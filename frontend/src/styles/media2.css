@@ -1,0 +1,79 @@
+/* @license GPL-2.0-or-later https://www.drupal.org/licensing/faq */
+.text-align-left {
+    text-align: left;
+}
+
+.text-align-right {
+    text-align: right;
+}
+
+.text-align-center {
+    text-align: center;
+}
+
+.text-align-justify {
+    text-align: justify;
+}
+
+.align-left {
+    float: left;
+}
+
+.align-right {
+    float: right;
+}
+
+.align-center {
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.toolbar-icon-fa-admin-admin-root::before {
+    background-image: url(/modules/custom/fa_admin/css/colophon_light.svg);
+}
+
+[data-gin-accent] .toolbar-icon-fa-admin-admin-root::before {
+    -webkit-mask-image: url(/modules/custom/fa_admin/css/colophon_light-gin.svg) !important;
+    mask-image: url(/modules/custom/fa_admin/css/colophon_light-gin.svg) !important;
+}
+
+.user-logged-in.path-admin .description ul {
+    padding-inline-start:1rem;}
+
+.user-logged-in.path-admin .form-checkboxes ul {
+    padding-inline-start:0;margin-left: calc(16px + 0.55em);
+}
+
+body .node-preview-container {
+    position: sticky;
+    top: 60px;
+}
+
+.fa-print-manage-pdf-form .media--view-mode-media-library-grid .field--name-created {
+    display: none;
+}
+
+.menu-item.menu-item--expanded:not([class*="menu-item__"]) {
+    display: none !important;
+}
+
+.menu-item.menu-item--expanded:not([class*="menu-item__"]):has(ul) {
+    display: block !important;
+}
+
+.horizontal-tabs-panes {
+    margin-top: 1rem;
+}
+
+.field-issue-sections-ordering-table th:nth-child(2),.field-issue-sections-ordering-table td:nth-child(2) {
+    display: none;
+}
+
+.captcha__description {
+    margin-bottom: .75em;
+}
+
+.paragraph--unpublished {
+    background-color: #fff4f4;
+}

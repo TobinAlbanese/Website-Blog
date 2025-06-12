@@ -1,0 +1,313 @@
+/* === NAVBAR BASE STYLES === */
+.base__nav {
+  background-color: #222; /* Dark background */
+  color: #fff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  position: relative;
+  z-index: 1000;
+}
+
+.site-nav {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.site-nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 20px;
+  padding-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.site-nav__list {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.site-nav__list.left {
+  justify-content: flex-start;
+  gap: 20px;
+}
+
+.site-nav__list.right {
+  justify-content: flex-end;
+  gap: 20px;
+}
+
+.site-nav__list-item {
+  display: flex;
+  align-items: center;
+}
+
+.site-nav__link {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.875rem; /* body-s-smallcaps approx */
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 8px 12px;
+  transition: color 0.3s ease;
+  cursor: pointer;
+}
+
+.site-nav__link:hover,
+.site-nav__link:focus {
+  color: #ff6f61; /* Accent color on hover/focus */
+  outline: none;
+}
+
+.site-nav__link.highlight {
+  color: #ff6f61;
+  font-weight: 700;
+}
+
+/* Logo styling */
+.site-nav__logo-link {
+  display: flex;
+  align-items: center;
+  margin: 0 20px;
+}
+
+.site-nav__logo {
+  height: 40px;
+  width: auto;
+  fill: #fff;
+}
+
+/* Menu toggle button */
+.site-nav__menu-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.site-nav__menu-btn-icon,
+.site-nav__close-icon {
+  width: 20px;
+  height: 20px;
+  fill: #fff;
+}
+
+.site-nav__close-icon {
+  display: none;
+}
+
+/* === VISIBILITY CONTROLS === */
+
+/* Desktop */
+.show-desktop {
+  display: flex;
+}
+
+/* Tablet */
+.show-tablet {
+  display: none;
+}
+
+/* Mobile */
+.show-mobile {
+  display: none;
+}
+
+/* === RESPONSIVE MEDIA QUERIES === */
+
+@media (max-width: 1024px) {
+  /* Tablet: show tablet nav items */
+  .show-tablet {
+    display: flex;
+  }
+  .show-desktop {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Mobile: show mobile nav items */
+  .show-mobile {
+    display: flex;
+  }
+  .show-tablet {
+    display: none;
+  }
+}
+
+/* === STICKY NAVBAR === */
+.site-nav--sticky {
+  background-color: #222;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  padding: 10px 20px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1100;
+  display: flex;
+  justify-content: center;
+}
+
+/* === MENU OPEN/HIDDEN === */
+.js--menu {
+  background-color: #333;
+  color: white;
+  width: 100%;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  padding: 20px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+  transition: max-height 0.3s ease;
+  overflow: hidden;
+  max-height: 0;
+  z-index: 1200;
+}
+
+.js--menu:not(.hidden) {
+  max-height: 1000px; /* arbitrary large height for animation */
+}
+
+/* Menu links inside the expanded menu */
+.menu__nav-links {
+  flex-direction: column;
+  gap: 15px;
+}
+
+.menu__nav-links-list-item a {
+  font-weight: 600;
+  color: #fff;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 8px 12px;
+  display: block;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.menu__nav-links-list-item a:hover,
+.menu__nav-links-list-item a:focus {
+  background-color: #ff6f61;
+  outline: none;
+}
+
+/* Search form */
+.search-form {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  margin: 30px 0 60px 0;
+}
+
+.search-form__input {
+  width: 100%;
+  padding: 15px 30px 15px 50px;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.search-form__icon {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  fill: #666;
+}
+
+/* Utility classes */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  border: 0 !important;
+}
+
+.d-flex {
+  display: flex !important;
+}
+
+.justify-around {
+  justify-content: space-around !important;
+}
+
+.pt-15 {
+  padding-top: 15px !important;
+}
+
+.pb-10 {
+  padding-bottom: 10px !important;
+}
+
+.pt-md-40 {
+  padding-top: 40px !important;
+}
+
+/* Overlay that dims the background */
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* dimming effect */
+  z-index: 9998;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+/* When menu is open, show the overlay */
+.menu-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Menu container */
+.js--menu.theme-accent {
+  position: fixed;
+  top: 50px; /* or 0 if you want it fully top */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90vw;
+  max-width: 900px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: white; /* or your desired menu bg */
+  z-index: 9999;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+}
+
+/* Show the menu when open */
+.js--menu.theme-accent.active {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+/* Prevent scrolling of background when menu is open */
+body.menu-open {
+  overflow: hidden;
+}
+.hidden {
+  display: none !important;
+}
