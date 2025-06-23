@@ -2,7 +2,12 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
+  "/Albanylitica/[slug]": "pages/Albanylitica/[slug].js",
   "/": "pages/index.js",
+  "/Albanylitica/Newsletter": "pages/Albanylitica/Newsletter.js",
+  "/Personal/Contact": "pages/Personal/Contact.js",
+  "/Portfolio": "pages/Portfolio.js",
   "/Personal/About": "pages/Personal/About.js",
-  "/Portfolio": "pages/Portfolio.js"
+  "/user/login": "pages/user/login.js",
+  "/Albanylitica": "pages/Albanylitica.js"
 }
