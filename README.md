@@ -178,7 +178,9 @@ Ultimately, I believe:
 ## 📬 Contact & Links  
 
 - 🌐 Website: [www.tobinalbanese.com](https://www.tobinalbanese.com)  
-- 📧 Email: `tobinmgraham@csus.edu` & `MidnightBureau@gmail.com` & `tobinmalbanese@gmail.com`  
+- 📧 Email: [tobinmgraham@csus.edu](mailto:tobinmgraham@csus.edu)  
+            [MidnightBureau@gmail.com](mailto:MidnightBureau@gmail.com)  
+            [tobinmalbanese@gmail.com](mailto:tobinmalbanese@gmail.com) 
 - 🧠 GitHub: [github.com/tobinalbanese](https://github.com/tobinalbanese)  
 - 🕵️ Blog: [The Midnight Bureau](https://www.tobinalbanese.com/MidnightBureau)  
 
