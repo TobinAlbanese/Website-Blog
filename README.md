@@ -86,12 +86,6 @@ Combines structured and unstructured data to visualize relationships in investig
 
 ---
 
-### 🟤 EZEKIAL  
-**Encrypted Zero-Trust Environment for Knowledge Integration, Analysis & Logistics**  
-> A secure data management cloud designed to store and route intelligence pipelines.  
-EZEKIAL is the vault and nervous system of my ecosystem — holding video, audio, text, and analytic results in a secure, queryable structure.
-
----
 
 ## 📁 Why These Projects?  
 
@@ -118,21 +112,68 @@ They’re not just codebases — they are applied, usable systems with relevance
 
 ## 🌐 About Me  
 
-I’m a computer science student, behavioral researcher, and aspiring intelligence analyst. This website represents more than just a resume — it’s a **living record** of how I think, what I build, and where I’m going.
+I’m a **computer science student**, **behavioral researcher**, and **aspiring intelligence analyst** with a deep curiosity for the unseen forces shaping our digital and psychological realities. This website is more than a portfolio — it’s a **living intelligence dossier** on the ideas, tools, and philosophies I’m exploring in real time.
 
-- 🎓 Expected graduation: Fall 2026  
-- 🧠 Primary interests: AI ethics, surveillance, autonomous systems, behavioral AI, cyber operations  
-- 💼 Goal: Work at the intersection of artificial intelligence, national security, and open-source research  
-- 📚 Philosophy: The most powerful tools are those that empower others to think clearly
+I’m drawn to intersections:  
+Where machine meets mind.  
+Where ethics meets algorithm.  
+Where surveillance meets sovereignty.  
+Where chaos becomes clarity.
+
+Every project you see here — from real-time facial analysis to AI-enhanced signal decryption — is a piece of my broader goal: to build systems that don’t just react to the world, but **understand it**.
 
 ---
+
+### 🎓 Academic Background  
+I’m currently pursuing my **B.S. in Computer Science** at **CSU Sacramento**, with an expected graduation in **Fall 2026**.  
+Alongside technical coursework, I actively study behavioral psychology, surveillance theory, and the evolving landscape of autonomous systems. I view technology not only through a programming lens — but a philosophical and strategic one.
+
+---
+
+### 🧠 Core Interests & Research Themes  
+
+- **AI Ethics & Governance** – Navigating the moral dilemmas of machine learning in high-stakes environments.  
+- **Surveillance & Open-Source Intelligence (OSINT)** – Building transparent tools for information gathering and threat detection.  
+- **Autonomous Systems & Warfare** – Understanding how autonomy is reshaping national defense and geopolitical power.  
+- **Behavioral AI & Micro-Expression Analysis** – Using subtle human signals to predict intent, stress, deception, and emotion.  
+- **Cyber Operations & Digital Threats** – Mapping the structure of online disinformation, malware ecosystems, and digital warfare.
+
+---
+
+### 💼 Career Vision  
+
+I aim to become an **intelligence analyst** working at the crossroads of **national security, counterterrorism, and artificial intelligence**. My goal is to contribute to teams solving complex global challenges — not through force, but through insight, analysis, and the responsible use of technology.
+
+I aspire to work alongside leading thinkers and dedicated professionals, united by a shared mission: to protect, to understand, and to act with integrity in service of something greater than ourselves.
+
+My long-term vision includes:
+- Supporting **national security and counterterrorism operations** with real-time, AI-enhanced intelligence  
+- Advancing **ethical AI practices** within defense and policy environments  
+- Building **open-source tools** that enable transparency, accountability, and clarity  
+- Writing, researching, and educating to elevate public understanding of digital and geopolitical threats
+
+
+---
+
+### 📚 Guiding Philosophy  
+
+> *“The most powerful tools are those that help others think clearly.”*
+
+In an era of noise, speed, and surveillance, the real challenge isn't just collecting data — it's knowing what it means.  
+That’s why I build tools for interpretation, not just automation.  
+That’s why I document what I learn, not just what I ship.
+
+This site is a reflection of that commitment — a record of ideas sharpened by inquiry, and systems forged by principle.
+
+---
+
 
 ## 📬 Contact & Links  
 
 - 🌐 [www.tobinalbanese.com](https://www.tobinalbanese.com)  
-- 📧 Email: `hello@tobinalbanese.com`  
+- 📧 Email: `tobinmgraham@csus.edu` & 1MidnightBureau@gmail.com1 & `tobinmalbanese@gmail.com`  
 - 🧠 GitHub: [github.com/tobinalbanese](https://github.com/tobinalbanese)  
-- 🕵️ Blog: [The Midnight Bureau](https://www.tobinalbanese.com/blog)  
+- 🕵️ Blog: [The Midnight Bureau](https://www.tobinalbanese.com/MidhightBureau)  
 
 ---
 
