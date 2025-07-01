@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 
@@ -9,6 +8,7 @@ import PortfolioData from '../../data/portfolioData.js';
 
 function ProjectCard({ project, index }) {
   const [visible, setVisible] = useState(false);
+  const [hover, setHover] = useState(false);
 
   useEffect(() => {
     const timeout = setTimeout(() => setVisible(true), index * 200);
@@ -16,27 +16,40 @@ function ProjectCard({ project, index }) {
   }, [index]);
 
   return (
-    <Link href={`/Portfolio/${project.slug}`} passHref>
+    <div
+      className="project-card"
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      style={{
+        display: "flex",
+        alignItems: "stretch",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        textDecoration: "none",
+        color: "var(--c-text)",
+        border: "1px solid var(--c-border)",
+        borderRadius: 12,
+        padding: 20,
+        boxShadow: hover
+          ? "0 10px 20px rgba(0, 0, 0, 0.1)"
+          : "0 4px 12px rgba(0, 0, 0, 0.04)",
+        backgroundColor: "var(--c-bg-primary)", 
+        opacity: visible ? 1 : 0,
+        transform: visible
+          ? hover
+            ? "translateY(-8px)"
+            : "translateX(0)"
+          : "translateX(-30px)",
+        transition: "opacity 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease",
+        height: "100%",
+        cursor: hover ? "pointer" : "default",
+      }}
+    >
       <div
-        className="project-card"
         style={{
           display: "flex",
+          flex: 1,
           alignItems: "stretch",
-          textDecoration: "none",
-          color: "#222",
-          border: "1px solid #ddd",
-          borderRadius: 12,
-          padding: 20,
-          boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
-          backgroundColor: "#FBF8F3",
-          transition: "box-shadow 0.3s ease",
-          opacity: visible ? 1 : 0,
-          transform: visible ? "translateX(0)" : "translateX(-30px)",
-          transitionProperty: "opacity, transform",
-          transitionDuration: "0.6s",
-          transitionTimingFunction: "ease",
-          height: "100%",
-          cursor: "pointer",
         }}
       >
         <div
@@ -48,8 +61,19 @@ function ProjectCard({ project, index }) {
             paddingRight: 20,
           }}
         >
-          <h3 style={{ margin: "0 0 12px 0", fontSize: 24, fontWeight: 700 }}>{project.title}</h3>
-          <p style={{ margin: 0, fontSize: 16, lineHeight: 1.6 }}>{project.description}</p>
+          <h3 style={{ margin: "0 0 12px 0", fontSize: 24, fontWeight: 700 }}>
+            {project.title}
+          </h3>
+          <p
+            style={{
+              margin: 0,
+              fontSize: 16,
+              lineHeight: 1.6,
+              color: "var(--c-text-secondary)",
+            }}
+          >
+            {project.description}
+          </p>
         </div>
 
         <img
@@ -64,31 +88,36 @@ function ProjectCard({ project, index }) {
           }}
         />
       </div>
-    </Link>
+
+      {/* Link text at bottom left */}
+      <div style={{ marginTop: 16, textAlign: "left" }}>
+        <Link
+          href={`/Portfolio/${project.slug}`}
+          style={{
+            color: "var(--c-accent)",
+            fontWeight: "500",
+            fontSize: 16,
+            textDecoration: "underline",
+            cursor: "pointer",
+          }}
+        >
+          Click here for more
+        </Link>
+      </div>
+    </div>
   );
 }
+
+
 
 export default function Portfolio() {
   return (
 <>
   <meta charSet="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <>
-          <Head>
-            <title>MetaHead</title>
-            <meta charSet="utf-8" />
-          </Head>
 
         <MetaHead />
-      </>
-      <>
-          <Head>
-            <title>svgHead</title>
-            <meta charSet="utf-8" />
-          </Head>
-
         <SvgHead />
-      </>
 
 
 
@@ -148,17 +177,17 @@ export default function Portfolio() {
               <li className="site-nav__list-item d-flex show-tablet">
                 <a
                   className="site-nav__link body-s-smallcaps highlight"
-                  href="/Albanylitica"
+                  href="/MidnightBureau"
                 >
-                  Albanylitica
+                  Midnight Bureau
                 </a>
               </li>
               <li className="site-nav__list-item d-flex show-mobile">
                 <a
                   className="site-nav__link body-s-smallcaps highlight"
-                  href="/Albanylitica"
+                  href="/MidnightBureau"
                 >
-                  Albanylitica
+                  Midnight Bureau
                 </a>
               </li>
             </ul>
@@ -172,7 +201,7 @@ export default function Portfolio() {
               <li className="site-nav__list-item d-flex show-desktop">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/Newsletter"
+                  href="/MidnightBureau/Newsletter"
                 >
                   Newsletters
                 </a>
@@ -196,9 +225,9 @@ export default function Portfolio() {
               <li className="site-nav__list-item d-flex show-desktop">
                 <a
                   className="site-nav__link body-s-smallcaps highlight"
-                  href="/Albanylitica"
+                  href="/MidnightBureau"
                 >
-                  Albanylitica
+                  Midnight Bureau
                 </a>
               </li>
               <li className="site-nav__list-item">
@@ -254,7 +283,7 @@ export default function Portfolio() {
               <li className="site-nav__list-item d-flex show-desktop">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/BookReviews"
+                  href="/MidnightBureau/BookReviews"
                 >
                   
                 </a>
@@ -270,17 +299,17 @@ export default function Portfolio() {
               <li className="site-nav__list-item d-flex show-tablet">
                 <a
                   className="site-nav__link body-s-smallcaps highlight"
-                  href="/Albanylitica"
+                  href="/MidnightBureau"
                 >
-                  Albanylitica
+                  Midnight Bureau
                 </a>
               </li>
               <li className="site-nav__list-item d-flex show-mobile">
                 <a
                   className="site-nav__link body-s-smallcaps highlight"
-                  href="/Albanylitica"
+                  href="/MidnightBureau"
                 >
-                  Albanylitica
+                  Midnight Bureau
                 </a>
               </li>
             </ul>
@@ -298,7 +327,7 @@ export default function Portfolio() {
               <li className="site-nav__list-item d-flex show-desktop">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/Newsletter"
+                  href="/MidnightBureau/Newsletter"
                 >
                   Newsletters
                 </a>
@@ -322,9 +351,9 @@ export default function Portfolio() {
               <li className="site-nav__list-item d-flex show-desktop">
                 <a
                   className="site-nav__link body-s-smallcaps highlight"
-                  href="/Albanylitica"
+                  href="/MidnightBureau"
                 >
-                  Albanylitica
+                  Midnight Bureau
                 </a>
               </li>
               <li className="site-nav__list-item">
@@ -357,7 +386,7 @@ export default function Portfolio() {
               <li className="site-nav__list-item d-flex show-mobile menu__nav-links-list-item pt-5 pb-5">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/Recent"
+                  href="/MidnightBureau/Recent"
                 >
                   Current Issue
                 </a>
@@ -365,7 +394,7 @@ export default function Portfolio() {
               <li className="site-nav__list-item d-flex show-tablet menu__nav-links-list-item pt-5 pb-5">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/Archive"
+                  href="/MidnightBureau/Archive"
                 >
                   Archive
                 </a>
@@ -373,7 +402,7 @@ export default function Portfolio() {
               <li className="site-nav__list-item d-flex show-mobile menu__nav-links-list-item pt-5 pb-5">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/Archive"
+                  href="/MidnightBureau/Archive"
                 >
                   Archive
                 </a>
@@ -381,7 +410,7 @@ export default function Portfolio() {
               <li className="site-nav__list-item d-flex show-tablet menu__nav-links-list-item pt-5 pb-5">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/BookReviews"
+                  href="/MidnightBureau/BookReviews"
                 >
                   Books
                 </a>
@@ -389,7 +418,7 @@ export default function Portfolio() {
               <li className="site-nav__list-item d-flex show-mobile menu__nav-links-list-item pt-5 pb-5">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/BookReviews"
+                  href="/MidnightBureau/BookReviews"
                 >
                   Books
                 </a>
@@ -413,7 +442,7 @@ export default function Portfolio() {
               <li className="site-nav__list-item d-flex show-tablet menu__nav-links-list-item pt-5 pb-5">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/Newsletter"
+                  href="/MidnightBureau/Newsletter"
                 >
                   Newsletters
                 </a>
@@ -421,7 +450,7 @@ export default function Portfolio() {
               <li className="site-nav__list-item d-flex show-mobile menu__nav-links-list-item pt-5 pb-5">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/Newsletter"
+                  href="/MidnightBureau/Newsletter"
                 >
                   Newsletters
                 </a>
@@ -467,16 +496,16 @@ export default function Portfolio() {
                 <p className="menu__overline mb-20">Browse by Section</p>
                 <ul>
                   <li className="menu__topics-list-item mb-10">
-                    <a href="/Albanylitica/Archive">Blog Archive</a>
+                    <a href="/MidnightBureau/Archive">Blog Archive</a>
                   </li>
                   <li className="menu__topics-list-item mb-10">
-                    <a href="/Albanylitica/Recent">Recent Posts</a>
+                    <a href="/MidnightBureau/Recent">Recent Posts</a>
                   </li>
                   <li className="menu__topics-list-item mb-10">
-                    <a href="/Albanylitica/Popular">Popular Posts</a>
+                    <a href="/MidnightBureau/Popular">Popular Posts</a>
                   </li>
                   <li className="menu__topics-list-item mb-10">
-                    <a href="/Albanylitica/Categories">Categories</a>
+                    <a href="/MidnightBureau/Categories">Categories</a>
                   </li>
                   <li className="menu__topics-list-item mb-10">
                     <a href="/Personal/About">About Me</a>
@@ -492,7 +521,7 @@ export default function Portfolio() {
                 <p className="menu__overline mb-20">Recent Posts</p>
                 <ul className="menu__issues-list d-flex">
                   <li>
-                    <a className="menu__post-link" href="/Albanylitica/post-1">
+                    <a className="menu__post-link" href="/MidnightBureau/post-1">
                       <figure className="">
                         <img
                           src=""
@@ -511,7 +540,7 @@ export default function Portfolio() {
                     </a>
                   </li>
                   <li>
-                    <a className="menu__post-link" href="/Albanylitica/post-2">
+                    <a className="menu__post-link" href="/MidnightBureau/post-2">
                       <figure className="">
                         <img
                           src=""
@@ -530,7 +559,7 @@ export default function Portfolio() {
                     </a>
                   </li>
                   <li>
-                    <a className="menu__post-link" href="/Albanylitica/post-3">
+                    <a className="menu__post-link" href="/MidnightBureau/post-3">
                       <figure className="">
                         <img
                           src=""
@@ -625,7 +654,7 @@ export default function Portfolio() {
                     </a>
                   </li>
                   <li className="menu__links--list-item mb-5">
-                    <a href="/Albanylitica/Newsletter">NewsLetter</a>
+                    <a href="/MidnightBureau/Newsletter">NewsLetter</a>
                   </li>
                   <li className="menu__links--list-item mb-5">
                     <a href="/Personal/About">About Me</a>
@@ -643,7 +672,7 @@ export default function Portfolio() {
                     <a href="/Personal/FAQ">/FAQs</a>
                   </li>
                   <li className="menu__links--list-item mb-5">
-                    <a href="/Albanylitica/Resources">Albanlytica Resources</a>
+                    <a href="/MidnightBureau/Resources">Albanlytica Resources</a>
                   </li>
                   <li className="menu__links--list-item mb-5">
                     <a href="/Personal/Projects">Projects & Events</a>
@@ -697,20 +726,7 @@ export default function Portfolio() {
         ))}
       </main>
 
-  
-
-
-
-
-    {/* Footer */}
-      <>
-          <Head>
-            <title>Tobin Albanese</title>
-            <meta charSet="utf-8" />
-          </Head>
-
         <Footer />
-      </>
 
     </div>
   </div>

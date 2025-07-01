@@ -31,10 +31,10 @@ export default function BlogHighlights() {
                     </h3>
                     <h4 className="body-s c-text-secondary mt-5">
                       <a href="">
-                        Breif Desc
+                        This is where a short description of the blog post will go. It should be brief and engaging to encourage readers to click through.
                       </a>
                     </h4>
-                    <p className="body-s mt-10 ">
+                    <p className="body-s mt-10 c-accent">
                       <a href="/authors/tobin-m-albanese">Tobin M. Albanese</a> 
                     </p>
                   </div>
@@ -85,8 +85,8 @@ export default function BlogHighlights() {
                         Breif Desc
                       </a>
                     </h4>
-                    <p className="body-s mt-10 ">
-                      <a href="/authors/tobin-m-albanese">Tobin M. Albanese</a> 
+                    <p className="body-s mt-10 c-accent">
+                      <a href="/authors/tobin-m-albanese">*Tobin M. Albanese</a> 
                     </p>
                   </div>
                   <div className="col-3 col-md-4 d-flex items-start justify-end mr-0">
@@ -136,8 +136,8 @@ export default function BlogHighlights() {
                         Breif Desc
                       </a>
                     </h4>
-                    <p className="body-s mt-10 ">
-                      <a href="/authors/tobin-m-albanese">Tobin M. Albanese</a> 
+                    <p className="body-s mt-10 c-accent">
+                      <a href="/authors/tobin-m-albanese">*Tobin M. Albanese</a> 
                     </p>
                   </div>
                   <div className="col-3 col-md-4 d-flex items-start justify-end mr-0">
@@ -187,8 +187,8 @@ export default function BlogHighlights() {
                         Breif Desc
                       </a>
                     </h4>
-                    <p className="body-s mt-10 ">
-                      <a href="/authors/tobin-m-albanese">Tobin M. Albanese</a> 
+                    <p className="body-s mt-10  c-accent">
+                      <a href="/authors/tobin-m-albanese"> *Tobin M. Albanese</a> 
                     </p>
                   </div>
                   <div className="col-3 col-md-4 d-flex items-start justify-end mr-0">

@@ -45,11 +45,11 @@ export default function SpecialFocus() {
                   </h3>
                   <h4 className="body-s c-text-secondary mt-5">
                     <a href="">
-                      Brief Desc
+                      Brief Description of the topic that I am currently working on.
                     </a>
                   </h4>
-                  <p className="body-s mt-10">
-                    <a href="">author</a>
+                  <p className="body-s mt-20 c-accent">
+                    <a href="">Tobin Albanese</a>
                   </p>
                 </div>
                 <div className="col-3 col-md-4 d-flex items-start justify-end mr-0">
@@ -93,8 +93,8 @@ export default function SpecialFocus() {
                       Brief Desc
                     </a>
                   </h4>
-                  <p className="body-s mt-10">
-                    <a href="">author</a>
+                  <p className="body-s mt-20 c-accent">
+                    <a href="">Tobin Albanese</a>
                   </p>
                 </div>
                 <div className="col-3 col-md-4 d-flex items-start justify-end mr-0">
@@ -185,11 +185,11 @@ export default function SpecialFocus() {
                   </h3>
                   <h4 className="body-s c-text-secondary mt-5">
                     <a href="">
-Brief Desc              Brief Desc
+                      Brief Desc
                     </a>
                   </h4>
-                  <p className="body-s mt-10">
-                    <a href="">author</a>
+                  <p className="body-s mt-20 c-accent">
+                    <a href="">Tobin Albanese</a>
                   </p>
                 </div>
                 <div className="col-3 col-md-4 d-flex items-start justify-end mr-0">

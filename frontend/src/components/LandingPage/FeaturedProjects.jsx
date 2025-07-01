@@ -104,7 +104,7 @@ export default function BlogHighlights() {
                       </h3>
                       <h4 className="body-s c-text-secondary mt-5">
                         <a href="">
-                          Brief Desc
+                          This is a brief description of the project that will entice readers to learn more.
                         </a>
                       </h4>
                     </div>

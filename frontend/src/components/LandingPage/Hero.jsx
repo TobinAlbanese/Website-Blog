@@ -22,10 +22,10 @@ export default function LandingSection() {
               }`}
               data-armstrong-id="personal-message"
             >
-              <h1 className="heading-l mb-15">Welcome to Tobin Albanese's Space</h1>
-              <p className="body-m">
+              <h1 className="heading-l mb-15">Welcome to <br></br>Tobin Albanese's Space</h1>
+              <p className="body-m c-text-secondary" style={{ fontSize: 18, lineHeight: 1.6}}>
                 Hi, I'm Tobin Albanese — a student, writer, thinker, and creator behind the blog{" "}
-                <em>Albanylitica</em>.
+                <em>Midnight Bureau</em>.
                 <br />
                 This space is where I share my insights on politics, culture, and the ideas that inspire me every day.
                 Through thoughtful analysis and personal reflections, I aim to explore the complexities of the world around us and encourage meaningful conversations.

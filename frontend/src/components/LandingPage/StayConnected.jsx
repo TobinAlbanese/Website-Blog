@@ -11,11 +11,11 @@ export default function StayConnected() {
             <div className="col-12 col-md-8 position-relative z-above-base ">
               <h2 className="position-relative z-above-base mt-15 c-accent fs-18 font-style-italic mb-20" />
               <h2 className="heading-m ls-narrow f-serif ls--1 dark-text-light text-wrap">
-                Stay connected to <em>Albanylitica </em>
+                Stay connected to <em>Midnight Bureau </em>
               </h2>
-              <ul className="body-l checkmarks ml-35">
+              <ul className="body-l checkmarks ml-35 c-text-secondary">
                 <li>
-                    Stay informed with the latest insights & analysis from <em>Albanylitica</em>. 
+                    Stay informed with the latest insights & analysis from <em>Midnight Bureau</em>. 
                     <br /> Sign up for our newsletter and never miss an update.
                 </li>
                 <li>
@@ -28,7 +28,7 @@ export default function StayConnected() {
                     takes straight to your inbox.
                 </li>
                 <li>
-                    Thanks for being here and engaging with AlbanyLitica. Your interest and feedback 
+                    Thanks for being here and engaging with Midnight Bureau. Your interest and feedback 
                     inspire me every day. Let’s keep the conversation going!
                 </li>
               </ul>
@@ -52,7 +52,7 @@ export default function StayConnected() {
                 <figure className="">
                   <img
                     src="/assets/images/albanylitica.png"
-                    alt="Albanylitica Blog Main Image"
+                    alt="Midnight Bureau Blog Main Image"
                     className="drop-shadow w-30 w-auto-md m-auto"
                     loading="lazy"
                     width={767}

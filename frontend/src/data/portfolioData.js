@@ -33,7 +33,7 @@ const PortfolioData = {
       image: "/assets/images/AfroTob.jpg"
     }
   ],
-  Research: [
+  "Research": [
     {
       title: "Counterterrorism Dynamics",
       slug: "counterterrorism-dynamics",
@@ -59,7 +59,7 @@ const PortfolioData = {
       image: "/assets/images/AfroTob.jpg"
     }
   ],
-  Journalism: [
+  "Current Projects": [
     {
       title: "Investigative Report: Cyber Attacks",
       slug: "cyber-attacks",

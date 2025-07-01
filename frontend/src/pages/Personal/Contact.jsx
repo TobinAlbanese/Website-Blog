@@ -143,17 +143,17 @@ export default function Contact() {
               <li className="site-nav__list-item d-flex show-tablet">
                 <a
                   className="site-nav__link body-s-smallcaps highlight"
-                  href="/Albanylitica"
+                  href="/MidnightBureau"
                 >
-                  Albanylitica
+                  Midnight Bureau
                 </a>
               </li>
               <li className="site-nav__list-item d-flex show-mobile">
                 <a
                   className="site-nav__link body-s-smallcaps highlight"
-                  href="/Albanylitica"
+                  href="/MidnightBureau"
                 >
-                  Albanylitica
+                  Midnight Bureau
                 </a>
               </li>
             </ul>
@@ -167,7 +167,7 @@ export default function Contact() {
               <li className="site-nav__list-item d-flex show-desktop">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/Newsletter"
+                  href="/MidnightBureau/Newsletter"
                 >
                   Newsletters
                 </a>
@@ -191,9 +191,9 @@ export default function Contact() {
               <li className="site-nav__list-item d-flex show-desktop">
                 <a
                   className="site-nav__link body-s-smallcaps highlight"
-                  href="/Albanylitica"
+                  href="/MidnightBureau"
                 >
-                  Albanylitica
+                  Midnight Bureau
                 </a>
               </li>
               <li className="site-nav__list-item">
@@ -249,7 +249,7 @@ export default function Contact() {
               <li className="site-nav__list-item d-flex show-desktop">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/BookReviews"
+                  href="/MidnightBureau/BookReviews"
                 >
                   
                 </a>
@@ -265,17 +265,17 @@ export default function Contact() {
               <li className="site-nav__list-item d-flex show-tablet">
                 <a
                   className="site-nav__link body-s-smallcaps highlight"
-                  href="/Albanylitica"
+                  href="/MidnightBureau"
                 >
-                  Albanylitica
+                  Midnight Bureau
                 </a>
               </li>
               <li className="site-nav__list-item d-flex show-mobile">
                 <a
                   className="site-nav__link body-s-smallcaps highlight"
-                  href="/Albanylitica"
+                  href="/MidnightBureau"
                 >
-                  Albanylitica
+                  Midnight Bureau
                 </a>
               </li>
             </ul>
@@ -293,7 +293,7 @@ export default function Contact() {
               <li className="site-nav__list-item d-flex show-desktop">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/Newsletter"
+                  href="/MidnightBureau/Newsletter"
                 >
                   Newsletters
                 </a>
@@ -317,9 +317,9 @@ export default function Contact() {
               <li className="site-nav__list-item d-flex show-desktop">
                 <a
                   className="site-nav__link body-s-smallcaps highlight"
-                  href="/Albanylitica"
+                  href="/MidnightBureau"
                 >
-                  Albanylitica
+                  Midnight Bureau
                 </a>
               </li>
               <li className="site-nav__list-item">
@@ -352,7 +352,7 @@ export default function Contact() {
               <li className="site-nav__list-item d-flex show-mobile menu__nav-links-list-item pt-5 pb-5">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/Recent"
+                  href="/MidnightBureau/Recent"
                 >
                   Current Issue
                 </a>
@@ -360,7 +360,7 @@ export default function Contact() {
               <li className="site-nav__list-item d-flex show-tablet menu__nav-links-list-item pt-5 pb-5">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/Archive"
+                  href="/MidnightBureau/Archive"
                 >
                   Archive
                 </a>
@@ -368,7 +368,7 @@ export default function Contact() {
               <li className="site-nav__list-item d-flex show-mobile menu__nav-links-list-item pt-5 pb-5">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/Archive"
+                  href="/MidnightBureau/Archive"
                 >
                   Archive
                 </a>
@@ -376,7 +376,7 @@ export default function Contact() {
               <li className="site-nav__list-item d-flex show-tablet menu__nav-links-list-item pt-5 pb-5">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/BookReviews"
+                  href="/MidnightBureau/BookReviews"
                 >
                   Books
                 </a>
@@ -384,7 +384,7 @@ export default function Contact() {
               <li className="site-nav__list-item d-flex show-mobile menu__nav-links-list-item pt-5 pb-5">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/BookReviews"
+                  href="/MidnightBureau/BookReviews"
                 >
                   Books
                 </a>
@@ -408,7 +408,7 @@ export default function Contact() {
               <li className="site-nav__list-item d-flex show-tablet menu__nav-links-list-item pt-5 pb-5">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/Newsletter"
+                  href="/MidnightBureau/Newsletter"
                 >
                   Newsletters
                 </a>
@@ -416,7 +416,7 @@ export default function Contact() {
               <li className="site-nav__list-item d-flex show-mobile menu__nav-links-list-item pt-5 pb-5">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/Newsletter"
+                  href="/MidnightBureau/Newsletter"
                 >
                   Newsletters
                 </a>
@@ -462,16 +462,16 @@ export default function Contact() {
                 <p className="menu__overline mb-20">Browse by Section</p>
                 <ul>
                   <li className="menu__topics-list-item mb-10">
-                    <a href="/Albanylitica/Archive">Blog Archive</a>
+                    <a href="/MidnightBureau/Archive">Blog Archive</a>
                   </li>
                   <li className="menu__topics-list-item mb-10">
-                    <a href="/Albanylitica/Recent">Recent Posts</a>
+                    <a href="/MidnightBureau/Recent">Recent Posts</a>
                   </li>
                   <li className="menu__topics-list-item mb-10">
-                    <a href="/Albanylitica/Popular">Popular Posts</a>
+                    <a href="/MidnightBureau/Popular">Popular Posts</a>
                   </li>
                   <li className="menu__topics-list-item mb-10">
-                    <a href="/Albanylitica/Categories">Categories</a>
+                    <a href="/MidnightBureau/Categories">Categories</a>
                   </li>
                   <li className="menu__topics-list-item mb-10">
                     <a href="/Personal/About">About Me</a>
@@ -487,7 +487,7 @@ export default function Contact() {
                 <p className="menu__overline mb-20">Recent Posts</p>
                 <ul className="menu__issues-list d-flex">
                   <li>
-                    <a className="menu__post-link" href="/Albanylitica/post-1">
+                    <a className="menu__post-link" href="/MidnightBureau/post-1">
                       <figure className="">
                         <img
                           src=""
@@ -506,7 +506,7 @@ export default function Contact() {
                     </a>
                   </li>
                   <li>
-                    <a className="menu__post-link" href="/Albanylitica/post-2">
+                    <a className="menu__post-link" href="/MidnightBureau/post-2">
                       <figure className="">
                         <img
                           src=""
@@ -525,7 +525,7 @@ export default function Contact() {
                     </a>
                   </li>
                   <li>
-                    <a className="menu__post-link" href="/Albanylitica/post-3">
+                    <a className="menu__post-link" href="/MidnightBureau/post-3">
                       <figure className="">
                         <img
                           src=""
@@ -620,7 +620,7 @@ export default function Contact() {
                     </a>
                   </li>
                   <li className="menu__links--list-item mb-5">
-                    <a href="/Albanylitica/Newsletter">NewsLetter</a>
+                    <a href="/MidnightBureau/Newsletter">NewsLetter</a>
                   </li>
                   <li className="menu__links--list-item mb-5">
                     <a href="/Personal/About">About Me</a>
@@ -638,7 +638,7 @@ export default function Contact() {
                     <a href="/Personal/FAQ">/FAQs</a>
                   </li>
                   <li className="menu__links--list-item mb-5">
-                    <a href="/Albanylitica/Resources">Albanlytica Resources</a>
+                    <a href="/MidnightBureau/Resources">Albanlytica Resources</a>
                   </li>
                   <li className="menu__links--list-item mb-5">
                     <a href="/Personal/Projects">Projects & Events</a>
@@ -665,6 +665,11 @@ export default function Contact() {
 
 
 
+
+
+
+
+
 {/* Main bordered section */}
 <section
   className="contact-section"
@@ -672,13 +677,13 @@ export default function Contact() {
     maxWidth: 900,
     margin: "0 auto 80px",
     padding: "30px 20px",
-    border: "4px solid #b02621",
+    border: `4px solid var(--c-accent)`,
     borderRadius: 8,
     fontWeight: 600,
     opacity: fadeIn ? 1 : 0,
     transition: "opacity 1.2s ease-in",
-    color: "white",
-    backgroundColor: "transparent",
+    color: "var(--c-text)",         
+    backgroundColor: "var(--c-bg)", 
   }}
 >
   <div
@@ -696,11 +701,12 @@ export default function Contact() {
       style={{
         flex: 1,
         minWidth: 320,
-        color: "#000", // form text black
-        border: "2px solid #b02621", // red outline border for the form
+        border: `2px solid var(--c-accent)`, 
         borderRadius: 8,
-        backgroundColor: "transparent",
+        backgroundColor: "var(--c-bg)",    
         padding: 20,
+        color: "var(--c-text)",               
+        fontFamily: "inherit",
       }}
       onSubmit={(e) => {
         e.preventDefault();
@@ -708,17 +714,16 @@ export default function Contact() {
         e.target.reset();
       }}
     >
-      <h2 style={{ color: "#000000", textAlign: "center", marginBottom: 20}}>
+      <h2 style={{ textAlign: "center", marginBottom: 20, color: "var(--c-text)", fontFamily: "inherit" }}>
         Get in Touch
       </h2>
-      <p style={{ marginBottom: 40, fontWeight: 600, color: "#000000" }}>
-        Whether you have questions, want to collaborate, or just to say
-        hello, feel free to drop me a message below!
+      <p style={{ marginBottom: 40, fontWeight: 400, color: "var(--c-text-secondary)" }}>
+        Whether you have questions, want to collaborate, or just to say hello, feel free to drop me a message below!
       </p>
 
       <label
         htmlFor="name"
-        style={{ display: "block", marginBottom: 6, color: "#000000" }}
+        style={{ display: "block", marginBottom: 6, color: "var(--c-text-secondary)", fontFamily: "inherit" }}
       >
         Name*
       </label>
@@ -732,17 +737,17 @@ export default function Contact() {
           padding: 10,
           marginBottom: 20,
           borderRadius: 4,
-          border: "1px solid #000000", 
+          border: `1px solid var(--c-input-border)`,
           fontSize: 16,
-          color: "#000000",
-          backgroundColor: "transparent",
+          color: "var(--c-text)",
+          backgroundColor: "var(--c-bg-primary)",
           fontFamily: "inherit",
         }}
       />
 
       <label
         htmlFor="email"
-        style={{ display: "block", marginBottom: 6, color: "#000000" }}
+        style={{ display: "block", marginBottom: 6, color: "var(--c-text-secondary)", FontFamily: "inherit"}}
       >
         Email*
       </label>
@@ -756,17 +761,17 @@ export default function Contact() {
           padding: 10,
           marginBottom: 20,
           borderRadius: 4,
-          border: "1px solid #000000", // red border
+          border: `1px solid var(--c-input-border)`,
           fontSize: 16,
-          color: "#000000",
-          backgroundColor: "transparent",
+          color: "var(--c-text)",
+          backgroundColor: "var(--c-bg-primary)",
           fontFamily: "inherit",
         }}
       />
 
       <label
         htmlFor="message"
-        style={{ display: "block", marginBottom: 6, color: "#000000" }}
+        style={{ display: "block", marginBottom: 6, color: "var(--c-text-secondary)", FontFamily: "inherit"}}
       >
         Message*
       </label>
@@ -780,10 +785,10 @@ export default function Contact() {
           padding: 10,
           marginBottom: 30,
           borderRadius: 4,
-          border: "1px solid #000000",
+          border: `1px solid var(--c-input-border)`,
           fontSize: 16,
-          color: "#000000",
-          backgroundColor: "transparent",
+          color: "var(--c-text)",
+          backgroundColor: "var(--c-bg-primary)",
           fontFamily: "inherit",
           resize: "vertical",
         }}
@@ -792,8 +797,8 @@ export default function Contact() {
       <button
         type="submit"
         style={{
-          backgroundColor: "#d62827",
-          color: "#000000",
+          backgroundColor: "var(--c-accent)",
+          color: "var(--c-button-text)",
           border: "none",
           borderRadius: 4,
           padding: "12px 24px",
@@ -803,8 +808,8 @@ export default function Contact() {
           transition: "background-color 0.3s ease",
           fontFamily: "inherit",
         }}
-        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#b02621")}
-        onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#d62827")}
+        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "var(--c-accent)")}
+        onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "var(--c-accent)")}
       >
         Send Message
       </button>
@@ -815,20 +820,22 @@ export default function Contact() {
       style={{
         flex: 1,
         minWidth: 280,
-        fontSize: 16,
+        fontSize: 18,
         lineHeight: 1.5,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        color: "#000000", 
+        color: "var(--c-text-secondary)",
+        fontFamily: "inherit",
       }}
     >
       <h3
         style={{
           marginBottom: 20,
           fontWeight: 600,
-          color: "#000000",
+          color: "var(--c-text)",
+          fontFamily: "inherit",
         }}
       >
         Find Me Online
@@ -845,11 +852,12 @@ export default function Contact() {
               display: "flex",
               alignItems: "center",
               marginBottom: 18,
-              color: "#000000",
+              color: "var(--c-text-secondary)",
               textDecoration: "none",
-              borderBottom: "1px solid rgba(255,255,255,0.2)",
+              borderBottom: "1px solid var(--c-border)",
               paddingBottom: 10,
               fontWeight: 600,
+              fontFamily: "inherit",
             }}
             aria-label={name}
           >
@@ -868,6 +876,7 @@ export default function Contact() {
                   fontWeight: 600,
                   fontSize: 16,
                   marginBottom: 4,
+                  color: "var(--c-text)",
                 }}
               >
                 {name}
@@ -875,7 +884,7 @@ export default function Contact() {
               <small
                 style={{
                   fontWeight: 400,
-                  color: "#000000",
+                  color: "var(--c-text-secondary)",
                   fontSize: 14,
                   lineHeight: 1.3,
                 }}

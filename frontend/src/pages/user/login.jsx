@@ -103,17 +103,17 @@ export default function Login() {
               <li className="site-nav__list-item d-flex show-tablet">
                 <a
                   className="site-nav__link body-s-smallcaps highlight"
-                  href="/Albanylitica"
+                  href="/Midnight Bureau"
                 >
-                  Albanylitica
+                  Midnight Bureau
                 </a>
               </li>
               <li className="site-nav__list-item d-flex show-mobile">
                 <a
                   className="site-nav__link body-s-smallcaps highlight"
-                  href="/Albanylitica"
+                  href="/Midnight Bureau"
                 >
-                  Albanylitica
+                  Midnight Bureau
                 </a>
               </li>
             </ul>
@@ -127,7 +127,7 @@ export default function Login() {
               <li className="site-nav__list-item d-flex show-desktop">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/Newsletter"
+                  href="/Midnight Bureau/Newsletter"
                 >
                   Newsletters
                 </a>
@@ -151,9 +151,9 @@ export default function Login() {
               <li className="site-nav__list-item d-flex show-desktop">
                 <a
                   className="site-nav__link body-s-smallcaps highlight"
-                  href="/Albanylitica"
+                  href="/Midnight Bureau"
                 >
-                  Albanylitica
+                  Midnight Bureau
                 </a>
               </li>
               <li className="site-nav__list-item">
@@ -209,7 +209,7 @@ export default function Login() {
               <li className="site-nav__list-item d-flex show-desktop">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/BookReviews"
+                  href="/Midnight Bureau/BookReviews"
                 >
                   
                 </a>
@@ -225,17 +225,17 @@ export default function Login() {
               <li className="site-nav__list-item d-flex show-tablet">
                 <a
                   className="site-nav__link body-s-smallcaps highlight"
-                  href="/Albanylitica"
+                  href="/Midnight Bureau"
                 >
-                  Albanylitica
+                  Midnight Bureau
                 </a>
               </li>
               <li className="site-nav__list-item d-flex show-mobile">
                 <a
                   className="site-nav__link body-s-smallcaps highlight"
-                  href="/Albanylitica"
+                  href="/Midnight Bureau"
                 >
-                  Albanylitica
+                  Midnight Bureau
                 </a>
               </li>
             </ul>
@@ -253,7 +253,7 @@ export default function Login() {
               <li className="site-nav__list-item d-flex show-desktop">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/Newsletter"
+                  href="/Midnight Bureau/Newsletter"
                 >
                   Newsletters
                 </a>
@@ -277,9 +277,9 @@ export default function Login() {
               <li className="site-nav__list-item d-flex show-desktop">
                 <a
                   className="site-nav__link body-s-smallcaps highlight"
-                  href="/Albanylitica"
+                  href="/Midnight Bureau"
                 >
-                  Albanylitica
+                  Midnight Bureau
                 </a>
               </li>
               <li className="site-nav__list-item">
@@ -312,7 +312,7 @@ export default function Login() {
               <li className="site-nav__list-item d-flex show-mobile menu__nav-links-list-item pt-5 pb-5">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/Recent"
+                  href="/Midnight Bureau/Recent"
                 >
                   Current Issue
                 </a>
@@ -320,7 +320,7 @@ export default function Login() {
               <li className="site-nav__list-item d-flex show-tablet menu__nav-links-list-item pt-5 pb-5">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/Archive"
+                  href="/Midnight Bureau/Archive"
                 >
                   Archive
                 </a>
@@ -328,7 +328,7 @@ export default function Login() {
               <li className="site-nav__list-item d-flex show-mobile menu__nav-links-list-item pt-5 pb-5">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/Archive"
+                  href="/Midnight Bureau/Archive"
                 >
                   Archive
                 </a>
@@ -336,7 +336,7 @@ export default function Login() {
               <li className="site-nav__list-item d-flex show-tablet menu__nav-links-list-item pt-5 pb-5">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/BookReviews"
+                  href="/Midnight Bureau/BookReviews"
                 >
                   Books
                 </a>
@@ -344,7 +344,7 @@ export default function Login() {
               <li className="site-nav__list-item d-flex show-mobile menu__nav-links-list-item pt-5 pb-5">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/BookReviews"
+                  href="/Midnight Bureau/BookReviews"
                 >
                   Books
                 </a>
@@ -368,7 +368,7 @@ export default function Login() {
               <li className="site-nav__list-item d-flex show-tablet menu__nav-links-list-item pt-5 pb-5">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/Newsletter"
+                  href="/Midnight Bureau/Newsletter"
                 >
                   Newsletters
                 </a>
@@ -376,7 +376,7 @@ export default function Login() {
               <li className="site-nav__list-item d-flex show-mobile menu__nav-links-list-item pt-5 pb-5">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/Newsletter"
+                  href="/Midnight Bureau/Newsletter"
                 >
                   Newsletters
                 </a>
@@ -422,16 +422,16 @@ export default function Login() {
                 <p className="menu__overline mb-20">Browse by Section</p>
                 <ul>
                   <li className="menu__topics-list-item mb-10">
-                    <a href="/Albanylitica/Archive">Blog Archive</a>
+                    <a href="/Midnight Bureau/Archive">Blog Archive</a>
                   </li>
                   <li className="menu__topics-list-item mb-10">
-                    <a href="/Albanylitica/Recent">Recent Posts</a>
+                    <a href="/Midnight Bureau/Recent">Recent Posts</a>
                   </li>
                   <li className="menu__topics-list-item mb-10">
-                    <a href="/Albanylitica/Popular">Popular Posts</a>
+                    <a href="/Midnight Bureau/Popular">Popular Posts</a>
                   </li>
                   <li className="menu__topics-list-item mb-10">
-                    <a href="/Albanylitica/Categories">Categories</a>
+                    <a href="/Midnight Bureau/Categories">Categories</a>
                   </li>
                   <li className="menu__topics-list-item mb-10">
                     <a href="/Personal/About">About Me</a>
@@ -447,7 +447,7 @@ export default function Login() {
                 <p className="menu__overline mb-20">Recent Posts</p>
                 <ul className="menu__issues-list d-flex">
                   <li>
-                    <a className="menu__post-link" href="/Albanylitica/post-1">
+                    <a className="menu__post-link" href="/Midnight Bureau/post-1">
                       <figure className="">
                         <img
                           src=""
@@ -466,7 +466,7 @@ export default function Login() {
                     </a>
                   </li>
                   <li>
-                    <a className="menu__post-link" href="/Albanylitica/post-2">
+                    <a className="menu__post-link" href="/Midnight Bureau/post-2">
                       <figure className="">
                         <img
                           src=""
@@ -485,7 +485,7 @@ export default function Login() {
                     </a>
                   </li>
                   <li>
-                    <a className="menu__post-link" href="/Albanylitica/post-3">
+                    <a className="menu__post-link" href="/Midnight Bureau/post-3">
                       <figure className="">
                         <img
                           src=""
@@ -580,7 +580,7 @@ export default function Login() {
                     </a>
                   </li>
                   <li className="menu__links--list-item mb-5">
-                    <a href="/Albanylitica/Newsletter">NewsLetter</a>
+                    <a href="/Midnight Bureau/Newsletter">NewsLetter</a>
                   </li>
                   <li className="menu__links--list-item mb-5">
                     <a href="/Personal/About">About Me</a>
@@ -598,7 +598,7 @@ export default function Login() {
                     <a href="/Personal/FAQ">/FAQs</a>
                   </li>
                   <li className="menu__links--list-item mb-5">
-                    <a href="/Albanylitica/Resources">Albanlytica Resources</a>
+                    <a href="/Midnight Bureau/Resources">Albanlytica Resources</a>
                   </li>
                   <li className="menu__links--list-item mb-5">
                     <a href="/Personal/Projects">Projects & Events</a>
@@ -640,7 +640,7 @@ export default function Login() {
       }}
     >
       <h2 style={{ fontSize: "2.5rem", marginBottom: 20 }}>
-        Log in to <span style={{ color: "#b02621" }}>Albanylitica</span>
+        Log in to <span style={{ color: "#b02621" }}><em>Midnight Bureau</em></span>
       </h2>
       <p style={{ fontSize: 18, maxWidth: 700, margin: "0 auto 30px" }}>
         Access exclusive content, track your subscriptions, and explore deeper insights.

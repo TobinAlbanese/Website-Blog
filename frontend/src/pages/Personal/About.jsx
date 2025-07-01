@@ -109,17 +109,17 @@ export default function About() {
               <li className="site-nav__list-item d-flex show-tablet">
                 <a
                   className="site-nav__link body-s-smallcaps highlight"
-                  href="/Albanylitica"
+                  href="/MidnightBureau"
                 >
-                  Albanylitica
+                 Midnight Bureau
                 </a>
               </li>
               <li className="site-nav__list-item d-flex show-mobile">
                 <a
                   className="site-nav__link body-s-smallcaps highlight"
-                  href="/Albanylitica"
+                  href="/MidnightBureau"
                 >
-                  Albanylitica
+                 Midnight Bureau
                 </a>
               </li>
             </ul>
@@ -133,7 +133,7 @@ export default function About() {
               <li className="site-nav__list-item d-flex show-desktop">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/Newsletter"
+                  href="/MidnightBureau/Newsletter"
                 >
                   Newsletters
                 </a>
@@ -157,9 +157,9 @@ export default function About() {
               <li className="site-nav__list-item d-flex show-desktop">
                 <a
                   className="site-nav__link body-s-smallcaps highlight"
-                  href="/Albanylitica"
+                  href="/MidnightBureau"
                 >
-                  Albanylitica
+                 Midnight Bureau
                 </a>
               </li>
               <li className="site-nav__list-item">
@@ -215,7 +215,7 @@ export default function About() {
               <li className="site-nav__list-item d-flex show-desktop">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/BookReviews"
+                  href="/MidnightBureau/BookReviews"
                 >
                   
                 </a>
@@ -231,17 +231,17 @@ export default function About() {
               <li className="site-nav__list-item d-flex show-tablet">
                 <a
                   className="site-nav__link body-s-smallcaps highlight"
-                  href="/Albanylitica"
+                  href="/MidnightBureau"
                 >
-                  Albanylitica
+                 Midnight Bureau
                 </a>
               </li>
               <li className="site-nav__list-item d-flex show-mobile">
                 <a
                   className="site-nav__link body-s-smallcaps highlight"
-                  href="/Albanylitica"
+                  href="/MidnightBureau"
                 >
-                  Albanylitica
+                 Midnight Bureau
                 </a>
               </li>
             </ul>
@@ -259,7 +259,7 @@ export default function About() {
               <li className="site-nav__list-item d-flex show-desktop">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/Newsletter"
+                  href="/MidnightBureau/Newsletter"
                 >
                   Newsletters
                 </a>
@@ -283,9 +283,9 @@ export default function About() {
               <li className="site-nav__list-item d-flex show-desktop">
                 <a
                   className="site-nav__link body-s-smallcaps highlight"
-                  href="/Albanylitica"
+                  href="/MidnightBureau"
                 >
-                  Albanylitica
+                 Midnight Bureau
                 </a>
               </li>
               <li className="site-nav__list-item">
@@ -318,7 +318,7 @@ export default function About() {
               <li className="site-nav__list-item d-flex show-mobile menu__nav-links-list-item pt-5 pb-5">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/Recent"
+                  href="/MidnightBureau/Recent"
                 >
                   Current Issue
                 </a>
@@ -326,7 +326,7 @@ export default function About() {
               <li className="site-nav__list-item d-flex show-tablet menu__nav-links-list-item pt-5 pb-5">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/Archive"
+                  href="/MidnightBureau/Archive"
                 >
                   Archive
                 </a>
@@ -334,7 +334,7 @@ export default function About() {
               <li className="site-nav__list-item d-flex show-mobile menu__nav-links-list-item pt-5 pb-5">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/Archive"
+                  href="/MidnightBureau/Archive"
                 >
                   Archive
                 </a>
@@ -342,7 +342,7 @@ export default function About() {
               <li className="site-nav__list-item d-flex show-tablet menu__nav-links-list-item pt-5 pb-5">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/BookReviews"
+                  href="/MidnightBureau/BookReviews"
                 >
                   Books
                 </a>
@@ -350,7 +350,7 @@ export default function About() {
               <li className="site-nav__list-item d-flex show-mobile menu__nav-links-list-item pt-5 pb-5">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/BookReviews"
+                  href="/MidnightBureau/BookReviews"
                 >
                   Books
                 </a>
@@ -374,7 +374,7 @@ export default function About() {
               <li className="site-nav__list-item d-flex show-tablet menu__nav-links-list-item pt-5 pb-5">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/Newsletter"
+                  href="/MidnightBureau/Newsletter"
                 >
                   Newsletters
                 </a>
@@ -382,7 +382,7 @@ export default function About() {
               <li className="site-nav__list-item d-flex show-mobile menu__nav-links-list-item pt-5 pb-5">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/Newsletter"
+                  href="/MidnightBureau/Newsletter"
                 >
                   Newsletters
                 </a>
@@ -428,16 +428,16 @@ export default function About() {
                 <p className="menu__overline mb-20">Browse by Section</p>
                 <ul>
                   <li className="menu__topics-list-item mb-10">
-                    <a href="/Albanylitica/Archive">Blog Archive</a>
+                    <a href="/MidnightBureau/Archive">Blog Archive</a>
                   </li>
                   <li className="menu__topics-list-item mb-10">
-                    <a href="/Albanylitica/Recent">Recent Posts</a>
+                    <a href="/MidnightBureau/Recent">Recent Posts</a>
                   </li>
                   <li className="menu__topics-list-item mb-10">
-                    <a href="/Albanylitica/Popular">Popular Posts</a>
+                    <a href="/MidnightBureau/Popular">Popular Posts</a>
                   </li>
                   <li className="menu__topics-list-item mb-10">
-                    <a href="/Albanylitica/Categories">Categories</a>
+                    <a href="/MidnightBureau/Categories">Categories</a>
                   </li>
                   <li className="menu__topics-list-item mb-10">
                     <a href="/Personal/About">About Me</a>
@@ -453,7 +453,7 @@ export default function About() {
                 <p className="menu__overline mb-20">Recent Posts</p>
                 <ul className="menu__issues-list d-flex">
                   <li>
-                    <a className="menu__post-link" href="/Albanylitica/post-1">
+                    <a className="menu__post-link" href="/MidnightBureau/post-1">
                       <figure className="">
                         <img
                           src=""
@@ -472,7 +472,7 @@ export default function About() {
                     </a>
                   </li>
                   <li>
-                    <a className="menu__post-link" href="/Albanylitica/post-2">
+                    <a className="menu__post-link" href="/MidnightBureau/post-2">
                       <figure className="">
                         <img
                           src=""
@@ -491,7 +491,7 @@ export default function About() {
                     </a>
                   </li>
                   <li>
-                    <a className="menu__post-link" href="/Albanylitica/post-3">
+                    <a className="menu__post-link" href="/MidnightBureau/post-3">
                       <figure className="">
                         <img
                           src=""
@@ -557,7 +557,7 @@ export default function About() {
             <div className="menu__section d-flex flex-wrap justify-between gap-y-30 -ml-10 -mr-10">
               <div className="menu__about col-12 col-sm-6 col-lg-4-base-10">
                 <p>
-                  Hi, I'm <em>Tobin Albanese</em>
+                  Hi, I'm <strong><em>Tobin Albanese</em></strong>
                   A Computer Science student and writer passionate about strategic intelligence, 
                   global affairs, and current events. This blog shares my thoughts, analyses, and
                   personal insights across a wide range of topics including politics, technology, and culture.
@@ -586,7 +586,7 @@ export default function About() {
                     </a>
                   </li>
                   <li className="menu__links--list-item mb-5">
-                    <a href="/Albanylitica/Newsletter">NewsLetter</a>
+                    <a href="/MidnightBureau/Newsletter">NewsLetter</a>
                   </li>
                   <li className="menu__links--list-item mb-5">
                     <a href="/Personal/About">About Me</a>
@@ -604,7 +604,7 @@ export default function About() {
                     <a href="/Personal/FAQ">/FAQs</a>
                   </li>
                   <li className="menu__links--list-item mb-5">
-                    <a href="/Albanylitica/Resources">Albanlytica Resources</a>
+                    <a href="/MidnightBureau/Resources">Albanlytica Resources</a>
                   </li>
                   <li className="menu__links--list-item mb-5">
                     <a href="/Personal/Projects">Projects & Events</a>
@@ -630,21 +630,22 @@ export default function About() {
 
 
 
-<section style={{ maxWidth: 900, margin: "0 auto", padding: 40, fontFamily: "inherit", color: "#222" }}>
+<section style={{ maxWidth: 900, margin: "0 auto", padding: 40, fontFamily: "inherit"}}>
   {/* First section: text left, image right */}
   <div style={{ display: "flex", gap: 40, alignItems: "center", marginBottom: 50 }}>
     <div style={{ flex: 1, fontSize: 18, lineHeight: 1.6 }}>
-<p>
-  I’m Tobin Albanese, a researcher committed to unraveling the intricacies of global security and modern threats. My work centers on the evolving landscape of counterterrorism, political violence, and the growing influence of emerging technologies in shaping conflict.
-  I approach international affairs with a strong foundation in critical analysis and an interdisciplinary mindset — informed by studies in political science, history, and cybersecurity. This allows me to synthesize complex events and patterns into narratives that are both accessible and intellectually grounded.
-  I’m Tobin Albanese, a researcher committed to unraveling the intricacies of global security and modern threats. My work centers on the evolving landscape of counterterrorism, political violence, and the growing influence of emerging technologies in shaping conflict.
-  I approach international affairs with a strong foundation in critical analysis and an interdisciplinary mindset — informed by studies in political science, history, and cybersecurity. This allows me to synthesize complex events and patterns into narratives that are both accessible and intellectually grounded.
-
-
-
-</p>
-
-
+      <h1 style={{ fontSize: '3rem', fontWeight: '600', marginBottom: 10 }}>
+        My Story...
+      </h1>
+      <p style={{ color: "var(--c-text-secondary)" }}>
+        I’m Tobin Albanese, a Computer Science student at Sacramento State University with a deep interest in global intelligence and national security. My academic path is grounded in technical learning—software development, data systems, and machine logic—yet it’s also shaped by a broader passion for understanding how technology influences geopolitics, security strategy, and international conflict.
+      </p>
+      <p style={{ color: "var(--c-text-secondary)" }}>
+        I bring an interdisciplinary mindset to my work, combining computer science with a growing knowledge base in political science, cybersecurity, and international relations. I’m fascinated by the ways in which emerging technologies are transforming both modern warfare and diplomacy, and how technical expertise can be used to improve intelligence gathering, threat analysis, and strategic decision-making.
+      </p>
+      <p style={{ color: "var(--c-text-secondary)" }}>
+        Outside the classroom, I’m always learning—listening to experts, reading across disciplines, and keeping a close eye on global developments. Midnight Bureau is my way of organizing those insights into something valuable for others. It’s a space where I reflect, analyze, and contribute to the public conversation on security, technology, and the future of global affairs.
+      </p>
     </div>
 
     <img
@@ -657,24 +658,31 @@ export default function About() {
         borderRadius: 16,
         boxShadow: "0 8px 20px rgba(0,0,0,0.15)",
         opacity: visibleRight ? 1 : 0,
-        transform: visibleRight ? "translateX(0)" : "translateX(50px)", // slide in from right
+        transform: visibleRight ? "translateX(0)" : "translateX(50px)",
         transition: "opacity 0.8s ease, transform 0.8s ease",
       }}
     />
   </div>
-  <div style={{ fontSize: 18, lineHeight: 1.6 }}>
-    <p>
-      When not working, I focus on continuous learning, reading, and engaging with global affairs to keep my perspective fresh and informed.
-    </p>
-    <p>
-      Albanylitica is my space to share these insights and foster thoughtful discussion on the issues shaping our world.
-          Albanylitica is my space to share these insights and foster thoughtful discussion on the issues shaping our world.
-      Albanylitica is my space to share these insights and foster thoughtful discussion on the issues shaping our world.
-      Albanylitica is my space to share these insights and foster thoughtful discussion on the issues shaping our world.
-      Albanylitica is my space to share these insights and foster thoughtful discussion on the issues shaping our world.
-      Albanylitica is my space to share these insights and foster thoughtful discussion on the issues shaping our world.
-      Albanylitica is my space to share these insights and foster thoughtful discussion on the issues shaping our world.
 
+  {/* Main body section */}
+  <div style={{ fontSize: 18, lineHeight: 1.6 }}>
+    <p style={{ color: "var(--c-text-secondary)" }}>
+      When I’m not immersed in academic work, I dedicate time to deep, consistent learning. I explore the connections between international relations, cybersecurity, digital warfare, and emerging technologies. I believe that staying informed isn't just a professional necessity—it’s a way of staying intellectually sharp and socially engaged. Whether it’s reading foreign policy journals, studying cyber law, or dissecting new innovations in AI, I seek out the knowledge that helps me think critically and strategically.
+    </p>
+    <p style={{ color: "var(--c-text-secondary)" }}>
+      My engagement with global affairs is personal and ongoing. I track the latest developments in national security, follow tech policy, and try to understand the shifting architecture of global power. What excites me is not just the “what” of world events, but the “why” behind them—and how we can respond more intelligently.
+    </p>
+    <p style={{ color: "var(--c-text-secondary)" }}>
+      Midnight Bureau was created to be a reflection of that drive. It’s not just a blog—it’s an evolving portfolio of insight, research, and strategic thinking. Here, I translate complexity into clarity. I write to understand, and I write to connect—with readers who want more than surface-level takes on the forces shaping our world.
+    </p>
+    <p style={{ color: "var(--c-text-secondary)" }}>
+      Whether I’m unpacking the global impact of AI regulation or analyzing hybrid warfare tactics, my goal is to bring attention to the overlooked, the emerging, and the critically important. The platform is also a space to challenge assumptions and build a community of informed readers who value depth over distraction.
+    </p>
+    <p style={{ color: "var(--c-text-secondary)" }}>
+      Ultimately, Midnight Bureau is about bridging the gap between technical knowledge and public awareness. It’s where I turn rigorous research into accessible stories and spark conversations about the future of intelligence, governance, and global stability. In an age where information is abundant but insight is rare, I aim to offer the latter.
+    </p>
+    <p style={{ color: "var(--c-text-secondary)" }}>
+      Because in the end, intelligence isn’t just about collecting data—it’s about seeing what others don’t. It’s about asking the right questions before the world knows they matter. Through this platform, I’m not just tracking the future—I’m training to understand it. And if you’re here reading, maybe you are too.
     </p>
   </div>
 
@@ -682,43 +690,42 @@ export default function About() {
   <div style={{ display: "flex", gap: 40, alignItems: "center", marginBottom: 50 }}>
     <img
       id="about-image-left"
-      src="/assets/images/AfroTob.jpg" 
-      alt="Description"
+      src="/assets/images/AfroTob.jpg"
+      alt="Tobin Albanese"
       style={{
         width: 400,
         borderRadius: 16,
         boxShadow: "0 8px 20px rgba(0,0,0,0.15)",
         opacity: visibleLeft ? 1 : 0,
-        transform: visibleLeft ? "translateX(0)" : "translateX(-50px)", // slide in from left
+        transform: visibleLeft ? "translateX(0)" : "translateX(-50px)",
         transition: "opacity 0.8s ease, transform 0.8s ease",
       }}
     />
 
     <div style={{ flex: 1, fontSize: 18, lineHeight: 1.6 }}>
-<p>
-  My research often explores how non-state actors adapt to digital environments, and how governments respond to asymmetric threats. I’m particularly interested in the policy implications of these dynamics, and how institutions must evolve to stay ahead of rapidly shifting realities.
-</p>
-
-<p>
-  I believe that knowledge, when clearly communicated, becomes power for the public. Whether I’m writing, speaking, or collaborating with others in the field, my goal is to bridge the gap between specialized research and meaningful civic understanding.
-</p>
-
-<p>
-  Beyond my academic and analytical work, I remain a student of the world — continuously reading, listening, and learning. I created Albanylitica to serve as a space where I can share my observations, challenge assumptions, and build conversations around the forces shaping our security future.
-</p>
+      <p style={{ color: "var(--c-text-secondary)" }}>
+        A core focus of my research is how non-state actors operate in the digital realm—and how governments adapt to those asymmetric threats. As new platforms, tools, and technologies emerge, threat actors evolve rapidly. Understanding how these changes affect national defense, cybersecurity, and policy response is at the center of my work.
+      </p>
+      <p style={{ color: "var(--c-text-secondary)" }}>
+        I also believe that communicating complex issues clearly is a public service. Whether I’m breaking down policy implications, exploring historical context, or connecting disparate trends, my intent is always the same: make knowledge meaningful and actionable. My writing aims to bridge the space between research and real-world relevance.
+      </p>
     </div>
   </div>
 
-  {/* More text-only paragraphs */}
+  {/* Final closer */}
   <div style={{ fontSize: 18, lineHeight: 1.6 }}>
-    <p>
-      When not working, I focus on continuous learning, reading, and engaging with global affairs to keep my perspective fresh and informed.
+    <p style={{ color: "var(--c-text-secondary)" }}>
+      Outside of research, I stay grounded through a lifelong curiosity and a deep respect for learning. I’m constantly observing, listening, and reflecting on how the world is changing—and how we can meet those changes with clarity and courage. Midnight Bureau is the product of that ongoing journey.
     </p>
-    <p>
-      Albanylitica is my space to share these insights and foster thoughtful discussion on the issues shaping our world.
+    <p style={{ color: "var(--c-text-secondary)" }}>
+      This platform reflects not only my personal interests, but also a broader mission: to contribute to the growing need for strategic, informed voices in the public arena. We live in a time when our greatest challenges—cybersecurity, misinformation, global instability—require new forms of literacy and leadership.
+    </p>
+    <p style={{ color: "var(--c-text-secondary)" }}>
+      Through Midnight Bureau, I strive to be a part of that solution. I hope to connect with others who share a passion for truth, analysis, and intelligent discourse. Because in the field of intelligence, what you know matters—but what you can see before it happens? That’s what shapes the future.
     </p>
   </div>
 </section>
+
 
 
 

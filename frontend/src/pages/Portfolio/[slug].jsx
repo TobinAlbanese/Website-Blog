@@ -79,17 +79,17 @@ export default function ProjectPage() {
               <li className="site-nav__list-item d-flex show-tablet">
                 <a
                   className="site-nav__link body-s-smallcaps highlight"
-                  href="/Albanylitica"
+                  href="/MidnightBureau"
                 >
-                  Albanylitica
+                  Midnight Bureau
                 </a>
               </li>
               <li className="site-nav__list-item d-flex show-mobile">
                 <a
                   className="site-nav__link body-s-smallcaps highlight"
-                  href="/Albanylitica"
+                  href="/MidnightBureau"
                 >
-                  Albanylitica
+                  Midnight Bureau
                 </a>
               </li>
             </ul>
@@ -103,7 +103,7 @@ export default function ProjectPage() {
               <li className="site-nav__list-item d-flex show-desktop">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/Newsletter"
+                  href="/MidnightBureau/Newsletter"
                 >
                   Newsletters
                 </a>
@@ -127,9 +127,9 @@ export default function ProjectPage() {
               <li className="site-nav__list-item d-flex show-desktop">
                 <a
                   className="site-nav__link body-s-smallcaps highlight"
-                  href="/Albanylitica"
+                  href="/MidnightBureau"
                 >
-                  Albanylitica
+                  Midnight Bureau
                 </a>
               </li>
               <li className="site-nav__list-item">
@@ -185,7 +185,7 @@ export default function ProjectPage() {
               <li className="site-nav__list-item d-flex show-desktop">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/BookReviews"
+                  href="/MidnightBureau/BookReviews"
                 >
                   
                 </a>
@@ -201,17 +201,17 @@ export default function ProjectPage() {
               <li className="site-nav__list-item d-flex show-tablet">
                 <a
                   className="site-nav__link body-s-smallcaps highlight"
-                  href="/Albanylitica"
+                  href="/MidnightBureau"
                 >
-                  Albanylitica
+                  Midnight Bureau
                 </a>
               </li>
               <li className="site-nav__list-item d-flex show-mobile">
                 <a
                   className="site-nav__link body-s-smallcaps highlight"
-                  href="/Albanylitica"
+                  href="/MidnightBureau"
                 >
-                  Albanylitica
+                  Midnight Bureau
                 </a>
               </li>
             </ul>
@@ -229,7 +229,7 @@ export default function ProjectPage() {
               <li className="site-nav__list-item d-flex show-desktop">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/Newsletter"
+                  href="/MidnightBureau/Newsletter"
                 >
                   Newsletters
                 </a>
@@ -253,9 +253,9 @@ export default function ProjectPage() {
               <li className="site-nav__list-item d-flex show-desktop">
                 <a
                   className="site-nav__link body-s-smallcaps highlight"
-                  href="/Albanylitica"
+                  href="/MidnightBureau"
                 >
-                  Albanylitica
+                  Midnight Bureau
                 </a>
               </li>
               <li className="site-nav__list-item">
@@ -288,7 +288,7 @@ export default function ProjectPage() {
               <li className="site-nav__list-item d-flex show-mobile menu__nav-links-list-item pt-5 pb-5">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/Recent"
+                  href="/MidnightBureau/Recent"
                 >
                   Current Issue
                 </a>
@@ -296,7 +296,7 @@ export default function ProjectPage() {
               <li className="site-nav__list-item d-flex show-tablet menu__nav-links-list-item pt-5 pb-5">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/Archive"
+                  href="/MidnightBureau/Archive"
                 >
                   Archive
                 </a>
@@ -304,7 +304,7 @@ export default function ProjectPage() {
               <li className="site-nav__list-item d-flex show-mobile menu__nav-links-list-item pt-5 pb-5">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/Archive"
+                  href="/MidnightBureau/Archive"
                 >
                   Archive
                 </a>
@@ -312,7 +312,7 @@ export default function ProjectPage() {
               <li className="site-nav__list-item d-flex show-tablet menu__nav-links-list-item pt-5 pb-5">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/BookReviews"
+                  href="/MidnightBureau/BookReviews"
                 >
                   Books
                 </a>
@@ -320,7 +320,7 @@ export default function ProjectPage() {
               <li className="site-nav__list-item d-flex show-mobile menu__nav-links-list-item pt-5 pb-5">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/BookReviews"
+                  href="/MidnightBureau/BookReviews"
                 >
                   Books
                 </a>
@@ -344,7 +344,7 @@ export default function ProjectPage() {
               <li className="site-nav__list-item d-flex show-tablet menu__nav-links-list-item pt-5 pb-5">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/Newsletter"
+                  href="/MidnightBureau/Newsletter"
                 >
                   Newsletters
                 </a>
@@ -352,7 +352,7 @@ export default function ProjectPage() {
               <li className="site-nav__list-item d-flex show-mobile menu__nav-links-list-item pt-5 pb-5">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/Albanylitica/Newsletter"
+                  href="/MidnightBureau/Newsletter"
                 >
                   Newsletters
                 </a>
@@ -398,16 +398,16 @@ export default function ProjectPage() {
                 <p className="menu__overline mb-20">Browse by Section</p>
                 <ul>
                   <li className="menu__topics-list-item mb-10">
-                    <a href="/Albanylitica/Archive">Blog Archive</a>
+                    <a href="/MidnightBureau/Archive">Blog Archive</a>
                   </li>
                   <li className="menu__topics-list-item mb-10">
-                    <a href="/Albanylitica/Recent">Recent Posts</a>
+                    <a href="/MidnightBureau/Recent">Recent Posts</a>
                   </li>
                   <li className="menu__topics-list-item mb-10">
-                    <a href="/Albanylitica/Popular">Popular Posts</a>
+                    <a href="/MidnightBureau/Popular">Popular Posts</a>
                   </li>
                   <li className="menu__topics-list-item mb-10">
-                    <a href="/Albanylitica/Categories">Categories</a>
+                    <a href="/MidnightBureau/Categories">Categories</a>
                   </li>
                   <li className="menu__topics-list-item mb-10">
                     <a href="/Personal/About">About Me</a>
@@ -423,7 +423,7 @@ export default function ProjectPage() {
                 <p className="menu__overline mb-20">Recent Posts</p>
                 <ul className="menu__issues-list d-flex">
                   <li>
-                    <a className="menu__post-link" href="/Albanylitica/post-1">
+                    <a className="menu__post-link" href="/MidnightBureau/post-1">
                       <figure className="">
                         <img
                           src=""
@@ -442,7 +442,7 @@ export default function ProjectPage() {
                     </a>
                   </li>
                   <li>
-                    <a className="menu__post-link" href="/Albanylitica/post-2">
+                    <a className="menu__post-link" href="/MidnightBureau/post-2">
                       <figure className="">
                         <img
                           src=""
@@ -461,7 +461,7 @@ export default function ProjectPage() {
                     </a>
                   </li>
                   <li>
-                    <a className="menu__post-link" href="/Albanylitica/post-3">
+                    <a className="menu__post-link" href="/MidnightBureau/post-3">
                       <figure className="">
                         <img
                           src=""
@@ -556,7 +556,7 @@ export default function ProjectPage() {
                     </a>
                   </li>
                   <li className="menu__links--list-item mb-5">
-                    <a href="/Albanylitica/Newsletter">NewsLetter</a>
+                    <a href="/MidnightBureau/Newsletter">NewsLetter</a>
                   </li>
                   <li className="menu__links--list-item mb-5">
                     <a href="/Personal/About">About Me</a>
@@ -574,7 +574,7 @@ export default function ProjectPage() {
                     <a href="/Personal/FAQ">/FAQs</a>
                   </li>
                   <li className="menu__links--list-item mb-5">
-                    <a href="/Albanylitica/Resources">Albanlytica Resources</a>
+                    <a href="/MidnightBureau/Resources">Albanlytica Resources</a>
                   </li>
                   <li className="menu__links--list-item mb-5">
                     <a href="/Personal/Projects">Projects & Events</a>

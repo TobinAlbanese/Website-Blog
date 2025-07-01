@@ -9,7 +9,7 @@ export default function Podcast() {
           id=".home-section-podcast"
         >
           <div
-            className="row base__main position-relative z-above-base"
+            className="row base__main position-relative z-above-base c-text-third"
             data-armstrong-id="primary"
           >
             <div className="col-12">
@@ -49,12 +49,12 @@ export default function Podcast() {
                         srcSet=""
                       />
                     </figure>
-                    <h2 className="heading-l">
-                      <a href="/podcasts/sudans-intractable-war">
+                    <h2 className="heading-l c-text-primary">
+                      <a href="/podcasts/sudans-intractable-war ">
                         Name of Weekly Podcast
                       </a>
                     </h2>
-                    <h3 className="body-l c-text-secondary mt-5">
+                    <h3 className="body-l c-text-2third mt-5">
                       <a href="/podcasts/sudans-intractable-war">
                         A brief description
                       </a>
@@ -81,7 +81,7 @@ export default function Podcast() {
                       </div>
                     </div>
                     <a
-                      className="arrow-link border-bottom-thin border-bottom d-inline-block lh-22 fs-18 mt-40 mb-40"
+                      className="arrow-link border-bottom-thin border-bottom d-inline-block lh-22 fs-18 mt-40 mb-40 c-accent"
                       href="/podcasts"
                     >
                       Follow the Podcast

@@ -15,20 +15,15 @@ globalThis.__BUILD_MANIFEST = {
       "static/chunks/main.js",
       "static/chunks/pages/index.js"
     ],
-    "/Albanylitica": [
+    "/MidnightBureau": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/Albanylitica.js"
+      "static/chunks/pages/MidnightBureau.js"
     ],
-    "/Albanylitica/Newsletter": [
+    "/MidnightBureau/Archive": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/Albanylitica/Newsletter.js"
-    ],
-    "/Albanylitica/[slug]": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/Albanylitica/[slug].js"
+      "static/chunks/pages/MidnightBureau/Archive.js"
     ],
     "/Personal/About": [
       "static/chunks/webpack.js",
@@ -40,11 +35,6 @@ globalThis.__BUILD_MANIFEST = {
       "static/chunks/main.js",
       "static/chunks/pages/Personal/Contact.js"
     ],
-    "/Portfolio": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/Portfolio.js"
-    ],
     "/_app": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
@@ -54,11 +44,6 @@ globalThis.__BUILD_MANIFEST = {
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
-    ],
-    "/user/login": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/user/login.js"
     ]
   },
   "ampFirstPages": []

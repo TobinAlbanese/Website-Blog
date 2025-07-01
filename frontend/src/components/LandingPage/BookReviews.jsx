@@ -43,14 +43,15 @@ export default function BookReviews() {
                       </h3>
                       <span className="body-m mb-10 mb-lg-30">
                         Written by{" "}
-                        <a href="/authors/cecilia-elena-rouse">
-                          Author
+                        <a href="/authors/cecilia-elena-rouse" style={{color: "var(--c-accent)"}}>
+                          <i>Tobin Albanese</i>
                         </a>
                       </span>
                       <div>
                         <a
                           className="arrow-link border-bottom-thin border-bottom self-start lh-22 fs-18 mt-15 mt-lg-25"
                           href="/reviews/works-progress-cecilia-rouse"
+                          style={{color: "var(--c-accent)"}}
                         >
                           Continue reading
                           <svg className="arrow-link__icon ">
