@@ -115,10 +115,10 @@ They’re not just codebases — they are applied, usable systems with relevance
 I’m a **computer science student**, **behavioral researcher**, and **aspiring intelligence analyst** with a deep curiosity for the unseen forces shaping our digital and psychological realities. This website is more than a portfolio — it’s a **living intelligence dossier** on the ideas, tools, and philosophies I’m exploring in real time.
 
 I’m drawn to intersections:  
-Where machine meets mind.  
-Where ethics meets algorithm.  
-Where surveillance meets sovereignty.  
-Where chaos becomes clarity.
+- Where machine meets mind.
+- Where ethics meets algorithm.
+- Where surveillance meets sovereignty.
+- Where chaos becomes clarity.
 
 Every project you see here — from real-time facial analysis to AI-enhanced signal decryption — is a piece of my broader goal: to build systems that don’t just react to the world, but **understand it**.
 
