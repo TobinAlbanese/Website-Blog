@@ -5,6 +5,49 @@
 
 ---
 
+## 🌐 About Me  
+
+I’m a **computer science student**, **behavioral researcher**, and **aspiring intelligence analyst** with a deep curiosity for the unseen forces shaping our digital and psychological realities. This website is more than a portfolio — it’s a **living intelligence dossier** on the ideas, tools, and philosophies I’m exploring in real time.
+
+I’m drawn to intersections:  
+- Where machine meets mind.
+- Where ethics meets algorithm.
+- Where surveillance meets sovereignty.
+- Where chaos becomes clarity.
+
+Every project you see here — from real-time facial analysis to AI-enhanced signal decryption — is a piece of my broader goal: to build systems that don’t just react to the world, but **understand it**.
+
+---
+
+### 🎓 Academic Background  
+I’m currently pursuing my **B.S. in Computer Science** at **CSU Sacramento**, with an expected graduation in **Fall 2026**.  
+Alongside technical coursework, I actively study behavioral psychology, surveillance theory, and the evolving landscape of autonomous systems. I view technology not only through a programming lens — but a philosophical and strategic one.
+
+---
+
+### 🧠 Core Interests & Research Themes  
+
+- **AI Ethics & Governance** – Navigating the moral dilemmas of machine learning in high-stakes environments.  
+- **Surveillance & Open-Source Intelligence (OSINT)** – Building transparent tools for information gathering and threat detection.  
+- **Autonomous Systems & Warfare** – Understanding how autonomy is reshaping national defense and geopolitical power.  
+- **Behavioral AI & Micro-Expression Analysis** – Using subtle human signals to predict intent, stress, deception, and emotion.  
+- **Cyber Operations & Digital Threats** – Mapping the structure of online disinformation, malware ecosystems, and digital warfare.
+
+---
+
+### 💼 Career Vision  
+
+I aspire to become an **intelligence analyst** operating at the intersection of **national security, counterterrorism, and artificial intelligence** — contributing to teams solving complex global problems through **analytical clarity**, **strategic insight**, and **responsible innovation**.
+
+My long-term vision includes:
+- Supporting **intelligence and defense communities** with real-time, AI-enhanced decision-making tools  
+- Advancing **ethical AI standards** for surveillance, behavioral analysis, and threat detection  
+- Developing **open-source platforms** that inform journalists, analysts, and public watchdogs  
+- Writing and researching to **elevate public understanding** of modern intelligence, autonomy, and disinformation  
+- Exploring **how technology can be used to defend freedom, not infringe it**
+
+---
+
 ## 🕵️ Midnight Bureau  
 **A living journal of signals, systems, and psychological landscapes.**  
 
@@ -109,71 +152,35 @@ They’re not just codebases — they are applied, usable systems with relevance
 - **Personal exploratory work in strategy and geopolitics**
 
 ---
-
-## 🌐 About Me  
-
-I’m a **computer science student**, **behavioral researcher**, and **aspiring intelligence analyst** with a deep curiosity for the unseen forces shaping our digital and psychological realities. This website is more than a portfolio — it’s a **living intelligence dossier** on the ideas, tools, and philosophies I’m exploring in real time.
-
-I’m drawn to intersections:  
-- Where machine meets mind.
-- Where ethics meets algorithm.
-- Where surveillance meets sovereignty.
-- Where chaos becomes clarity.
-
-Every project you see here — from real-time facial analysis to AI-enhanced signal decryption — is a piece of my broader goal: to build systems that don’t just react to the world, but **understand it**.
-
----
-
-### 🎓 Academic Background  
-I’m currently pursuing my **B.S. in Computer Science** at **CSU Sacramento**, with an expected graduation in **Fall 2026**.  
-Alongside technical coursework, I actively study behavioral psychology, surveillance theory, and the evolving landscape of autonomous systems. I view technology not only through a programming lens — but a philosophical and strategic one.
-
----
-
-### 🧠 Core Interests & Research Themes  
-
-- **AI Ethics & Governance** – Navigating the moral dilemmas of machine learning in high-stakes environments.  
-- **Surveillance & Open-Source Intelligence (OSINT)** – Building transparent tools for information gathering and threat detection.  
-- **Autonomous Systems & Warfare** – Understanding how autonomy is reshaping national defense and geopolitical power.  
-- **Behavioral AI & Micro-Expression Analysis** – Using subtle human signals to predict intent, stress, deception, and emotion.  
-- **Cyber Operations & Digital Threats** – Mapping the structure of online disinformation, malware ecosystems, and digital warfare.
-
----
-
-### 💼 Career Vision  
-
-I aim to become an **intelligence analyst** working at the crossroads of **national security, counterterrorism, and artificial intelligence**. My goal is to contribute to teams solving complex global challenges — not through force, but through insight, analysis, and the responsible use of technology.
-
-I aspire to work alongside leading thinkers and dedicated professionals, united by a shared mission: to protect, to understand, and to act with integrity in service of something greater than ourselves.
-
-My long-term vision includes:
-- Supporting **national security and counterterrorism operations** with real-time, AI-enhanced intelligence  
-- Advancing **ethical AI practices** within defense and policy environments  
-- Building **open-source tools** that enable transparency, accountability, and clarity  
-- Writing, researching, and educating to elevate public understanding of digital and geopolitical threats
-
-
----
-
 ### 📚 Guiding Philosophy  
 
-> *“The most powerful tools are those that help others think clearly.”*
+> *“The value of a problem lies not in its answer, but in how clearly it forces you to think.”*  
+> — Inspired by the analytical ethos of Turing, Einstein, and the intelligence community
 
-In an era of noise, speed, and surveillance, the real challenge isn't just collecting data — it's knowing what it means.  
-That’s why I build tools for interpretation, not just automation.  
-That’s why I document what I learn, not just what I ship.
+In a world oversaturated with data and distortion, the challenge isn't access — it’s **discernment**.
 
-This site is a reflection of that commitment — a record of ideas sharpened by inquiry, and systems forged by principle.
+Intelligence, whether artificial or human, is not defined by how much it collects — but by **how well it understands**.  
+That’s why I don’t just build tools to automate action. I build systems to **amplify clarity**, **reveal meaning**, and **guide principled decision-making**.
+
+This site is a reflection of that purpose:
+- A **record of questions worth asking**  
+- A **testbed for systems grounded in ethics and transparency**  
+- A **public experiment in thinking critically about power, perception, and technology**
+
+Ultimately, I believe:
+- 🧠 *Precision of thought is the first form of defense.*  
+- 🛰️ *Every line of code has strategic implications.*  
+- 🧭 *The best tools don’t just process — they illuminate.*
+
 
 ---
-
 
 ## 📬 Contact & Links  
 
-- 🌐 [www.tobinalbanese.com](https://www.tobinalbanese.com)  
-- 📧 Email: `tobinmgraham@csus.edu` & 1MidnightBureau@gmail.com1 & `tobinmalbanese@gmail.com`  
+- 🌐 Website: [www.tobinalbanese.com](https://www.tobinalbanese.com)  
+- 📧 Email: `tobinmgraham@csus.edu` & `MidnightBureau@gmail.com` & `tobinmalbanese@gmail.com`  
 - 🧠 GitHub: [github.com/tobinalbanese](https://github.com/tobinalbanese)  
-- 🕵️ Blog: [The Midnight Bureau](https://www.tobinalbanese.com/MidhightBureau)  
+- 🕵️ Blog: [The Midnight Bureau](https://www.tobinalbanese.com/MidnightBureau)  
 
 ---
 
