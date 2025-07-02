@@ -132,30 +132,6 @@ export default function About() {
             <ul className="site-nav__list d-flex right">
               <li className="site-nav__list-item d-flex show-desktop">
                 <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/MidnightBureau/Newsletter"
-                >
-                  Newsletters
-                </a>
-              </li>
-              <li className="site-nav__list-item d-flex show-desktop">
-                <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/user/login"
-                >
-                  Log In
-                </a>
-              </li>
-              <li className="site-nav__list-item d-flex show-tablet">
-                <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/user/login"
-                >
-                  Log In
-                </a>
-              </li>
-              <li className="site-nav__list-item d-flex show-desktop">
-                <a
                   className="site-nav__link body-s-smallcaps highlight"
                   href="/MidnightBureau"
                 >
@@ -258,30 +234,6 @@ export default function About() {
             <ul className="site-nav__list d-flex right">
               <li className="site-nav__list-item d-flex show-desktop">
                 <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/MidnightBureau/Newsletter"
-                >
-                  Newsletters
-                </a>
-              </li>
-              <li className="site-nav__list-item d-flex show-desktop">
-                <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/user/login"
-                >
-                  Log In
-                </a>
-              </li>
-              <li className="site-nav__list-item d-flex show-tablet">
-                <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/user/login"
-                >
-                  Log In
-                </a>
-              </li>
-              <li className="site-nav__list-item d-flex show-desktop">
-                <a
                   className="site-nav__link body-s-smallcaps highlight"
                   href="/MidnightBureau"
                 >
@@ -369,30 +321,6 @@ export default function About() {
                   href="/Personal/Portfolio"
                 >
                   Portfolio
-                </a>
-              </li>
-              <li className="site-nav__list-item d-flex show-tablet menu__nav-links-list-item pt-5 pb-5">
-                <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/MidnightBureau/Newsletter"
-                >
-                  Newsletters
-                </a>
-              </li>
-              <li className="site-nav__list-item d-flex show-mobile menu__nav-links-list-item pt-5 pb-5">
-                <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/MidnightBureau/Newsletter"
-                >
-                  Newsletters
-                </a>
-              </li>
-              <li className="site-nav__list-item d-flex show-mobile menu__nav-links-list-item pt-5 pb-5">
-                <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/user/login"
-                >
-                  Log In
                 </a>
               </li>
             </ul>

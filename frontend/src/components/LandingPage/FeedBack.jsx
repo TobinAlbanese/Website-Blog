@@ -1,8 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 export default function Feedback() {
+  const [visible, setVisible] = useState(false);
+  const sectionRef = useRef(null);
   const [feedback, setFeedback] = useState("");
   const [submitted, setSubmitted] = useState(false);
+
+  useEffect(() => {
+    const element = sectionRef.current;
+    if (!element) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.unobserve(element);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(element);
+
+    return () => observer.disconnect();
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -16,7 +37,12 @@ export default function Feedback() {
 
   return (
     <>
-<section className="c-bg" data-armstrong-id="wrapper">
+<section
+  ref={sectionRef}
+  id="feedback-section"
+  className={`c-bg ${visible ? "slide-in-up" : "hidden"}`}
+  data-armstrong-id="wrapper"
+>
   <div
     className="row base__main pb-10 pb-md-25 pb-lg-40 pt-20 pt-md-30 pt-lg-60"
     data-armstrong-id="primary"

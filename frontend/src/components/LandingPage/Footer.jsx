@@ -1,8 +1,92 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/router";
 
 export default function Footer() {
+  const router = useRouter();
+  const sectionRef = useRef(null);
+const [visible, setVisible] = useState(false);
+
+useEffect(() => {
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        setVisible(true);
+        observer.disconnect(); 
+      }
+    },
+    { threshold: 0.2 } 
+  );
+
+  if (sectionRef.current) {
+    observer.observe(sectionRef.current);
+  }
+
+  return () => observer.disconnect();
+}, []);
+
+
+  const sectionToPageMap = {
+    // Midnight Bureau sections
+    "latest-posts": "/MidnightBureau",
+    "recent-posts": "/MidnightBureau",
+    "geopolitics": "/MidnightBureau",
+    "economic-intelligence": "/MidnightBureau",
+    "military-&-defense": "/MidnightBureau",
+    "technology-&-innovation": "/MidnightBureau",
+    "global-events": "/MidnightBureau",
+    "cybersecurity": "/MidnightBureau",
+
+    // Portfolio sections
+    "Current-&-In-Progress-Work": "/Portfolio",
+    "research-&-analysis-projects": "/Portfolio",
+    "computer-science-projects": "/Portfolio",
+    "employers-&-work-experience": "/Portfolio",
+    "education-&-certifications": "/Portfolio",
+    "featured-/-spotlight-projects": "/Portfolio",
+    "speaking-&-media": "/Portfolio",
+    "collaborations": "/Portfolio",
+    "analytical-writing-&-publications": "/Portfolio",
+
+    "feedback-section": "/",
+  };
+
+const handleScrollToSection = (id) => {
+  if (typeof window === "undefined") return;
+
+  const targetPage = sectionToPageMap[id] || "/";
+
+  if (router.pathname === targetPage) {
+    // If already on the page, scroll immediately
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    }
+  } else {
+    // Store target and navigate
+    sessionStorage.setItem("scrollTarget", id);
+    router.push(targetPage);
+  }
+};
+
+useEffect(() => {
+  if (typeof window === "undefined") return;
+
+  const scrollTarget = sessionStorage.getItem("scrollTarget");
+
+  if (scrollTarget && document.readyState === "complete") {
+    const el = document.getElementById(scrollTarget);
+    if (el) {
+      setTimeout(() => {
+        el.scrollIntoView({ behavior: "smooth" });
+        sessionStorage.removeItem("scrollTarget");
+      }, 300); // Delay to allow section to mount/render
+    }
+  }
+}, [router.pathname]);
+
+
   return (
-<>
+    <>
       <div className="footer w-100" data-theme="theme-contrast">
         <div className="row flex-nowrap-lg footer__inner pt-60 pb-40 pt-lg-80 pb-lg-30 f-sans fs-11 fs-md-12">
           <div className="col-12 col-lg-3 text-align-center">
@@ -13,7 +97,7 @@ export default function Footer() {
               <span className="visually-hidden">Tobin Albanese</span>
             </a>
             <p className="c-text-secondary mt-20 mt-md-20 lh-sm">
-              Published by Tobin Albanese on Albanylitica, Inc.
+              Published by Tobin Albanese on MidnightBureau, Inc.
             </p>
             <p className="c-text-secondary mt-5">©2025. All Rights Reserved.</p>
             <p className="mt-15">
@@ -22,6 +106,7 @@ export default function Footer() {
               <a href="/terms-use">Terms of Use</a>
             </p>
             <div className="socials d-flex items-center justify-center mt-30 mt-md-40 mb-30 mb-md-40">
+              {/* Social links unchanged */}
               <a
                 href="https://www.facebook.com/tobin.graham.77"
                 className="footer__social d-inline-block"
@@ -103,6 +188,7 @@ export default function Footer() {
               </a>
             </div>
           </div>
+
           <div className="col-12 col-lg-9 pl-lg-80 row">
             <div className="col-6 col-md-3">
               <nav>
@@ -115,23 +201,7 @@ export default function Footer() {
                       className="site-footer-section-menu__item d-block lh-lg fs-12"
                       href="/Personal/About"
                     >
-                      About Myself{" "}
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      className="site-footer-section-menu__item d-block lh-lg fs-12"
-                      href="/Albanylitica"
-                    >
-                      Blog{" "}
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      className="site-footer-section-menu__item d-block lh-lg fs-12"
-                      href="/Portfolio"
-                    >
-                      Portfolio{" "}
+                      About Myself
                     </a>
                   </li>
                   <li>
@@ -139,7 +209,15 @@ export default function Footer() {
                       className="site-footer-section-menu__item d-block lh-lg fs-12"
                       href="/Personal/Contact"
                     >
-                      Contact{" "}
+                      Contact
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      className="site-footer-section-menu__item d-block lh-lg fs-12"
+                      href="/Portfolio"
+                    >
+                      Portfolio
                     </a>
                   </li>
                   <li>
@@ -147,12 +225,13 @@ export default function Footer() {
                       className="site-footer-section-menu__item d-block lh-lg fs-12"
                       href="/Personal/FAQ"
                     >
-                      FAQs{" "}
+                      FAQs
                     </a>
                   </li>
                 </ul>
               </nav>
             </div>
+
             <div className="col-6 col-md-3">
               <nav>
                 <div className="mb-10 mt-40 mt-md-0 f-sans fw-semibold">
@@ -160,158 +239,133 @@ export default function Footer() {
                 </div>
                 <ul className="d-flex flex-column">
                   <li>
-                    <a
+                    <span
+                      onClick={() => handleScrollToSection("latest-posts")}
                       className="site-footer-section-menu__item d-block lh-lg fs-12"
-                      href="/Albanylitica/Recent"
+                      style={{ cursor: "pointer" }}
                     >
-                      Latest Posts{" "}
-                    </a>
+                      Latest Debrief
+                    </span>
                   </li>
                   <li>
-                    <a
+                    <span
+                      onClick={() => handleScrollToSection("recent-posts")}
                       className="site-footer-section-menu__item d-block lh-lg fs-12"
-                      href="/Albanylitica/Categories"
+                      style={{ cursor: "pointer" }}
                     >
-                      Categories{" "}
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      className="site-footer-section-menu__item d-block lh-lg fs-12"
-                      href="/Albanylitica/Popular"
-                    >
-                      Popular Posts{" "}
-                    </a>
+                      Recent Posts
+                    </span>
                   </li>
                   <li className="d-none d-lg-block">
                     <a
+                      href="/MidnightBureau/Archive"
                       className="site-footer-section-menu__item d-block lh-lg fs-12"
-                      href="/Albanylitica/Archive"
+                      style={{ cursor: "pointer" }}
                     >
-                      Archives{" "}
+                      Archives
                     </a>
                   </li>
+<li>
+  <span
+    className="site-footer-section-menu__item d-block lh-lg fs-12"
+    style={{ cursor: "pointer" }}
+    onClick={() => handleScrollToSection("feedback-section")}
+  >
+    Feedback
+  </span>
+</li>
+                </ul>
+              </nav>
+            </div>
+
+            <div className="col-6 col-md-3">
+              <nav>
+                <div className="mb-10 mt-40 mt-md-0 f-sans fw-semibold">
+                  Portfolio Sections
+                </div>
+                <ul className="d-flex flex-column">
                   <li>
-                    <a
+                    <span
+                      onClick={() =>
+                        handleScrollToSection("employers-&-work-experience")
+                      }
                       className="site-footer-section-menu__item d-block lh-lg fs-12"
-                      href="/Albanylitica/Resources"
+                      style={{ cursor: "pointer" }}
                     >
-                      Resources{" "}
-                    </a>
+                      Employers & Work Experience
+                    </span>
                   </li>
                   <li>
-                    <a
+                    <span
+                      onClick={() =>
+                        handleScrollToSection("computer-science-projects")
+                      }
                       className="site-footer-section-menu__item d-block lh-lg fs-12"
-                      href="/Albanylitica/Feedback"
+                      style={{ cursor: "pointer" }}
                     >
-                      Feedback{" "}
-                    </a>
+                      Computer Science Projects
+                    </span>
+                  </li>
+                  <li>
+                    <span
+                      onClick={() =>
+                        handleScrollToSection("research-&-analysis-projects")
+                      }
+                      className="site-footer-section-menu__item d-block lh-lg fs-12"
+                      style={{ cursor: "pointer" }}
+                    >
+                      Research & Analysis Projects
+                    </span>
+                  </li>
+                  <li>
+                    <span
+                      onClick={() =>
+                        handleScrollToSection("education-&-certifications")
+                      }
+                      className="site-footer-section-menu__item d-block lh-lg fs-12"
+                      style={{ cursor: "pointer" }}
+                    >
+                      Education & Certifications
+                    </span>
+                  </li>
+                  <li>
+                    <span
+                      onClick={() =>
+                        handleScrollToSection("featured-/-spotlight-projects")
+                      }
+                      className="site-footer-section-menu__item d-block lh-lg fs-12"
+                      style={{ cursor: "pointer" }}
+                    >
+                      Featured Projects
+                    </span>
                   </li>
                 </ul>
               </nav>
             </div>
+
             <div className="col-6 col-md-3">
               <nav>
                 <div className="mb-10 mt-40 mt-md-0 f-sans fw-semibold">
-                  Projects & Work
+                  Speaking & Media
                 </div>
                 <ul className="d-flex flex-column">
                   <li>
-                    <a
+                    <span
+                      onClick={() => handleScrollToSection("speaking-&-media")}
                       className="site-footer-section-menu__item d-block lh-lg fs-12"
-                      href="/Portfolio"
+                      style={{ cursor: "pointer" }}
                     >
-                      Current Projects{" "}
-                    </a>
+                      Speaking & Media
+                    </span>
                   </li>
                   <li>
-                    <a
+                    <span
+                      onClick={() => handleScrollToSection("collaborations")}
                       className="site-footer-section-menu__item d-block lh-lg fs-12"
-                      href="/Albanylitica/Archive"
+                      style={{ cursor: "pointer" }}
                     >
-                      Writing Portfolio{" "}
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      className="site-footer-section-menu__item d-block lh-lg fs-12"
-                      href="/Portfolio/Research"
-                    >
-                      Research{" "}
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      className="site-footer-section-menu__item d-block lh-lg fs-12"
-                      href="/Personal/Events"
-                    >
-                      Events{" "}
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      className="site-footer-section-menu__item d-block lh-lg fs-12"
-                      href="/Portfolio/Consulting"
-                    >
-                      Consulting{" "}
-                    </a>
-                  </li>
-                </ul>
-              </nav>
-            </div>
-            <div className="col-6 col-md-3">
-              <nav>
-                <div className="mb-10 mt-40 mt-md-0 f-sans fw-semibold">
-                  Connect & Resources
-                </div>
-                <ul className="d-flex flex-column">
-                  <li>
-                    <a
-                      className="site-footer-section-menu__item d-block lh-lg fs-12"
-                      href="/Personal/Contact"
-                    >
-                      Contact Me{" "}
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      className="site-footer-section-menu__item d-block lh-lg fs-12"
-                      href="PUT THE LINKTREE THING HERE FOR ROUTES "
-                    >
-                      Social Media{" "}
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      className="site-footer-section-menu__item d-block lh-lg fs-12"
-                      href="/Albanylitica/Recomendations"
-                    >
-                      Recommended Reads{" "}
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      className="site-footer-section-menu__item d-block lh-lg fs-12"
-                      href="/Albanylitica/Resources"
-                    >
-                      Tools & Links{" "}
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      className="site-footer-section-menu__item d-block lh-lg fs-12"
-                      href="/Albanylitica/Glossary"
-                    >
-                      Glossary{" "}
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      className="site-footer-section-menu__item d-block lh-lg fs-12"
-                      href="/Albanylitical/Newsletter"
-                    >
-                      Newsletters{" "}
-                    </a>
+                      Collaborations
+                    </span>
                   </li>
                 </ul>
               </nav>
@@ -319,7 +373,6 @@ export default function Footer() {
           </div>
         </div>
       </div>
-  
-</>
-    );
+    </>
+  );
 }

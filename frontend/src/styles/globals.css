@@ -234,6 +234,7 @@ textarea:focus {
     --c-sponsored: #f8f8f8;
     --c-text-third: #fff;
     --c-text-2third: #ECE9E4;
+    --c-bg-third: #282828;
 }
 
 :root [data-theme=theme-accent] {
@@ -274,6 +275,7 @@ textarea:focus {
         --c-sponsored: #1e1e1e;
         --c-text-third: #000000;
         --c-text-2third: #4a4a4a;
+        --c-bg-third: #282828;
     }
 
     :root [data-theme=theme-accent] {
@@ -2310,6 +2312,22 @@ details ul li a {
   animation: slideInRight 1.5s forwards ease-out;
 }
 
+.hidden {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.slide-in-up {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.slide-in-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 @keyframes slideInLeft {
   to {
     opacity: 1;
@@ -2383,14 +2401,23 @@ details ul li a {
 }
 
 
-@media (max-width: 1024px) {
-  .archive-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+
+html {
+  scroll-behavior: smooth;
 }
 
-@media (max-width: 600px) {
-  .archive-grid {
-    grid-template-columns: 1fr;
+/* Default (light mode): make FAQ section dark */
+.faq-contrast {
+  --faq-bg: #282828;
+  --faq-text: #ffffff;
+  --faq-border: rgba(255, 255, 255, 0.2);
+}
+
+/* Dark mode (reverse the contrast) */
+@media (prefers-color-scheme: dark) {
+  .faq-contrast {
+    --faq-bg: #ffffff;
+    --faq-text: #000000;
+    --faq-border: rgba(0, 0, 0, 0.2);
   }
 }

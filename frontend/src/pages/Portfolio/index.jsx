@@ -90,7 +90,7 @@ function ProjectCard({ project, index }) {
       </div>
 
       {/* Link text at bottom left */}
-      <div style={{ marginTop: 16, textAlign: "left" }}>
+      <div style={{ marginTop: 16, textAlign: "right" }}>
         <Link
           href={`/Portfolio/${project.slug}`}
           style={{
@@ -200,30 +200,6 @@ export default function Portfolio() {
             <ul className="site-nav__list d-flex right">
               <li className="site-nav__list-item d-flex show-desktop">
                 <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/MidnightBureau/Newsletter"
-                >
-                  Newsletters
-                </a>
-              </li>
-              <li className="site-nav__list-item d-flex show-desktop">
-                <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/user/login"
-                >
-                  Log In
-                </a>
-              </li>
-              <li className="site-nav__list-item d-flex show-tablet">
-                <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/user/login"
-                >
-                  Log In
-                </a>
-              </li>
-              <li className="site-nav__list-item d-flex show-desktop">
-                <a
                   className="site-nav__link body-s-smallcaps highlight"
                   href="/MidnightBureau"
                 >
@@ -326,30 +302,6 @@ export default function Portfolio() {
             <ul className="site-nav__list d-flex right">
               <li className="site-nav__list-item d-flex show-desktop">
                 <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/MidnightBureau/Newsletter"
-                >
-                  Newsletters
-                </a>
-              </li>
-              <li className="site-nav__list-item d-flex show-desktop">
-                <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/user/login"
-                >
-                  Log In
-                </a>
-              </li>
-              <li className="site-nav__list-item d-flex show-tablet">
-                <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/user/login"
-                >
-                  Log In
-                </a>
-              </li>
-              <li className="site-nav__list-item d-flex show-desktop">
-                <a
                   className="site-nav__link body-s-smallcaps highlight"
                   href="/MidnightBureau"
                 >
@@ -437,30 +389,6 @@ export default function Portfolio() {
                   href="/Portfolio"
                 >
                   Portfolio
-                </a>
-              </li>
-              <li className="site-nav__list-item d-flex show-tablet menu__nav-links-list-item pt-5 pb-5">
-                <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/MidnightBureau/Newsletter"
-                >
-                  Newsletters
-                </a>
-              </li>
-              <li className="site-nav__list-item d-flex show-mobile menu__nav-links-list-item pt-5 pb-5">
-                <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/MidnightBureau/Newsletter"
-                >
-                  Newsletters
-                </a>
-              </li>
-              <li className="site-nav__list-item d-flex show-mobile menu__nav-links-list-item pt-5 pb-5">
-                <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/user/login"
-                >
-                  Log In
                 </a>
               </li>
             </ul>
@@ -700,7 +628,11 @@ export default function Portfolio() {
 
   <main style={{ maxWidth: "1400px", margin: "40px auto", padding: "0 20px" }}>
         {Object.entries(PortfolioData).map(([category, projects]) => (
-          <section key={category} style={{ marginBottom: 60 }}>
+<section
+  id={category.toLowerCase().replace(/\s+/g, '-')}
+  key={category}
+  style={{ marginBottom: 60 }}
+>
             <h2
               style={{
                 fontSize: "2.5rem",

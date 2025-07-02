@@ -2,9 +2,8 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/MidnightBureau": "pages/MidnightBureau.js",
-  "/MidnightBureau/Archive": "pages/MidnightBureau/Archive.js",
-  "/Personal/Contact": "pages/Personal/Contact.js",
   "/Personal/About": "pages/Personal/About.js",
-  "/": "pages/index.js"
+  "/Portfolio": "pages/Portfolio.js",
+  "/": "pages/index.js",
+  "/MidnightBureau": "pages/MidnightBureau.js"
 }

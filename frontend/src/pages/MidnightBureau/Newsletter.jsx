@@ -712,7 +712,7 @@ export default function Newsletter() {
     </button>
   </form>
 
-<small style={{ marginTop: 10, fontSize: 14, color: "#000000" }}>
+<small style={{ marginTop: 10, fontSize: 14, color: "var(--c-text-secondary)" }}>
   You can unsubscribe anytime.
 </small>
 </section>
