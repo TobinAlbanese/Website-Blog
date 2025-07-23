@@ -14,22 +14,18 @@ export default function BookReviews() {
               <div className="row justify-between">
                 <div className="col-12 col-lg-8">
                   <div className="row border-bottom border-bottom-thin c-input-border border-0-lg pb-25 mb-25">
-                    <div className="col-5 col-lg-4">
+
                       <a href="">
-                        <figure className="">
-                          <img
-                            src=""
-                            alt="Main centered book"
-                            className=""
-                            loading="lazy"
-                            width={277}
-                            height={347}
-                            srcSet=""
-                            sizes="(max-width: 720px) 123px, 277px"
-                          />
-                        </figure>
+                        <figure>
+  <img
+  src="/assets/images/afroTob.JPG"
+  alt="Main centered book"
+  style={{ height: 650, width: 400, borderRadius: "8px", objectFit: "cover" }}
+  loading="lazy"
+/>
+</figure>
+
                       </a>
-                    </div>
                     <div className="col-7 col-lg-8 d-flex flex-column pl-lg-20">
                       <h2 className="heading-s mb-5 mb-lg-15">
                         <a href="/reviews/works-progress-cecilia-rouse">

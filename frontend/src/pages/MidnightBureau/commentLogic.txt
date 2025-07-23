@@ -1,0 +1,198 @@
+/*
+  // Commenting feature state & refs - COMMENTED OUT
+  const [comments, setComments] = useState([]);
+  const [commenting, setCommenting] = useState(false);
+  const [newComment, setNewComment] = useState("");
+  const loggedIn = true; // Replace with real auth check later
+  const currentUser = "Tobin Albanese";
+  const commentRef = useRef(null);
+
+  const handleCommentSubmit = (e) => {
+    e.preventDefault();
+    if (newComment.trim() === "") return;
+    setComments((prev) => [
+      ...prev,
+      { user: currentUser, text: newComment.trim(), date: new Date() },
+    ]);
+    setNewComment("");
+    setCommenting(false);
+  };
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (commentRef.current && !commentRef.current.contains(event.target)) {
+        setCommenting(false);
+      }
+    }
+    if (commenting) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [commenting]);
+  */
+
+    {/*
+            // Comment button disabled - fully commented out
+
+            <button
+              onClick={() => setCommenting(true)}
+              disabled={!loggedIn}
+              style={{
+                border: "1px solid var(--c-text)",
+                background: "transparent",
+                color: "var(--c-text)",
+                padding: "0.4rem 1rem",
+                cursor: loggedIn ? "pointer" : "not-allowed",
+                fontSize: "1rem",
+                fontWeight: "600",
+                borderRadius: "4px",
+                position: "relative",
+              }}
+              aria-label="Add Comment"
+            >
+              Comment
+            </button>
+          */}
+
+           {/*
+          // Entire commenting form & comments list fully commented out
+
+          {commenting && (
+            <form
+              ref={commentRef}
+              onSubmit={handleCommentSubmit}
+              style={{
+                position: "absolute",
+                top: "100%",
+                left: "0%",
+                transform: "translateX(-50%)",
+                marginBottom: "1rem",
+                marginTop: "0.5rem",
+                marginLeft: "6rem",
+                border: "1px solid var(--c-text)",
+                borderRadius: "8px",
+                backgroundColor: "var(--c-bg)",
+                padding: "1rem",
+                width: "320px",
+                boxShadow: "0 4px 10px rgba(0,0,0,0.15)",
+                zIndex: 100,
+              }}
+            >
+              <textarea
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+                rows={4}
+                placeholder="Write your comment here..."
+                style={{
+                  width: "100%",
+                  resize: "vertical",
+                  fontSize: "1rem",
+                  padding: "0.5rem",
+                  borderRadius: "4px",
+                  border: "1px solid #ccc",
+                  fontFamily: "inherit",
+                }}
+                required
+              />
+              <button
+                type="submit"
+                style={{
+                  marginTop: "0.5rem",
+                  padding: "0.5rem 1rem",
+                  backgroundColor: "var(--c-accent)",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "4px",
+                  cursor: "pointer",
+                  fontWeight: "600",
+                }}
+              >
+                Submit
+              </button>
+            </form>
+          )}
+
+          {comments.length > 0 && (
+            <div
+              className="comments-list"
+              style={{
+                maxWidth: "1200px",
+                marginTop: "1.5rem",
+                marginLeft: "auto",
+                marginRight: "auto",
+              }}
+            >
+              {comments.map(({ user, text, date }, idx) => (
+                <div
+                  key={idx}
+                  style={{
+                    width: "100%",
+                    minHeight: "200px",
+                    minWidth: "800px",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                    padding: "1rem",
+                    marginBottom: "1.5rem",
+                    border: "1px solid #ccc",
+                    borderRadius: "8px",
+                    position: "relative",
+                  }}
+                >
+                  <div
+                    style={{
+                      fontSize: "1rem",
+                      fontWeight: "600",
+                      marginBottom: "0.5rem",
+                      color: "var(--c-text, #333)",
+                    }}
+                  >
+                    {user}
+                  </div>
+
+                  <div
+                    style={{
+                      flexGrow: 1,
+                      fontSize: "1.1rem",
+                      lineHeight: "1.6",
+                      whiteSpace: "pre-wrap",
+                      color: "var(--c-text)",
+                      marginBottom: "1rem",
+                    }}
+                  >
+                    {text}
+                  </div>
+
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
+                  >
+                    <span style={{ fontSize: "0.9rem", color: "var(--c-text-secondary, #666)" }}>
+                      {date.toLocaleDateString()}
+                    </span>
+                    <button
+                      aria-label="Like comment"
+                      style={{
+                        border: "none",
+                        background: "transparent",
+                        cursor: "pointer",
+                        color: "var(--c-text-secondary, #666)",
+                        fontSize: "1.2rem",
+                      }}
+                      onClick={() => alert("Like feature coming soon!")}
+                    >
+                      <i className="far fa-thumbs-up"></i>
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        */}

@@ -22,7 +22,7 @@ export default function LandingSection() {
               }`}
               data-armstrong-id="personal-message"
             >
-              <h1 className="heading-l mb-15">Welcome to <br></br>Tobin Albanese's Space</h1>
+              <h1 className="heading-l mb-15">Welcome to <br></br>Tobin Albanese's space</h1>
               <p className="body-m c-text-secondary" style={{ fontSize: 18, lineHeight: 1.6}}>
                 Hi, I'm Tobin Albanese — a student, writer, thinker, and creator behind the blog{" "}
                 <em>Midnight Bureau</em>.

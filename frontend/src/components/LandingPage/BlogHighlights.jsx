@@ -29,7 +29,7 @@ export default function BlogHighlights() {
                     <h3 className="body-m">
                       <a href="">TITLE</a>
                     </h3>
-                    <h4 className="body-s c-text-secondary mt-5">
+                    <h4 className="body-s c-text-primary mt-5">
                       <a href="">
                         This is where a short description of the blog post will go. It should be brief and engaging to encourage readers to click through.
                       </a>

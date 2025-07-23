@@ -1,1 +1,1 @@
-self.__REACT_LOADABLE_MANIFEST="{}"
+self.__REACT_LOADABLE_MANIFEST="{\"pages/Personal/About.jsx -> gsap/DrawSVGPlugin\":{\"id\":\"pages/Personal/About.jsx -> gsap/DrawSVGPlugin\",\"files\":[\"static/chunks/_pages-dir-browser_node_modules_gsap_DrawSVGPlugin_js.js\"]}}"

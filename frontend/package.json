@@ -8,14 +8,26 @@
     "start": "next start"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.7.2",
+    "@fortawesome/free-regular-svg-icons": "^6.7.2",
+    "@fortawesome/free-solid-svg-icons": "^6.7.2",
+    "@fortawesome/react-fontawesome": "^0.2.2",
+    "gsap": "^3.13.0",
+    "locomotive-scroll": "^4.1.4",
     "next": "^15.3.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-pageflip": "^2.0.3",
     "react-slick": "^0.30.3",
-    "slick-carousel": "^1.8.1"
+    "slick-carousel": "^1.8.1",
+    "split-type": "^0.3.4"
   },
   "devDependencies": {
-    "purgecss": "^7.0.2"
-  }
+    "@tailwindcss/postcss": "^4.1.11",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "purgecss": "^7.0.2",
+    "tailwindcss": "^4.1.11"
+  },
+  "window.confirmExternalOpen": false
 }

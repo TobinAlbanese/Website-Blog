@@ -3,7 +3,12 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/Personal/About": "pages/Personal/About.js",
-  "/Portfolio": "pages/Portfolio.js",
   "/": "pages/index.js",
-  "/MidnightBureau": "pages/MidnightBureau.js"
+  "/Personal/Contact": "pages/Personal/Contact.js",
+  "/Portfolio/[slug]": "pages/Portfolio/[slug].js",
+  "/MidnightBureau/[slug]": "pages/MidnightBureau/[slug].js",
+  "/MidnightBureau": "pages/MidnightBureau.js",
+  "/MidnightBureau/Contact": "pages/MidnightBureau/Contact.js",
+  "/Portfolio": "pages/Portfolio.js",
+  "/MidnightBureau/Archive": "pages/MidnightBureau/Archive.js"
 }
