@@ -168,9 +168,9 @@ This site is a reflection of that purpose:
 - A **public experiment in thinking critically about power, perception, and technology**
 
 Ultimately, I believe:
-- 🧠 *Precision of thought is the first form of defense.*  
-- 🛰️ *Every line of code has strategic implications.*  
-- 🧭 *The best tools don’t just process — they illuminate.*
+- *Precision of thought is the first form of defense.*  
+- *Every line of code has strategic implications.*  
+- *The best tools don’t just process — they illuminate.*
 
 
 ---
