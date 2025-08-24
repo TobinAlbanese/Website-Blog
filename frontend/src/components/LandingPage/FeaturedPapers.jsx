@@ -1,7 +1,7 @@
 // components/FeaturedPapers.jsx
 import React from "react";
 import Link from "next/link";
-import PortfolioData from "../../data/PortfolioData";
+import PortfolioData from "../../data/portfolioData";
 
 // ---- helpers ----
 const getSection = (name) =>
