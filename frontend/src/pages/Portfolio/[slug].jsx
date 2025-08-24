@@ -9,6 +9,7 @@ import ScrollTrigger from "gsap/ScrollTrigger";
 import Footer from "../../components/LandingPage/Footer.jsx";
 import Navbar from "../../components/LandingPage/Navbar.jsx";
 import { listPF, getPF } from "../../lib/posts";
+import Script from "next/script";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -163,8 +164,11 @@ const ProjectPost = ({ project }) => {
           <Head>
             <title>{project.title} – Portfolio</title>
             <meta name="description" content={project.excerpt || ""} />
-            <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" />
           </Head>
+          <Script
+  src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
+  strategy="afterInteractive"
+/>
 
           <div className="midnight-bureau-article">
             {/* Vertical helper links */}
