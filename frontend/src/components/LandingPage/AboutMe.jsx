@@ -28,7 +28,7 @@ export default function AboutMe() {
               <a href="/about">
                 <figure>
                   <img
-                    src="/assets/images/aboutMePhoto2.jpg"
+                    src="/assets/images/AboutMePhoto2.jpg"
                     alt="Photo of Family wedding"
                     loading="lazy"
                     style={{

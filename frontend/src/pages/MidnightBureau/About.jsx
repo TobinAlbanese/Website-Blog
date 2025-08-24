@@ -6,7 +6,7 @@ import Footer from "../../components/LandingPage/Footer.jsx";
 import Navbar from "../../components/LandingPage/Navbar.jsx";
 
 const BW_IMG = "/assets/images/GradBW.png";
-const COLOR_IMG = "/assets/images/Dylan&Tobin.JPG";
+const COLOR_IMG = "/assets/images/Dylan-Tobin.jpg";
 
 // --- Layout knobs ---
 const DESKTOP_MIN = 900;
