@@ -8,7 +8,7 @@ import Navbar from "../../components/LandingPage/Navbar.jsx";
 // re-enable: import { gsap } from "gsap";
 
 const BW_IMG = "/assets/images/GradBW.png"; // used in archived heat reveal & right float (fallback)
-const COLOR_IMG = "/assets/images/Dylan&Tobin.JPG"; // used in live responsive hero & left float
+const COLOR_IMG = "/assets/images/Dylan-Tobin.jpg"; // used in live responsive hero & left float
 
 // --- Layout knobs ---
 const DESKTOP_MIN = 900; // breakpoint for interactive mode

@@ -7,7 +7,7 @@ const MidnightBureauData = {
       author: "Tobin M. Albanese",
       date: "2025-07-10",
       excerpt: "A drifting ship holds secrets in the Belt...",
-      archiveImage: "/assets/images/Midnight Bureau.png",
+      archiveImage: "/assets/images/Midnight-Bureau.png",
       banner:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 
@@ -82,7 +82,7 @@ const MidnightBureauData = {
       author: "Tobin M. Albanese",
       date: "2025-07-03",
       excerpt: "Telemetry ghosts hint at a forgotten beacon near Titan’s haze.",
-      archiveImage: "/assets/images/Midnight Bureau.png",
+      archiveImage: "/assets/images/Midnight-Bureau.png",
       banner:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 
@@ -140,7 +140,7 @@ const MidnightBureauData = {
       date: "2025-06-21",
       excerpt:
         "Transmissions harmonize where relays failed—like a choir with no choir loft.",
-      archiveImage: "/assets/images/Midnight Bureau.png",
+      archiveImage: "/assets/images/Midnight-Bureau.png",
       banner:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 
@@ -197,7 +197,7 @@ const MidnightBureauData = {
       author: "Tobin M. Albanese",
       date: "2025-06-12",
       excerpt: "Auto-dock arms still remember a routine the living forgot.",
-      archiveImage: "/assets/images/Midnight Bureau.png",
+      archiveImage: "/assets/images/Midnight-Bureau.png",
       banner:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 
@@ -259,7 +259,7 @@ const MidnightBureauData = {
       author: "Tobin M. Albanese",
       date: "2024-01-14",
       excerpt: "Why no single superpower can dominate the 21st century.",
-      archiveImage: "/assets/images/Midnight Bureau.png",
+      archiveImage: "/assets/images/Midnight-Bureau.png",
       banner:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 
@@ -316,7 +316,7 @@ const MidnightBureauData = {
       author: "Tobin M. Albanese",
       date: "2023-09-05",
       excerpt: "Where Western agencies got it wrong.",
-      archiveImage: "/assets/images/Midnight Bureau.png",
+      archiveImage: "/assets/images/Midnight-Bureau.png",
       banner:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 
@@ -373,7 +373,7 @@ const MidnightBureauData = {
       author: "Tobin M. Albanese",
       date: "2024-06-30",
       excerpt: "Stalemates calcify into structures that outlast intent.",
-      archiveImage: "/assets/images/Midnight Bureau.png",
+      archiveImage: "/assets/images/Midnight-Bureau.png",
       banner:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 
@@ -431,7 +431,7 @@ const MidnightBureauData = {
       date: "2024-03-22",
       excerpt:
         "Analysts warned. Institutions listened—then budget season arrived.",
-      archiveImage: "/assets/images/Midnight Bureau.png",
+      archiveImage: "/assets/images/Midnight-Bureau.png",
       banner:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 
@@ -491,7 +491,7 @@ const MidnightBureauData = {
       author: "Tobin M. Albanese",
       date: "2024-04-10",
       excerpt: "What this book gets right—and wrong—about geopolitics.",
-      archiveImage: "/assets/images/Midnight Bureau.png",
+      archiveImage: "/assets/images/Midnight-Bureau.png",
       banner:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 
@@ -548,7 +548,7 @@ const MidnightBureauData = {
       author: "Tobin M. Albanese",
       date: "2025-03-22",
       excerpt: "Rethinking espionage in the age of AI.",
-      archiveImage: "/assets/images/Midnight Bureau.png",
+      archiveImage: "/assets/images/Midnight-Bureau.png",
       banner:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 
@@ -606,7 +606,7 @@ const MidnightBureauData = {
       date: "2024-11-01",
       excerpt:
         "Conflict below the threshold of war, above the level of comfort.",
-      archiveImage: "/assets/images/Midnight Bureau.png",
+      archiveImage: "/assets/images/Midnight-Bureau.png",
       banner:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 
@@ -663,7 +663,7 @@ const MidnightBureauData = {
       author: "Tobin M. Albanese",
       date: "2025-01-05",
       excerpt: "Economic statecraft as a strategic weapon.",
-      archiveImage: "/assets/images/Midnight Bureau.png",
+      archiveImage: "/assets/images/Midnight-Bureau.png",
       banner:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 
@@ -723,7 +723,7 @@ const MidnightBureauData = {
       author: "Tobin M. Albanese",
       date: "2025-02-05",
       excerpt: "Resources for aspiring analysts and researchers.",
-      archiveImage: "/assets/images/Midnight Bureau.png",
+      archiveImage: "/assets/images/Midnight-Bureau.png",
       banner:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 
@@ -778,7 +778,7 @@ const MidnightBureauData = {
       author: "Tobin M. Albanese",
       date: "2024-12-12",
       excerpt: "Where the world's leading minds publish.",
-      archiveImage: "/assets/images/Midnight Bureau.png",
+      archiveImage: "/assets/images/Midnight-Bureau.png",
       banner:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 
@@ -833,7 +833,7 @@ const MidnightBureauData = {
       author: "Tobin M. Albanese",
       date: "2025-01-18",
       excerpt: "Datasets, checklists, and workflows to get moving fast.",
-      archiveImage: "/assets/images/Midnight Bureau.png",
+      archiveImage: "/assets/images/Midnight-Bureau.png",
       banner:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 
@@ -888,7 +888,7 @@ const MidnightBureauData = {
       author: "Tobin M. Albanese",
       date: "2025-02-28",
       excerpt: "A curated atlas of reliable open data feeds.",
-      archiveImage: "/assets/images/Midnight Bureau.png",
+      archiveImage: "/assets/images/Midnight-Bureau.png",
       banner:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 
@@ -946,7 +946,7 @@ const MidnightBureauData = {
       author: "Tobin M. Albanese",
       date: "2025-06-01",
       excerpt: "Why regional disputes have global consequences.",
-      archiveImage: "/assets/images/Midnight Bureau.png",
+      archiveImage: "/assets/images/Midnight-Bureau.png",
       banner:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 
@@ -1003,7 +1003,7 @@ const MidnightBureauData = {
       author: "Tobin M. Albanese",
       date: "2025-05-01",
       excerpt: "Coalitions, hedging, and the new balance of power.",
-      archiveImage: "/assets/images/Midnight Bureau.png",
+      archiveImage: "/assets/images/Midnight-Bureau.png",
       banner:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 
@@ -1058,7 +1058,7 @@ const MidnightBureauData = {
       author: "Tobin M. Albanese",
       date: "2025-03-01",
       excerpt: "Where geography shapes leverage.",
-      archiveImage: "/assets/images/Midnight Bureau.png",
+      archiveImage: "/assets/images/Midnight-Bureau.png",
       banner:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 
@@ -1113,7 +1113,7 @@ const MidnightBureauData = {
       author: "Tobin M. Albanese",
       date: "2025-02-01",
       excerpt: "Economic pressure and its diplomatic side effects.",
-      archiveImage: "/assets/images/Midnight Bureau.png",
+      archiveImage: "/assets/images/Midnight-Bureau.png",
       banner:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 
@@ -1173,7 +1173,7 @@ const MidnightBureauData = {
       author: "Tobin M. Albanese",
       date: "2025-06-10",
       excerpt: "What agencies are really listening to.",
-      archiveImage: "/assets/images/Midnight Bureau.png",
+      archiveImage: "/assets/images/Midnight-Bureau.png",
       banner:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 
@@ -1228,7 +1228,7 @@ const MidnightBureauData = {
       author: "Tobin M. Albanese",
       date: "2025-05-25",
       excerpt: "Sources still matter when sensors saturate.",
-      archiveImage: "/assets/images/Midnight Bureau.png",
+      archiveImage: "/assets/images/Midnight-Bureau.png",
       banner:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 
@@ -1285,7 +1285,7 @@ const MidnightBureauData = {
       author: "Tobin M. Albanese",
       date: "2025-04-30",
       excerpt: "What public data can (and can’t) replace.",
-      archiveImage: "/assets/images/Midnight Bureau.png",
+      archiveImage: "/assets/images/Midnight-Bureau.png",
       banner:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 
@@ -1340,7 +1340,7 @@ const MidnightBureauData = {
       author: "Tobin M. Albanese",
       date: "2025-03-18",
       excerpt: "Defense against insiders and influence ops.",
-      archiveImage: "/assets/images/Midnight Bureau.png",
+      archiveImage: "/assets/images/Midnight-Bureau.png",
       banner:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 
@@ -1400,7 +1400,7 @@ const MidnightBureauData = {
       author: "Tobin M. Albanese",
       date: "2025-05-30",
       excerpt: "How physical and cyber threats converge.",
-      archiveImage: "/assets/images/Midnight Bureau.png",
+      archiveImage: "/assets/images/Midnight-Bureau.png",
       banner:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 
@@ -1457,7 +1457,7 @@ const MidnightBureauData = {
       author: "Tobin M. Albanese",
       date: "2025-04-29",
       excerpt: "Why the business model keeps winning.",
-      archiveImage: "/assets/images/Midnight Bureau.png",
+      archiveImage: "/assets/images/Midnight-Bureau.png",
       banner:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 
@@ -1512,7 +1512,7 @@ const MidnightBureauData = {
       author: "Tobin M. Albanese",
       date: "2025-02-10",
       excerpt: "Hardening processes without chilling speech.",
-      archiveImage: "/assets/images/Midnight Bureau.png",
+      archiveImage: "/assets/images/Midnight-Bureau.png",
       banner:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 
@@ -1567,7 +1567,7 @@ const MidnightBureauData = {
       author: "Tobin M. Albanese",
       date: "2025-03-02",
       excerpt: "Implementing principles under messy constraints.",
-      archiveImage: "/assets/images/Midnight Bureau.png",
+      archiveImage: "/assets/images/Midnight-Bureau.png",
       banner:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 
@@ -1627,7 +1627,7 @@ const MidnightBureauData = {
       author: "Tobin M. Albanese",
       date: "2025-04-12",
       excerpt: "Is the alliance still relevant in a multipolar world?",
-      archiveImage: "/assets/images/Midnight Bureau.png",
+      archiveImage: "/assets/images/Midnight-Bureau.png",
       banner:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 
@@ -1684,7 +1684,7 @@ const MidnightBureauData = {
       author: "Tobin M. Albanese",
       date: "2025-05-06",
       excerpt: "Swarming challenges old assumptions about scale.",
-      archiveImage: "/assets/images/Midnight Bureau.png",
+      archiveImage: "/assets/images/Midnight-Bureau.png",
       banner:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 
@@ -1741,7 +1741,7 @@ const MidnightBureauData = {
       author: "Tobin M. Albanese",
       date: "2025-03-09",
       excerpt: "Littoral fights against modern A2/AD.",
-      archiveImage: "/assets/images/Midnight Bureau.png",
+      archiveImage: "/assets/images/Midnight-Bureau.png",
       banner:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 
@@ -1796,7 +1796,7 @@ const MidnightBureauData = {
       author: "Tobin M. Albanese",
       date: "2025-02-22",
       excerpt: "Throughput wins wars.",
-      archiveImage: "/assets/images/Midnight Bureau.png",
+      archiveImage: "/assets/images/Midnight-Bureau.png",
       banner:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 
@@ -1854,7 +1854,7 @@ const MidnightBureauData = {
       author: "Tobin M. Albanese",
       date: "2025-06-01",
       excerpt: "Speed, accuracy—and ethical questions.",
-      archiveImage: "/assets/images/Midnight Bureau.png",
+      archiveImage: "/assets/images/Midnight-Bureau.png",
       banner:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 
@@ -1911,7 +1911,7 @@ const MidnightBureauData = {
       author: "Tobin M. Albanese",
       date: "2025-06-05",
       excerpt: "AI-generated content and the collapse of reality.",
-      archiveImage: "/assets/images/Midnight Bureau.png",
+      archiveImage: "/assets/images/Midnight-Bureau.png",
       banner:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 
@@ -1964,7 +1964,7 @@ const MidnightBureauData = {
       author: "Tobin M. Albanese",
       date: "2025-06-08",
       excerpt: "Hacking brains: science fiction meets security policy.",
-      archiveImage: "/assets/images/Midnight Bureau.png",
+      archiveImage: "/assets/images/Midnight-Bureau.png",
       banner:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 
@@ -2021,7 +2021,7 @@ const MidnightBureauData = {
       author: "Tobin M. Albanese",
       date: "2025-06-12",
       excerpt: "When humans supervise fleets at machine speed.",
-      archiveImage: "/assets/images/Midnight Bureau.png",
+      archiveImage: "/assets/images/Midnight-Bureau.png",
       banner:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 
@@ -2081,7 +2081,7 @@ const MidnightBureauData = {
       author: "Tobin M. Albanese",
       date: "2025-03-11",
       excerpt: "CBDCs, sanctions, and strategic leverage.",
-      archiveImage: "/assets/images/Midnight Bureau.png",
+      archiveImage: "/assets/images/Midnight-Bureau.png",
       banner:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 
@@ -2134,7 +2134,7 @@ const MidnightBureauData = {
       author: "Tobin M. Albanese",
       date: "2025-02-14",
       excerpt: "Resilience beats just-in-time.",
-      archiveImage: "/assets/images/Midnight Bureau.png",
+      archiveImage: "/assets/images/Midnight-Bureau.png",
       banner:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 
@@ -2187,7 +2187,7 @@ const MidnightBureauData = {
       author: "Tobin M. Albanese",
       date: "2025-04-01",
       excerpt: "Materials that decide entire industries.",
-      archiveImage: "/assets/images/Midnight Bureau.png",
+      archiveImage: "/assets/images/Midnight-Bureau.png",
       banner:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 
@@ -2242,7 +2242,7 @@ const MidnightBureauData = {
       author: "Tobin M. Albanese",
       date: "2025-03-20",
       excerpt: "Pricing power as geopolitical power.",
-      archiveImage: "/assets/images/Midnight Bureau.png",
+      archiveImage: "/assets/images/Midnight-Bureau.png",
       banner:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 
@@ -2300,7 +2300,7 @@ const MidnightBureauData = {
       author: "Tobin M. Albanese",
       date: "2025-01-20",
       excerpt: "How oil and gas drive foreign policy.",
-      archiveImage: "/assets/images/Midnight Bureau.png",
+      archiveImage: "/assets/images/Midnight-Bureau.png",
       banner:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 
@@ -2357,7 +2357,7 @@ const MidnightBureauData = {
       author: "Tobin M. Albanese",
       date: "2025-02-26",
       excerpt: "Why advanced reactors are back in the chat.",
-      archiveImage: "/assets/images/Midnight Bureau.png",
+      archiveImage: "/assets/images/Midnight-Bureau.png",
       banner:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 
@@ -2414,7 +2414,7 @@ const MidnightBureauData = {
       author: "Tobin M. Albanese",
       date: "2025-03-03",
       excerpt: "Where hydrogen fits—and where it doesn’t.",
-      archiveImage: "/assets/images/Midnight Bureau.png",
+      archiveImage: "/assets/images/Midnight-Bureau.png",
       banner:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 
@@ -2471,7 +2471,7 @@ const MidnightBureauData = {
       author: "Tobin M. Albanese",
       date: "2025-03-15",
       excerpt: "Keeping the lights on under stress.",
-      archiveImage: "/assets/images/Midnight Bureau.png",
+      archiveImage: "/assets/images/Midnight-Bureau.png",
       banner:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 

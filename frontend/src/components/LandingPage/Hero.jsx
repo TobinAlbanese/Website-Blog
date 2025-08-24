@@ -58,7 +58,7 @@ export default function LandingSection() {
               data-armstrong-id="profile-image"
             >
               <img
-                src="/assets/images/tobin&johnny.jpg"
+                src="/assets/images/Tobin-Johnny.jpg"
                 alt="Photo of Tobin Albanese"
                 className="profile-image"
                 style={{
