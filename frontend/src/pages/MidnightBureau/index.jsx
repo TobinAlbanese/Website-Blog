@@ -8,8 +8,86 @@ import MidnightBureauData from "../../data/MidnightBureau.js";
 import HeatRevealCanvas from "../../components/LandingPage/HeatRevealCanvas.jsx";
 import NavbarMB from "../../components/LandingPage/NavbarMB.jsx";
 
-// Updated text effect hook with space preservation
-export function useSpanizedText(text, baseDelay = 0.05, className = "type-char", startDelay = 0) {
+// ---------- helpers for category -> data arrays (labels stay the same) ----------
+const arr = (xs) => (Array.isArray(xs) ? xs : []);
+const sortByDateDesc = (xs) =>
+  [...xs].sort((a, b) => new Date(b.date) - new Date(a.date));
+const uniqBySlug = (xs = []) => {
+  const seen = new Set();
+  return xs.filter(
+    (p) => p?.slug && !seen.has(p.slug) && (seen.add(p.slug), true)
+  );
+};
+
+function takeFromKeys(keys, total = 2, perSourceCap) {
+  const buckets = keys.map((k) => sortByDateDesc(arr(MidnightBureauData?.[k])));
+  const out = [];
+  const seen = new Set();
+
+  if (perSourceCap != null) {
+    const caps = new Array(buckets.length).fill(0);
+    let progressed = true;
+    while (out.length < total && progressed) {
+      progressed = false;
+      for (let i = 0; i < buckets.length && out.length < total; i++) {
+        if (caps[i] >= perSourceCap) continue;
+        const bucket = buckets[i];
+
+        while (caps[i] < bucket.length) {
+          const p = bucket[caps[i]];
+          caps[i] += 1;
+          if (p?.slug && !seen.has(p.slug)) {
+            out.push(p);
+            seen.add(p.slug);
+            progressed = true;
+            break;
+          }
+        }
+      }
+    }
+  }
+
+  if (out.length < total) {
+    for (const bucket of buckets) {
+      for (const p of bucket) {
+        if (!p?.slug || seen.has(p.slug)) continue;
+        out.push(p);
+        seen.add(p.slug);
+        if (out.length >= total) break;
+      }
+      if (out.length >= total) break;
+    }
+  }
+
+  return out;
+}
+
+function getCategoryPosts(label) {
+  switch (label) {
+    case "Geopolitics":
+      return uniqBySlug(takeFromKeys(["Geopolitics"], 2));
+    case "Cybersecurity":
+      return uniqBySlug(takeFromKeys(["Security", "Technology"], 2, 1));
+    case "Economic Intelligence":
+      return uniqBySlug(takeFromKeys(["Economy", "Intelligence"], 2, 1));
+    case "Military & Defense":
+      return uniqBySlug(takeFromKeys(["Defense", "Security"], 2, 1));
+    case "Technology & Innovation":
+      return uniqBySlug(takeFromKeys(["Technology"], 2));
+    case "Global Events":
+      return uniqBySlug(takeFromKeys(["ForeignPolicy", "Diplomacy"], 2, 1));
+    default:
+      return [];
+  }
+}
+
+// ---------- Updated text effect hook with space preservation ----------
+export function useSpanizedText(
+  text,
+  baseDelay = 0.05,
+  className = "type-char",
+  startDelay = 0
+) {
   return useMemo(() => {
     return text.split("").map((char, index) => (
       <span
@@ -33,200 +111,202 @@ function AnimatedPostCard({ post, index, isMain }) {
   }, [index]);
 
   return (
-<article
-  onMouseEnter={() => setHover(true)}
-  onMouseLeave={() => setHover(false)}
-  style={{
-    opacity: visible ? 1 : 0,
-    transform: visible
-      ? hover
-        ? "translateY(-8px)"
-        : "translateY(0)"
-      : "translateX(-30px)",
-    transition:
-      "opacity 0.4s ease, transform 0.3s ease, box-shadow 0.3s ease",
-    boxShadow: hover
-      ? "0 12px 30px rgba(0, 0, 0, 0.15)"
-      : isMain
-      ? "0 10px 30px rgba(0,0,0,0.1)"
-      : "0 8px 24px rgba(0, 0, 0, 0.08)",
-    backgroundColor: "var(--c-bg-primary)",
-    borderRadius: 12,
-    padding: isMain ? 24 : 16,
-    display: isMain ? "flex" : "grid",
-    flexDirection: isMain ? "column" : undefined,
-    gap: isMain ? 24 : 32,
-    gridTemplateColumns: isMain ? undefined : "1fr 2fr",
-    width: "100%",
-    cursor: "pointer",
-  }}
->
-  {isMain ? (
-    <>
-      <img
-        src={post.images && post.images.length > 0 ? post.images[0] : post.banner || '/default-image.jpg'}
-  alt={post.title}
-        style={{
-          width: "100%",
-          height: "600px",
-          objectFit: "cover",
-          borderRadius: 12,
-          boxShadow: "0 8px 30px rgba(0, 0, 0, 0.1)",
-        }}
-      />
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          flexGrow: 1,
-          textAlign: "left",
-        }}
-      >
-        <div>
-          <h3
+    <article
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      style={{
+        opacity: visible ? 1 : 0,
+        transform: visible
+          ? hover
+            ? "translateY(-8px)"
+            : "translateY(0)"
+          : "translateX(-30px)",
+        transition:
+          "opacity 0.4s ease, transform 0.3s ease, box-shadow 0.3s ease",
+        boxShadow: hover
+          ? "0 12px 30px rgba(0, 0, 0, 0.15)"
+          : isMain
+            ? "0 10px 30px rgba(0,0,0,0.1)"
+            : "0 8px 24px rgba(0, 0, 0, 0.08)",
+        backgroundColor: "var(--c-bg-primary)",
+        borderRadius: 12,
+        padding: isMain ? 24 : 16,
+        display: isMain ? "flex" : "grid",
+        flexDirection: isMain ? "column" : undefined,
+        gap: isMain ? 24 : 32,
+        gridTemplateColumns: isMain ? undefined : "1fr 2fr",
+        width: "100%",
+        cursor: "pointer",
+      }}
+    >
+      {isMain ? (
+        <>
+          <img
+            src={
+              post.images && post.images.length > 0
+                ? post.images[0]
+                : post.banner || "/default-image.jpg"
+            }
+            alt={post.title}
             style={{
-              fontSize: "2.5rem",
-              fontWeight: 900,
-              margin: "0 0 8px 0",
-              color: "var(--c-text-primary)",
+              width: "100%",
+              height: "600px",
+              objectFit: "cover",
+              borderRadius: 12,
+              boxShadow: "0 8px 30px rgba(0, 0, 0, 0.1)",
+            }}
+          />
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              flexGrow: 1,
+              textAlign: "left",
             }}
           >
-            {post.title}
-          </h3>
-          <p
-            style={{
-              fontSize: "1.15rem",
-              lineHeight: 1.8,
-              color: "var(--c-text-secondary)",
-              marginBottom: 8,
-            }}
-          >
-            {post.excerpt}
-          </p>
-        </div>
+            <div>
+              <h3
+                style={{
+                  fontSize: "2.5rem",
+                  fontWeight: 900,
+                  margin: "0 0 8px 0",
+                  color: "var(--c-text-primary)",
+                }}
+              >
+                {post.title}
+              </h3>
+              <p
+                style={{
+                  fontSize: "1.15rem",
+                  lineHeight: 1.8,
+                  color: "var(--c-text-secondary)",
+                  marginBottom: 8,
+                }}
+              >
+                {post.excerpt}
+              </p>
+            </div>
 
-        <div
-          style={{
-            marginTop: "auto",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "flex-end",
-          }}
-        >
-          <small
+            <div
+              style={{
+                marginTop: "auto",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "flex-end",
+              }}
+            >
+              <small
+                style={{
+                  fontSize: "0.9rem",
+                  color: "var(--c-text-secondary)",
+                  textTransform: "uppercase",
+                  letterSpacing: 0.5,
+                }}
+              >
+                {post.date} • {post.author}
+              </small>
+              <Link
+                href={`/MidnightBureau/${post.slug}`}
+                style={{
+                  color: "var(--c-accent)",
+                  fontWeight: 700,
+                  fontSize: "1rem",
+                  letterSpacing: 0.5,
+                  textDecoration: "underline",
+                  whiteSpace: "nowrap",
+                }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                Continue reading here →
+              </Link>
+            </div>
+          </div>
+        </>
+      ) : (
+        <>
+          <img
+            src={post.image}
+            alt={post.title}
             style={{
-              fontSize: "0.9rem",
-              color: "var(--c-text-secondary)",
-              textTransform: "uppercase",
-              letterSpacing: 0.5,
+              width: "100%",
+              maxHeight: 260,
+              height: 260,
+              objectFit: "cover",
+              borderRadius: 12,
+              boxShadow: "0 4px 12px rgba(0, 0, 0, 0.08)",
+              flexShrink: 0,
+            }}
+          />
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              height: 260,
+              textAlign: "justify",
+              paddingLeft: 0,
             }}
           >
-            {post.date} • {post.author}
-          </small>
-          <Link
-            href={`/MidnightBureau/${post.slug}`}
-            style={{
-              color: "var(--c-accent)",
-              fontWeight: 700,
-              fontSize: "1rem",
-              letterSpacing: 0.5,
-              textDecoration: "underline",
-              whiteSpace: "nowrap",
-            }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            Continue reading here →
-          </Link>
-        </div>
-      </div>
-    </>
-  ) : (
-    <>
-      <img
-        src={post.image}
-        alt={post.title}
-        style={{
-          width: "100%",
-          maxHeight: 260,
-          height: 260,
-          objectFit: "cover",
-          borderRadius: 12,
-          boxShadow: "0 4px 12px rgba(0, 0, 0, 0.08)",
-          flexShrink: 0,
-        }}
-      />
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          height: 260,
-          textAlign: "justify",
-          paddingLeft: 0,
-        }}
-      >
-        <div>
-          <h3
-            style={{
-              fontSize: "2rem",
-              fontWeight: 700,
-              margin: "10px 0 16px 0",
-              color: "var(--c-text-primary)",
-            }}
-          >
-            {post.title}
-          </h3>
-          <p
-            style={{
-              fontSize: "1.05rem",
-              lineHeight: 1.7,
-              color: "var(--c-text-secondary)",
-              marginBottom: 12,
-            }}
-          >
-            {post.excerpt}
-          </p>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <small
-            style={{
-              fontSize: "0.85rem",
-              color: "var(--c-text-secondary)",
-              textTransform: "uppercase",
-              letterSpacing: 0.5,
-            }}
-          >
-            {post.date} • {post.author}
-          </small>
-          <Link
-            href={`/MidnightBureau/${post.slug}`}
-            style={{
-              color: "var(--c-accent)",
-              fontWeight: 600,
-              fontSize: "0.95rem",
-              textDecoration: "underline",
-            }}
-          >
-            Read full article →
-          </Link>
-        </div>
-      </div>
-    </>
-  )}
-</article>
-
+            <div>
+              <h3
+                style={{
+                  fontSize: "2rem",
+                  fontWeight: 700,
+                  margin: "10px 0 16px 0",
+                  color: "var(--c-text-primary)",
+                }}
+              >
+                {post.title}
+              </h3>
+              <p
+                style={{
+                  fontSize: "1.05rem",
+                  lineHeight: 1.7,
+                  color: "var(--c-text-secondary)",
+                  marginBottom: 12,
+                }}
+              >
+                {post.excerpt}
+              </p>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <small
+                style={{
+                  fontSize: "0.85rem",
+                  color: "var(--c-text-secondary)",
+                  textTransform: "uppercase",
+                  letterSpacing: 0.5,
+                }}
+              >
+                {post.date} • {post.author}
+              </small>
+              <Link
+                href={`/MidnightBureau/${post.slug}`}
+                style={{
+                  color: "var(--c-accent)",
+                  fontWeight: 600,
+                  fontSize: "0.95rem",
+                  textDecoration: "underline",
+                }}
+              >
+                Read full article →
+              </Link>
+            </div>
+          </div>
+        </>
+      )}
+    </article>
   );
 }
 
 export default function MidnightBureau() {
-  
   const [animate, setAnimate] = useState(false);
 
   useEffect(() => {
@@ -251,7 +331,11 @@ export default function MidnightBureau() {
   ];
 
   const titleLine1 = useSpanizedText("Welcome to", 0.08, "type-char-title");
-  const titleLine2 = useSpanizedText("Midnight Bureau", 0.08, "type-char-title");
+  const titleLine2 = useSpanizedText(
+    "Midnight Bureau",
+    0.08,
+    "type-char-title"
+  );
 
   return (
     <>
@@ -260,13 +344,6 @@ export default function MidnightBureau() {
 
       <MetaHead />
       <SvgHead />
-
-
-
-
-
-
-
 
       {/*NAVBAR*/}
       <div
@@ -278,293 +355,302 @@ export default function MidnightBureau() {
         </div>
         <div id="js-dfp-tag-outofpage--2"></div>
         <div className="base d-flex">
-            <NavbarMB /> 
+          <NavbarMB />
 
-
-
-
-
-
-
-
-
-
-
-
-
- <section className="c-bg" data-armstrong-id="wrapper">
-        <div
-          className="row base__main pt-20 pt-md-30 pt-lg-60 pb-10 pb-md-25 pb-lg-40"
-          data-armstrong-id="primary"
-        >
-          <div className="col-12">
-            <div className="row justify-between d-flex" data-armstrong-id="row">
-        {/* Hero section left */}
-        <div
-          className={`col-12 col-lg-6 mb-20 mb-lg-0 d-flex flex-column justify-center ${
-            animate ? "slide-in-left" : ""
-          }`}
-          data-armstrong-id="personal-message"
-        >
-          <h1
-            className="heading-l mb-15"
-            style={{
-              fontFamily: "inherit",
-              overflow: "hidden",
-              whiteSpace: "pre-wrap",
-              color: "var(--c-text)",
-            }}
-          >
-            <div>{titleLine1}</div>
-            <div>{titleLine2}</div>
-          </h1>
-
-          {/* Paragraphs with staggered typewriter delays */}
-          <p
-            className="body-m"
-            style={{
-              fontSize: 18,
-              lineHeight: 1.6,
-              color: "var(--c-text-secondary)",
-              fontFamily: "inherit",
-              whiteSpace: "normal",
-              marginBottom: "1em",
-            }}
-          >
-            {useSpanizedText(paragraphLines[0], 0.01, "type-char", 0)}
-            <b><em>{useSpanizedText(paragraphLines[1], 0.01, "type-char", 2.8)}</em></b>
-            {useSpanizedText(paragraphLines[2], 0.01, "type-char", 3)}
-          </p>
-
-          <p
-            className="body-m"
-            style={{
-              fontSize: 18,
-              lineHeight: 1.6,
-              color: "var(--c-text-secondary)",
-              fontFamily: "inherit",
-              whiteSpace: "normal",
-              marginBottom: "1em",
-            }}
-          >
-            {useSpanizedText(paragraphLines[3], 0.01, "type-char", 3.6)}
-          </p>
-
-          <p
-            className="body-m"
-            style={{
-              fontSize: 18,
-              lineHeight: 1.6,
-              color: "var(--c-text-secondary)",
-              fontFamily: "inherit",
-              whiteSpace: "normal",
-            }}
-          >
-            {useSpanizedText(paragraphLines[4], 0.01, "type-char", 5.7)}
-          </p>
-        </div>
-
-
-
-
-
-        {/* Hero section right image */}
-<div className="heat-canvas-wrapper">
-  <HeatRevealCanvas width={800} height={800} />
-</div>
-
-
-
-
-
-      </div>
-    </div>
-  </div>
-
-
-
-
-
-        {/* Red line separator */}
-        <div
-          style={{
-            maxWidth: 1000,
-            margin: "40px auto",
-            borderTop: "4px solid #d62827",
-          }}
-        />
-
-        <main style={{ maxWidth: 1400, margin: "40px auto", padding: "0 24px" }}>
-          {/* Latest + Recent side-by-side */}
-<section
-  id="briefing-recent"
-  style={{
-    display: "flex",
-    gap: "48px",
-    marginBottom: 80,
-    alignItems: "stretch",
-  }}
->
-  {/* Latest Briefing */}
-  <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-    <h2
-      style={{
-        fontSize: "2.75rem",
-        fontWeight: 800,
-        marginBottom: 24,
-        color: "var(--c-text-primary)",
-        textTransform: "uppercase",
-        letterSpacing: 1,
-        borderLeft: "5px solid #d62827",
-        paddingLeft: 16,
-      }}
-    >
-      Latest Briefing
-    </h2>
-    <div className="latest-briefing-wrapper">
-      <AnimatedPostCard post={mainPost} index={0} isMain />
-    </div>
-  </div>
-
-  {/* Recent Posts */}
-  <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "32px" }}>
-    <h2
-      style={{
-        fontSize: "2.75rem",
-        fontWeight: 800,
-        marginBottom: 24,
-        color: "var(--c-text-primary)",
-        textTransform: "uppercase",
-        letterSpacing: 1,
-        borderLeft: "5px solid #d62827",
-        paddingLeft: 16,
-      }}
-    >
-      Recent Posts
-    </h2>
-    {otherPosts.slice(0, 3).map((post, i) => (
-      <AnimatedPostCard key={post.slug} post={post} index={i + 1} isMain={false} />
-    ))}
-  </div>
-</section>
-
-
-          <div
-            style={{
-              maxWidth: 1000,
-              margin: "80px auto 24px auto",
-              borderTop: "4px solid #d62827",
-            }}
-          />
-
-          {/* Browse by Topics */}
-          <h2
-            id="categories"
-            style={{
-              fontSize: "2.75rem",
-              fontWeight: 800,
-              marginBottom: 32,
-              color: "var(--c-text-primary)",
-              textTransform: "uppercase",
-              letterSpacing: 1,
-              borderLeft: "5px solid #d62827",
-              paddingLeft: 16,
-              maxWidth: 1400,
-              marginInline: "auto",
-            }}
-          >
-            Browse by Topics
-          </h2>
-
-          {/* Categories Section */}
-          <div
-            style={{
-              maxWidth: "1350px",
-              margin: "0 auto 100px auto",
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(500px, 1fr))",
-              gap: "64px 48px",
-            }}
-          >
-            {[
-              "Geopolitics",
-              "Cybersecurity",
-              "Economic Intelligence",
-              "Military & Defense",
-              "Technology & Innovation",
-              "Global Events",
-            ].map((cat) => {
-              const posts =
-                MidnightBureauData[
-                  cat.replace(/ & /g, "").replace(/ /g, "")
-                ]?.slice(0, 2) || [];
-              return (
+          <section className="c-bg" data-armstrong-id="wrapper">
+            <div
+              className="row base__main pt-20 pt-md-30 pt-lg-60 pb-10 pb-md-25 pb-lg-40"
+              data-armstrong-id="primary"
+            >
+              <div className="col-12">
                 <div
-                  key={cat}
+                  className="row justify-between d-flex"
+                  data-armstrong-id="row"
+                >
+                  {/* Hero section left */}
+                  <div
+                    className={`col-12 col-lg-6 mb-20 mb-lg-0 d-flex flex-column justify-center ${animate ? "slide-in-left" : ""}`}
+                    data-armstrong-id="personal-message"
+                  >
+                    <h1
+                      className="heading-l mb-15"
+                      style={{
+                        fontFamily: "inherit",
+                        overflow: "hidden",
+                        whiteSpace: "pre-wrap",
+                        color: "var(--c-text)",
+                      }}
+                    >
+                      <div>{titleLine1}</div>
+                      <div>{titleLine2}</div>
+                    </h1>
+
+                    {/* Paragraphs with staggered typewriter delays */}
+                    <p
+                      className="body-m"
+                      style={{
+                        fontSize: 18,
+                        lineHeight: 1.6,
+                        color: "var(--c-text-secondary)",
+                        fontFamily: "inherit",
+                        whiteSpace: "normal",
+                        marginBottom: "1em",
+                      }}
+                    >
+                      {useSpanizedText(paragraphLines[0], 0.01, "type-char", 0)}
+                      <b>
+                        <em>
+                          {useSpanizedText(
+                            paragraphLines[1],
+                            0.01,
+                            "type-char",
+                            2.8
+                          )}
+                        </em>
+                      </b>
+                      {useSpanizedText(paragraphLines[2], 0.01, "type-char", 3)}
+                    </p>
+
+                    <p
+                      className="body-m"
+                      style={{
+                        fontSize: 18,
+                        lineHeight: 1.6,
+                        color: "var(--c-text-secondary)",
+                        fontFamily: "inherit",
+                        whiteSpace: "normal",
+                        marginBottom: "1em",
+                      }}
+                    >
+                      {useSpanizedText(
+                        paragraphLines[3],
+                        0.01,
+                        "type-char",
+                        3.6
+                      )}
+                    </p>
+
+                    <p
+                      className="body-m"
+                      style={{
+                        fontSize: 18,
+                        lineHeight: 1.6,
+                        color: "var(--c-text-secondary)",
+                        fontFamily: "inherit",
+                        whiteSpace: "normal",
+                      }}
+                    >
+                      {useSpanizedText(
+                        paragraphLines[4],
+                        0.01,
+                        "type-char",
+                        5.7
+                      )}
+                    </p>
+                  </div>
+
+                  {/* Hero section right image */}
+                  <div className="heat-canvas-wrapper">
+                    <HeatRevealCanvas width={800} height={800} />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Red line separator */}
+            <div
+              style={{
+                maxWidth: 1000,
+                margin: "40px auto",
+                borderTop: "4px solid #d62827",
+              }}
+            />
+
+            <main
+              style={{ maxWidth: 1400, margin: "40px auto", padding: "0 24px" }}
+            >
+              {/* Latest + Recent side-by-side */}
+              <section
+                id="briefing-recent"
+                style={{
+                  display: "flex",
+                  gap: "48px",
+                  marginBottom: 80,
+                  alignItems: "stretch",
+                }}
+              >
+                {/* Latest Briefing */}
+                <div
+                  style={{ flex: 1, display: "flex", flexDirection: "column" }}
+                >
+                  <h2
+                    style={{
+                      fontSize: "2.75rem",
+                      fontWeight: 800,
+                      marginBottom: 24,
+                      color: "var(--c-text-primary)",
+                      textTransform: "uppercase",
+                      letterSpacing: 1,
+                      borderLeft: "5px solid #d62827",
+                      paddingLeft: 16,
+                    }}
+                  >
+                    Latest Briefing
+                  </h2>
+                  <div className="latest-briefing-wrapper">
+                    <AnimatedPostCard post={mainPost} index={0} isMain />
+                  </div>
+                </div>
+
+                {/* Recent Posts */}
+                <div
+                  id="recent-posts"
                   style={{
+                    flex: 1,
                     display: "flex",
                     flexDirection: "column",
                     gap: "32px",
+                    scrollMarginTop: "80px",
                   }}
                 >
-                  <h3
+                  <h2
                     style={{
-                      fontSize: "1.75rem",
-                      fontWeight: 700,
+                      fontSize: "2.75rem",
+                      fontWeight: 800,
+                      marginBottom: 24,
                       color: "var(--c-text-primary)",
-                      borderBottom: "2px solid #d62827",
-                      paddingBottom: 8,
+                      textTransform: "uppercase",
+                      letterSpacing: 1,
+                      borderLeft: "5px solid #d62827",
+                      paddingLeft: 16,
                     }}
                   >
-                    {cat}
-                  </h3>
-                  {posts.map((post, i) => (
+                    Recent Posts
+                  </h2>
+                  {otherPosts.slice(0, 3).map((post, i) => (
                     <AnimatedPostCard
                       key={post.slug}
                       post={post}
-                      index={i}
+                      index={i + 1}
                       isMain={false}
                     />
                   ))}
                 </div>
-              );
-            })}
-          </div>
-          <button
-            type="button"
-            style={{
-              backgroundColor: "#d62827",
-              color: "var(--c-text-primary)",
-              border: "none",
-              borderRadius: 4,
-              padding: "12px 24px",
-              fontWeight: 700,
-              fontSize: 16,
-              cursor: "pointer",
-              transition: "background-color 0.3s ease",
-              fontFamily: "inherit",
-              marginTop: 40,
-              display: "block",
-              marginLeft: "auto",
-              marginRight: "auto",
-            }}
-            onMouseEnter={(e) =>
-              (e.currentTarget.style.backgroundColor = "#b02621")
-            }
-            onMouseLeave={(e) =>
-              (e.currentTarget.style.backgroundColor = "#d62827")
-            }
-            onClick={() =>
-              (window.location.href = "/MidnightBureau/Archive")
-            }
-          >
-            Explore Full Archive Here!
-          </button>
-        </main>
-      </section>
+              </section>
 
-      <Footer />
-      </div>
+              <div
+                style={{
+                  maxWidth: 1000,
+                  margin: "80px auto 24px auto",
+                  borderTop: "4px solid #d62827",
+                }}
+              />
+
+              {/* Browse by Topics */}
+              <h2
+                id="categories"
+                style={{
+                  fontSize: "2.75rem",
+                  fontWeight: 800,
+                  marginBottom: 32,
+                  color: "var(--c-text-primary)",
+                  textTransform: "uppercase",
+                  letterSpacing: 1,
+                  borderLeft: "5px solid #d62827",
+                  paddingLeft: 16,
+                  maxWidth: 1400,
+                  marginInline: "auto",
+                }}
+              >
+                Browse by Topics
+              </h2>
+
+              {/* Categories Section */}
+              <div
+                style={{
+                  maxWidth: "1350px",
+                  margin: "0 auto 100px auto",
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fit, minmax(500px, 1fr))",
+                  gap: "64px 48px",
+                }}
+              >
+                {[
+                  "Geopolitics",
+                  "Cybersecurity",
+                  "Economic Intelligence",
+                  "Military & Defense",
+                  "Technology & Innovation",
+                  "Global Events",
+                ].map((cat) => {
+                  const posts = getCategoryPosts(cat);
+                  return (
+                    <div
+                      key={cat}
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "32px",
+                      }}
+                    >
+                      <h3
+                        style={{
+                          fontSize: "1.75rem",
+                          fontWeight: 700,
+                          color: "var(--c-text-primary)",
+                          borderBottom: "2px solid #d62827",
+                          paddingBottom: 8,
+                        }}
+                      >
+                        {cat}
+                      </h3>
+                      {posts.map((post, i) => (
+                        <AnimatedPostCard
+                          key={post.slug}
+                          post={post}
+                          index={i}
+                          isMain={false}
+                        />
+                      ))}
+                    </div>
+                  );
+                })}
+              </div>
+              <button
+                type="button"
+                style={{
+                  backgroundColor: "#d62827",
+                  color: "var(--c-text-primary)",
+                  border: "none",
+                  borderRadius: 4,
+                  padding: "12px 24px",
+                  fontWeight: 700,
+                  fontSize: 16,
+                  cursor: "pointer",
+                  transition: "background-color 0.3s ease",
+                  fontFamily: "inherit",
+                  marginTop: 40,
+                  display: "block",
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.backgroundColor = "#b02621")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.backgroundColor = "#d62827")
+                }
+                onClick={() =>
+                  (window.location.href = "/MidnightBureau/Archive")
+                }
+              >
+                Explore Full Archive Here!
+              </button>
+            </main>
+          </section>
+
+          <Footer />
+        </div>
       </div>
     </>
   );

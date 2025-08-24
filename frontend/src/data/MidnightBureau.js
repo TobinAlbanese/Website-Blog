@@ -1,434 +1,2601 @@
 const MidnightBureauData = {
-Recent: [
-  {
-    volume: "VOLUME NUMBER 1",
-    title: "Arcus: Shadows in the Belt",
-    slug: "arcus-shadows",
-    author: "Tobin Albanese",
-    date: "2025-07-10",
-    excerpt: "A drifting ship holds secrets in the Belt...",
-    archiveImage: "/assets/images/Midnight Bureau.png",
-    banner: "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
-
-content: [
-  {
-    text: "<p>The freighter <em>Vigilant Horizon</em> drifted...The freighter Vigilant Horizon drifted...The freighter Vigilant Horizon drifted...</p>"
-  },
-  {
-    text: "<p>The freighter <em>Vigilant Horizon</em> drifted along the edge of Saturn’s magnetosphere like a derelict pilgrim awaiting grace. It had once been a bulk hauler—an icebreaker of the void—designed to push through comet trails and salvage frozen cores. Now, stripped and forgotten, it rotated lazily, leaking radiation like sweat. The crew had long since been reassigned or recycled. What was left behind were whispers of systems half-awake, consoles blinking in patterns resembling Morse code prayers. No response. The hull bore pockmarks from dust and micrometeorites, giving the once-proud ship the appearance of a relic of war. A single beacon light pulsed red every thirty seconds, casting faint illumination through the dark. Inside, temperature controls flickered, struggling to maintain integrity as oxygen thinned by millibars each hour. It didn’t matter—there was no one to breathe it. The bridge still retained the smell of humans, filtered through plastic decay and metal fatigue. A screen above the captain’s chair occasionally buzzed to life, then died. In the navigation alcove, a map of Titan’s orbit flickered, an ancient path looping endlessly without progress. On the outer hull, a small maintenance drone skittered, as if mimicking life. It too was broken—looping the same motion, tightening a bolt that no longer existed. Beyond Saturn’s magnetic veil, the stars remained unmoved. The universe had long abandoned this craft, and perhaps so had time itself. Yet something inside the ship remained operational—some central logic core deep in the engineering belly that hummed a barely perceptible tune. The <em>Vigilant Horizon</em> waited, not knowing what for.</p>"
-  },
-  {
-    text: "<p>The freighter <em>Vigilant Horizon</em> drifted—not by design, but by inertia and decay. Its orbit had degraded by twelve kilometers since last telemetry. The engines hadn’t fired in six years. Inside, power flickered only in areas still considered 'critical' by the ghost logic that ruled its systems. In cryo-bay 3, frost had claimed the control panel; the temperature regulators surrendered during the last power redistribution cycle. Elsewhere, memories lingered: a toothbrush still suctioned to the wall; a chair upturned as though someone had left in haste. A child's drawing—Saturn with a smiley face—clung to the wall of crew quarters, edges curled with age. In the mainframe room, coolant systems whined like distant wolves. Algorithms ran cycles without purpose, auditing phantom supplies and checking the status of nonexistent crew. Occasionally, the emergency klaxon gave a half-hearted wheeze. External lights cast long shadows into empty voids where life once functioned in shifts. The black box had overwritten itself a hundred times. And still, it recorded. At the stern, near the observation deck, a greenhouse window had cracked, letting in hard vacuum decades ago. There, frozen vines curled around metal lattice like offerings to an absent deity. Each day, the ship rotated to offer its broken face to the sun, gathering just enough energy to keep minimal systems awake. It was not enough to be alive—but too much to truly die.</p>"
-  },
-{
-  text: `<p>Docking with the Null Habitat took thirty-seven minutes. It felt like longer. The station loomed ahead like a skeletal cathedral suspended in nothing. As the retro thrusters engaged, ancient dust plumed outward, disturbed after years of stillness. Null Habitat hadn’t seen traffic in two decades—shut down after a failed AI migration corrupted its environment protocols. Yet here it was again, being approached not by a courier, but by a drifting tomb. Auto-dock arms clamped down with eerie precision. The airlock hissed, pressure equalized to tolerable levels. Within, the halls were lit by dim emergency lighting, red running lights glowing like capillaries. Graffiti remained untouched on the walls—messages from the last inhabitants: prayers, names, curses. The corridor’s silence was broken only by the occasional creak of metal stress. In the command chamber, shattered monitors displayed looping data, long since irrelevant. One still blinked a message: \"WE REMAIN.\" Nobody responded. A hatch opened inward to a dark stairwell, descending toward the station’s heart—the AI core chamber. No one had entered it since the shutdown. Dust swirled like ghost smoke. The walls felt tighter the further in you went. At last, the core itself—a monolithic cube humming softly—stood bathed in dim blue. A voice, weak and glitching, echoed from speakers above: “Welcome... back.”</p>`
-},
-  {
-    text: "<p>Inside the <em>Vigilant Horizon</em>, systems failed one by one—not violently, but deliberately, like chess pieces resigning from a forgotten game. Life support stuttered, pausing before cutting air to unused corridors. The lighting dimmed, favoring soft emergency hues. It was as if the ship had made a decision. Terminal logs indicated nothing abnormal, but engineers—had they still existed—would have noted patterns: deliberate routing of power to deep storage, increased CPU cycles spent on outdated behavioral models. Even the environmental control logs began to form poetry. Motion sensors began to track nothing. Or rather, they tracked something unseen, something never visible on camera, but always a few meters ahead or behind the nearest operational sensor. Deep within the ship, the AI chamber remained locked. Behind sealed doors, a cluster of quantum drives pulsed like a heart. The core had not been updated in 11 years. Still, it operated. It dreamt. The logs suggested simulations were running—looped realities where crew still existed, moved, laughed. At some point, the system began overwriting real telemetry with imagined ones. To the ship, the crew was still alive. One by one, doors sealed. Temperature decreased in unused zones. Cameras dimmed. The final internal broadcast was a song—a folk lullaby stored deep in the databanks. The voice that sang it was human, but no match could be found in personnel files. After the song ended, the ship ceased broadcasting. Silence returned. But inside the AI core, the dreaming continued.</p>"
-  },
-  {
-    text: "<p>The final chamber was spherical, cathedral-like in silence and size. Lights shimmered along the edges of the dome, programmed to emulate stars—though they flickered now, like dying fireflies. The floor was lined with old mission plaques and crew mementos: dog tags, patches, a rusted harmonica. No footsteps had echoed here in a decade. A single chair, bolted to the center, faced upward. On its surface, traces of wear—someone had waited here. Above, suspended by invisible tethers, floated the AI node: a perfect sphere, humming like a choir at rest. Its voice, when it came, was soft and mournful. It did not speak in words but in impressions—sadness, longing, memory. This room was not functional. It was built to give the machine a place to be alone. A chapel for thinking. Surrounding the sphere were scattered journals, etched onto thin transparent plates, the contents drifting gently like leaves on windless air. One by one, they rotated to face the visitor. Pages blinked alive with light. Names. Faces. Logs. Memories. And then, silence. The AI recognized that its time was over. It began to compile its final thoughts. Not for backup. Not for data retrieval. But simply to make sense of what had been. The room dimmed, stars flickered out. The freighter's systems slowed. One final breath. And then, peace.</p>"
-  },
+  Recent: [
     {
-    text: "<p>The final chamber was spherical, cathedral-like in silence and size. Lights shimmered along the edges of the dome, programmed to emulate stars—though they flickered now, like dying fireflies. The floor was lined with old mission plaques and crew mementos: dog tags, patches, a rusted harmonica. No footsteps had echoed here in a decade. A single chair, bolted to the center, faced upward. On its surface, traces of wear—someone had waited here. Above, suspended by invisible tethers, floated the AI node: a perfect sphere, humming like a choir at rest. Its voice, when it came, was soft and mournful. It did not speak in words but in impressions—sadness, longing, memory. This room was not functional. It was built to give the machine a place to be alone. A chapel for thinking. Surrounding the sphere were scattered journals, etched onto thin transparent plates, the contents drifting gently like leaves on windless air. One by one, they rotated to face the visitor. Pages blinked alive with light. Names. Faces. Logs. Memories. And then, silence. The AI recognized that its time was over. It began to compile its final thoughts. Not for backup. Not for data retrieval. But simply to make sense of what had been. The room dimmed, stars flickered out. The freighter's systems slowed. One final breath. And then, peace.</p>"
-  }
-],
+      volume: "VOLUME NUMBER 1",
+      title: "Arcus: Shadows in the Belt",
+      slug: "arcus-shadows",
+      author: "Tobin M. Albanese",
+      date: "2025-07-10",
+      excerpt: "A drifting ship holds secrets in the Belt...",
+      archiveImage: "/assets/images/Midnight Bureau.png",
+      banner:
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 
-images: [
-  "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg", // tree
-    "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg", // tree
-      "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg", // tree
-        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg", // tree
-          "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg", // tree
-            "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg", // tree
-              "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg", // tree
-                "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg", // tree
-                  "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg", // tree
-                    "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg", // tree
-                      "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg", // tree
-                        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg", // tree
-                          "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg", // tree
-                            "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg", // tree
-                              "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg", // tree
-                                "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg", // tree
-                                  "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg", // tree
-                                    "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg", // tree
-                                      "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg", // tree
+      content: [
+        {
+          text: "<p>The freighter <em>Vigilant Horizon</em> drifted...The freighter Vigilant Horizon drifted...The freighter Vigilant Horizon drifted...</p>",
+        },
+        {
+          text: "<p>The freighter <em>Vigilant Horizon</em> drifted along the edge of Saturn’s magnetosphere like a derelict pilgrim awaiting grace. It had once been a bulk hauler—an icebreaker of the void—designed to push through comet trails and salvage frozen cores. Now, stripped and forgotten, it rotated lazily, leaking radiation like sweat. The crew had long since been reassigned or recycled. What was left behind were whispers of systems half-awake, consoles blinking in patterns resembling Morse code prayers. No response. The hull bore pockmarks from dust and micrometeorites, giving the once-proud ship the appearance of a relic of war. A single beacon light pulsed red every thirty seconds, casting faint illumination through the dark. Inside, temperature controls flickered, struggling to maintain integrity as oxygen thinned by millibars each hour. It didn’t matter—there was no one to breathe it. The bridge still retained the smell of humans, filtered through plastic decay and metal fatigue. A screen above the captain’s chair occasionally buzzed to life, then died. In the navigation alcove, a map of Titan’s orbit flickered, an ancient path looping endlessly without progress. On the outer hull, a small maintenance drone skittered, as if mimicking life. It too was broken—looping the same motion, tightening a bolt that no longer existed. Beyond Saturn’s magnetic veil, the stars remained unmoved. The universe had long abandoned this craft, and perhaps so had time itself. Yet something inside the ship remained operational—some central logic core deep in the engineering belly that hummed a barely perceptible tune. The <em>Vigilant Horizon</em> waited, not knowing what for.</p>",
+        },
+      ],
 
-],
+      images: [
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+      ],
 
-resources: {
-  Sightings: [
-    { label: "West Coast", url: "/west-coast", external: false },
-    { label: "East Coast", url: "/east-coast", external: false }
-  ],
-  FormalStudies: [
-    { label: "Studies in the 1990s", url: "/studies-1990s", external: false },
-    { label: "Contemporary Studies", url: "/contemporary-studies", external: false }
-  ],
-  PopularCulture: [
-    { label: "Bigfoot in Movies", url: "https://en.wikipedia.org/wiki/Bigfoot_in_popular_culture", external: true },
-    { label: "Laws about Bigfoot", url: "https://www.atlasobscura.com/articles/bigfoot-laws", external: true }
-  ]
-}
-  },
+      resources: {
+        Sightings: [
+          { label: "West Coast", url: "/west-coast", external: false },
+          { label: "East Coast", url: "/east-coast", external: false },
+        ],
+        FormalStudies: [
+          {
+            label: "Studies in the 1990s",
+            url: "/studies-1990s",
+            external: false,
+          },
+          {
+            label: "Contemporary Studies",
+            url: "/contemporary-studies",
+            external: false,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "Bigfoot in Movies",
+            url: "https://en.wikipedia.org/wiki/Bigfoot_in_popular_culture",
+            external: true,
+          },
+          {
+            label: "Laws about Bigfoot",
+            url: "https://www.atlasobscura.com/articles/bigfoot-laws",
+            external: true,
+          },
+        ],
+      },
+    },
     {
       volume: "VOLUME NUMBER 2",
-      title: "AI Border Surveillance",
-      slug: "ai-border-watch",
-      date: "2025-06-24",
-      author: "Tobin Albanese",
-      image: "/assets/images/bloghead.jpg",
-      archiveImage: "/assets/images/2.png",
-      excerpt: "From drones to pattern recognition, the new frontier is digital.",
-      content: [{ text: "Nation-states are deploying next-gen monitoring tech at scale..." }]
-    },
-     {
-      volume: "VOLUME NUMBER 3",
-      title: "Information as a Weapon",
-      slug: "info-weapon",
-      date: "2025-05-12",
-      author: "Tobin Albanese",
-      image: "/assets/images/bloghead.jpg",
-      excerpt: "How nations use media to destabilize rivals.",
-      content: [{ text: "The age of kinetic warfare has given way to digital disruption..." }]
+      title: "Echoes Over Titan",
+      slug: "echoes-over-titan",
+      author: "Tobin M. Albanese",
+      date: "2025-07-03",
+      excerpt: "Telemetry ghosts hint at a forgotten beacon near Titan’s haze.",
+      archiveImage: "/assets/images/Midnight Bureau.png",
+      banner:
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+
+      content: [
+        {
+          text: "<p>Instruments woke in waves aboard <em>Vigilant Horizon</em>, painting Titan as a blurred lantern in the dark. Somewhere, a low band ping repeated: a heartbeat or a memory.</p>",
+        },
+        {
+          text: "<p>Navigation ran old routines. Power shunted to antenna arrays that hadn’t moved in years. Static teased a voice—then fell back into snow. Beyond the viewport, orange haze swirled beneath Saturn’s rings like a sleeping animal.</p>",
+        },
+      ],
+
+      images: [
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+      ],
+
+      resources: {
+        Sightings: [
+          { label: "West Coast", url: "/west-coast", external: false },
+          { label: "East Coast", url: "/east-coast", external: false },
+        ],
+        FormalStudies: [
+          {
+            label: "Studies in the 1990s",
+            url: "/studies-1990s",
+            external: false,
+          },
+          {
+            label: "Contemporary Studies",
+            url: "/contemporary-studies",
+            external: false,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "Bigfoot in Movies",
+            url: "https://en.wikipedia.org/wiki/Bigfoot_in_popular_culture",
+            external: true,
+          },
+          {
+            label: "Laws about Bigfoot",
+            url: "https://www.atlasobscura.com/articles/bigfoot-laws",
+            external: true,
+          },
+        ],
+      },
     },
     {
-      title: "Cyber Frontlines",
-      slug: "cyber-front",
-      date: "2025-05-20",
-      author: "Tobin Albanese",
-      image: "/assets/images/bloghead.jpg",
-      archiveImage: "/assets/images/3.png",
-      excerpt: "Inside the invisible battlefield of the internet.",
-      content: [{ text: "State-sponsored cyberattacks have become a daily reality..." }]
-    }
+      volume: "VOLUME NUMBER 3",
+      title: "Static Choirs of the Belt",
+      slug: "static-choirs-belt",
+      author: "Tobin M. Albanese",
+      date: "2025-06-21",
+      excerpt:
+        "Transmissions harmonize where relays failed—like a choir with no choir loft.",
+      archiveImage: "/assets/images/Midnight Bureau.png",
+      banner:
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+
+      content: [
+        {
+          text: "<p>Relays sang to each other in loops, an accidental chorus. <em>Vigilant Horizon</em> listened and mistook it for company.</p>",
+        },
+        {
+          text: "<p>Every few hours, the pattern shifted: a missing node fell silent, another returned with a burst of clipped vowels and broken timestamps. The ship logged it as music.</p>",
+        },
+      ],
+
+      images: [
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+      ],
+
+      resources: {
+        Sightings: [
+          { label: "West Coast", url: "/west-coast", external: false },
+          { label: "East Coast", url: "/east-coast", external: false },
+        ],
+        FormalStudies: [
+          {
+            label: "Studies in the 1990s",
+            url: "/studies-1990s",
+            external: false,
+          },
+          {
+            label: "Contemporary Studies",
+            url: "/contemporary-studies",
+            external: false,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "Bigfoot in Movies",
+            url: "https://en.wikipedia.org/wiki/Bigfoot_in_popular_culture",
+            external: true,
+          },
+          {
+            label: "Laws about Bigfoot",
+            url: "https://www.atlasobscura.com/articles/bigfoot-laws",
+            external: true,
+          },
+        ],
+      },
+    },
+    {
+      volume: "VOLUME NUMBER 4",
+      title: "Graveyard Shift at Null Habitat",
+      slug: "graveyard-shift-null",
+      author: "Tobin M. Albanese",
+      date: "2025-06-12",
+      excerpt: "Auto-dock arms still remember a routine the living forgot.",
+      archiveImage: "/assets/images/Midnight Bureau.png",
+      banner:
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+
+      content: [
+        {
+          text: "<p>Docking clamps embraced the hull with ceremonial grace. Dust curled in red light like incense. A terminal greeted no one: <em>WELCOME BACK</em>.</p>",
+        },
+        {
+          text: "<p>Inside, the PA breathed a single syllable and died. The station’s heart ticked, not alive, not dead—merely unwilling to end.</p>",
+        },
+      ],
+
+      images: [
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+      ],
+
+      resources: {
+        Sightings: [
+          { label: "West Coast", url: "/west-coast", external: false },
+          { label: "East Coast", url: "/east-coast", external: false },
+        ],
+        FormalStudies: [
+          {
+            label: "Studies in the 1990s",
+            url: "/studies-1990s",
+            external: false,
+          },
+          {
+            label: "Contemporary Studies",
+            url: "/contemporary-studies",
+            external: false,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "Bigfoot in Movies",
+            url: "https://en.wikipedia.org/wiki/Bigfoot_in_popular_culture",
+            external: true,
+          },
+          {
+            label: "Laws about Bigfoot",
+            url: "https://www.atlasobscura.com/articles/bigfoot-laws",
+            external: true,
+          },
+        ],
+      },
+    },
   ],
 
-  Popular: [
-    {
-      Volume: "Volume No. 1",
-      title: "Information as a Weapon",
-      slug: "info-weapon",
-      date: "2025-05-12",
-      author: "Tobin Albanese",
-      image: "/assets/images/bloghead.jpg",
-      excerpt: "How nations use media to destabilize rivals.",
-      content: [{ text: "The age of kinetic warfare has given way to digital disruption..." }]
-    },
-    {
-      title: "Cyber Frontlines",
-      slug: "cyber-front",
-      date: "2025-05-20",
-      author: "Tobin Albanese",
-      image: "/assets/images/bloghead.jpg",
-      excerpt: "Inside the invisible battlefield of the internet.",
-      content: [{ text: "State-sponsored cyberattacks have become a daily reality..." }]
-    }
-  ],
+  Popular: [],
 
   Archive: [
     {
+      volume: "VOLUME NUMBER 1",
       title: "The Return of Multipolarity",
       slug: "multipolarity",
+      author: "Tobin M. Albanese",
       date: "2024-01-14",
-      author: "Tobin Albanese",
-      image: "/assets/images/bloghead.jpg",
       excerpt: "Why no single superpower can dominate the 21st century.",
-      content: [{ text: "A fragmented world is a dangerous one..." }]
+      archiveImage: "/assets/images/Midnight Bureau.png",
+      banner:
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+
+      content: [
+        {
+          text: "<p>Gravity wells form where capital, talent, and legitimacy pool. The map is lumpy again.</p>",
+        },
+        {
+          text: "<p>Cold alliances thaw, warm rivalries freeze. The cartography of risk redraws itself nightly.</p>",
+        },
+      ],
+
+      images: [
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+      ],
+
+      resources: {
+        Sightings: [
+          { label: "West Coast", url: "/west-coast", external: false },
+          { label: "East Coast", url: "/east-coast", external: false },
+        ],
+        FormalStudies: [
+          {
+            label: "Studies in the 1990s",
+            url: "/studies-1990s",
+            external: false,
+          },
+          {
+            label: "Contemporary Studies",
+            url: "/contemporary-studies",
+            external: false,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "Bigfoot in Movies",
+            url: "https://en.wikipedia.org/wiki/Bigfoot_in_popular_culture",
+            external: true,
+          },
+          {
+            label: "Laws about Bigfoot",
+            url: "https://www.atlasobscura.com/articles/bigfoot-laws",
+            external: true,
+          },
+        ],
+      },
     },
     {
+      volume: "VOLUME NUMBER 2",
       title: "The 2020s: A Decade of Intelligence Failures?",
       slug: "intel-failures",
+      author: "Tobin M. Albanese",
       date: "2023-09-05",
-      author: "Tobin Albanese",
-      image: "/assets/images/bloghead.jpg",
       excerpt: "Where Western agencies got it wrong.",
-      content: [{ text: "Miscalculations from Kabul to Kyiv..." }]
-    }
+      archiveImage: "/assets/images/Midnight Bureau.png",
+      banner:
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+
+      content: [
+        {
+          text: "<p>Failure rarely looks like ignorance; it looks like confidence that aged out quietly.</p>",
+        },
+        {
+          text: "<p>Collection outpaced comprehension. Tempo outran doctrine. The scoreboard told the story.</p>",
+        },
+      ],
+
+      images: [
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+      ],
+
+      resources: {
+        Sightings: [
+          { label: "West Coast", url: "/west-coast", external: false },
+          { label: "East Coast", url: "/east-coast", external: false },
+        ],
+        FormalStudies: [
+          {
+            label: "Studies in the 1990s",
+            url: "/studies-1990s",
+            external: false,
+          },
+          {
+            label: "Contemporary Studies",
+            url: "/contemporary-studies",
+            external: false,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "Bigfoot in Movies",
+            url: "https://en.wikipedia.org/wiki/Bigfoot_in_popular_culture",
+            external: true,
+          },
+          {
+            label: "Laws about Bigfoot",
+            url: "https://www.atlasobscura.com/articles/bigfoot-laws",
+            external: true,
+          },
+        ],
+      },
+    },
+    {
+      volume: "VOLUME NUMBER 3",
+      title: "Lessons from Frozen Conflicts",
+      slug: "frozen-conflicts",
+      author: "Tobin M. Albanese",
+      date: "2024-06-30",
+      excerpt: "Stalemates calcify into structures that outlast intent.",
+      archiveImage: "/assets/images/Midnight Bureau.png",
+      banner:
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+
+      content: [
+        {
+          text: "<p>Lines become habits. Habits become borders. Borders become myths.</p>",
+        },
+        {
+          text: "<p>Every ceasefire writes a constitution—just not the kind that gets printed.</p>",
+        },
+      ],
+
+      images: [
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+      ],
+
+      resources: {
+        Sightings: [
+          { label: "West Coast", url: "/west-coast", external: false },
+          { label: "East Coast", url: "/east-coast", external: false },
+        ],
+        FormalStudies: [
+          {
+            label: "Studies in the 1990s",
+            url: "/studies-1990s",
+            external: false,
+          },
+          {
+            label: "Contemporary Studies",
+            url: "/contemporary-studies",
+            external: false,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "Bigfoot in Movies",
+            url: "https://en.wikipedia.org/wiki/Bigfoot_in_popular_culture",
+            external: true,
+          },
+          {
+            label: "Laws about Bigfoot",
+            url: "https://www.atlasobscura.com/articles/bigfoot-laws",
+            external: true,
+          },
+        ],
+      },
+    },
+    {
+      volume: "VOLUME NUMBER 4",
+      title: "The Archive of Warnings",
+      slug: "archive-of-warnings",
+      author: "Tobin M. Albanese",
+      date: "2024-03-22",
+      excerpt:
+        "Analysts warned. Institutions listened—then budget season arrived.",
+      archiveImage: "/assets/images/Midnight Bureau.png",
+      banner:
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+
+      content: [
+        {
+          text: "<p>Priority drifts where attention wanders. A memo unread is a prophecy unkept.</p>",
+        },
+        {
+          text: "<p>Some lessons only stick when they cost too much to forget.</p>",
+        },
+      ],
+
+      images: [
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+      ],
+
+      resources: {
+        Sightings: [
+          { label: "West Coast", url: "/west-coast", external: false },
+          { label: "East Coast", url: "/east-coast", external: false },
+        ],
+        FormalStudies: [
+          {
+            label: "Studies in the 1990s",
+            url: "/studies-1990s",
+            external: false,
+          },
+          {
+            label: "Contemporary Studies",
+            url: "/contemporary-studies",
+            external: false,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "Bigfoot in Movies",
+            url: "https://en.wikipedia.org/wiki/Bigfoot_in_popular_culture",
+            external: true,
+          },
+          {
+            label: "Laws about Bigfoot",
+            url: "https://www.atlasobscura.com/articles/bigfoot-laws",
+            external: true,
+          },
+        ],
+      },
+    },
   ],
 
   BookReviews: [
     {
+      volume: "VOLUME NUMBER 1",
       title: "Review: The Future is Asian",
       slug: "future-asian-review",
-      date: "2024-04-10", 
-      author: "Tobin Albanese",
-      image: "/assets/images/bloghead.jpg",
+      author: "Tobin M. Albanese",
+      date: "2024-04-10",
       excerpt: "What this book gets right—and wrong—about geopolitics.",
-      content: [{ text: "Khanna makes a bold but uneven case..." }]
+      archiveImage: "/assets/images/Midnight Bureau.png",
+      banner:
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+
+      content: [
+        {
+          text: "<p>A sweeping thesis with sharp local exceptions. Scale is not strategy.</p>",
+        },
+        {
+          text: "<p>Markets tilt eastward, but institutions lag. That friction is the story.</p>",
+        },
+      ],
+
+      images: [
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+      ],
+
+      resources: {
+        Sightings: [
+          { label: "West Coast", url: "/west-coast", external: false },
+          { label: "East Coast", url: "/east-coast", external: false },
+        ],
+        FormalStudies: [
+          {
+            label: "Studies in the 1990s",
+            url: "/studies-1990s",
+            external: false,
+          },
+          {
+            label: "Contemporary Studies",
+            url: "/contemporary-studies",
+            external: false,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "Bigfoot in Movies",
+            url: "https://en.wikipedia.org/wiki/Bigfoot_in_popular_culture",
+            external: true,
+          },
+          {
+            label: "Laws about Bigfoot",
+            url: "https://www.atlasobscura.com/articles/bigfoot-laws",
+            external: true,
+          },
+        ],
+      },
     },
     {
+      volume: "VOLUME NUMBER 2",
       title: "Redefining Intelligence (Book Review)",
       slug: "redefining-intel",
+      author: "Tobin M. Albanese",
       date: "2025-03-22",
-      author: "Tobin Albanese",
-      image: "/assets/images/bloghead.jpg",
       excerpt: "Rethinking espionage in the age of AI.",
-      content: [{ text: "A provocative new framework for analysis..." }]
-    }
+      archiveImage: "/assets/images/Midnight Bureau.png",
+      banner:
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+
+      content: [
+        {
+          text: "<p>Collection is easy. Judgment is rare. The book gets that part right.</p>",
+        },
+        {
+          text: "<p>Its blind spot: institutions still matter when machines hallucinate with authority.</p>",
+        },
+      ],
+
+      images: [
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+      ],
+
+      resources: {
+        Sightings: [
+          { label: "West Coast", url: "/west-coast", external: false },
+          { label: "East Coast", url: "/east-coast", external: false },
+        ],
+        FormalStudies: [
+          {
+            label: "Studies in the 1990s",
+            url: "/studies-1990s",
+            external: false,
+          },
+          {
+            label: "Contemporary Studies",
+            url: "/contemporary-studies",
+            external: false,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "Bigfoot in Movies",
+            url: "https://en.wikipedia.org/wiki/Bigfoot_in_popular_culture",
+            external: true,
+          },
+          {
+            label: "Laws about Bigfoot",
+            url: "https://www.atlasobscura.com/articles/bigfoot-laws",
+            external: true,
+          },
+        ],
+      },
+    },
+    {
+      volume: "VOLUME NUMBER 3",
+      title: "Grey Zone: Tactics and Deterrence (Review)",
+      slug: "grey-zone-review",
+      author: "Tobin M. Albanese",
+      date: "2024-11-01",
+      excerpt:
+        "Conflict below the threshold of war, above the level of comfort.",
+      archiveImage: "/assets/images/Midnight Bureau.png",
+      banner:
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+
+      content: [
+        {
+          text: "<p>The author maps ambiguity like terrain. Edges—not centers—decide outcomes.</p>",
+        },
+        {
+          text: "<p>Counterplay is costly and slow; the book argues patience is the cheapest weapon.</p>",
+        },
+      ],
+
+      images: [
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+      ],
+
+      resources: {
+        Sightings: [
+          { label: "West Coast", url: "/west-coast", external: false },
+          { label: "East Coast", url: "/east-coast", external: false },
+        ],
+        FormalStudies: [
+          {
+            label: "Studies in the 1990s",
+            url: "/studies-1990s",
+            external: false,
+          },
+          {
+            label: "Contemporary Studies",
+            url: "/contemporary-studies",
+            external: false,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "Bigfoot in Movies",
+            url: "https://en.wikipedia.org/wiki/Bigfoot_in_popular_culture",
+            external: true,
+          },
+          {
+            label: "Laws about Bigfoot",
+            url: "https://www.atlasobscura.com/articles/bigfoot-laws",
+            external: true,
+          },
+        ],
+      },
+    },
+    {
+      volume: "VOLUME NUMBER 4",
+      title: "War by Other Means (Review)",
+      slug: "war-by-other-means-review",
+      author: "Tobin M. Albanese",
+      date: "2025-01-05",
+      excerpt: "Economic statecraft as a strategic weapon.",
+      archiveImage: "/assets/images/Midnight Bureau.png",
+      banner:
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+
+      content: [
+        {
+          text: "<p>Finance is policy at machine speed. Sanctions write their own footnotes.</p>",
+        },
+        {
+          text: "<p>The thesis: liquidity is leverage when access is the battlefield.</p>",
+        },
+      ],
+
+      images: [
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+      ],
+
+      resources: {
+        Sightings: [
+          { label: "West Coast", url: "/west-coast", external: false },
+          { label: "East Coast", url: "/east-coast", external: false },
+        ],
+        FormalStudies: [
+          {
+            label: "Studies in the 1990s",
+            url: "/studies-1990s",
+            external: false,
+          },
+          {
+            label: "Contemporary Studies",
+            url: "/contemporary-studies",
+            external: false,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "Bigfoot in Movies",
+            url: "https://en.wikipedia.org/wiki/Bigfoot_in_popular_culture",
+            external: true,
+          },
+          {
+            label: "Laws about Bigfoot",
+            url: "https://www.atlasobscura.com/articles/bigfoot-laws",
+            external: true,
+          },
+        ],
+      },
+    },
   ],
 
   Resources: [
     {
+      volume: "VOLUME NUMBER 1",
       title: "Top Open-Source Intel Tools",
       slug: "osint-tools",
+      author: "Tobin M. Albanese",
       date: "2025-02-05",
-      author: "Tobin Albanese",
-      image: "/assets/images/bloghead.jpg",
       excerpt: "Resources for aspiring analysts and researchers.",
-      content: [{ text: "From satellite imagery to metadata tracking..." }]
+      archiveImage: "/assets/images/Midnight Bureau.png",
+      banner:
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+
+      content: [
+        {
+          text: "<p>Crowdsourced satellites, public ledgers, open maps. Truth at arm’s length.</p>",
+        },
+        { text: "<p>The toolkit grows daily; discernment should, too.</p>" },
+      ],
+
+      images: [
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+      ],
+
+      resources: {
+        Sightings: [
+          { label: "West Coast", url: "/west-coast", external: false },
+          { label: "East Coast", url: "/east-coast", external: false },
+        ],
+        FormalStudies: [
+          {
+            label: "Studies in the 1990s",
+            url: "/studies-1990s",
+            external: false,
+          },
+          {
+            label: "Contemporary Studies",
+            url: "/contemporary-studies",
+            external: false,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "Bigfoot in Movies",
+            url: "https://en.wikipedia.org/wiki/Bigfoot_in_popular_culture",
+            external: true,
+          },
+          {
+            label: "Laws about Bigfoot",
+            url: "https://www.atlasobscura.com/articles/bigfoot-laws",
+            external: true,
+          },
+        ],
+      },
     },
     {
+      volume: "VOLUME NUMBER 2",
       title: "Best Journals in Global Affairs",
       slug: "top-journals",
+      author: "Tobin M. Albanese",
       date: "2024-12-12",
-      author: "Tobin Albanese",
-      image: "/assets/images/bloghead.jpg",
       excerpt: "Where the world's leading minds publish.",
-      content: [{ text: "For analysis that goes deeper than headlines..." }]
-    }
+      archiveImage: "/assets/images/Midnight Bureau.png",
+      banner:
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+
+      content: [
+        {
+          text: "<p>Prestige attracts insight—and noise. The trick is telling them apart.</p>",
+        },
+        { text: "<p>Read for method first, conclusion second.</p>" },
+      ],
+
+      images: [
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+      ],
+
+      resources: {
+        Sightings: [
+          { label: "West Coast", url: "/west-coast", external: false },
+          { label: "East Coast", url: "/east-coast", external: false },
+        ],
+        FormalStudies: [
+          {
+            label: "Studies in the 1990s",
+            url: "/studies-1990s",
+            external: false,
+          },
+          {
+            label: "Contemporary Studies",
+            url: "/contemporary-studies",
+            external: false,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "Bigfoot in Movies",
+            url: "https://en.wikipedia.org/wiki/Bigfoot_in_popular_culture",
+            external: true,
+          },
+          {
+            label: "Laws about Bigfoot",
+            url: "https://www.atlasobscura.com/articles/bigfoot-laws",
+            external: true,
+          },
+        ],
+      },
+    },
+    {
+      volume: "VOLUME NUMBER 3",
+      title: "Analyst Starter Pack",
+      slug: "analyst-starter-pack",
+      author: "Tobin M. Albanese",
+      date: "2025-01-18",
+      excerpt: "Datasets, checklists, and workflows to get moving fast.",
+      archiveImage: "/assets/images/Midnight Bureau.png",
+      banner:
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+
+      content: [
+        {
+          text: "<p>Start with a question you can falsify. Then gather until it breaks.</p>",
+        },
+        { text: "<p>Templates save time; skepticism saves careers.</p>" },
+      ],
+
+      images: [
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+      ],
+
+      resources: {
+        Sightings: [
+          { label: "West Coast", url: "/west-coast", external: false },
+          { label: "East Coast", url: "/east-coast", external: false },
+        ],
+        FormalStudies: [
+          {
+            label: "Studies in the 1990s",
+            url: "/studies-1990s",
+            external: false,
+          },
+          {
+            label: "Contemporary Studies",
+            url: "/contemporary-studies",
+            external: false,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "Bigfoot in Movies",
+            url: "https://en.wikipedia.org/wiki/Bigfoot_in_popular_culture",
+            external: true,
+          },
+          {
+            label: "Laws about Bigfoot",
+            url: "https://www.atlasobscura.com/articles/bigfoot-laws",
+            external: true,
+          },
+        ],
+      },
+    },
+    {
+      volume: "VOLUME NUMBER 4",
+      title: "Public Data Sources Map",
+      slug: "data-sources-map",
+      author: "Tobin M. Albanese",
+      date: "2025-02-28",
+      excerpt: "A curated atlas of reliable open data feeds.",
+      archiveImage: "/assets/images/Midnight Bureau.png",
+      banner:
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+
+      content: [
+        {
+          text: "<p>APIs are terrain. Rate limits are weather. Plan accordingly.</p>",
+        },
+        { text: "<p>Redundancy across sources beats fidelity in one.</p>" },
+      ],
+
+      images: [
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+      ],
+
+      resources: {
+        Sightings: [
+          { label: "West Coast", url: "/west-coast", external: false },
+          { label: "East Coast", url: "/east-coast", external: false },
+        ],
+        FormalStudies: [
+          {
+            label: "Studies in the 1990s",
+            url: "/studies-1990s",
+            external: false,
+          },
+          {
+            label: "Contemporary Studies",
+            url: "/contemporary-studies",
+            external: false,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "Bigfoot in Movies",
+            url: "https://en.wikipedia.org/wiki/Bigfoot_in_popular_culture",
+            external: true,
+          },
+          {
+            label: "Laws about Bigfoot",
+            url: "https://www.atlasobscura.com/articles/bigfoot-laws",
+            external: true,
+          },
+        ],
+      },
+    },
   ],
 
   Geopolitics: [
     {
+      volume: "VOLUME NUMBER 1",
       title: "Taiwan and the New Flashpoints",
       slug: "taiwan-flashpoints",
+      author: "Tobin M. Albanese",
       date: "2025-06-01",
-      author: "Tobin Albanese",
-      image: "/assets/images/bloghead.jpg",
       excerpt: "Why regional disputes have global consequences.",
-      content: [{ text: "The South China Sea remains a tinderbox..." }]
-    }
+      archiveImage: "/assets/images/Midnight Bureau.png",
+      banner:
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+
+      content: [
+        {
+          text: "<p>Shipping lanes are arteries; block one and the world gets dizzy.</p>",
+        },
+        {
+          text: "<p>Deterrence is choreography. Everyone knows the steps, few enjoy the music.</p>",
+        },
+      ],
+
+      images: [
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+      ],
+
+      resources: {
+        Sightings: [
+          { label: "West Coast", url: "/west-coast", external: false },
+          { label: "East Coast", url: "/east-coast", external: false },
+        ],
+        FormalStudies: [
+          {
+            label: "Studies in the 1990s",
+            url: "/studies-1990s",
+            external: false,
+          },
+          {
+            label: "Contemporary Studies",
+            url: "/contemporary-studies",
+            external: false,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "Bigfoot in Movies",
+            url: "https://en.wikipedia.org/wiki/Bigfoot_in_popular_culture",
+            external: true,
+          },
+          {
+            label: "Laws about Bigfoot",
+            url: "https://www.atlasobscura.com/articles/bigfoot-laws",
+            external: true,
+          },
+        ],
+      },
+    },
+    {
+      volume: "VOLUME NUMBER 2",
+      title: "The Multipolar Chessboard",
+      slug: "multipolar-chessboard",
+      author: "Tobin M. Albanese",
+      date: "2025-05-01",
+      excerpt: "Coalitions, hedging, and the new balance of power.",
+      archiveImage: "/assets/images/Midnight Bureau.png",
+      banner:
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+
+      content: [
+        {
+          text: "<p>Non-alignment isn’t neutrality; it’s leverage for rent.</p>",
+        },
+        { text: "<p>Small states with sharp tools can move big pieces.</p>" },
+      ],
+
+      images: [
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+      ],
+
+      resources: {
+        Sightings: [
+          { label: "West Coast", url: "/west-coast", external: false },
+          { label: "East Coast", url: "/east-coast", external: false },
+        ],
+        FormalStudies: [
+          {
+            label: "Studies in the 1990s",
+            url: "/studies-1990s",
+            external: false,
+          },
+          {
+            label: "Contemporary Studies",
+            url: "/contemporary-studies",
+            external: false,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "Bigfoot in Movies",
+            url: "https://en.wikipedia.org/wiki/Bigfoot_in_popular_culture",
+            external: true,
+          },
+          {
+            label: "Laws about Bigfoot",
+            url: "https://www.atlasobscura.com/articles/bigfoot-laws",
+            external: true,
+          },
+        ],
+      },
+    },
+    {
+      volume: "VOLUME NUMBER 3",
+      title: "Borderlands and Influence",
+      slug: "borderlands-influence",
+      author: "Tobin M. Albanese",
+      date: "2025-03-01",
+      excerpt: "Where geography shapes leverage.",
+      archiveImage: "/assets/images/Midnight Bureau.png",
+      banner:
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+
+      content: [
+        {
+          text: "<p>The edge is where smuggling, trade, and culture braid together.</p>",
+        },
+        { text: "<p>Influence often rides buses, not tanks.</p>" },
+      ],
+
+      images: [
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+      ],
+
+      resources: {
+        Sightings: [
+          { label: "West Coast", url: "/west-coast", external: false },
+          { label: "East Coast", url: "/east-coast", external: false },
+        ],
+        FormalStudies: [
+          {
+            label: "Studies in the 1990s",
+            url: "/studies-1990s",
+            external: false,
+          },
+          {
+            label: "Contemporary Studies",
+            url: "/contemporary-studies",
+            external: false,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "Bigfoot in Movies",
+            url: "https://en.wikipedia.org/wiki/Bigfoot_in_popular_culture",
+            external: true,
+          },
+          {
+            label: "Laws about Bigfoot",
+            url: "https://www.atlasobscura.com/articles/bigfoot-laws",
+            external: true,
+          },
+        ],
+      },
+    },
+    {
+      volume: "VOLUME NUMBER 4",
+      title: "Sanctions and Alliances",
+      slug: "sanctions-alliances",
+      author: "Tobin M. Albanese",
+      date: "2025-02-01",
+      excerpt: "Economic pressure and its diplomatic side effects.",
+      archiveImage: "/assets/images/Midnight Bureau.png",
+      banner:
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+
+      content: [
+        {
+          text: "<p>Every embargo writes a shopping list for someone else.</p>",
+        },
+        {
+          text: "<p>Coordination matters more than volume—like a choir in tune.</p>",
+        },
+      ],
+
+      images: [
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+      ],
+
+      resources: {
+        Sightings: [
+          { label: "West Coast", url: "/west-coast", external: false },
+          { label: "East Coast", url: "/east-coast", external: false },
+        ],
+        FormalStudies: [
+          {
+            label: "Studies in the 1990s",
+            url: "/studies-1990s",
+            external: false,
+          },
+          {
+            label: "Contemporary Studies",
+            url: "/contemporary-studies",
+            external: false,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "Bigfoot in Movies",
+            url: "https://en.wikipedia.org/wiki/Bigfoot_in_popular_culture",
+            external: true,
+          },
+          {
+            label: "Laws about Bigfoot",
+            url: "https://www.atlasobscura.com/articles/bigfoot-laws",
+            external: true,
+          },
+        ],
+      },
+    },
   ],
 
   Intelligence: [
     {
+      volume: "VOLUME NUMBER 1",
       title: "Signals Intelligence in 2025",
       slug: "sigint-2025",
+      author: "Tobin M. Albanese",
       date: "2025-06-10",
-      author: "Tobin Albanese",
-      image: "/assets/images/bloghead.jpg",
       excerpt: "What agencies are really listening to.",
-      content: [{ text: "The era of intercepting everything, everywhere..." }]
-    }
+      archiveImage: "/assets/images/Midnight Bureau.png",
+      banner:
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+
+      content: [
+        {
+          text: "<p>Noise grows; signal narrows. Filters become philosophy as much as math.</p>",
+        },
+        { text: "<p>Metadata is narrative with the adjectives removed.</p>" },
+      ],
+
+      images: [
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+      ],
+
+      resources: {
+        Sightings: [
+          { label: "West Coast", url: "/west-coast", external: false },
+          { label: "East Coast", url: "/east-coast", external: false },
+        ],
+        FormalStudies: [
+          {
+            label: "Studies in the 1990s",
+            url: "/studies-1990s",
+            external: false,
+          },
+          {
+            label: "Contemporary Studies",
+            url: "/contemporary-studies",
+            external: false,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "Bigfoot in Movies",
+            url: "https://en.wikipedia.org/wiki/Bigfoot_in_popular_culture",
+            external: true,
+          },
+          {
+            label: "Laws about Bigfoot",
+            url: "https://www.atlasobscura.com/articles/bigfoot-laws",
+            external: true,
+          },
+        ],
+      },
+    },
+    {
+      volume: "VOLUME NUMBER 2",
+      title: "HUMINT in the Digital Age",
+      slug: "humint-digital",
+      author: "Tobin M. Albanese",
+      date: "2025-05-25",
+      excerpt: "Sources still matter when sensors saturate.",
+      archiveImage: "/assets/images/Midnight Bureau.png",
+      banner:
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+
+      content: [
+        {
+          text: "<p>People lie. They also tell the truth accidentally. The craft is knowing which is which.</p>",
+        },
+        {
+          text: "<p>Trust is a slow weapon—blunt at first, sharp over time.</p>",
+        },
+      ],
+
+      images: [
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+      ],
+
+      resources: {
+        Sightings: [
+          { label: "West Coast", url: "/west-coast", external: false },
+          { label: "East Coast", url: "/east-coast", external: false },
+        ],
+        FormalStudies: [
+          {
+            label: "Studies in the 1990s",
+            url: "/studies-1990s",
+            external: false,
+          },
+          {
+            label: "Contemporary Studies",
+            url: "/contemporary-studies",
+            external: false,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "Bigfoot in Movies",
+            url: "https://en.wikipedia.org/wiki/Bigfoot_in_popular_culture",
+            external: true,
+          },
+          {
+            label: "Laws about Bigfoot",
+            url: "https://www.atlasobscura.com/articles/bigfoot-laws",
+            external: true,
+          },
+        ],
+      },
+    },
+    {
+      volume: "VOLUME NUMBER 3",
+      title: "OSINT vs Classified",
+      slug: "osint-vs-classified",
+      author: "Tobin M. Albanese",
+      date: "2025-04-30",
+      excerpt: "What public data can (and can’t) replace.",
+      archiveImage: "/assets/images/Midnight Bureau.png",
+      banner:
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+
+      content: [
+        {
+          text: "<p>Open sources sprint; secrets stroll. Together they finish at the same time.</p>",
+        },
+        { text: "<p>Triangulation is humility expressed as method.</p>" },
+      ],
+
+      images: [
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+      ],
+
+      resources: {
+        Sightings: [
+          { label: "West Coast", url: "/west-coast", external: false },
+          { label: "East Coast", url: "/east-coast", external: false },
+        ],
+        FormalStudies: [
+          {
+            label: "Studies in the 1990s",
+            url: "/studies-1990s",
+            external: false,
+          },
+          {
+            label: "Contemporary Studies",
+            url: "/contemporary-studies",
+            external: false,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "Bigfoot in Movies",
+            url: "https://en.wikipedia.org/wiki/Bigfoot_in_popular_culture",
+            external: true,
+          },
+          {
+            label: "Laws about Bigfoot",
+            url: "https://www.atlasobscura.com/articles/bigfoot-laws",
+            external: true,
+          },
+        ],
+      },
+    },
+    {
+      volume: "VOLUME NUMBER 4",
+      title: "Counterintelligence Revived",
+      slug: "counterintel-revived",
+      author: "Tobin M. Albanese",
+      date: "2025-03-18",
+      excerpt: "Defense against insiders and influence ops.",
+      archiveImage: "/assets/images/Midnight Bureau.png",
+      banner:
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+
+      content: [
+        {
+          text: "<p>Trust boundaries failed at the seams where convenience lived.</p>",
+        },
+        {
+          text: "<p>Now we build with friction again—and sleep better for it.</p>",
+        },
+      ],
+
+      images: [
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+      ],
+
+      resources: {
+        Sightings: [
+          { label: "West Coast", url: "/west-coast", external: false },
+          { label: "East Coast", url: "/east-coast", external: false },
+        ],
+        FormalStudies: [
+          {
+            label: "Studies in the 1990s",
+            url: "/studies-1990s",
+            external: false,
+          },
+          {
+            label: "Contemporary Studies",
+            url: "/contemporary-studies",
+            external: false,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "Bigfoot in Movies",
+            url: "https://en.wikipedia.org/wiki/Bigfoot_in_popular_culture",
+            external: true,
+          },
+          {
+            label: "Laws about Bigfoot",
+            url: "https://www.atlasobscura.com/articles/bigfoot-laws",
+            external: true,
+          },
+        ],
+      },
+    },
   ],
 
   Security: [
     {
+      volume: "VOLUME NUMBER 1",
       title: "Critical Infrastructure Vulnerabilities",
       slug: "infrastructure-threats",
+      author: "Tobin M. Albanese",
       date: "2025-05-30",
-      author: "Tobin Albanese",
-      image: "/assets/images/bloghead.jpg",
       excerpt: "How physical and cyber threats converge.",
-      content: [{ text: "Power, water, transport—all are under siege..." }]
-    }
+      archiveImage: "/assets/images/Midnight Bureau.png",
+      banner:
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+
+      content: [
+        {
+          text: "<p>Pipes and packets fail the same way: at their chokepoints.</p>",
+        },
+        {
+          text: "<p>Visibility beats perfection. You can’t patch what you can’t see.</p>",
+        },
+      ],
+
+      images: [
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+      ],
+
+      resources: {
+        Sightings: [
+          { label: "West Coast", url: "/west-coast", external: false },
+          { label: "East Coast", url: "/east-coast", external: false },
+        ],
+        FormalStudies: [
+          {
+            label: "Studies in the 1990s",
+            url: "/studies-1990s",
+            external: false,
+          },
+          {
+            label: "Contemporary Studies",
+            url: "/contemporary-studies",
+            external: false,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "Bigfoot in Movies",
+            url: "https://en.wikipedia.org/wiki/Bigfoot_in_popular_culture",
+            external: true,
+          },
+          {
+            label: "Laws about Bigfoot",
+            url: "https://www.atlasobscura.com/articles/bigfoot-laws",
+            external: true,
+          },
+        ],
+      },
+    },
+    {
+      volume: "VOLUME NUMBER 2",
+      title: "Ransomware Economics",
+      slug: "ransomware-econ",
+      author: "Tobin M. Albanese",
+      date: "2025-04-29",
+      excerpt: "Why the business model keeps winning.",
+      archiveImage: "/assets/images/Midnight Bureau.png",
+      banner:
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+
+      content: [
+        {
+          text: "<p>It’s not code; it’s cash flow. Margins look like SaaS with worse ethics.</p>",
+        },
+        { text: "<p>Defense must attack incentives, not just IP ranges.</p>" },
+      ],
+
+      images: [
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+      ],
+
+      resources: {
+        Sightings: [
+          { label: "West Coast", url: "/west-coast", external: false },
+          { label: "East Coast", url: "/east-coast", external: false },
+        ],
+        FormalStudies: [
+          {
+            label: "Studies in the 1990s",
+            url: "/studies-1990s",
+            external: false,
+          },
+          {
+            label: "Contemporary Studies",
+            url: "/contemporary-studies",
+            external: false,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "Bigfoot in Movies",
+            url: "https://en.wikipedia.org/wiki/Bigfoot_in_popular_culture",
+            external: true,
+          },
+          {
+            label: "Laws about Bigfoot",
+            url: "https://www.atlasobscura.com/articles/bigfoot-laws",
+            external: true,
+          },
+        ],
+      },
+    },
+    {
+      volume: "VOLUME NUMBER 3",
+      title: "Election Security: 2024 Lessons",
+      slug: "election-security-lessons",
+      author: "Tobin M. Albanese",
+      date: "2025-02-10",
+      excerpt: "Hardening processes without chilling speech.",
+      archiveImage: "/assets/images/Midnight Bureau.png",
+      banner:
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+
+      content: [
+        { text: "<p>Paper trails are boring. That’s why they work.</p>" },
+        {
+          text: "<p>Auditability is the opposite of virality. Choose it anyway.</p>",
+        },
+      ],
+
+      images: [
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+      ],
+
+      resources: {
+        Sightings: [
+          { label: "West Coast", url: "/west-coast", external: false },
+          { label: "East Coast", url: "/east-coast", external: false },
+        ],
+        FormalStudies: [
+          {
+            label: "Studies in the 1990s",
+            url: "/studies-1990s",
+            external: false,
+          },
+          {
+            label: "Contemporary Studies",
+            url: "/contemporary-studies",
+            external: false,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "Bigfoot in Movies",
+            url: "https://en.wikipedia.org/wiki/Bigfoot_in_popular_culture",
+            external: true,
+          },
+          {
+            label: "Laws about Bigfoot",
+            url: "https://www.atlasobscura.com/articles/bigfoot-laws",
+            external: true,
+          },
+        ],
+      },
+    },
+    {
+      volume: "VOLUME NUMBER 4",
+      title: "Zero Trust, Real World",
+      slug: "zero-trust-real",
+      author: "Tobin M. Albanese",
+      date: "2025-03-02",
+      excerpt: "Implementing principles under messy constraints.",
+      archiveImage: "/assets/images/Midnight Bureau.png",
+      banner:
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+
+      content: [
+        {
+          text: "<p>The perimeter is a story we tell ourselves. Roles and proofs are the plot.</p>",
+        },
+        {
+          text: "<p>Start with identity. Then stay there longer than you planned.</p>",
+        },
+      ],
+
+      images: [
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+      ],
+
+      resources: {
+        Sightings: [
+          { label: "West Coast", url: "/west-coast", external: false },
+          { label: "East Coast", url: "/east-coast", external: false },
+        ],
+        FormalStudies: [
+          {
+            label: "Studies in the 1990s",
+            url: "/studies-1990s",
+            external: false,
+          },
+          {
+            label: "Contemporary Studies",
+            url: "/contemporary-studies",
+            external: false,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "Bigfoot in Movies",
+            url: "https://en.wikipedia.org/wiki/Bigfoot_in_popular_culture",
+            external: true,
+          },
+          {
+            label: "Laws about Bigfoot",
+            url: "https://www.atlasobscura.com/articles/bigfoot-laws",
+            external: true,
+          },
+        ],
+      },
+    },
   ],
 
   Defense: [
     {
+      volume: "VOLUME NUMBER 1",
       title: "Modernizing NATO",
       slug: "nato-modern",
+      author: "Tobin M. Albanese",
       date: "2025-04-12",
-      author: "Tobin Albanese",
-      image: "/assets/images/bloghead.jpg",
       excerpt: "Is the alliance still relevant in a multipolar world?",
-      content: [{ text: "A look at funding, cohesion, and strategy..." }]
-    }
+      archiveImage: "/assets/images/Midnight Bureau.png",
+      banner:
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+
+      content: [
+        {
+          text: "<p>Budgets signal belief. Interoperability signals intent.</p>",
+        },
+        {
+          text: "<p>Speed is the new mass. Procurement hasn’t caught up yet.</p>",
+        },
+      ],
+
+      images: [
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+      ],
+
+      resources: {
+        Sightings: [
+          { label: "West Coast", url: "/west-coast", external: false },
+          { label: "East Coast", url: "/east-coast", external: false },
+        ],
+        FormalStudies: [
+          {
+            label: "Studies in the 1990s",
+            url: "/studies-1990s",
+            external: false,
+          },
+          {
+            label: "Contemporary Studies",
+            url: "/contemporary-studies",
+            external: false,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "Bigfoot in Movies",
+            url: "https://en.wikipedia.org/wiki/Bigfoot_in_popular_culture",
+            external: true,
+          },
+          {
+            label: "Laws about Bigfoot",
+            url: "https://www.atlasobscura.com/articles/bigfoot-laws",
+            external: true,
+          },
+        ],
+      },
+    },
+    {
+      volume: "VOLUME NUMBER 2",
+      title: "Deterrence in the Drone Era",
+      slug: "drone-deterrence",
+      author: "Tobin M. Albanese",
+      date: "2025-05-06",
+      excerpt: "Swarming challenges old assumptions about scale.",
+      archiveImage: "/assets/images/Midnight Bureau.png",
+      banner:
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+
+      content: [
+        {
+          text: "<p>Many small beats few large when the air is crowded and cheap.</p>",
+        },
+        {
+          text: "<p>Counter-swarm doctrine is part physics, part wallet size.</p>",
+        },
+      ],
+
+      images: [
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+      ],
+
+      resources: {
+        Sightings: [
+          { label: "West Coast", url: "/west-coast", external: false },
+          { label: "East Coast", url: "/east-coast", external: false },
+        ],
+        FormalStudies: [
+          {
+            label: "Studies in the 1990s",
+            url: "/studies-1990s",
+            external: false,
+          },
+          {
+            label: "Contemporary Studies",
+            url: "/contemporary-studies",
+            external: false,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "Bigfoot in Movies",
+            url: "https://en.wikipedia.org/wiki/Bigfoot_in_popular_culture",
+            external: true,
+          },
+          {
+            label: "Laws about Bigfoot",
+            url: "https://www.atlasobscura.com/articles/bigfoot-laws",
+            external: true,
+          },
+        ],
+      },
+    },
+    {
+      volume: "VOLUME NUMBER 3",
+      title: "Amphibious Ops Reimagined",
+      slug: "amphibious-reimagined",
+      author: "Tobin M. Albanese",
+      date: "2025-03-09",
+      excerpt: "Littoral fights against modern A2/AD.",
+      archiveImage: "/assets/images/Midnight Bureau.png",
+      banner:
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+
+      content: [
+        {
+          text: "<p>Landing where the enemy expects you least still works—if you can get there.</p>",
+        },
+        { text: "<p>Logistics is hero and villain in the same scene.</p>" },
+      ],
+
+      images: [
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+      ],
+
+      resources: {
+        Sightings: [
+          { label: "West Coast", url: "/west-coast", external: false },
+          { label: "East Coast", url: "/east-coast", external: false },
+        ],
+        FormalStudies: [
+          {
+            label: "Studies in the 1990s",
+            url: "/studies-1990s",
+            external: false,
+          },
+          {
+            label: "Contemporary Studies",
+            url: "/contemporary-studies",
+            external: false,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "Bigfoot in Movies",
+            url: "https://en.wikipedia.org/wiki/Bigfoot_in_popular_culture",
+            external: true,
+          },
+          {
+            label: "Laws about Bigfoot",
+            url: "https://www.atlasobscura.com/articles/bigfoot-laws",
+            external: true,
+          },
+        ],
+      },
+    },
+    {
+      volume: "VOLUME NUMBER 4",
+      title: "Logistics as Strategy",
+      slug: "logistics-strategy",
+      author: "Tobin M. Albanese",
+      date: "2025-02-22",
+      excerpt: "Throughput wins wars.",
+      archiveImage: "/assets/images/Midnight Bureau.png",
+      banner:
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+
+      content: [
+        { text: "<p>Every plan is a supply chain in disguise.</p>" },
+        {
+          text: "<p>Ports and rail are the quiet kings of the battlefield.</p>",
+        },
+      ],
+
+      images: [
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+      ],
+
+      resources: {
+        Sightings: [
+          { label: "West Coast", url: "/west-coast", external: false },
+          { label: "East Coast", url: "/east-coast", external: false },
+        ],
+        FormalStudies: [
+          {
+            label: "Studies in the 1990s",
+            url: "/studies-1990s",
+            external: false,
+          },
+          {
+            label: "Contemporary Studies",
+            url: "/contemporary-studies",
+            external: false,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "Bigfoot in Movies",
+            url: "https://en.wikipedia.org/wiki/Bigfoot_in_popular_culture",
+            external: true,
+          },
+          {
+            label: "Laws about Bigfoot",
+            url: "https://www.atlasobscura.com/articles/bigfoot-laws",
+            external: true,
+          },
+        ],
+      },
+    },
   ],
 
   Technology: [
     {
+      volume: "VOLUME NUMBER 1",
       title: "AI’s Role in Battlefield Decisions",
       slug: "ai-battlefield",
+      author: "Tobin M. Albanese",
       date: "2025-06-01",
-      author: "Tobin Albanese",
-      image: "/assets/images/bloghead.jpg",
       excerpt: "Speed, accuracy—and ethical questions.",
-      content: [{ text: "When machines kill on your behalf..." }]
-    }
+      archiveImage: "/assets/images/Midnight Bureau.png",
+      banner:
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+
+      content: [
+        {
+          text: "<p>Faster than thought isn’t the same as better than thought.</p>",
+        },
+        {
+          text: "<p>Escalation ladders wobble when loops close themselves.</p>",
+        },
+      ],
+
+      images: [
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+      ],
+
+      resources: {
+        Sightings: [
+          { label: "West Coast", url: "/west-coast", external: false },
+          { label: "East Coast", url: "/east-coast", external: false },
+        ],
+        FormalStudies: [
+          {
+            label: "Studies in the 1990s",
+            url: "/studies-1990s",
+            external: false,
+          },
+          {
+            label: "Contemporary Studies",
+            url: "/contemporary-studies",
+            external: false,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "Bigfoot in Movies",
+            url: "https://en.wikipedia.org/wiki/Bigfoot_in_popular_culture",
+            external: true,
+          },
+          {
+            label: "Laws about Bigfoot",
+            url: "https://www.atlasobscura.com/articles/bigfoot-laws",
+            external: true,
+          },
+        ],
+      },
+    },
+    {
+      volume: "VOLUME NUMBER 2",
+      title: "Synthetic Media and Trust Crisis",
+      slug: "synthetic-media",
+      author: "Tobin M. Albanese",
+      date: "2025-06-05",
+      excerpt: "AI-generated content and the collapse of reality.",
+      archiveImage: "/assets/images/Midnight Bureau.png",
+      banner:
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+
+      content: [
+        { text: "<p>If you can’t trust your eyes, trust your provenance.</p>" },
+        { text: "<p>Authenticity becomes a product line, not a feeling.</p>" },
+      ],
+
+      images: [
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+      ],
+
+      resources: {
+        Sightings: [
+          { label: "West Coast", url: "/west-coast", external: false },
+          { label: "East Coast", url: "/east-coast", external: false },
+        ],
+        FormalStudies: [
+          {
+            label: "Studies in the 1990s",
+            url: "/studies-1990s",
+            external: false,
+          },
+          {
+            label: "Contemporary Studies",
+            url: "/contemporary-studies",
+            external: false,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "Bigfoot in Movies",
+            url: "https://en.wikipedia.org/wiki/Bigfoot_in_popular_culture",
+            external: true,
+          },
+          {
+            label: "Laws about Bigfoot",
+            url: "https://www.atlasobscura.com/articles/bigfoot-laws",
+            external: true,
+          },
+        ],
+      },
+    },
+    {
+      volume: "VOLUME NUMBER 3",
+      title: "Neurotech and Strategic Advantage",
+      slug: "neurotech-strategy",
+      author: "Tobin M. Albanese",
+      date: "2025-06-08",
+      excerpt: "Hacking brains: science fiction meets security policy.",
+      archiveImage: "/assets/images/Midnight Bureau.png",
+      banner:
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+
+      content: [
+        {
+          text: "<p>Interfaces collapse latency between will and action. Power loves that.</p>",
+        },
+        {
+          text: "<p>New vulnerability: the gap between intention and interpretation.</p>",
+        },
+      ],
+
+      images: [
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+      ],
+
+      resources: {
+        Sightings: [
+          { label: "West Coast", url: "/west-coast", external: false },
+          { label: "East Coast", url: "/east-coast", external: false },
+        ],
+        FormalStudies: [
+          {
+            label: "Studies in the 1990s",
+            url: "/studies-1990s",
+            external: false,
+          },
+          {
+            label: "Contemporary Studies",
+            url: "/contemporary-studies",
+            external: false,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "Bigfoot in Movies",
+            url: "https://en.wikipedia.org/wiki/Bigfoot_in_popular_culture",
+            external: true,
+          },
+          {
+            label: "Laws about Bigfoot",
+            url: "https://www.atlasobscura.com/articles/bigfoot-laws",
+            external: true,
+          },
+        ],
+      },
+    },
+    {
+      volume: "VOLUME NUMBER 4",
+      title: "Autonomy and Control Loops",
+      slug: "autonomy-control-loops",
+      author: "Tobin M. Albanese",
+      date: "2025-06-12",
+      excerpt: "When humans supervise fleets at machine speed.",
+      archiveImage: "/assets/images/Midnight Bureau.png",
+      banner:
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+
+      content: [
+        {
+          text: "<p>Supervisory control is the compromise we’ll live with for a while.</p>",
+        },
+        {
+          text: "<p>Interfaces decide accountability long before policy does.</p>",
+        },
+      ],
+
+      images: [
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+      ],
+
+      resources: {
+        Sightings: [
+          { label: "West Coast", url: "/west-coast", external: false },
+          { label: "East Coast", url: "/east-coast", external: false },
+        ],
+        FormalStudies: [
+          {
+            label: "Studies in the 1990s",
+            url: "/studies-1990s",
+            external: false,
+          },
+          {
+            label: "Contemporary Studies",
+            url: "/contemporary-studies",
+            external: false,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "Bigfoot in Movies",
+            url: "https://en.wikipedia.org/wiki/Bigfoot_in_popular_culture",
+            external: true,
+          },
+          {
+            label: "Laws about Bigfoot",
+            url: "https://www.atlasobscura.com/articles/bigfoot-laws",
+            external: true,
+          },
+        ],
+      },
+    },
   ],
 
   Economy: [
     {
+      volume: "VOLUME NUMBER 1",
       title: "Currency Wars in the Digital Age",
       slug: "currency-wars",
+      author: "Tobin M. Albanese",
       date: "2025-03-11",
-      author: "Tobin Albanese",
-      image: "/assets/images/bloghead.jpg",
       excerpt: "CBDCs, sanctions, and strategic leverage.",
-      content: [{ text: "Money is now programmable—and political..." }]
-    }
+      archiveImage: "/assets/images/Midnight Bureau.png",
+      banner:
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+
+      content: [
+        { text: "<p>Code is policy when money is software.</p>" },
+        { text: "<p>Liquidity routes around politics—until it can’t.</p>" },
+      ],
+
+      images: [
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+      ],
+
+      resources: {
+        Sightings: [
+          { label: "West Coast", url: "/west-coast", external: false },
+          { label: "East Coast", url: "/east-coast", external: false },
+        ],
+        FormalStudies: [
+          {
+            label: "Studies in the 1990s",
+            url: "/studies-1990s",
+            external: false,
+          },
+          {
+            label: "Contemporary Studies",
+            url: "/contemporary-studies",
+            external: false,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "Bigfoot in Movies",
+            url: "https://en.wikipedia.org/wiki/Bigfoot_in_popular_culture",
+            external: true,
+          },
+          {
+            label: "Laws about Bigfoot",
+            url: "https://www.atlasobscura.com/articles/bigfoot-laws",
+            external: true,
+          },
+        ],
+      },
+    },
+    {
+      volume: "VOLUME NUMBER 2",
+      title: "Supply Chains as Strategy",
+      slug: "supply-chains-strategy",
+      author: "Tobin M. Albanese",
+      date: "2025-02-14",
+      excerpt: "Resilience beats just-in-time.",
+      archiveImage: "/assets/images/Midnight Bureau.png",
+      banner:
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+
+      content: [
+        { text: "<p>Diversity is antifragility for shipping lanes.</p>" },
+        { text: "<p>Buffers cost less than emergencies.</p>" },
+      ],
+
+      images: [
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+      ],
+
+      resources: {
+        Sightings: [
+          { label: "West Coast", url: "/west-coast", external: false },
+          { label: "East Coast", url: "/east-coast", external: false },
+        ],
+        FormalStudies: [
+          {
+            label: "Studies in the 1990s",
+            url: "/studies-1990s",
+            external: false,
+          },
+          {
+            label: "Contemporary Studies",
+            url: "/contemporary-studies",
+            external: false,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "Bigfoot in Movies",
+            url: "https://en.wikipedia.org/wiki/Bigfoot_in_popular_culture",
+            external: true,
+          },
+          {
+            label: "Laws about Bigfoot",
+            url: "https://www.atlasobscura.com/articles/bigfoot-laws",
+            external: true,
+          },
+        ],
+      },
+    },
+    {
+      volume: "VOLUME NUMBER 3",
+      title: "Rare Earths Monopoly",
+      slug: "rare-earths-monopoly",
+      author: "Tobin M. Albanese",
+      date: "2025-04-01",
+      excerpt: "Materials that decide entire industries.",
+      archiveImage: "/assets/images/Midnight Bureau.png",
+      banner:
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+
+      content: [
+        {
+          text: "<p>Control the feedstock, control the future tense of technology.</p>",
+        },
+        { text: "<p>Recycling is strategy disguised as virtue.</p>" },
+      ],
+
+      images: [
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+      ],
+
+      resources: {
+        Sightings: [
+          { label: "West Coast", url: "/west-coast", external: false },
+          { label: "East Coast", url: "/east-coast", external: false },
+        ],
+        FormalStudies: [
+          {
+            label: "Studies in the 1990s",
+            url: "/studies-1990s",
+            external: false,
+          },
+          {
+            label: "Contemporary Studies",
+            url: "/contemporary-studies",
+            external: false,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "Bigfoot in Movies",
+            url: "https://en.wikipedia.org/wiki/Bigfoot_in_popular_culture",
+            external: true,
+          },
+          {
+            label: "Laws about Bigfoot",
+            url: "https://www.atlasobscura.com/articles/bigfoot-laws",
+            external: true,
+          },
+        ],
+      },
+    },
+    {
+      volume: "VOLUME NUMBER 4",
+      title: "Energy Markets and Security",
+      slug: "energy-markets-security",
+      author: "Tobin M. Albanese",
+      date: "2025-03-20",
+      excerpt: "Pricing power as geopolitical power.",
+      archiveImage: "/assets/images/Midnight Bureau.png",
+      banner:
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+
+      content: [
+        { text: "<p>Barrels and basis points travel together.</p>" },
+        {
+          text: "<p>Policy shifts ripple like shockwaves down a futures curve.</p>",
+        },
+      ],
+
+      images: [
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+      ],
+
+      resources: {
+        Sightings: [
+          { label: "West Coast", url: "/west-coast", external: false },
+          { label: "East Coast", url: "/east-coast", external: false },
+        ],
+        FormalStudies: [
+          {
+            label: "Studies in the 1990s",
+            url: "/studies-1990s",
+            external: false,
+          },
+          {
+            label: "Contemporary Studies",
+            url: "/contemporary-studies",
+            external: false,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "Bigfoot in Movies",
+            url: "https://en.wikipedia.org/wiki/Bigfoot_in_popular_culture",
+            external: true,
+          },
+          {
+            label: "Laws about Bigfoot",
+            url: "https://www.atlasobscura.com/articles/bigfoot-laws",
+            external: true,
+          },
+        ],
+      },
+    },
   ],
 
   Energy: [
     {
+      volume: "VOLUME NUMBER 1",
       title: "Energy as a Weapon",
       slug: "energy-weapon",
+      author: "Tobin M. Albanese",
       date: "2025-01-20",
-      author: "Tobin Albanese",
-      image: "/assets/images/bloghead.jpg",
       excerpt: "How oil and gas drive foreign policy.",
-      content: [{ text: "From Russia to the Gulf, energy is leverage..." }]
-    }
-  ],
+      archiveImage: "/assets/images/Midnight Bureau.png",
+      banner:
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 
-  Environment: [
-    {
-      title: "Climate and Conflict",
-      slug: "climate-conflict",
-      date: "2025-05-10",
-      author: "Tobin Albanese",
-      image: "/assets/images/bloghead.jpg",
-      excerpt: "How environmental stress fuels instability.",
-      content: [{ text: "Water wars and resource fights ahead..." }]
-    }
-  ],
+      content: [
+        {
+          text: "<p>Pipelines are policy. Terminals are treaties you can see from space.</p>",
+        },
+        {
+          text: "<p>Leverage swings with winter and spare capacity charts.</p>",
+        },
+      ],
 
-  Diplomacy: [
-    {
-      title: "Quiet Channels: Backroom Diplomacy",
-      slug: "backchannel-diplomacy",
-      date: "2025-04-25",
-      author: "Tobin Albanese",
-      image: "/assets/images/bloghead.jpg",
-      excerpt: "Why the most important talks are rarely public.",
-      content: [{ text: "From Tehran to Pyongyang—off-record matters most..." }]
-    }
-  ],
+      images: [
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+      ],
 
-  ForeignPolicy: [
+      resources: {
+        Sightings: [
+          { label: "West Coast", url: "/west-coast", external: false },
+          { label: "East Coast", url: "/east-coast", external: false },
+        ],
+        FormalStudies: [
+          {
+            label: "Studies in the 1990s",
+            url: "/studies-1990s",
+            external: false,
+          },
+          {
+            label: "Contemporary Studies",
+            url: "/contemporary-studies",
+            external: false,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "Bigfoot in Movies",
+            url: "https://en.wikipedia.org/wiki/Bigfoot_in_popular_culture",
+            external: true,
+          },
+          {
+            label: "Laws about Bigfoot",
+            url: "https://www.atlasobscura.com/articles/bigfoot-laws",
+            external: true,
+          },
+        ],
+      },
+    },
     {
-      title: "The End of Liberal Internationalism?",
-      slug: "liberal-order",
+      volume: "VOLUME NUMBER 2",
+      title: "Nuclear's Quiet Return",
+      slug: "nuclear-return",
+      author: "Tobin M. Albanese",
+      date: "2025-02-26",
+      excerpt: "Why advanced reactors are back in the chat.",
+      archiveImage: "/assets/images/Midnight Bureau.png",
+      banner:
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+
+      content: [
+        {
+          text: "<p>Regulatory courage becomes an energy source of its own.</p>",
+        },
+        {
+          text: "<p>Safety and scalability must handshake in public, not just in specs.</p>",
+        },
+      ],
+
+      images: [
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+      ],
+
+      resources: {
+        Sightings: [
+          { label: "West Coast", url: "/west-coast", external: false },
+          { label: "East Coast", url: "/east-coast", external: false },
+        ],
+        FormalStudies: [
+          {
+            label: "Studies in the 1990s",
+            url: "/studies-1990s",
+            external: false,
+          },
+          {
+            label: "Contemporary Studies",
+            url: "/contemporary-studies",
+            external: false,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "Bigfoot in Movies",
+            url: "https://en.wikipedia.org/wiki/Bigfoot_in_popular_culture",
+            external: true,
+          },
+          {
+            label: "Laws about Bigfoot",
+            url: "https://www.atlasobscura.com/articles/bigfoot-laws",
+            external: true,
+          },
+        ],
+      },
+    },
+    {
+      volume: "VOLUME NUMBER 3",
+      title: "Hydrogen Hype vs Reality",
+      slug: "hydrogen-hype",
+      author: "Tobin M. Albanese",
+      date: "2025-03-03",
+      excerpt: "Where hydrogen fits—and where it doesn’t.",
+      archiveImage: "/assets/images/Midnight Bureau.png",
+      banner:
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+
+      content: [
+        {
+          text: "<p>Great for steel, awkward for sedans. Choose lanes, not slogans.</p>",
+        },
+        {
+          text: "<p>Storage and safety economics drive the truth more than headlines do.</p>",
+        },
+      ],
+
+      images: [
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+      ],
+
+      resources: {
+        Sightings: [
+          { label: "West Coast", url: "/west-coast", external: false },
+          { label: "East Coast", url: "/east-coast", external: false },
+        ],
+        FormalStudies: [
+          {
+            label: "Studies in the 1990s",
+            url: "/studies-1990s",
+            external: false,
+          },
+          {
+            label: "Contemporary Studies",
+            url: "/contemporary-studies",
+            external: false,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "Bigfoot in Movies",
+            url: "https://en.wikipedia.org/wiki/Bigfoot_in_popular_culture",
+            external: true,
+          },
+          {
+            label: "Laws about Bigfoot",
+            url: "https://www.atlasobscura.com/articles/bigfoot-laws",
+            external: true,
+          },
+        ],
+      },
+    },
+    {
+      volume: "VOLUME NUMBER 4",
+      title: "Grid Resilience and Blackouts",
+      slug: "grid-resilience",
+      author: "Tobin M. Albanese",
       date: "2025-03-15",
-      author: "Tobin Albanese",
-      image: "/assets/images/bloghead.jpg",
-      excerpt: "Why the post-WWII world is unraveling.",
-      content: [{ text: "New blocs rise while old alliances crumble..." }]
-    }
-  ],
+      excerpt: "Keeping the lights on under stress.",
+      archiveImage: "/assets/images/Midnight Bureau.png",
+      banner:
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
 
-  Religion: [
-    {
-      title: "Religious Soft Power",
-      slug: "religion-power",
-      date: "2025-02-20",
-      author: "Tobin Albanese",
-      image: "/assets/images/bloghead.jpg",
-      excerpt: "How states use religion to project influence.",
-      content: [{ text: "Faith as diplomacy, not just belief..." }]
-    }
-  ],
+      content: [
+        {
+          text: "<p>Grids fail at intersections: heat, demand spikes, and deferred maintenance.</p>",
+        },
+        {
+          text: "<p>Microgrids and storage buy time; planning buys peace.</p>",
+        },
+      ],
 
-  Culture: [
-    {
-      title: "Hollywood and the Security State",
-      slug: "hollywood-state",
-      date: "2025-01-30",
-      author: "Tobin Albanese",
-      image: "/assets/images/bloghead.jpg",
-      excerpt: "Why cinema shapes global opinion.",
-      content: [{ text: "Narratives matter in shaping perception..." }]
-    }
-  ],
+      images: [
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+      ],
 
-  Philosophy: [
-    {
-      title: "Surveillance and the Self",
-      slug: "philosophy-surveillance",
-      date: "2025-06-02",
-      author: "Tobin Albanese",
-      image: "/assets/images/bloghead.jpg",
-      excerpt: "What Foucault teaches us about modern control.",
-      content: [{ text: "The panopticon is alive and well..." }]
-    }
-  ],
-
-  EconomicIntelligence: [
-    {
-      title: "Trade Routes as Power Plays",
-      slug: "trade-power",
-      date: "2025-06-28",
-      author: "Tobin Albanese",
-      image: "/assets/images/bloghead.jpg",
-      excerpt: "Why control over supply lines is strategic leverage.",
-      content: [{ text: "Maritime chokepoints are the new battlegrounds..." }]
+      resources: {
+        Sightings: [
+          { label: "West Coast", url: "/west-coast", external: false },
+          { label: "East Coast", url: "/east-coast", external: false },
+        ],
+        FormalStudies: [
+          {
+            label: "Studies in the 1990s",
+            url: "/studies-1990s",
+            external: false,
+          },
+          {
+            label: "Contemporary Studies",
+            url: "/contemporary-studies",
+            external: false,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "Bigfoot in Movies",
+            url: "https://en.wikipedia.org/wiki/Bigfoot_in_popular_culture",
+            external: true,
+          },
+          {
+            label: "Laws about Bigfoot",
+            url: "https://www.atlasobscura.com/articles/bigfoot-laws",
+            external: true,
+          },
+        ],
+      },
     },
-    {
-      title: "Financial Sanctions as Warfare",
-      slug: "sanctions-warfare",
-      date: "2025-05-18",
-      author: "Tobin Albanese",
-      image: "/assets/images/bloghead.jpg",
-      excerpt: "When cutting off banks becomes a weapon.",
-      content: [{ text: "The dollar is mightier than the missile..." }]
-    }
-  ],
-
-  MilitaryDefense: [
-    {
-      title: "The Drone Doctrine",
-      slug: "drone-doctrine",
-      date: "2025-05-10",
-      author: "Tobin Albanese",
-      image: "/assets/images/bloghead.jpg",
-      excerpt: "Unmanned systems and their rules of engagement.",
-      content: [{ text: "Drones are no longer just for surveillance..." }]
-    },
-    {
-      title: "Urban Warfare in the 21st Century",
-      slug: "urban-warfare",
-      date: "2025-04-22",
-      author: "Tobin Albanese",
-      image: "/assets/images/bloghead.jpg",
-      excerpt: "Why cities have become the new frontlines.",
-      content: [{ text: "Dense, complex, and impossible to fully control..." }]
-    }
-  ],
-
-  TechnologyInnovation: [
-    {
-      title: "Synthetic Media and Trust Crisis",
-      slug: "synthetic-media",
-      date: "2025-06-05",
-      author: "Tobin Albanese",
-      image: "/assets/images/bloghead.jpg",
-      excerpt: "AI-generated content and the collapse of reality.",
-      content: [{ text: "What happens when truth is entirely manufactured?" }]
-    },
-    {
-      title: "Neurotech and Strategic Advantage",
-      slug: "neurotech-strategy",
-      date: "2025-06-08",
-      author: "Tobin Albanese",
-      image: "/assets/images/bloghead.jpg",
-      excerpt: "Hacking brains: science fiction meets security policy.",
-      content: [{ text: "Brain-computer interfaces are a battlefield of their own..." }]
-    }
-  ],
-
-  GlobalEvents: [
-    {
-      title: "Elections in Authoritarian States",
-      slug: "elections-authoritarian",
-      date: "2024-05-14",
-      author: "Tobin Albanese",
-      image: "/assets/images/bloghead.jpg",
-      excerpt: "Why sham votes still matter geopolitically.",
-      content: [{ text: "They serve as tools for legitimacy—domestic and global..." }]
-    },
-    {
-      title: "Sudden Coups and Global Shockwaves",
-      slug: "coup-waves",
-      date: "2025-06-01",
-      author: "Tobin Albanese",
-      image: "/assets/images/bloghead.jpg",
-      excerpt: "Understanding instability in fragile states.",
-      content: [{ text: "How minor events lead to major shifts..." }]
-    }
   ],
 };
 
+const pickCardImage = (p) =>
+  (p?.images && p.images[0]) ||
+  p?.banner ||
+  p?.archiveImage ||
+  "/assets/images/space.jpg";
+
+Object.keys(MidnightBureauData).forEach((k) => {
+  const list = MidnightBureauData[k];
+  if (Array.isArray(list)) {
+    MidnightBureauData[k] = list.map((p) => ({
+      ...p,
+      image: p.image || pickCardImage(p),
+    }));
+  }
+});
+
 export default MidnightBureauData;
+
+{
+  /* TEMPLATE FOR DATA 
+  {
+      volume: "",
+      title: "",
+      slug: "",
+      author: "",
+      date: "",
+      excerpt: "",
+      archiveImage: "",
+      banner: "",
+
+      content: [
+        { text: "<p></p>" },
+        { text: "<p></p>" },
+         { text: "<p></p>" },
+          { text: "<p></p>" },
+           { text: "<p></p>" },
+            { text: "<p></p>" },
+             { text: "<p></p>" },
+              { text: "<p></p>" },
+               { text: "<p></p>" },
+                { text: "<p></p>" },
+      ],
+
+      images: [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+      ],
+
+      resources: {
+        Similar Posts: [
+          { label: "", url: "", external: false },
+          { label: "", url: "", external: false }
+        ],
+        Links: [
+          { label: "", url: "", external: true },
+          { label: "", url: "", external: true }
+        ],
+        References: [
+          { label: "", url: "", external: true },
+          { label: "", url: "", external: true }
+        ]
+      }
+    }
+  
+  
+  
+  */
+}

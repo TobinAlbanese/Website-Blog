@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import MetaHead from "../../components/LandingPage/MetaHead.jsx";
 import SvgHead from "../../components/LandingPage/svgHead.jsx";
 import Footer from "../../components/LandingPage/Footer.jsx";
-import NavbarMB from "../../components/LandingPage/NavbarMB.jsx"
+import NavbarMB from "../../components/LandingPage/NavbarMB.jsx";
 
 const socialLinks = [
   {
@@ -87,22 +87,15 @@ export default function Contact() {
 
       {/*NAVBAR*/}
       <div
-              className="dialog-off-canvas-main-canvas"
-              data-off-canvas-main-canvas=""
-            >
-              <div className="text-align-center pt-15 d-flex dfp-tag-wrapper justify-around">
-                <div id="js-dfp-tag-top--2"></div>
-              </div>
-              <div id="js-dfp-tag-outofpage--2"></div>
-              <div className="base d-flex">
-              <NavbarMB />
-
-
-
-
-
-
-
+        className="dialog-off-canvas-main-canvas"
+        data-off-canvas-main-canvas=""
+      >
+        <div className="text-align-center pt-15 d-flex dfp-tag-wrapper justify-around">
+          <div id="js-dfp-tag-top--2"></div>
+        </div>
+        <div id="js-dfp-tag-outofpage--2"></div>
+        <div className="base d-flex">
+          <NavbarMB />
 
           {/* Main bordered section */}
           <section

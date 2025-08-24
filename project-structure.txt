@@ -1,0 +1,42 @@
+.
+├── .DS_Store
+├── .gitattributes
+├── .gitignore
+├── backend
+│   ├── config
+│   │   └── db.js
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── routes
+│   │   └── postRoutes.js
+│   └── server.js
+├── frontend
+│   ├── .DS_Store
+│   ├── .env.local
+│   ├── .stylelintrc.json
+│   ├── build
+│   │   └── globals.css
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── postcss.config.js
+│   ├── public
+│   │   ├── .DS_Store
+│   │   ├── assets
+│   │   └── fonts
+│   ├── purgecss.config.cjs
+│   ├── README.md
+│   └── src
+│       ├── .DS_Store
+│       ├── components
+│       ├── data
+│       ├── lib
+│       ├── pages
+│       └── styles
+├── LICENSE
+├── project-structure.txt
+├── README.md
+└── styles2
+    ├── new.css
+    └── rand.css
+
+16 directories, 24 files

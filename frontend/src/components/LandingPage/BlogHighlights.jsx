@@ -1,250 +1,225 @@
-import React from 'react';
+// components/BlogHighlights.jsx
+import React from "react";
+import Link from "next/link";
+import MidnightBureauData from "../../data/MidnightBureau";
+
+// pick Popular first, else Recent
+const source =
+  Array.isArray(MidnightBureauData?.Popular) &&
+  MidnightBureauData.Popular.length
+    ? MidnightBureauData.Popular
+    : Array.isArray(MidnightBureauData?.Recent)
+      ? MidnightBureauData.Recent
+      : [];
+const posts = source.slice(0, 4);
+
+const getImg = (post) =>
+  post?.images?.[0] || post?.archiveImage || "/assets/images/space.jpg";
+const getHref = (post) => `/MidnightBureau/${post.slug}`;
+const getDescription = (post) => {
+  if (post?.excerpt) return post.excerpt;
+  const html = post?.content?.[0]?.text || "";
+  const text = html
+    .replace(/<[^>]*>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  const m = text.match(/.*?[.!?](\s|$)/);
+  return (m ? m[0] : text) || "Read the full story.";
+};
+const formatDate = (iso) => {
+  if (!iso) return "";
+  const d = new Date(iso);
+  return d.toLocaleDateString(undefined, {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+};
+
+// image sizing to match Special Focus
+const IMG_MAX_W_DESKTOP = 220;
+const ASPECT_RATIO = "16 / 10";
+const IMG_W_MOBILE = 105;
+const IMG_H_MOBILE = 115;
 
 export default function BlogHighlights() {
   return (
-    <>
-        <section className="c-bg" data-armstrong-id="wrapper" id="blog-highlights-section">
-        <div
-          className="row base__main pb-10 pb-md-25 pb-lg-40 pt-20 pt-md-30 pt-lg-60"
-          data-armstrong-id="primary"
-        >
-          {/* Heading and subtitle stacked top-left */}
-          <div className="col-12 col-md-5 d-flex flex-column justify-center align-items-start">
-            <h3 className="font-style-italic c-accent mt-15 fs-md-24 lh-lg">
-              Blog Highlights
-            </h3>
-            <h4 className="fs-18 mb-15 fs-md-16" data-armstrong-id="module_subtitle">
-              A curated look at my latest insights on politics, culture, and more.
-            </h4>
-          </div>
+    <section
+      className="c-bg"
+      data-armstrong-id="wrapper"
+      id="blog-highlights-section"
+    >
+      <div
+        className="row base__main pb-10 pb-md-25 pb-lg-40 pt-20 pt-md-30 pt-lg-60"
+        data-armstrong-id="primary"
+      >
+        {/* Heading */}
+        <div className="col-12 col-md-5 d-flex flex-column justify-center align-items-start">
+          <h3 className="font-style-italic c-accent mt-15 fs-md-24 lh-lg">
+            Blog Highlights
+          </h3>
+          <h4
+            className="fs-18 mb-15 fs-md-16"
+            data-armstrong-id="module_subtitle"
+          >
+            A curated look at my latest insights on politics, culture, and more.
+          </h4>
+        </div>
 
-          {/* Blog cards + sidebar row underneath full width */}
-          <div className="col-12">
-            <div className="row justify-between d-flex" data-armstrong-id="row">
-              {/* Blog cards */}
-              <div className="col-12 col-md-8 items-start" data-armstrong-id="grid_2">
-                {/* Card 1 */}
-                <div className="card items-start row card--large justify-between col-12 ml-0 mr-0 mb-20 border-bottom border-bottom-thin c-border border-top border-top-thin pt-20">
-                  <div className="mb-20 col-9 col-md-8 ml-0">
-                    <h3 className="body-m">
-                      <a href="">TITLE</a>
+        {/* Cards + sidebar */}
+        <div className="col-12">
+          <div className="row justify-between d-flex" data-armstrong-id="row">
+            {/* Cards */}
+            <div className="col-12 col-md-8" data-armstrong-id="grid_2">
+              {posts.map((post, i) => (
+                <div
+                  key={post.slug || `${post.title}-${i}`}
+                  className={
+                    "card row card--large justify-between col-12 ml-0 mr-0 pb-15 border-bottom border-bottom-thin c-border " +
+                    (i === 0 ? "border-top border-top-thin pt-20" : "")
+                  }
+                  style={{
+                    alignItems: "stretch",
+                    marginBottom: 14,
+                    position: "relative",
+                  }}
+                >
+                  {/* FULL-CARD CLICKABLE OVERLAY */}
+                  <Link
+                    href={getHref(post)}
+                    aria-label={`Open: ${post.title}`}
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      zIndex: 1,
+                      borderRadius: 6,
+                    }}
+                  />
+
+                  {/* LEFT: title/desc/author+date */}
+                  <div
+                    className="col-9 col-md-8 ml-0 d-flex flex-column"
+                    style={{ minHeight: 0 }}
+                  >
+                    <h3 className="body-m" style={{ marginBottom: 6 }}>
+                      <span>{post.title}</span>
                     </h3>
-                    <h4 className="body-s c-text-primary mt-5">
-                      <a href="">
-                        This is where a short description of the blog post will go. It should be brief and engaging to encourage readers to click through.
-                      </a>
-                    </h4>
-                    <p className="body-s mt-10 c-accent">
-                      <a href="/authors/tobin-m-albanese">Tobin M. Albanese</a> 
+
+                    <p
+                      className="body-s c-text-secondary"
+                      style={{ marginBottom: 10 }}
+                    >
+                      <span>{getDescription(post)}</span>
+                    </p>
+
+                    {/* Author ✵ Date (no divider) */}
+                    <p
+                      className="body-s c-accent"
+                      style={{
+                        fontSize: "0.9rem",
+                        marginTop: "auto",
+                        marginBottom: 0,
+                        paddingTop: 12,
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 10,
+                      }}
+                    >
+                      <span>Tobin M. Albanese</span>
+                      <span
+                        aria-hidden="true"
+                        style={{
+                          lineHeight: 1,
+                          transform: "translateY(-0.5px)",
+                        }}
+                      >
+                        ✵
+                      </span>
+                      <time dateTime={post.date || ""}>
+                        {formatDate(post.date)}
+                      </time>
                     </p>
                   </div>
-                  <div className="col-3 col-md-4 d-flex items-start justify-end mr-0">
-                    <a
-                      className="card__image mb-20"
-                      href=""
-                      aria-label=""
-                    >
-                      <figure>
-                        <img
-                          src=""
-                          alt=""
-                          className="d-none d-md-block"
-                          loading="lazy"
-                          width={200}
-                          height={120}
-                          srcSet=""
-                          sizes="(max-width: 767px) 200px"
-                        />
-                      </figure>
-                      <figure>
-                        <img
-                          src=""
-                          alt=""
-                          className="d-block d-md-none"
-                          loading="lazy"
-                          width={90}
-                          height={90}
-                          srcSet=""
-                          sizes="(max-width: 767px) 65px, 90px"
-                        />
-                      </figure>
-                    </a>
-                  </div>
-                </div>
 
-                {/* Card 2 */}
-                <div className="card items-start row card--large justify-between col-12 ml-0 mr-0 mb-20 border-bottom border-bottom-thin c-border">
-                  <div className="mb-20 col-9 col-md-8 ml-0">
-                    <h3 className="body-m">
-                      <a href="">
-                       TITLE 
-                      </a>
-                    </h3>
-                    <h4 className="body-s c-text-secondary mt-5">
-                      <a href="">
-                        Breif Desc
-                      </a>
-                    </h4>
-                    <p className="body-s mt-10 c-accent">
-                      <a href="/authors/tobin-m-albanese">*Tobin M. Albanese</a> 
-                    </p>
-                  </div>
-                  <div className="col-3 col-md-4 d-flex items-start justify-end mr-0">
-                    <a
-                      className="card__image mb-20"
-                      href=""
-                      aria-label=""
+                  {/* RIGHT: image — sized like Special Focus */}
+                  <div
+                    className="col-3 col-md-4 d-flex flex-column mr-0"
+                    style={{ alignItems: "flex-start" }}
+                  >
+                    {/* Desktop */}
+                    <figure
+                      className="d-none d-md-block"
+                      style={{ margin: 0, marginBottom: 10 }}
                     >
-                      <figure>
-                        <img
-                          src=""
-                          alt=""
-                          className="d-none d-md-block"
-                          loading="lazy"
-                          width={200}
-                          height={120}
-                          srcSet=""
-                          sizes="(max-width: 767px) 200px"
-                        />
-                      </figure>
-                      <figure>
-                        <img
-                          src=""
-                          alt=""
-                          className="d-block d-md-none"
-                          loading="lazy"
-                          width={90}
-                          height={90}
-                          srcSet=""
-                          sizes="(max-width: 767px) 65px, 90px"
-                        />
-                      </figure>
-                    </a>
-                  </div>
-                </div>
-
-                {/* Card 3 */}
-                <div className="card items-start row card--large justify-between col-12 ml-0 mr-0 mb-20 border-bottom border-bottom-thin c-border">
-                  <div className="mb-20 col-9 col-md-8 ml-0">
-                    <h3 className="body-m">
-                      <a href="">
-                        TITLE
-                      </a>
-                    </h3>
-                    <h4 className="body-s c-text-secondary mt-5">
-                      <a href="">
-                        Breif Desc
-                      </a>
-                    </h4>
-                    <p className="body-s mt-10 c-accent">
-                      <a href="/authors/tobin-m-albanese">*Tobin M. Albanese</a> 
-                    </p>
-                  </div>
-                  <div className="col-3 col-md-4 d-flex items-start justify-end mr-0">
-                    <a
-                      className="card__image mb-20"
-                      href=""
-                      aria-label=""
-                    >
-                      <figure>
-                        <img
-                          src=""
-                          alt=""
-                          className="d-none d-md-block"
-                          loading="lazy"
-                          width={200}
-                          height={120}
-                          srcSet=""
-                          sizes="(max-width: 767px) 200px"
-                        />
-                      </figure>
-                      <figure>
-                        <img
-                          src=""
-                          alt=""
-                          className="d-block d-md-none"
-                          loading="lazy"
-                          width={90}
-                          height={90}
-                          srcSet=""
-                          sizes="(max-width: 767px) 65px, 90px"
-                        />
-                      </figure>
-                    </a>
-                  </div>
-                </div>
-
-                {/* Card 4 */}
-                <div className="card items-start row card--large justify-between col-12 ml-0 mr-0 mb-20 border-bottom border-bottom-thin c-border">
-                  <div className="mb-20 col-9 col-md-8 ml-0">
-                    <h3 className="body-m">
-                      <a href="">
-                        TITLE
-                      </a>
-                    </h3>
-                    <h4 className="body-s c-text-secondary mt-5">
-                      <a href="">
-                        Breif Desc
-                      </a>
-                    </h4>
-                    <p className="body-s mt-10  c-accent">
-                      <a href="/authors/tobin-m-albanese"> *Tobin M. Albanese</a> 
-                    </p>
-                  </div>
-                  <div className="col-3 col-md-4 d-flex items-start justify-end mr-0">
-                    <a
-                      className="card__image mb-20"
-                      href=""
-                      aria-label=""
-                    >
-                      <figure>
-                        <img
-                          src=""
-                          alt=""
-                          className="d-none d-md-block"
-                          loading="lazy"
-                          width={200}
-                          height={120}
-                          srcSet=""
-                          sizes="(max-width: 767px) 200px"
-                        />
-                      </figure>
-                      <figure>
-                        <img
-                          src=""
-                          alt=""
-                          className="d-block d-md-none"
-                          loading="lazy"
-                          width={90}
-                          height={90}
-                          srcSet=""
-                          sizes="(max-width: 767px) 65px, 90px"
-                        />
-                      </figure>
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              {/* Sidebar (ad) on the right of the cards */}
-              <aside className="col-12 col-md-4">
-                {/* Your sidebar content here */}
-                <div className="sidebar">
-                    <aside className="col-12 col-md-4 d-flex justify-center align-items-center">
-                    <img
-                        src="/assets/images/Family.jpg"
-                        alt="blog background"
-                        style={{ maxWidth: '100%', height: 650, borderRadius: '8px' }}
+                      <img
+                        src={getImg(post)}
+                        alt={post.title}
                         loading="lazy"
-                    />
-                    </aside>
+                        style={{
+                          width: "100%",
+                          maxWidth: IMG_MAX_W_DESKTOP,
+                          aspectRatio: ASPECT_RATIO,
+                          objectFit: "cover",
+                          borderRadius: 6,
+                          display: "block",
+                        }}
+                      />
+                    </figure>
 
+                    {/* Mobile */}
+                    <figure
+                      className="d-block d-md-none"
+                      style={{ margin: 0, marginBottom: 10 }}
+                    >
+                      <img
+                        src={getImg(post)}
+                        alt={post.title}
+                        loading="lazy"
+                        width={IMG_W_MOBILE}
+                        height={IMG_H_MOBILE}
+                        style={{
+                          width: IMG_W_MOBILE,
+                          height: IMG_H_MOBILE,
+                          objectFit: "cover",
+                          borderRadius: 6,
+                          display: "block",
+                        }}
+                      />
+                    </figure>
                   </div>
-              </aside>
+                </div>
+              ))}
+
+              {posts.length === 0 && (
+                <div className="col-12 body-s c-text-secondary">
+                  No posts found. Add items to{" "}
+                  <code>MidnightBureauData.Popular</code> or{" "}
+                  <code>.Recent</code>.
+                </div>
+              )}
             </div>
+
+            {/* Sidebar */}
+            <aside className="col-12 col-md-4">
+              <div className="sidebar">
+                <aside className="col-12 col-md-4 d-flex justify-center align-items-center">
+                  <img
+                    src="/assets/images/Croatia.jpg"
+                    alt="Croatia coastline"
+                    style={{
+                      maxWidth: "100%",
+                      height: 620,
+                      borderRadius: "8px",
+                      objectFit: "cover",
+                    }}
+                    loading="lazy"
+                  />
+                </aside>
+              </div>
+            </aside>
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 }

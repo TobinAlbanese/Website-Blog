@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import MetaHead from "../../components/LandingPage/MetaHead";
 import SvgHead from "../../components/LandingPage/svgHead";
 import Footer from "../../components/LandingPage/Footer";
-import Navbar from "../../components/LandingPage/Navbar";
+import NavbarMB from "../../components/LandingPage/NavbarMB.jsx";
 
 const faqs = [
   {
@@ -57,7 +57,6 @@ const faqs = [
   },
 ];
 
-
 export default function FAQs() {
   const [openIndex, setOpenIndex] = useState(null);
   const [visible, setVisible] = useState(false);
@@ -79,14 +78,17 @@ export default function FAQs() {
       <MetaHead />
       <SvgHead />
 
-{/*NAVBAR*/}
-  <div className="dialog-off-canvas-main-canvas" data-off-canvas-main-canvas="">
-    <div className="text-align-center pt-15 d-flex dfp-tag-wrapper justify-around">
-      <div id="js-dfp-tag-top--2"></div>
-    </div>
-    <div id="js-dfp-tag-outofpage--2"></div>
-    <div className="base d-flex">
-     <Navbar />
+      {/*NAVBAR*/}
+      <div
+        className="dialog-off-canvas-main-canvas"
+        data-off-canvas-main-canvas=""
+      >
+        <div className="text-align-center pt-15 d-flex dfp-tag-wrapper justify-around">
+          <div id="js-dfp-tag-top--2"></div>
+        </div>
+        <div id="js-dfp-tag-outofpage--2"></div>
+        <div className="base d-flex">
+          <NavbarMB />
 
           <section
             ref={sectionRef}

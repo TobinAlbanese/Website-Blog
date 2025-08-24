@@ -22,17 +22,28 @@ export default function LandingSection() {
               }`}
               data-armstrong-id="personal-message"
             >
-              <h1 className="heading-l mb-15">Welcome to <br></br>Tobin Albanese's space</h1>
-              <p className="body-m c-text-secondary" style={{ fontSize: 18, lineHeight: 1.6}}>
-                Hi, I'm Tobin Albanese — a student, writer, thinker, and creator behind the blog{" "}
-                <em>Midnight Bureau</em>.
+              <h1 className="heading-l mb-15">
+                Welcome to <br></br>Tobin Albanese's space
+              </h1>
+              <p
+                className="body-m c-text-secondary"
+                style={{ fontSize: 18, lineHeight: 1.6 }}
+              >
+                Hi, I'm Tobin Albanese — a student, writer, thinker, and creator
+                behind the blog <em>Midnight Bureau</em>.
                 <br />
-                This space is where I share my insights on politics, culture, and the ideas that inspire me every day.
-                Through thoughtful analysis and personal reflections, I aim to explore the complexities of the world around us and encourage meaningful conversations.
+                This space is where I share my insights on politics, culture,
+                and the ideas that inspire me every day. Through thoughtful
+                analysis and personal reflections, I aim to explore the
+                complexities of the world around us and encourage meaningful
+                conversations.
                 <br />
                 <br />
-                In addition to the blog, this site also serves as a portfolio showcasing my current projects and work as I grow and learn in the fields I’m passionate about.
-                Whether you’re here to read my latest thoughts or explore my portfolio, I hope you find something that resonates or sparks your curiosity.
+                In addition to the blog, this site also serves as a portfolio
+                showcasing my current projects and work as I grow and learn in
+                the fields I’m passionate about. Whether you’re here to read my
+                latest thoughts or explore my portfolio, I hope you find
+                something that resonates or sparks your curiosity.
                 <br />
                 <br />
                 Thanks for visiting!
@@ -50,7 +61,11 @@ export default function LandingSection() {
                 src="/assets/images/tobin&johnny.jpg"
                 alt="Photo of Tobin Albanese"
                 className="profile-image"
-                style={{ maxWidth: "100%", height: "auto", borderRadius: "8px" }}
+                style={{
+                  maxWidth: "100%",
+                  height: "auto",
+                  borderRadius: "8px",
+                }}
               />
             </div>
           </div>

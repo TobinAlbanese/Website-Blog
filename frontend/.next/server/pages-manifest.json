@@ -2,13 +2,6 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/Personal/About": "pages/Personal/About.js",
-  "/": "pages/index.js",
-  "/Personal/Contact": "pages/Personal/Contact.js",
-  "/Portfolio/[slug]": "pages/Portfolio/[slug].js",
-  "/MidnightBureau/[slug]": "pages/MidnightBureau/[slug].js",
-  "/MidnightBureau": "pages/MidnightBureau.js",
-  "/MidnightBureau/Contact": "pages/MidnightBureau/Contact.js",
   "/Portfolio": "pages/Portfolio.js",
-  "/MidnightBureau/Archive": "pages/MidnightBureau/Archive.js"
+  "/": "pages/index.js"
 }

@@ -1,6 +1,9 @@
+// postcss.config.js
 module.exports = {
   plugins: {
-    '@tailwindcss/postcss': {},
+    'postcss-discard-duplicates': {},
+    'postcss-merge-rules': {},
     autoprefixer: {},
-  },
+    cssnano: { preset: 'default' }
+  }
 };

@@ -5,13 +5,23 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "next lint",
+    "css:purge": "mkdir -p build && purgecss -c purgecss.config.cjs",
+    "css:post": "postcss \"build/**/*.css\" -d build",
+    "css:lint": "stylelint \"build/**/*.css\" --fix || true",
+    "css:fmt": "prettier --write \"build/**/*.css\"",
+    "css:clean": "npm run css:purge && npm run css:post && npm run css:lint && npm run css:fmt"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
+    "@fortawesome/free-brands-svg-icons": "^7.0.0",
     "@fortawesome/free-regular-svg-icons": "^6.7.2",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
-    "@fortawesome/react-fontawesome": "^0.2.2",
+    "@fortawesome/react-fontawesome": "^0.2.5",
+    "@next/eslint-plugin-next": "^15.0.0",
+    "eslint": "^9.0.0",
     "gsap": "^3.13.0",
     "locomotive-scroll": "^4.1.4",
     "next": "^15.3.3",
@@ -23,11 +33,19 @@
     "split-type": "^0.3.4"
   },
   "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^7.0.2",
     "@tailwindcss/postcss": "^4.1.11",
     "autoprefixer": "^10.4.21",
+    "cssnano": "^7.1.0",
+    "eslint-config-next": "15.5.0",
     "postcss": "^8.5.6",
+    "postcss-cli": "^11.0.1",
+    "postcss-discard-duplicates": "^7.0.2",
+    "postcss-merge-rules": "^7.0.6",
+    "prettier": "^3.6.2",
     "purgecss": "^7.0.2",
+    "stylelint": "^16.23.1",
+    "stylelint-config-standard": "^39.0.0",
     "tailwindcss": "^4.1.11"
-  },
-  "window.confirmExternalOpen": false
+  }
 }

@@ -6,10 +6,9 @@ import { SplitText } from "gsap/SplitText";
 gsap.registerPlugin(ScrambleTextPlugin, SplitText);
 
 export default function HeatRevealCanvas({
-  
   width = 800,
   height = 800,
-  imgSrc = "/assets/images/Pakistan.jpg",
+  imgSrc = "/assets/images/Syria2.jpg",
 }) {
   const canvasRef = useRef(null);
   const containerRef = useRef(null);
@@ -110,10 +109,18 @@ export default function HeatRevealCanvas({
     }
 
     _bindEvents() {
-      this.canvas.addEventListener("pointermove", this._onMove, { passive: true });
-      this.canvas.addEventListener("pointerdown", this._onDown, { passive: true });
-      this.canvas.addEventListener("pointerleave", this._onLeave, { passive: true });
-      this.canvas.addEventListener("pointercancel", this._onLeave, { passive: true });
+      this.canvas.addEventListener("pointermove", this._onMove, {
+        passive: true,
+      });
+      this.canvas.addEventListener("pointerdown", this._onDown, {
+        passive: true,
+      });
+      this.canvas.addEventListener("pointerleave", this._onLeave, {
+        passive: true,
+      });
+      this.canvas.addEventListener("pointercancel", this._onLeave, {
+        passive: true,
+      });
       document.addEventListener("visibilitychange", this._visibilityChange);
     }
 
@@ -202,13 +209,16 @@ export default function HeatRevealCanvas({
       const rows = Math.floor(this.H / this.P.grid.size);
 
       // Reset any previous word chars
-      this.charGrid.forEach(cell => (cell.isWordChar = false));
+      this.charGrid.forEach((cell) => (cell.isWordChar = false));
 
       this.words.forEach((word) => {
         const placementCount = Math.max(1, Math.floor(Math.random() * 2) + 1);
         for (let placement = 0; placement < placementCount; placement++) {
           const direction = Math.floor(Math.random() * 3); // 0=horizontal,1=vertical,2=diagonal
-          let startX, startY, valid, attempts = 0;
+          let startX,
+            startY,
+            valid,
+            attempts = 0;
 
           while (!valid && attempts < 20) {
             attempts++;
@@ -217,7 +227,8 @@ export default function HeatRevealCanvas({
             valid = true;
 
             if (direction === 0 && startX + word.length > cols) valid = false;
-            else if (direction === 1 && startY + word.length > rows) valid = false;
+            else if (direction === 1 && startY + word.length > rows)
+              valid = false;
             else if (
               direction === 2 &&
               (startX + word.length > cols || startY + word.length > rows)
@@ -239,17 +250,14 @@ export default function HeatRevealCanvas({
                   y = (startY + i) * this.P.grid.size;
                 }
 
-               const cellIndex = this.charGrid.findIndex(
-  (cell) => cell.x === x && cell.y === y
-);
+                const cellIndex = this.charGrid.findIndex(
+                  (cell) => cell.x === x && cell.y === y
+                );
 
-if (
-  cellIndex === -1 ||
-  this.charGrid[cellIndex].isWordChar 
-) {
-  valid = false;
-  break; 
-}
+                if (cellIndex === -1 || this.charGrid[cellIndex].isWordChar) {
+                  valid = false;
+                  break;
+                }
 
                 if (cellIndex !== -1) {
                   this.charGrid[cellIndex].char = word[i];
@@ -282,10 +290,11 @@ if (
         const sizeFactor = isWordChar ? 0.8 : 0.5;
         const size = this.fontSize * (sizeFactor + brightness * 0.8);
 
-ctx.font = `${isWordChar ? "bold" : ""} ${size}px ${isWordChar ? "Caslon" : this.fontFamily}`;
+        ctx.font = `${isWordChar ? "bold" : ""} ${size}px ${isWordChar ? "Caslon" : this.fontFamily}`;
 
         const colorFactor = isWordChar ? 1.3 : 1.1;
-        const finalBrightness = Math.min(1, brightness * colorFactor) * this.P.grid.textOpacity;
+        const finalBrightness =
+          Math.min(1, brightness * colorFactor) * this.P.grid.textOpacity;
 
         ctx.fillStyle = `rgba(255, 255, 255, ${finalBrightness})`;
         ctx.fillText(char, x + this.P.grid.size / 2, y + this.P.grid.size / 2);
@@ -408,7 +417,10 @@ ctx.font = `${isWordChar ? "bold" : ""} ${size}px ${isWordChar ? "Caslon" : this
             const intensity = amount * Math.pow(1 - d / rad, 1.5);
             this.heat.current[idx] += intensity;
             this.heat.current[idx] = Math.min(1, this.heat.current[idx]);
-            this.heat.maxValue = Math.max(this.heat.maxValue, this.heat.current[idx]);
+            this.heat.maxValue = Math.max(
+              this.heat.maxValue,
+              this.heat.current[idx]
+            );
           }
         }
       }
@@ -445,16 +457,16 @@ ctx.font = `${isWordChar ? "bold" : ""} ${size}px ${isWordChar ? "Caslon" : this
     }
 
     _coords(e) {
-  const rect = this.canvas.getBoundingClientRect();
+      const rect = this.canvas.getBoundingClientRect();
 
-  const scaleX = this.canvas.width / rect.width;
-  const scaleY = this.canvas.height / rect.height;
+      const scaleX = this.canvas.width / rect.width;
+      const scaleY = this.canvas.height / rect.height;
 
-  const x = (e.clientX - rect.left) * scaleX;
-  const y = (e.clientY - rect.top) * scaleY;
+      const x = (e.clientX - rect.left) * scaleX;
+      const y = (e.clientY - rect.top) * scaleY;
 
-  return { x, y };
-}
+      return { x, y };
+    }
 
     _start() {
       if (this.heat.active) return;
@@ -485,7 +497,9 @@ ctx.font = `${isWordChar ? "bold" : ""} ${size}px ${isWordChar ? "Caslon" : this
 
       if (this.lowPerformanceMode && Math.random() > 0.5) return;
 
-      const scrambleCount = Math.floor(this.charGrid.length * this.scrambleAmount);
+      const scrambleCount = Math.floor(
+        this.charGrid.length * this.scrambleAmount
+      );
       for (let i = 0; i < scrambleCount; i++) {
         const randIndex = Math.floor(Math.random() * this.charGrid.length);
         const cell = this.charGrid[randIndex];
@@ -584,11 +598,7 @@ ctx.font = `${isWordChar ? "bold" : ""} ${size}px ${isWordChar ? "Caslon" : this
   }, [imgSrc]);
 
   return (
-    <div
-  className="canvas-container"
-  ref={containerRef}
->
-
+    <div className="canvas-container" ref={containerRef}>
       <canvas
         ref={canvasRef}
         width={width}

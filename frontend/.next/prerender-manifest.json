@@ -1,1 +1,11 @@
-{"version":4,"routes":{"/MidnightBureau/arcus-shadows":{},"/MidnightBureau/ai-border-watch":{},"/MidnightBureau/info-weapon":{},"/MidnightBureau/cyber-front":{}},"dynamicRoutes":{"/MidnightBureau/[slug]":{"fallback":false}},"notFoundRoutes":[],"preview":{"previewModeId":"53820cd0f2448a5005285714760cf007","previewModeSigningKey":"46c940d00fe41358013585f93e657b562a607dc951677587b8543c2bc1ffd933","previewModeEncryptionKey":"d62a803ae0735238e673ceb8a29397091609be1351dade0610bd79b3fc870169"}}
+{
+  "version": 4,
+  "routes": {},
+  "dynamicRoutes": {},
+  "notFoundRoutes": [],
+  "preview": {
+    "previewModeId": "23a1aff5f41110b3a393095e3b8b4be2",
+    "previewModeSigningKey": "1cb49223823c6f7efda71975584238ff4dc64860ae0c80760f9f32470382c80d",
+    "previewModeEncryptionKey": "483c1dcdf26be89d4ad8d4c38c7c01661bed3f7fa98aab9425db860c8e1cb310"
+  }
+}

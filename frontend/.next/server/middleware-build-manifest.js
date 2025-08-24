@@ -15,40 +15,10 @@ globalThis.__BUILD_MANIFEST = {
       "static/chunks/main.js",
       "static/chunks/pages/index.js"
     ],
-    "/MidnightBureau": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/MidnightBureau.js"
-    ],
-    "/MidnightBureau/Archive": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/MidnightBureau/Archive.js"
-    ],
-    "/MidnightBureau/Contact": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/MidnightBureau/Contact.js"
-    ],
-    "/Personal/About": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/Personal/About.js"
-    ],
-    "/Personal/Contact": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/Personal/Contact.js"
-    ],
     "/Portfolio": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/Portfolio.js"
-    ],
-    "/Portfolio/[slug]": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/Portfolio/[slug].js"
     ],
     "/_app": [
       "static/chunks/webpack.js",

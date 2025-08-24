@@ -51,120 +51,114 @@ export default function SignupPage() {
     <>
       <meta charSet="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
-    
-            <MetaHead />
-            <SvgHead />
-    
-    
-    
-    {/*NAVBAR*/}
-      <div className="dialog-off-canvas-main-canvas" data-off-canvas-main-canvas="">
+
+      <MetaHead />
+      <SvgHead />
+
+      {/*NAVBAR*/}
+      <div
+        className="dialog-off-canvas-main-canvas"
+        data-off-canvas-main-canvas=""
+      >
         <div className="text-align-center pt-15 d-flex dfp-tag-wrapper justify-around">
           <div id="js-dfp-tag-top--2"></div>
         </div>
         <div id="js-dfp-tag-outofpage--2"></div>
         <div className="base d-flex">
-         <NavbarMB />
-        
+          <NavbarMB />
 
-
-
-
-<section
-        style={{
-          maxWidth: 900,
-          margin: "60px auto",
-          padding: "40px 20px",
-          border: "4px solid #b02621",
-          borderRadius: 8,
-          backgroundColor: "transparent",
-          color: "#000000",
-          textAlign: "center",
-          fontWeight: 600,
-          fontFamily: "inherit",
-        }}
-      >
-        <h2 style={{ fontSize: "2.5rem", marginBottom: 20 }}>
-          Create your <span style={{ color: "#b02621" }}>Midnight Bureau</span> account
-        </h2>
-
-        <form
-          onSubmit={handleSubmit}
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: 20,
-            marginTop: 30,
-          }}
-        >
-          <input
-            type="email"
-            placeholder="you@example.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            style={inputStyle}
-            required
-          />
-
-          <input
-            type="email"
-            placeholder="confirm email"
-            value={confirmEmail}
-            onChange={(e) => setConfirmEmail(e.target.value)}
-            style={inputStyle}
-            required
-          />
-
-          <input
-            type="password"
-            placeholder="Create a password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            style={inputStyle}
-            required
-          />
-
-          {errors && (
-            <div style={{ color: "#b02621", fontSize: 14, marginTop: -10 }}>
-              {errors}
-            </div>
-          )}
-
-          <button
-            type="submit"
-            disabled={!isFormValid}
+          <section
             style={{
-              ...buttonStyle,
-              backgroundColor: isFormValid ? "#d62827" : "#d62827",
-              cursor: isFormValid ? "pointer" : "not-allowed",
+              maxWidth: 900,
+              margin: "60px auto",
+              padding: "40px 20px",
+              border: "4px solid #b02621",
+              borderRadius: 8,
+              backgroundColor: "transparent",
+              color: "#000000",
+              textAlign: "center",
+              fontWeight: 600,
+              fontFamily: "inherit",
             }}
           >
-            Sign Up
-          </button>
+            <h2 style={{ fontSize: "2.5rem", marginBottom: 20 }}>
+              Create your{" "}
+              <span style={{ color: "#b02621" }}>Midnight Bureau</span> account
+            </h2>
 
-          <small style={{ marginTop: 10, fontSize: 14, color: "#000000" }}>
-            Already have an account?{" "}
-            <a href="/login" style={{ color: "#b02621", textDecoration: "underline" }}>
-              Log in
-            </a>
-          </small>
-        </form>
-      </section>
+            <form
+              onSubmit={handleSubmit}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: 20,
+                marginTop: 30,
+              }}
+            >
+              <input
+                type="email"
+                placeholder="you@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                style={inputStyle}
+                required
+              />
 
+              <input
+                type="email"
+                placeholder="confirm email"
+                value={confirmEmail}
+                onChange={(e) => setConfirmEmail(e.target.value)}
+                style={inputStyle}
+                required
+              />
 
+              <input
+                type="password"
+                placeholder="Create a password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                style={inputStyle}
+                required
+              />
 
+              {errors && (
+                <div style={{ color: "#b02621", fontSize: 14, marginTop: -10 }}>
+                  {errors}
+                </div>
+              )}
 
+              <button
+                type="submit"
+                disabled={!isFormValid}
+                style={{
+                  ...buttonStyle,
+                  backgroundColor: isFormValid ? "#d62827" : "#d62827",
+                  cursor: isFormValid ? "pointer" : "not-allowed",
+                }}
+              >
+                Sign Up
+              </button>
 
-                <Footer />
-        
-            </div>
-          </div>
-        </>
-          );
-        } 
+              <small style={{ marginTop: 10, fontSize: 14, color: "#000000" }}>
+                Already have an account?{" "}
+                <a
+                  href="/login"
+                  style={{ color: "#b02621", textDecoration: "underline" }}
+                >
+                  Log in
+                </a>
+              </small>
+            </form>
+          </section>
 
+          <Footer />
+        </div>
+      </div>
+    </>
+  );
+}
 
 const inputStyle = {
   width: "100%",

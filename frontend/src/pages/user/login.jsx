@@ -57,7 +57,7 @@ export default function Login() {
         <div id="js-dfp-tag-outofpage--2"></div>
         <div className="base ">
           <NavbarMB />
-            
+
           <section
             className="login-section"
             style={{
