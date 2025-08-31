@@ -3735,3 +3735,9 @@ body {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
   z-index: 10000;
 }
+
+
+.project-card:focus-visible {
+  outline: 3px solid var(--c-accent, #d62827);
+  outline-offset: 2px;
+}

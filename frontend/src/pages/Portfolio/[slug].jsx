@@ -1,5 +1,6 @@
 // pages/Portfolio/[slug].jsx
-import React, { useEffect, useState, useRef } from "react";
+/* eslint-disable @next/next/no-img-element */
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import MetaHead from "../../components/LandingPage/MetaHead.jsx";
@@ -15,6 +16,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 const ProjectPost = ({ project }) => {
   const router = useRouter();
+
+  // ---------- State ----------
   const [visibleImages, setVisibleImages] = useState([]);
   const [showTopLink, setShowTopLink] = useState(false);
   const [showBottomLink, setShowBottomLink] = useState(false);
@@ -28,15 +31,12 @@ const ProjectPost = ({ project }) => {
 
   // ---------- Derived content/image data ----------
   const contentBlocks = Array.isArray(project?.content) ? project.content : [];
-  // We pair images with every block except the intro (index 0) and outro (last)
   const pairedCount = Math.max(0, contentBlocks.length - 2);
 
   const allImages = Array.isArray(project?.images)
     ? project.images.filter(Boolean)
     : [];
 
-  // The images used in the text body are indices [0 .. pairedCount-1]
-  // The gallery shows the remainder (or falls back)
   const primaryGallery =
     allImages.length > pairedCount ? allImages.slice(pairedCount) : [];
 
@@ -47,10 +47,23 @@ const ProjectPost = ({ project }) => {
   const gallery = primaryGallery.length
     ? primaryGallery
     : allImages.length
-      ? allImages
-      : fallbackGallery;
+    ? allImages
+    : fallbackGallery;
 
   const shouldShowGallery = Array.isArray(gallery) && gallery.length >= 4;
+
+  // ---------- Helpers used by effects ----------
+  const VISIBLE_COUNT = 5;
+
+  const midOfWindow = useCallback(
+    (start) => {
+      const total = gallery.length;
+      const windowCount = Math.min(VISIBLE_COUNT, total - start);
+      if (windowCount <= 0) return null;
+      return start + Math.floor((windowCount - 1) / 2);
+    },
+    [gallery.length]
+  );
 
   // ---------- Effects ----------
   // Smooth-scroll to banner
@@ -112,18 +125,22 @@ const ProjectPost = ({ project }) => {
     };
   }, [menuOpen]);
 
+  // ✅ Keep expanded image centered when gallery window changes
+  useEffect(() => {
+    if (!shouldShowGallery) return;
+    setExpandedCarouselIndex((prev) => {
+      const start = galleryIdx;
+      const end = galleryIdx + VISIBLE_COUNT;
+      const outOfWindow = prev == null || prev < start || prev >= end;
+      return outOfWindow ? midOfWindow(galleryIdx) : prev;
+    });
+  }, [shouldShowGallery, galleryIdx, midOfWindow]);
+
+  // Early return is FINE now (no hooks below this line)
   if (router.isFallback) return <p>Loading...</p>;
 
-  // ---------- Helpers ----------
+  // ---------- Non-hook helpers ----------
   const alternatingAlign = (i) => (i % 2 === 0 ? "right" : "left");
-
-  const VISIBLE_COUNT = 5;
-  const midOfWindow = (start) => {
-    const total = gallery.length;
-    const windowCount = Math.min(VISIBLE_COUNT, total - start);
-    if (windowCount <= 0) return null;
-    return start + Math.floor((windowCount - 1) / 2); // center index
-  };
 
   const handleGalleryNav = (dir) => {
     if (!shouldShowGallery) return;
@@ -136,29 +153,18 @@ const ProjectPost = ({ project }) => {
           : Math.min(prev + VISIBLE_COUNT, maxStart);
       const mid = midOfWindow(next);
       if (mid !== null) setExpandedCarouselIndex(mid);
-
       return next;
     });
   };
-useEffect(() => {
-  if (!shouldShowGallery) return;
-  setExpandedCarouselIndex((prev) => {
-    const start = galleryIdx;
-    const end = galleryIdx + VISIBLE_COUNT;
-    const outOfWindow = prev == null || prev < start || prev >= end;
-    return outOfWindow ? midOfWindow(galleryIdx) : prev;
-  });
-}, [shouldShowGallery, galleryIdx, gallery.length]);
 
   const toggleCarouselExpand = (idx) => {
     setExpandedCarouselIndex((prev) => (prev === idx ? null : idx));
   };
 
   const bannerSrc =
-    project?.banner ||
-    allImages[0] ||
-    null ||
-    project?.archiveImage ||
+    project?.banner ??
+    allImages[0] ??
+    project?.archiveImage ??
     "/assets/images/space.jpg";
 
   return (
@@ -229,8 +235,8 @@ useEffect(() => {
 
             {/* Body with alternating float images (indexes 0..pairedCount-1) */}
             {contentBlocks.slice(1, -1).map((block, i) => {
-              const imgIndex = i; // image aligned with this block index
-              const side = alternatingAlign(i); // "left" or "right"
+              const imgIndex = i;
+              const side = alternatingAlign(i);
               const floatStyle = {
                 float: side,
                 margin: side === "left" ? "0 1rem 1rem 0" : "0 0 1rem 1rem",
@@ -247,7 +253,9 @@ useEffect(() => {
                       id={`img-${imgIndex}`}
                       src={imgSrc}
                       alt={`Project Image ${imgIndex + 1}`}
-                      className={`card-image ${visibleImages[imgIndex] ? "slide-in" : ""}`}
+                      className={`card-image ${
+                        visibleImages[imgIndex] ? "slide-in" : ""
+                      }`}
                       style={{
                         ...floatStyle,
                         width: "260px",
@@ -310,7 +318,9 @@ useEffect(() => {
                     return (
                       <div
                         key={absoluteIdx}
-                        className={`box ${isExpanded ? "expanded" : expandedCarouselIndex === null ? "" : "closed"}`}
+                        className={`box ${
+                          isExpanded ? "expanded" : expandedCarouselIndex === null ? "" : "closed"
+                        }`}
                         style={{ backgroundImage: `url("${src}")` }}
                         onClick={() => toggleCarouselExpand(absoluteIdx)}
                       >

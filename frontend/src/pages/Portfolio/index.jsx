@@ -52,32 +52,40 @@ function ProjectCard({ project, index }) {
   const imgSrc = getProjectImage(project);
   const desc = getProjectExcerpt(project);
 
-  // tweak these to your preferred thumb size (keeps cards from getting tall)
-  const THUMB_W = 256; // px
-  const THUMB_H = 256; // px
+  // keeps cards compact/consistent
+  const THUMB_W = 256;
+  const THUMB_H = 256;
 
   return (
-    <div
+    <Link
+      href={`/Portfolio/${project.slug}`}
+      aria-label={`Open ${project.title}`}
       className={`project-card ${visible ? "visible" : ""} ${hover ? "hovered" : ""}`}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      style={{ display: "flex", flexDirection: "column" }}
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        textDecoration: "none",
+        color: "inherit",
+        borderRadius: 12,
+        transition: "box-shadow .2s ease, transform .2s ease, opacity .3s ease",
+        boxShadow: hover
+          ? "0 12px 24px rgba(0,0,0,.15)"
+          : "0 6px 12px rgba(0,0,0,.08)",
+        transform: hover ? "translateY(-2px)" : "translateY(0)",
+        opacity: visible ? 1 : 0,
+      }}
     >
-      {/* text + fixed-size right thumb */}
       <div
         className="project-content"
-        style={{
-          display: "flex",
-          alignItems: "flex-start",
-          gap: "1rem",
-        }}
+        style={{ display: "flex", alignItems: "flex-start", gap: "1rem" }}
       >
         <div className="project-text" style={{ flex: 1, minWidth: 0 }}>
-          <h3>{project.title}</h3>
-          {desc && <p>{desc}</p>}
+          <h3 style={{ margin: "0 0 .35rem 0" }}>{project.title}</h3>
+          {desc && <p style={{ margin: 0 }}>{desc}</p>}
         </div>
 
-        {/* fixed-size thumbnail (never grows/shrinks) */}
         <div
           className="project-thumb"
           style={{
@@ -97,20 +105,16 @@ function ProjectCard({ project, index }) {
             style={{
               width: "100%",
               height: "100%",
-              objectFit: "cover", // crop without changing the box
+              objectFit: "cover",
               display: "block",
             }}
           />
         </div>
       </div>
-
-      {/* keeps link from drifting if text length varies */}
-      <div className="project-link" style={{ marginTop: "0.75rem" }}>
-        <Link href={`/Portfolio/${project.slug}`}>Click here for more</Link>
-      </div>
-    </div>
+    </Link>
   );
 }
+
 
 // ---------- Page ----------
 export default function Portfolio() {
