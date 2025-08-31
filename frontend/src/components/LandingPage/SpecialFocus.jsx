@@ -74,7 +74,7 @@ export default function SpecialFocus() {
           {/* Large image on the left */}
           <div className="col-12 col-md-5 d-flex justify-center align-items-center">
             <img
-              src="/assets/images/Snowboard.jpg"
+              src="/assets/images/stellarisWorkflow.jpg"
               alt="Special Focus Visual"
               style={{
                 maxWidth: "100%",

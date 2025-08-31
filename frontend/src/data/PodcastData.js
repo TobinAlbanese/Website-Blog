@@ -2,7 +2,7 @@
 const PodcastData = {
   items: [
     {
-      title: "First Title to the Podcast",
+      title: "Volume 1, Episode 1: Pilot",
       slug: "pilot",
       author: "Tobin M. Albanese",
       date: "2025-01-01",

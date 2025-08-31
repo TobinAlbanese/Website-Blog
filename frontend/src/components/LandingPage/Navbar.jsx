@@ -471,6 +471,9 @@ export default function Navbar() {
                     </a>
                   </li>
                   <li className="menu__topics-list-item mb-10">
+                    <a href="/Notes">Notes</a>
+                  </li>
+                  <li className="menu__topics-list-item mb-10">
                     <a href="/MidnightBureau/Newsletter">Newsletter</a>
                   </li>
                   <li className="menu__topics-list-item mb-10">

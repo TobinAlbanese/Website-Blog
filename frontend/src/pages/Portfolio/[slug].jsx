@@ -50,6 +50,8 @@ const ProjectPost = ({ project }) => {
       ? allImages
       : fallbackGallery;
 
+  const shouldShowGallery = Array.isArray(gallery) && gallery.length >= 4;
+
   // ---------- Effects ----------
   // Smooth-scroll to banner
   useEffect(() => {
@@ -115,23 +117,38 @@ const ProjectPost = ({ project }) => {
   // ---------- Helpers ----------
   const alternatingAlign = (i) => (i % 2 === 0 ? "right" : "left");
 
+  const VISIBLE_COUNT = 5;
+  const midOfWindow = (start) => {
+    const total = gallery.length;
+    const windowCount = Math.min(VISIBLE_COUNT, total - start);
+    if (windowCount <= 0) return null;
+    return start + Math.floor((windowCount - 1) / 2); // center index
+  };
+
   const handleGalleryNav = (dir) => {
+    if (!shouldShowGallery) return;
     setGalleryIdx((prev) => {
       const total = gallery.length;
-      const maxStart = Math.max(0, total - 5);
-      let next = prev;
-      if (dir === "prev") next = Math.max(prev - 5, 0);
-      if (dir === "next") next = Math.min(prev + 5, maxStart);
+      const maxStart = Math.max(0, total - VISIBLE_COUNT);
+      const next =
+        dir === "prev"
+          ? Math.max(prev - VISIBLE_COUNT, 0)
+          : Math.min(prev + VISIBLE_COUNT, maxStart);
+      const mid = midOfWindow(next);
+      if (mid !== null) setExpandedCarouselIndex(mid);
 
-      if (
-        expandedCarouselIndex !== null &&
-        (expandedCarouselIndex < next || expandedCarouselIndex >= next + 5)
-      ) {
-        setExpandedCarouselIndex(null);
-      }
       return next;
     });
   };
+useEffect(() => {
+  if (!shouldShowGallery) return;
+  setExpandedCarouselIndex((prev) => {
+    const start = galleryIdx;
+    const end = galleryIdx + VISIBLE_COUNT;
+    const outOfWindow = prev == null || prev < start || prev >= end;
+    return outOfWindow ? midOfWindow(galleryIdx) : prev;
+  });
+}, [shouldShowGallery, galleryIdx, gallery.length]);
 
   const toggleCarouselExpand = (idx) => {
     setExpandedCarouselIndex((prev) => (prev === idx ? null : idx));
@@ -166,9 +183,9 @@ const ProjectPost = ({ project }) => {
             <meta name="description" content={project.excerpt || ""} />
           </Head>
           <Script
-  src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
-  strategy="afterInteractive"
-/>
+            src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
+            strategy="afterInteractive"
+          />
 
           <div className="midnight-bureau-article">
             {/* Vertical helper links */}
@@ -257,14 +274,14 @@ const ProjectPost = ({ project }) => {
             )}
 
             {/* Gallery */}
-            {gallery.length > 0 && (
+            {shouldShowGallery && (
               <div
                 className="gallery-wrapper"
                 style={{ maxWidth: "1400px", margin: "3rem auto" }}
               >
                 <div className="gallery-header">
                   <h4>Gallery Images</h4>
-                  {gallery.length > 5 && (
+                  {gallery.length > 4 && (
                     <div className="gallery-arrows">
                       {galleryIdx > 0 && (
                         <button

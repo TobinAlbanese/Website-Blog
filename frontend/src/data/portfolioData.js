@@ -13,86 +13,173 @@ const PortfolioData = {
       author: "Tobin M. Albanese",
       date: "2024-03-05",
       excerpt:
-        "Neural Analysis Of Micro-Intent — real-time micro-expressions → inferred intent.",
-      archiveImage: "/assets/images/space.jpg",
-      banner: "/assets/images/space.jpg",
+        "An advanced AI platform designed to detect and analyze micro-expressions — tiny, fleeting facial movements that often reveal hidden emotions like stress, deception, or confidence. Neural Analysis Of Micro-Intent in real-time micro-expressions → inferred intent.",
+      archiveImage: "/assets/images/naomiPortfolio.jpg",
+      banner: "/assets/images/naomiBanner.jpg",
 
       content: [
         {
-          text: "<p><strong>Overview.</strong> NAOMI ingests live or recorded video and analyzes rapid facial micro-movements to surface likely states such as stress, confidence, or deception. Outputs include per-frame landmarks, temporal deltas, and calibrated confidence scores designed for human-in-the-loop review.</p>",
+          text: `
+      <p><strong>Overview.</strong> NAOMI (Neural Analysis of Micro-Intent) is an advanced behavioral analytics system designed to detect and interpret micro-expressions — subtle, fleeting facial movements that occur in fractions of a second. 
+      These signals, often invisible to casual human observation, can provide important cues about a person’s underlying state such as stress, confidence, or possible deception. 
+      NAOMI processes both live and recorded video, tracking facial landmarks at high frequency, and computing temporal deltas across micro-windows of tens of milliseconds. 
+      The platform translates this into structured, calibrated outputs that can be reviewed by human analysts, making it a powerful augmentation tool in interviews, intelligence gathering, psychology, user research, and training environments.</p>
+    `,
         },
-
         {
-          text: "<p><strong>Why this matters.</strong> Human evaluators miss sub-second changes under time pressure. NAOMI provides a second set of eyes: high-frequency, explainable cues that <em>assist</em> (not replace) judgment in interviews, investigations, user research, and training simulations.</p>",
+          text: `
+      <p><strong>Why this matters.</strong> Human evaluators are skilled at interpreting broad body language, but the reality is that rapid micro-expressions often occur too quickly for the eye to register, especially under time pressure or distraction. 
+      A subtle twitch of an eyebrow, a half-suppressed smile, or a fleeting tightening around the eyes can carry critical meaning — yet they vanish in less than a quarter of a second. 
+      NAOMI offers analysts a second layer of observation: a consistent, explainable, high-frequency sensor that runs in parallel with human judgment. 
+      Rather than replacing intuition, it strengthens it, ensuring that critical signals are not lost and that evaluators can pause, review, and assess cues in context rather than relying solely on memory or impression.</p>
+    `,
         },
-
         {
-          text: "<p><strong>Objectives.</strong></p><ul><li>Realtime (< 40ms latency) overlays for analysts.</li><li>Explainable outputs: AUs, heatmaps, and per-window deltas.</li><li>Robustness to pose, occlusion, and lighting shifts.</li><li>Auditable traces + privacy-first design.</li></ul>",
+          text: `
+      <p><strong>Objectives.</strong> The design of NAOMI is shaped around four central objectives. 
+      First, it must deliver true real-time performance, with latencies under 40ms per frame so that overlays remain usable in live scenarios. 
+      Second, it must provide explainable outputs — not just black-box classifications, but visible action units, heatmaps, and frame-to-frame deltas that users can understand. 
+      Third, it must demonstrate robustness against environmental factors such as poor lighting, angled faces, or partial occlusions like glasses and masks. 
+      And fourth, it must maintain full auditability and privacy-conscious design, producing exportable traces for later review while never storing or transmitting sensitive footage unnecessarily. 
+      Together, these objectives ensure that NAOMI is not just a research demo, but a deployable and responsible system.</p>
+    `,
         },
-
         {
-          text: "<p><strong>Architecture.</strong> Modular pipeline with two paths:</p><ul><li><em>Edge</em> (browser/WebRTC or desktop): detector + lightweight temporal model.</li><li><em>Server</em> (GPU): high-accuracy models + batch analytics + storage.</li></ul><p>Components: <em>capture</em> → <em>preprocess</em> → <em>landmark/feature</em> → <em>temporal model</em> → <em>intent head</em> → <em>calibration</em> → <em>reporting</em>.</p>",
+          text: `
+      <p><strong>Architecture.</strong> NAOMI uses a modular architecture with both edge and server deployment options. 
+      At the edge — in-browser or on-device — lightweight models run directly on user hardware, ensuring video never leaves the system. 
+      In server deployments, GPU-backed services process streams at scale, enabling batch analytics and long-term archival of inference traces. 
+      The end-to-end flow follows a structured pipeline: capture, preprocessing, landmark detection, temporal feature modeling, intent classification, calibration, and finally reporting. 
+      Each stage is decoupled, meaning models can be swapped or upgraded independently, giving the system long-term adaptability as methods and hardware evolve.</p>
+    `,
         },
-
         {
-          text: "<p><strong>Signal pipeline.</strong> Face detection → landmark tracking → micro-window differencing (tens of ms) → temporal model (BiLSTM/Temporal-CNN) → intent classifier. The pipeline is resilient to jitter via smoothing and occlusion handling.</p>",
+          text: `
+      <p><strong>Signal pipeline.</strong> At the heart of NAOMI is its signal-processing chain. 
+      Each incoming frame undergoes face detection and landmark tracking. 
+      These landmarks are compared across micro-windows of 30–80ms, capturing tiny deltas in x/y coordinates that correspond to micro-movements. 
+      Temporal models such as BiLSTMs and Temporal CNNs ingest these sequences, smoothing noise, interpolating across small gaps, and handling jitter or occlusion. 
+      The model outputs intent predictions, which are then calibrated before being surfaced to the analyst. 
+      This pipeline is engineered to balance sensitivity with stability, flagging meaningful signals while suppressing irrelevant motion.</p>
+    `,
         },
-
         {
-          text: "<p><strong>Features.</strong></p><ul><li>Landmarks: 68/106-pt normalized to canonical frame.</li><li>Micro-deltas: ∆x/∆y per landmark in 30–80ms windows.</li><li>AUs: estimated via regression over localized regions.</li><li>Stabilization: optical-flow aided tracking + EMA smoothing.</li></ul>",
+          text: `
+      <p><strong>Features.</strong> NAOMI’s outputs go far beyond a single probability score. 
+      Analysts can access normalized 68- or 106-point landmark maps, per-landmark micro-deltas over short windows, localized action unit activations derived from the Facial Action Coding System, and stabilized overlays produced via optical-flow tracking. 
+      Heatmaps highlight regions of the face most associated with detected intent, while frame-level charts show how probabilities rise and fall over time. 
+      These multi-layered features ensure that signals remain interpretable and actionable, rather than being hidden inside an opaque classifier.</p>
+    `,
         },
-
         {
-          text: "<p><strong>Modeling & training.</strong> Transfer learning from expression corpora with domain adaptation. Emphasis on label hygiene, inter-rater reliability, and post-hoc calibration (Platt/temperature scaling) to keep scores honest.</p>",
+          text: `
+      <p><strong>Modeling & training.</strong> The NAOMI models are trained through transfer learning on expression recognition corpora, then fine-tuned with domain-specific adaptations. 
+      Datasets are curated with an emphasis on annotation quality: multiple human raters label the same footage, disagreements are adjudicated, and only consensus examples make it into training sets. 
+      Probability calibration methods like Platt scaling and temperature scaling ensure outputs reflect real likelihoods rather than overconfident guesses. 
+      The training process is not just about maximizing accuracy — it is about producing models whose outputs can be trusted in sensitive human-facing contexts.</p>
+    `,
         },
-
         {
-          text: "<p><strong>Data & labeling.</strong> Mix of public corpora + synthetic augmentations (pose, illumination, occlusion). Dual-rater labels with adjudication. All datasets tracked via DVC with provenance.</p>",
+          text: `
+      <p><strong>Data & labeling.</strong> High-quality data underpins NAOMI’s reliability. 
+      The system draws from a combination of public corpora, in-house datasets, and synthetic augmentations that simulate different poses, lighting conditions, and occlusions. 
+      Each dataset is version-controlled with tools like DVC, enabling traceability of labels and models across iterations. 
+      Double-labeling with adjudication ensures inter-rater reliability, reducing noise and bias in the data. 
+      By maintaining meticulous provenance of all training material, NAOMI ensures both reproducibility and accountability in its evolution.</p>
+    `,
         },
-
         {
-          text: "<p><strong>Evaluation.</strong></p><ul><li>Latency: 25–38ms per frame on RTX-class GPU; 12–18fps on modern laptops (edge path).</li><li>Robustness: ±15° yaw/pitch without significant drift.</li><li>Calibration: ECE ≤ 0.06 after temperature scaling.</li></ul>",
+          text: `
+      <p><strong>Evaluation.</strong> NAOMI’s performance is validated through comprehensive benchmarks. 
+      On RTX-class GPUs, it achieves frame latencies of 25–38ms, enabling real-time overlays. 
+      On modern laptops running edge deployments, it sustains 12–18fps with acceptable accuracy. 
+      Robustness testing demonstrates reliable performance up to ±15° yaw/pitch rotation before significant drift. 
+      Calibration results show Expected Calibration Error under 0.06 after scaling, meaning probabilities align closely with true likelihoods. 
+      These metrics confirm that NAOMI is not only fast, but also trustworthy across varied conditions.</p>
+    `,
         },
-
         {
-          text: "<p><strong>Interface.</strong> Analysts see overlays (action units, heatmaps), clip scrubbing, and frame-level charts. Batch mode supports bulk uploads; live mode supports WebRTC streams with adjustable sampling rate.</p>",
+          text: `
+      <p><strong>Interface.</strong> The analyst interface is designed to make complex signals usable in real-world workflows. 
+      In live mode, overlays highlight landmarks, heatmaps, and intent scores directly on the video feed. 
+      Analysts can scrub back through footage, adjust playback speed, and inspect frame-level probability charts. 
+      Batch mode supports uploads of large video sets with automated summary reports. 
+      Adjustable sampling rates let users tune the balance between performance and fidelity. 
+      The goal is not just to present data, but to present it in a way that supports fast comprehension and confident decision-making.</p>
+    `,
         },
-
         {
-          text: '<p><strong>API (excerpt).</strong></p><pre>{\n  "frame": 1532,\n  "landmarks": [[x,y], ...],\n  "au": { "AU01": 0.22, "AU04": 0.61, ... },\n  "microDeltaRMS": 0.047,\n  "intent": { "stress": 0.73, "confidence": 0.18, "deception": 0.09 },\n  "calibrated": true,\n  "timestamp": "2024-03-05T21:11:10Z"\n}</pre>',
+          text: `
+      <p><strong>API.</strong> NAOMI exposes its functionality through a developer-friendly API that delivers structured, machine-readable outputs. 
+      Responses include frame indices, raw landmark coordinates, action unit activations, micro-delta RMS values, calibrated intent scores, and precise timestamps. 
+      This allows integration into larger systems — from training simulators to research dashboards — without requiring analysts to parse visualizations. 
+      By being transparent and consistent, the API ensures NAOMI can plug into diverse ecosystems smoothly.</p>
+    `,
         },
-
         {
-          text: "<p><strong>Deployment.</strong></p><ul><li><em>Edge:</em> WebAssembly + WebGL; no video leaves device.</li><li><em>Server:</em> gRPC/REST; autoscaled GPU workers; object storage for traces.</li><li>CI/CD: GitHub Actions → container registry → IaC templates.</li></ul>",
+          text: `
+      <p><strong>Deployment.</strong> Flexibility in deployment is a core design feature. 
+      NAOMI can run entirely on-device for privacy-sensitive use cases, leveraging WebAssembly and WebGL for inference in browsers or desktop applications. 
+      In server mode, GPU workers scale elastically via container orchestration, with gRPC/REST endpoints serving multiple clients. 
+      Traces and outputs are stored securely in object storage, while CI/CD pipelines automate build and deployment across environments. 
+      This versatility allows NAOMI to be deployed in secure labs, enterprise servers, or distributed field environments with equal ease.</p>
+    `,
         },
-
         {
-          text: "<p><strong>Security & privacy.</strong> Role-based access, encryption at rest/in transit, and retention controls. Designed to be auditable with exportable inference traces. Optional on-device only mode (no upload).</p>",
+          text: `
+      <p><strong>Security & privacy.</strong> NAOMI was designed with security and privacy as first-class priorities. 
+      Role-based access controls determine who can access data and outputs. 
+      Encryption protects information at rest and in transit, while retention policies allow organizations to automatically expire sensitive records. 
+      Analysts can export anonymized inference traces without exposing raw video. 
+      An on-device-only mode is available for the highest-security environments, ensuring no data ever leaves the analyst’s machine. 
+      This safeguards trust and compliance in contexts where data protection is essential.</p>
+    `,
         },
-
         {
-          text: "<p><strong>Limitations.</strong> Sensitive to extreme occlusion; cultural and personal variation require careful thresholding. The system is an <em>indicator</em> — never a sole determiner of intent.</p>",
+          text: `
+      <p><strong>Limitations.</strong> Like any AI system, NAOMI has known boundaries. 
+      Extreme occlusions such as masks, scarves, or sunglasses reduce accuracy. 
+      Cultural and individual differences in expression mean thresholds must be tuned carefully for context. 
+      The system is best viewed as an indicator, not a verdict: it surfaces additional cues for human evaluators but is never intended to provide definitive judgments about truth or intent. 
+      Being transparent about these limitations is central to NAOMI’s design and ethical positioning.</p>
+    `,
         },
-
         {
-          text: "<p><strong>Ethics.</strong> Human-in-the-loop only. Clear consent, documented purpose limits, and transparency about error rates. Red-team reviews for misuse scenarios.</p>",
+          text: `
+      <p><strong>Ethics.</strong> Ethical safeguards are embedded into NAOMI’s deployment philosophy. 
+      The system is always human-in-the-loop, requiring explicit consent and documented limits of use. 
+      Error rates are disclosed openly rather than hidden, preventing overconfidence. 
+      Red-team reviews simulate misuse cases — such as coercive interrogation or surveillance overreach — to identify risks and build mitigations. 
+      By prioritizing transparency, consent, and accountability, NAOMI ensures that powerful technology is applied responsibly.</p>
+    `,
         },
-
         {
-          text: "<p><strong>Roadmap.</strong></p><ul><li>Multimodal fusion (voice prosody, keystroke dynamics).</li><li>Improved self-supervised pretraining for low-light video.</li><li>Edge-optimized transformer with distillation.</li><li>Richer analyst notes → weak labels for continual learning.</li></ul>",
+          text: `
+      <p><strong>Roadmap.</strong> NAOMI’s future development roadmap extends beyond facial micro-expression analysis. 
+      Planned milestones include multimodal fusion with audio prosody and keystroke dynamics, enabling richer behavioral insights. 
+      Advances in self-supervised pretraining will improve robustness in low-light conditions, while distilled transformer models will bring higher accuracy to lightweight edge deployments. 
+      Collaborative analyst note-taking will generate weak labels that feed back into continual learning pipelines. 
+      These roadmap items point toward NAOMI evolving into a comprehensive, multimodal human-behavior analytics platform.</p>
+    `,
         },
-
         {
-          text: "<p><strong>Stack.</strong> PyTorch, ONNX, OpenCV, WebRTC, FastAPI/gRPC, React, D3, Docker, Terraform.</p>",
+          text: `
+      <p><strong>Stack.</strong> NAOMI is built on a stack of proven technologies and modern ML frameworks. 
+      PyTorch provides the foundation for model training and inference, with ONNX enabling optimized, portable runtime execution. 
+      OpenCV and MediaPipe power real-time video analysis and landmark tracking. 
+      FastAPI and gRPC provide efficient APIs, while React and D3.js render intuitive analyst interfaces. 
+      Deployment pipelines use Docker for containerization and Terraform for infrastructure as code, with CI/CD automating continuous delivery. 
+      This combination makes NAOMI adaptable, developer-friendly, and production-ready.</p>
+    `,
         },
       ],
 
       images: [
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
+        "/assets/images/naomiWhy.jpg",
+        "/assets/images/naomiPillars.jpg",
+        "/assets/images/naomiArchitecture.jpg",
+        "/assets/images/naomiPipeline.jpg",
+        "/assets/images/naomiFeatures.jpg",
         "/assets/images/space.jpg",
         "/assets/images/space.jpg",
         "/assets/images/space.jpg",
@@ -158,39 +245,116 @@ const PortfolioData = {
         ],
       },
     },
+
     {
-      volume: "PORTFOLIO — PROJECT",
-      title: "STELLARIS — OSINT NLP & Knowledge Graphs",
+      volume: "Computer Science Project 2",
+      title: "STELLARIS Project",
       slug: "stellaris",
       author: "Tobin M. Albanese",
       date: "2024-01-20",
       excerpt:
-        "Stream → extract entities/relations → visualize as interactive knowledge graphs.",
-      archiveImage: "/assets/images/space.jpg",
-      banner: "/assets/images/space.jpg",
+        "An AI-driven platform that ingests, processes, and analyzes large volumes of unstructured text and relational data from open sources such as news, social media, government releases, and intercepted communications. ",
+      archiveImage: "/assets/images/stellarisPortfolio.jpg",
+      banner: "/assets/images/stellarisBanner.jpg",
       content: [
         {
-          text: "<p><strong>Mission.</strong> STELLARIS turns public text streams into navigable knowledge graphs so analysts can trace people, organizations, locations, and events across sources.</p>",
+          text: `
+      <p><strong>Mission.</strong> STELLARIS (Structured Textual Extraction & Linking for Live Analysis of Real-time Intelligence Sources) exists to transform the unstructured noise of the open web into structured, defensible, and actionable intelligence. 
+      The platform continuously ingests massive volumes of text streams — ranging from news articles and government filings to online forums, RSS feeds, and PDF reports — and converts this raw, unstructured material into a living web of linked data. 
+      Analysts are no longer forced to manually sift through documents, guess at connections, or rely on brittle keyword searches; instead, they can follow a clear thread from a single individual to their associated addresses, companies, financial transactions, and cross-border shipments. 
+      Every connection remains anchored in its original source, so context and evidentiary lineage are never lost. The mission is simple but ambitious: empower investigators, researchers, and intelligence professionals to understand complex realities faster, more reliably, and with complete transparency.</p>
+    `,
         },
         {
-          text: "<p><strong>Capabilities.</strong> NER, relation extraction, event detection, entity resolution, and graph exploration with filters, timelines, and saved views.</p>",
+          text: `
+      <p><strong>What it does.</strong> At its core, STELLARIS is a pipeline for turning words into structured networks of knowledge. 
+      The system applies advanced natural language processing (NLP) techniques — including named entity recognition, cross-document entity resolution, relation extraction, event detection, and temporal normalization — to every incoming document. 
+      This means the platform doesn’t just identify “who” is mentioned in a text, but also “how” those people or organizations are connected, “what” events they participated in, and “when” those events occurred. 
+      The extracted information is assembled into an interactive knowledge graph where analysts can explore relationships, filter by attributes, overlay geospatial or temporal views, and pivot across different types of entities seamlessly. 
+      Instead of static search results, users receive a living map of connections that evolves as new information flows in, making the invisible visible in real time.</p>
+    `,
         },
         {
-          text: "<p><strong>Stack.</strong> Ingestion workers, FastAPI services, Transformer-based NLP, Elastic for search, and a graph store (e.g., Neo4j). Frontend renders graphs and dossiers with fast type-ahead and pivoting.</p>",
+          text: `
+      <p><strong>Analyst workflow.</strong> STELLARIS is designed around the way human analysts actually work. 
+      A typical workflow might begin with a single seed — a company, a username, a shipping record, or even a fragment of leaked data. 
+      From this starting point, the analyst can explore first- and second-degree relationships, visualizing how seemingly unrelated entities begin to cluster into meaningful patterns. 
+      They can pin subgraphs of interest, annotate edges with hypotheses or questions, and save customized views that preserve filters, time windows, and notes for future sessions or team sharing. 
+      Every node and edge is annotated with citations, model confidence, and version history, so nothing is ever taken on faith. 
+      This design makes it possible for teams to review, challenge, and reproduce each other’s findings, turning the platform into not just a discovery tool but also a collaborative research environment where insights are defensible and transparent.</p>
+    `,
         },
         {
-          text: "<p><strong>Reliability.</strong> Backpressure via queues, idempotent ingestion, and provenance tracking for every edge/claim to support verification and rollback.</p>",
+          text: `
+      <p><strong>Stack.</strong> The technology stack behind STELLARIS combines distributed data engineering with cutting-edge machine learning. 
+      On the ingestion side, distributed workers handle incoming streams with robust backpressure controls, ensuring no single source overwhelms the system. 
+      Message queues balance loads, while FastAPI services orchestrate requests across the pipeline. 
+      Transformer-based NLP models (built on Hugging Face and spaCy) handle tasks like entity recognition, relation extraction, and event detection, producing structured records from messy text. 
+      ElasticSearch powers fast keyword and semantic search, while a graph database (Neo4j or JanusGraph) stores and queries the resulting networks. 
+      On the frontend, a React/Vite application renders graphs at scale with GPU-accelerated layouts, type-ahead entity search, and keyboard-driven pivoting, giving analysts a responsive, interactive workspace even with millions of nodes and edges. 
+      The result is a stack that is both modern and battle-tested, capable of handling real-world data at real-world scale.</p>
+    `,
         },
         {
-          text: "<p><strong>Roadmap.</strong> Cross-lingual NER, stance clustering, and natural-language graph queries.</p>",
+          text: `
+      <p><strong>Data quality & provenance.</strong> In intelligence analysis, trust is everything. 
+      That is why STELLARIS treats provenance as a first-class concern. 
+      Every edge in the graph is linked back to the exact source from which it was derived — including the document URI, the paragraph offset, the model version that produced it, and the scoring features used in extraction. 
+      Ingestion processes are idempotent, relying on hashing to detect duplicates, while assertions can be re-scored as models improve over time. 
+      Analysts can invoke an “explain-this-edge” action to see the raw snippet, the extraction process, and even model confidence. 
+      Rollbacks are supported at every level, making it possible to test new models, audit old ones, or red-team sensitive cases without corrupting the graph. 
+      This rigorous approach ensures that every claim in the system can be verified, challenged, or disproven — the opposite of a black box.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Scale & reliability.</strong> Real-world OSINT environments are messy and bursty — some days the system must absorb thousands of routine filings, while other days it is hit with floods of breaking news or viral posts. 
+      STELLARIS is engineered to handle both extremes gracefully. 
+      Message queues smooth out ingestion spikes, while batch and streaming modes run in parallel to balance throughput with latency. 
+      Retry policies and dead-letter queues ensure that problematic documents don’t clog the pipeline, while monitoring dashboards track queue depths, error rates, and model latencies in real time. 
+      Nightly compaction tasks merge duplicate entities and refresh indexes to keep queries fast. 
+      Schema migration scripts evolve the graph database without downtime, so analysts never lose access even during upgrades. 
+      The overall design principle is simple: reliability at scale, because analysts can’t afford gaps or outages in the middle of an investigation.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Security & governance.</strong> Because STELLARIS often deals with sensitive or personally identifiable information, governance is embedded into the platform itself. 
+      Fine-grained role-based access controls (RBAC) allow administrators to control who can view, edit, or export specific segments of the graph. 
+      Sensitive attributes can be masked or hidden entirely depending on clearance level, while export bundles are signed with checksums to prevent tampering. 
+      Secrets and credentials are rotated automatically, and all data — both at rest and in transit — is encrypted with modern standards. 
+      Audit logs capture every action, making it possible to review not just what the data says, but who accessed it, when, and how. 
+      This makes STELLARIS suitable not only for open-source research, but also for regulated environments where compliance and accountability are non-negotiable.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Impact.</strong> The practical outcome of all this engineering is measurable acceleration in the way analysts work. 
+      Tasks that once took hours — verifying an alias across multiple reports, surfacing intermediaries in a financial network, or mapping supply chain hops across borders — now take minutes. 
+      Instead of emailing screenshots or exporting static reports, teams can share reproducible graph views that carry all the filters, time windows, and citations baked in. 
+      This reduces duplication of effort, makes peer review far easier, and ensures that insights scale across an organization rather than living in individual silos. 
+      For organizations facing information overload, STELLARIS doesn’t just speed up analysis; it changes the very culture of how intelligence is produced, reviewed, and disseminated.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Roadmap.</strong> STELLARIS is already powerful, but its future is even more ambitious. 
+      Upcoming milestones include cross-lingual models that can normalize entities across languages and scripts, enabling global investigations without linguistic blind spots. 
+      Stance and claim clustering will allow analysts to group related narratives, distinguish between factual reporting and opinion, and identify coordinated campaigns. 
+      Natural-language graph queries will let users type questions like “Show all shell companies linked to X in 2022” and receive structured subgraphs as answers. 
+      Event-sequence anomaly detection will flag unusual chains of activity — like logistics routes that don’t match normal patterns. 
+      Finally, collaborative playbooks will allow teams to codify repeatable workflows as templates, so that common investigative patterns can be reused, audited, and improved over time. 
+      Together, these roadmap items point to a system that doesn’t just document the world, but actively helps analysts stay ahead of it.</p>
+    `,
         },
       ],
+
       images: [
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
+        "/assets/images/stellarisOverview.jpg",
+        "/assets/images/stellarisWorkflow.jpg",
+        "/assets/images/stellarisStack.jpg",
+        "/assets/images/stellarisQuality.jpg",
+        "/assets/images/stellarisScale.jpg",
       ],
       resources: {
         Sightings: [
@@ -219,318 +383,341 @@ const PortfolioData = {
         ],
       },
     },
+
     {
-      volume: "PORTFOLIO — PROJECT",
-      title: "COSMOS — Cyber Threat Intelligence Dashboard",
+      volume: "Computer Science Project 3 ",
+      title: "COSMOS Project",
       slug: "cosmos",
       author: "Tobin M. Albanese",
       date: "2024-05-12",
       excerpt:
-        "Unifies feeds, DW intel, CVEs, and incident workflows into one pane.",
-      archiveImage: "/assets/images/space.jpg",
-      banner: "/assets/images/space.jpg",
+        "A centralized cybersecurity platform designed to monitor, analyze, and respond to evolving cyber threats. It focuses on real-time malware detection, dark web intelligence, vulnerability tracking, and cyber attack pattern analysis—comprehensive situational awareness to protect critical information.",
+      archiveImage: "/assets/images/cosmosPortfolio.jpg",
+      banner: "/assets/images/cosmosEarth.jpg",
       content: [
         {
-          text: "<p><strong>Purpose.</strong> COSMOS centralizes heterogeneous threat data to reduce swivel-chair analysis and accelerate triage and response.</p>",
+          text: `
+      <p><strong>Purpose.</strong> COSMOS consolidates heterogeneous cyber threat data—commercial/open feeds, dark-web chatter, vulnerability disclosures, malware sandboxes, and internal telemetry—into a single operational pane. 
+      By eliminating swivel-chair analysis across tabs and tools, analysts can triage faster, correlate indicators of compromise (IOCs) with real assets, and move from signal to decision with full context. 
+      COSMOS is designed for 24/7 situational awareness: it ingests continuously, normalizes formats, enriches artifacts, and preserves provenance so every alert can be traced back to its source.</p>
+    `,
         },
         {
-          text: "<p><strong>Features.</strong> Multi-feed ingestion, IOC correlation, dark-web monitoring, CVE tracking with patch posture, and analyst playbooks with checklists/notes.</p>",
+          text: `
+      <p><strong>Features.</strong> The platform performs multi-feed ingestion with per-source parsing and enrichment, unifies IOCs (hashes, IPs, domains, URLs) into entity-centric views, and monitors the dark web for leaks, targeting chatter, and sale of stolen data. 
+      Vulnerability tracking ties CVEs to your asset inventory and patch posture, prioritizing exploit-in-the-wild and KEV (Known Exploited Vulnerabilities). 
+      Analyst playbooks provide step-by-step checklists, notes, and evidence capture, turning tribal knowledge into repeatable, auditable response workflows.</p>
+    `,
         },
         {
-          text: "<p><strong>Analytics.</strong> Behavioral baselines, anomaly scoring, and clustering by TTPs; drill-downs link to raw artifacts and sandbox results.</p>",
+          text: `
+      <p><strong>Analytics.</strong> COSMOS builds behavioral baselines from historical telemetry, then scores anomalies across users, hosts, and network segments. 
+      TTP clustering groups related events by ATT&CK techniques, surfacing campaigns rather than isolated alerts. 
+      Every analytic view is drillable: pivot from a cluster to raw artifacts, sandbox detonation reports, PCAP slices, and original feed entries. 
+      Confidence and severity are explained with contributing features so analysts understand <em>why</em> something is prioritized—not just that it is.</p>
+    `,
         },
         {
-          text: "<p><strong>Integrations.</strong> SIEM/SOAR webhooks, ticketing, and notifications. RBAC and workspace isolation for teams/tenants.</p>",
+          text: `
+      <p><strong>Integrations.</strong> COSMOS connects to SIEM/SOAR platforms via webhooks and REST, opens tickets in incident systems with pre-filled context, and notifies channels (email/ChatOps) with deduplicated alerts. 
+      Role-based access control (RBAC) and workspace isolation support multi-team and multi-tenant operations, while API keys and signed export bundles enable safe sharing with partners. 
+      A plugin model allows new feed connectors, enrichment services, and automations to be added without redeploying the core.</p>
+    `,
         },
         {
-          text: "<p><strong>Outcome.</strong> From feeds to findings with full provenance and auditability.</p>",
+          text: `
+      <p><strong>Outcome.</strong> Teams move from feeds to findings quickly, with end-to-end traceability. 
+      COSMOS cuts time-to-triage by centralizing evidence, reduces false positives through correlation and context, and captures institutional knowledge in reusable playbooks. 
+      Every action—ingest, enrich, score, escalate—is logged for audit, enabling after-action reviews that actually improve posture over time.</p>
+    `,
         },
       ],
       images: [
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
+        "/assets/images/cosmosBanner.jpg",
+        "/assets/images/cosmosHeatmap.jpg",
+        "/assets/images/cosmosFeatures.jpg",
       ],
+
       resources: {
-        Sightings: [
+        "Platform Links": [
           { label: "Project Hub", url: "/Portfolio", external: false },
-          { label: "Security Notes", url: "/Notes/Sec", external: false },
+          {
+            label: "COSMOS Security Notes",
+            url: "/Notes/Sec",
+            external: false,
+          },
         ],
-        FormalStudies: [
+        "Research & Methodology": [
           {
             label: "Threat Modeling Write-up",
             url: "/Notes/Threat-Modeling",
             external: false,
           },
           {
-            label: "ResearchGate",
+            label: "ResearchGate Profile",
             url: "https://www.researchgate.net/profile/Tobin-Albanese",
             external: true,
           },
         ],
-        PopularCulture: [
+        "Code & Integrations": [
           {
-            label: "GitHub",
+            label: "COSMOS GitHub Repo",
             url: "https://github.com/TobinAlbanese",
             external: true,
           },
-          { label: "Home", url: "/", external: false },
-        ],
-      },
-    },
-    {
-      volume: "PORTFOLIO — PROJECT",
-      title: "ECHO — Encrypted/Noisy Audio Intelligence",
-      slug: "echo",
-      author: "Tobin M. Albanese",
-      date: "2024-06-17",
-      excerpt:
-        "ASR + keyword heatmaps + stress/tone in noisy or degraded audio.",
-      archiveImage: "/assets/images/space.jpg",
-      banner: "/assets/images/space.jpg",
-      content: [
-        {
-          text: "<p><strong>Scope.</strong> ECHO extracts transcripts, speakers, and acoustic cues from difficult audio. It emphasizes robustness to noise and support for multiple languages.</p>",
-        },
-        {
-          text: "<p><strong>Pipeline.</strong> Denoise → diarize → transcribe → keyword/phrase spotting → acoustic features (pitch, jitter, shimmer, tempo) → per-segment scoring and highlights.</p>",
-        },
-        {
-          text: "<p><strong>UI.</strong> Waveform view with overlays, jump-to-event, and export of clips with redaction options for PII.</p>",
-        },
-        {
-          text: "<p><strong>Security.</strong> Storage is encrypted, and all processing steps record parameters for reproducibility.</p>",
-        },
-        {
-          text: "<p><strong>Next.</strong> Real-time streaming and model personalization per device/channel.</p>",
-        },
-      ],
-      images: [
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-      ],
-      resources: {
-        Sightings: [
-          { label: "Project Hub", url: "/Portfolio", external: false },
-          { label: "Audio Notes", url: "/Notes/Audio", external: false },
-        ],
-        FormalStudies: [
           {
-            label: "Signal Processing Primer",
-            url: "/Notes/DSP",
+            label: "API Documentation (Coming Soon)",
+            url: "#",
             external: false,
           },
-          {
-            label: "ResearchGate",
-            url: "https://www.researchgate.net/profile/Tobin-Albanese",
-            external: true,
-          },
         ],
-        PopularCulture: [
+        "Reports & Case Studies": [
           {
-            label: "GitHub",
-            url: "https://github.com/TobinAlbanese",
-            external: true,
+            label: "Midnight Bureau (Case Notes)",
+            url: "/MidnightBureau",
+            external: false,
           },
           { label: "Home", url: "/", external: false },
         ],
       },
     },
+
     {
-      volume: "PORTFOLIO — PROJECT",
-      title: "VAULT — Encrypted File & Folder Manager",
+      volume: "Computer Science Project 5",
+      title: "VAULT PROJECT",
       slug: "vault-project",
       author: "Tobin M. Albanese",
       date: "2023-12-01",
       excerpt:
-        "Client-side AES-GCM, sharing & versioning with full audit trails.",
-      archiveImage: "/assets/images/space.jpg",
-      banner: "/assets/images/space.jpg",
+        "Provides users with a secure platform to encrypt, store, and manage files and folders locally and in the cloud. Utilizing strong encryption algorithms, VAULT ensures that sensitive documents remain private, enabling secure sharing and access control while maintaining user sovereignty over data.",
+      archiveImage: "/assets/images/vaultPortfolio.jpg",
+      banner: "/assets/images/vaultBanner.jpg",
       content: [
         {
-          text: "<p><strong>Design goal.</strong> Keep plaintext on the client, always. Servers only ever see ciphertext and metadata required for sync/sharing.</p>",
+          text: `
+      <p><strong>Project Overview.</strong> VAULT-PROJECT is a zero-knowledge, end-to-end encrypted file and folder manager designed to keep plaintext on the client at all times. Users encrypt locally and synchronize only ciphertext and minimal metadata to the cloud, preserving privacy without sacrificing collaboration. Modern cryptography protects documents at rest and in transit, while straightforward sharing and access controls make it practical for everyday work. The guiding promise is convenience that never compromises user sovereignty over data.</p>
+    `,
         },
         {
-          text: "<p><strong>Features.</strong> End-to-end encryption, role-based sharing, link keys, version history, and device-bound access with revocation.</p>",
+          text: `
+      <p><strong>Vision &amp; Goals.</strong> The aim is to make strong security feel ordinary: encryption happens automatically on-device, sync is seamless across desktops and mobiles, and permissions are understandable at a glance. VAULT-PROJECT favors clarity over complexity—clear indicators show what is encrypted and who can decrypt it—while backups and recovery remain encrypted end-to-end so resilience never dilutes privacy. The cross-platform experience is intentionally consistent, so moving between devices does not change the security model.</p>
+    `,
         },
         {
-          text: "<p><strong>Architecture.</strong> Desktop/mobile clients; metadata APIs; encrypted object storage; background sync and conflict handling.</p>",
+          text: `
+      <p><strong>What it Provides.</strong> In practical terms, VAULT-PROJECT encrypts files and folders before any upload, syncs ciphertext to cloud object storage, and lets owners share access by exchanging keys instead of exposing content. Version history is preserved without revealing prior plaintext, and every significant action—shares, revocations, and device changes—leaves a signed, tamper-evident trace for audit. The interface keeps the workflow familiar—drag and drop, previews where possible, and clear status badges—so teams can adopt stronger practices without relearning file management from scratch.</p>
+    `,
         },
         {
-          text: "<p><strong>Safety.</strong> Recovery keys, tamper-evident logs, and optional hardware-backed key storage.</p>",
+          text: `
+      <p><strong>Architecture &amp; Tech Stack.</strong> VAULT-PROJECT separates cryptography from coordination. Clients built with Electron (desktop) and React Native (mobile) handle key generation, wrapping, and AES-GCM encryption locally, deriving keys with PBKDF2 or scrypt and never releasing plaintext to servers. Lightweight Node.js services coordinate identities, device enrollment, and sharing graphs, while cloud object storage retains encrypted blobs and version chunks. Key management—generation, rotation, and revocation—remains client-side by design, preserving the zero-knowledge model even when syncing or collaborating.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Typical Use.</strong> Individuals and teams use VAULT-PROJECT to safeguard legal, medical, and financial documents; collaborate privately across locations; and maintain compliant, tamper-evident archives. It suits personal backups as much as shared workspaces, because encryption is the default and sharing simply extends decryption rights to the intended recipients—nothing more.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Getting Started.</strong> Setup involves installing the desktop or mobile client, creating a workspace, and enrolling devices. From there, files dropped into VAULT-PROJECT are encrypted on the spot and synchronized as ciphertext; inviting collaborators issues keys rather than exposing content. Recovery can be configured with encrypted backups and a user-held recovery key so that resilience does not depend on the server knowing anything about the data itself.</p>
+    `,
         },
       ],
       images: [
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
+        "/assets/images/vaultOverview.jpg",
+        "/assets/images/vaultProvider.jpg",
+        "/assets/images/vaultArchitecture.jpg",
+        "/assets/images/vaultUse.jpg",
+        "/assets/images/vault5.jpg",
       ],
       resources: {
-        Sightings: [
+        "Platform Links": [
           { label: "Project Hub", url: "/Portfolio", external: false },
-          { label: "Security Notes", url: "/Notes/Sec", external: false },
+          {
+            label: "Security Notes (VAULT)",
+            url: "/Notes/Sec",
+            external: false,
+          },
         ],
-        FormalStudies: [
+        "Crypto & Methodology": [
           { label: "Crypto Basics", url: "/Notes/Crypto", external: false },
           {
-            label: "ResearchGate",
+            label: "Threat Modeling Notes",
+            url: "/Notes/Threat-Modeling",
+            external: false,
+          },
+          {
+            label: "ResearchGate Profile",
             url: "https://www.researchgate.net/profile/Tobin-Albanese",
             external: true,
           },
         ],
-        PopularCulture: [
+        "Code & SDKs": [
           {
-            label: "GitHub",
+            label: "GitHub (VAULT / clients / tooling)",
             url: "https://github.com/TobinAlbanese",
             external: true,
           },
-          { label: "Home", url: "/", external: false },
+          { label: "API Schemas (Coming Soon)", url: "#", external: false },
+        ],
+        "Threat Models & Audits": [
+          {
+            label: "Transparency / Audit Log Overview (Coming Soon)",
+            url: "#",
+            external: false,
+          },
         ],
       },
     },
+
     {
-      volume: "PORTFOLIO — PROJECT",
-      title: "NOTES — End-to-End Encrypted Notes",
+      volume: "Computer Science Project 5",
+      title: "NOTES PROJECT",
       slug: "notes-project",
       author: "Tobin M. Albanese",
       date: "2024-02-15",
-      excerpt: "Zero-knowledge notes with offline-first sync and rich editing.",
-      archiveImage: "/assets/images/space.jpg",
-      banner: "/assets/images/space.jpg",
+      excerpt:
+        "Zero-knowledge notes with offline-first sync and rich editing. a privacy-first note-taking app that encrypts user data end-to-end, ensuring all notes are stored securely and accessible only by the user. Future linked towards Vault Project as 1:1",
+      archiveImage: "/assets/images/notesPortfolio.jpg",
+      banner: "/assets/images/notesBanner.jpg",
       content: [
         {
-          text: "<p><strong>Why.</strong> Fast, private knowledge capture that works offline and syncs safely across devices.</p>",
+          text: `
+      <p><strong>Project Overview.</strong> NOTES-PROJECT is a privacy-first notes application that treats encryption as a default, not an add-on. Every note, attachment, and index entry is encrypted locally before it ever touches a server, and only the minimum metadata required for sync is transmitted. The experience is intentionally simple—open, type, search, tag—while strong cryptography and careful key handling keep content private to the owner. The result is a familiar note-taking workflow with end-to-end security and zero-knowledge guarantees.</p>
+    `,
         },
         {
-          text: "<p><strong>Core.</strong> Client-side crypto; CRDT/OT syncing; tags, search, and attachments; conflict resolution; exports and backups.</p>",
+          text: `
+      <p><strong>Why.</strong> Capturing ideas should be fast and portable, but it shouldn’t compromise privacy. NOTES-PROJECT aims to make strong security feel invisible: it works offline on a flight or in a dead zone, then safely syncs when a connection returns. Whether the content is a personal journal or sensitive meeting minutes, the system assumes untrusted networks and honest-but-curious servers, so plaintext never leaves the device and decryption keys never reside on the backend.</p>
+    `,
         },
         {
-          text: "<p><strong>Privacy.</strong> Zero-knowledge design; servers store ciphertext only. Share by exchanging keys out-of-band or via link keys.</p>",
+          text: `
+      <p><strong>How it Works.</strong> Notes live in encrypted notebooks that synchronize across devices using conflict-tolerant data structures (CRDT/OT) so edits from multiple places merge predictably. Client apps handle key generation, wrapping, and encryption on the device; servers store ciphertext blobs and lightweight sync state. When two edits collide, the app preserves intent and offers a clear, local resolution view rather than dropping content or exposing it server-side for reconciliation.</p>
+    `,
         },
         {
-          text: "<p><strong>Extensibility.</strong> Plugin hooks for templates, tasking, and API integrations.</p>",
+          text: `
+      <p><strong>Editing & Organization.</strong> The editor supports rich text, markdown-style shortcuts, attachments, and inline media, with tagging and fast, local-first search. Notes can be grouped into notebooks or filtered across tags and dates. Previews render client-side so no plaintext or thumbnails are generated on the server. Export flows produce encrypted backups by default, with optional client-side decrypt when a readable archive is required.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Privacy & Sharing.</strong> The architecture is zero-knowledge: servers see ciphertext only. When collaboration is needed, owners grant access by sharing keys—either out-of-band or via time-boxed link keys—so recipients decrypt locally and the service never gains read capability. All significant actions—new share, revoked key, device enrollment—are recorded as signed events, creating a tamper-evident activity history that can be reviewed offline.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Extensibility.</strong> NOTES-PROJECT exposes guarded plugin hooks for templates, task extraction, and integrations while maintaining the same trust boundaries: plugins operate on decrypted content within the client sandbox and never transmit plaintext externally without explicit user intent. Over time, the plugin surface will grow to include importers, exporters, and automations that keep the security model intact.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Getting Started.</strong> Install the desktop or mobile client, create a notebook, and enroll your devices. From that moment, keystrokes are encrypted on-device, synchronized as ciphertext, and instantly searchable locally. If you choose to share, the app guides you through key delivery so collaborators can decrypt on their own devices without changing the zero-knowledge posture of the service.</p>
+    `,
         },
       ],
       images: [
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
+        "/assets/images/notesWhy.jpg",
+        "/assets/images/notesHow.jpg",
+        "/assets/images/notesEdit.jpg",
+        "/assets/images/notesEnigma.jpg",
+        "/assets/images/notesLibrary.jpg",
       ],
       resources: {
-        Sightings: [
+        "Platform Links": [
           { label: "Project Hub", url: "/Portfolio", external: false },
           { label: "App UX Notes", url: "/Notes/UX", external: false },
         ],
-        FormalStudies: [
+        "Sync & Data Structures": [
           { label: "CRDT Primer", url: "/Notes/CRDT", external: false },
+        ],
+        "Privacy & Methods": [
           {
-            label: "ResearchGate",
+            label: "Zero-Knowledge Design Notes",
+            url: "/Notes/ZeroKnowledge",
+            external: false,
+          },
+          {
+            label: "ResearchGate Profile",
             url: "https://www.researchgate.net/profile/Tobin-Albanese",
             external: true,
           },
         ],
-        PopularCulture: [
+        "Code & Integrations": [
           {
-            label: "GitHub",
+            label: "GitHub (NOTES-PROJECT)",
             url: "https://github.com/TobinAlbanese",
             external: true,
           },
-          { label: "Home", url: "/", external: false },
-        ],
-      },
-    },
-    {
-      volume: "PORTFOLIO — PROJECT",
-      title: "4D — AI Visual Reconstruction from 2D",
-      slug: "4d-project",
-      author: "Tobin M. Albanese",
-      date: "2024-08-01",
-      excerpt: "2D → 3D/4D via depth + temporal layering; VR/AR-ready exports.",
-      archiveImage: "/assets/images/space.jpg",
-      banner: "/assets/images/space.jpg",
-      content: [
-        {
-          text: "<p><strong>Concept.</strong> Rebuild volumetric scenes from images with monocular depth, neural rendering, and temporal interpolation.</p>",
-        },
-        {
-          text: "<p><strong>Pipeline.</strong> Depth estimation → point cloud/mesh → temporal alignment → refinement & super-resolution → GLTF export.</p>",
-        },
-        {
-          text: "<p><strong>Applications.</strong> Surveillance review, cultural heritage, immersive media, and scientific visualization.</p>",
-        },
-        {
-          text: "<p><strong>Performance.</strong> GPU-accelerated reconstruction with progressive previews for large scenes.</p>",
-        },
-      ],
-      images: [
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-      ],
-      resources: {
-        Sightings: [
-          { label: "Project Hub", url: "/Portfolio", external: false },
-          { label: "3D Showcase", url: "/Gallery/3D", external: false },
-        ],
-        FormalStudies: [
-          { label: "Papers & Notes", url: "/Notes/4D", external: false },
           {
-            label: "ResearchGate",
-            url: "https://www.researchgate.net/profile/Tobin-Albanese",
-            external: true,
+            label: "API / Plugin Hooks (Coming Soon)",
+            url: "#",
+            external: false,
           },
         ],
-        PopularCulture: [
-          {
-            label: "GitHub",
-            url: "https://github.com/TobinAlbanese",
-            external: true,
-          },
-          { label: "Home", url: "/", external: false },
-        ],
+        Home: [{ label: "Home", url: "/", external: false }],
       },
     },
+
     {
-      volume: "PORTFOLIO — PROJECT",
-      title: "Portfolio & Research Hub (this site)",
+      volume: "Computer Science Project 6",
+      title: "Portfolio & Research Hub",
       slug: "portfolio-hub",
       author: "Tobin M. Albanese",
       date: "2025-01-01",
       excerpt:
-        "Unified hub for projects, essays, and the Midnight Bureau archive.",
-      archiveImage: "/assets/images/space.jpg",
-      banner: "/assets/images/space.jpg",
+        "My personal website for exploring my portfolio, stories about me & my interests, along with the curation of my blog page; Midnight Bureau where I dive into topics I'm most interested in & real time Intelligence analysis :)!",
+      archiveImage: "/assets/images/portfolioHub.jpg",
+      banner: "/assets/images/portfolioBanner.jpg",
       content: [
         {
-          text: "<p><strong>Goals.</strong> Clean reading experience, fast discovery, and a unified schema that scales with your research and builds.</p>",
+          text: `
+      <p><strong>Why this exists.</strong> I wanted one quiet place to gather the things I’m building and learning—projects, essays, and the Midnight Bureau archive—without chasing half-finished drafts across apps. This site is my working notebook in public. It’s tidy on the surface so it’s pleasant to read, but it doesn’t hide the in-progress parts: the small experiments, the detours, the questions I’m still figuring out. I also wanted permanence. Links should stay valid, citations should have a home, and files shouldn’t disappear because a platform changed its mind. Publishing here gives me a stable address to point to, a place I control, and a rhythm that encourages me to refine ideas out in the open instead of waiting for “perfect.”</p>
+    `,
         },
         {
-          text: "<p><strong>UX.</strong> Responsive cards → deep-dive slugs; resource sections for outbound links; image galleries per entry.</p>",
+          text: `
+      <p><strong>How I want it to feel.</strong> Calm and quick. Pages should open fast and stay out of the way—no pop-ups, no newsletter walls, no unexpected motion. The typography aims for a comfortable line length and steady rhythm so reading feels effortless, even on a small phone late at night. Color is used sparingly, mostly to guide attention; whitespace does the heavy lifting. Interactions are gentle: hover hints, clear affordances, predictable focus states. If you only have a few minutes between tasks, you can still drop in, scan a page, and leave with something useful. If you have an hour, the layout scales with you and invites a deeper read without feeling heavy.</p>
+    `,
         },
         {
-          text: "<p><strong>Next.</strong> Search across portfolio & Bureau, shared tagging, and server-side rendering for SEO.</p>",
+          text: `
+      <p><strong>How it’s organized.</strong> The home grid is a map, not a maze. Each card opens to a focused deep-dive page with the same simple structure: title, context, body, images, and a small resource panel for links and references. Projects, essays, and Bureau posts all share this schema so I can cross-link related ideas without custom glue every time. Tags connect threads across formats; series collect longer arcs; dates keep the story honest. You’ll find gentle breadcrumbs, related reads at the end, and clear anchors for headings so it’s easy to reference a specific section. The goal is to make discovery obvious and maintenance boring—in the best way.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>My workflow.</strong> I write in Markdown/MDX because it keeps me close to the text. Drafts often start as short notes or outlines that I push early, then shape over time. When something moves from sketch to substance, I add images, callouts, and citations; when I change my mind, I leave a trace so the reasoning is visible. Small diagrams live alongside paragraphs. Commit messages act like a lab notebook. I try to publish decisions, not just outcomes—what I tried, what broke, what I kept. This pace lets me ship ideas while they’re fresh and come back later to tighten the prose without losing the path I took to get there.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Craft &amp; accessibility.</strong> I sweat the basics because they matter every day: consistent headings, real landmarks, strong contrast, generous spacing, and meaningful alt text for images. Pages are light and cache well; images are responsive and lazy-load when they’re actually needed. Keyboard navigation is first-class, focus states are obvious, and motion is minimal (and reducible). If JavaScript is limited, the content still reads cleanly. The site should feel welcoming whether you’re skimming with a trackpad, reading with a screen reader, or printing a long case study to mark up with a pen.</p>
+    `,
+        },
+        {
+          text: `
+    <p><strong>Background.</strong> My center of gravity is intelligence work—collecting, structuring, and turning fragments into something a team can act on. I’m drawn to target development: mapping people and organizations, tracing logistics and finance, and producing briefs that hold up under scrutiny. That bias shows up in how I build and write here. I keep sources, citations, and version history close; I document assumptions and alternatives; and I try to make every page a small training rep in tradecraft—state a hypothesis, gather, analyze, reduce to what matters. The tools and projects across this site—graph analysis, threat dashboards, secure comms, disciplined note-taking—are all aimed at the same goal: becoming the kind of intelligence targeter who can find the signal, defend the reasoning, and deliver something useful when time is tight.</p>
+  `,
+        },
+
+        {
+          text: `
+      <p><strong>What’s next.</strong> I’m building a single search that spans the portfolio and the Bureau so you can jump to an idea no matter where it lives. Shared tagging will help surface threads that cut across projects and essays. I want a print-friendly mode for long pieces that respects footnotes and figures, plus RSS for new essays so you don’t have to remember to check back. Analytics will stay minimal—enough to learn what’s working, never enough to profile anyone. Over time I’ll open-source small pieces of the stack and keep tightening the writing tools so publishing here remains fast, durable, and enjoyable.</p>
+    `,
         },
       ],
       images: [
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
+        "/assets/images/portfolio1.jpg",
+        "/assets/images/portfolioMap.jpg",
+        "/assets/images/portfolioUX.jpg",
+        "/assets/images/portfolioAccess.jpg",
+        "/assets/images/lincoln.jpg",
       ],
       resources: {
-        Sightings: [
+        "Live & Navigation": [
           {
             label: "Live Site",
             url: "https://www.tobinalbanese.com",
@@ -538,7 +725,7 @@ const PortfolioData = {
           },
           { label: "Midnight Bureau", url: "/MidnightBureau", external: false },
         ],
-        FormalStudies: [
+        "About & Research": [
           { label: "About / CV", url: "/About", external: false },
           {
             label: "ResearchGate",
@@ -546,13 +733,12 @@ const PortfolioData = {
             external: true,
           },
         ],
-        PopularCulture: [
+        "Code & Repos": [
           {
             label: "GitHub",
             url: "https://github.com/TobinAlbanese",
             external: true,
           },
-          { label: "Home", url: "/", external: false },
         ],
       },
     },
@@ -580,8 +766,11 @@ const PortfolioData = {
         },
       ],
       images: [
+        "https://images.unsplash.com/photo-1677212004257-103cfa6b59d0?q=80&w=2160&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         "/assets/images/space.jpg",
         "/assets/images/space.jpg",
+        "/assets/images/space.jpg",
+        "/assets/images/portfolioAccessibility.jpg",
         "/assets/images/space.jpg",
         "/assets/images/space.jpg",
         "/assets/images/space.jpg",
@@ -631,7 +820,7 @@ const PortfolioData = {
         },
       ],
       images: [
-        "/assets/images/space.jpg",
+        "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         "/assets/images/space.jpg",
         "/assets/images/space.jpg",
         "/assets/images/space.jpg",
@@ -874,7 +1063,7 @@ const PortfolioData = {
         },
       ],
       images: [
-        "/assets/images/space.jpg",
+        "https://plat.ai/wp-content/uploads/Shutterstock_567338095.jpg.webp",
         "/assets/images/space.jpg",
         "/assets/images/space.jpg",
         "/assets/images/space.jpg",
@@ -921,7 +1110,7 @@ const PortfolioData = {
         },
       ],
       images: [
-        "/assets/images/space.jpg",
+        "/assets/images/stellarisStack.jpg",
         "/assets/images/space.jpg",
         "/assets/images/space.jpg",
         "/assets/images/space.jpg",
@@ -965,7 +1154,7 @@ const PortfolioData = {
         },
       ],
       images: [
-        "/assets/images/space.jpg",
+        "https://images.unsplash.com/photo-1677212004257-103cfa6b59d0?q=80&w=928&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         "/assets/images/space.jpg",
         "/assets/images/space.jpg",
         "/assets/images/space.jpg",
@@ -1084,153 +1273,112 @@ const PortfolioData = {
     },
   ],
 
-  "Current & In-Progress Work": [
-    {
-      volume: "PORTFOLIO — IN PROGRESS",
-      title: "Midnight Bureau Blog Expansion",
-      slug: "midnight-bureau-expansion",
-      author: "Tobin M. Albanese",
-      date: "2025-02-01",
-      excerpt: "Better discovery, smoother reading, richer archives.",
-      archiveImage: "/assets/images/space.jpg",
-      banner: "/assets/images/space.jpg",
-      content: [
-        {
-          text: "<p>Upgrading archive navigation, adding topic/entity filters, and refining long-form readability across devices.</p>",
-        },
-        {
-          text: "<p>Planned: unified tagging with portfolio and cross-search.</p>",
-        },
+"Current & In-Progress Work": [
+  {
+    volume: "PORTFOLIO — IN PROGRESS",
+    title: "Midnight Bureau Blog Expansion",
+    slug: "midnight-bureau-expansion",
+    author: "Tobin M. Albanese",
+    date: "2025-02-01",
+    excerpt: "Better discovery, smoother reading, richer archives.",
+    archiveImage: "/assets/images/space.jpg",
+    banner: "/assets/images/space.jpg",
+    content: [
+      { text: "<p>Upgrading archive navigation, adding topic/entity filters, and refining long-form readability across devices.</p>" },
+      { text: "<p>Planned: unified tagging with portfolio and cross-search.</p>" }
+    ],
+    images: [
+      "/assets/images/Container.png",  // skyscrapers
+      "/assets/images/space.jpg",
+      "/assets/images/space.jpg",
+      "/assets/images/space.jpg",
+      "/assets/images/space.jpg"
+    ],
+    resources: {
+      Sightings: [
+        { label: "Midnight Bureau", url: "/MidnightBureau", external: false },
+        { label: "Live Site", url: "https://www.tobinalbanese.com", external: true }
       ],
-      images: [
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
+      FormalStudies: [
+        { label: "About / CV", url: "/About", external: false },
+        { label: "ResearchGate", url: "https://www.researchgate.net/profile/Tobin-Albanese", external: true }
       ],
-      resources: {
-        Sightings: [
-          { label: "Midnight Bureau", url: "/MidnightBureau", external: false },
-          {
-            label: "Live Site",
-            url: "https://www.tobinalbanese.com",
-            external: true,
-          },
-        ],
-        FormalStudies: [
-          { label: "About / CV", url: "/About", external: false },
-          {
-            label: "ResearchGate",
-            url: "https://www.researchgate.net/profile/Tobin-Albanese",
-            external: true,
-          },
-        ],
-        PopularCulture: [
-          {
-            label: "GitHub",
-            url: "https://github.com/TobinAlbanese",
-            external: true,
-          },
-          { label: "Home", url: "/", external: false },
-        ],
-      },
-    },
-    {
-      volume: "PORTFOLIO — IN PROGRESS",
-      title: "Real-time Facial Recognition Prototype",
-      slug: "facial-recognition-prototype",
-      author: "Tobin M. Albanese",
-      date: "2025-04-01",
-      excerpt: "End-to-end live identity experiments with policy gates.",
-      archiveImage: "/assets/images/space.jpg",
-      banner: "/assets/images/space.jpg",
-      content: [
-        {
-          text: "<p>Prototyping a low-latency video pipeline with detection, matching, and governance hooks for safe testing.</p>",
-        },
-        {
-          text: "<p>Focus on evaluation, latency budgets, and opt-in controls.</p>",
-        },
+      PopularCulture: [
+        { label: "GitHub", url: "https://github.com/TobinAlbanese", external: true },
+        { label: "Home", url: "/", external: false }
+      ]
+    }
+  },
+  {
+    volume: "PORTFOLIO — IN PROGRESS",
+    title: "Real-time Facial Recognition Prototype",
+    slug: "facial-recognition-prototype",
+    author: "Tobin M. Albanese",
+    date: "2025-04-01",
+    excerpt: "End-to-end live identity experiments with policy gates.",
+    archiveImage: "/assets/images/space.jpg",
+    banner: "/assets/images/space.jpg",
+    content: [
+      { text: "<p>Prototyping a low-latency video pipeline with detection, matching, and governance hooks for safe testing.</p>" },
+      { text: "<p>Focus on evaluation, latency budgets, and opt-in controls.</p>" }
+    ],
+    images: [
+      "/assets/images/naomiPortfolio.jpg",
+      "/assets/images/space.jpg",
+      "/assets/images/space.jpg",
+      "/assets/images/space.jpg"
+    ],
+    resources: {
+      Sightings: [
+        { label: "Project Hub", url: "/Portfolio", external: false },
+        { label: "Policy Notes", url: "/Notes/Policy", external: false }
       ],
-      images: [
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
+      FormalStudies: [
+        { label: "About / CV", url: "/About", external: false },
+        { label: "ResearchGate", url: "https://www.researchgate.net/profile/Tobin-Albanese", external: true }
       ],
-      resources: {
-        Sightings: [
-          { label: "Project Hub", url: "/Portfolio", external: false },
-          { label: "Policy Notes", url: "/Notes/Policy", external: false },
-        ],
-        FormalStudies: [
-          { label: "About / CV", url: "/About", external: false },
-          {
-            label: "ResearchGate",
-            url: "https://www.researchgate.net/profile/Tobin-Albanese",
-            external: true,
-          },
-        ],
-        PopularCulture: [
-          {
-            label: "GitHub",
-            url: "https://github.com/TobinAlbanese",
-            external: true,
-          },
-          { label: "Home", url: "/", external: false },
-        ],
-      },
-    },
-    {
-      volume: "PORTFOLIO — IN PROGRESS",
-      title: "OSINT Data Aggregation Pipeline",
-      slug: "osint-data-pipeline",
-      author: "Tobin M. Albanese",
-      date: "2025-06-01",
-      excerpt: "Scalable ingestion with provenance and PII safety.",
-      archiveImage: "/assets/images/space.jpg",
-      banner: "/assets/images/space.jpg",
-      content: [
-        {
-          text: "<p>Standing up resilient intake with dedupe, provenance tracking, and safe storage patterns.</p>",
-        },
-        {
-          text: "<p>Planned features: source scoring and alerting thresholds.</p>",
-        },
+      PopularCulture: [
+        { label: "GitHub", url: "https://github.com/TobinAlbanese", external: true },
+        { label: "Home", url: "/", external: false }
+      ]
+    }
+  },
+  {
+    volume: "PORTFOLIO — IN PROGRESS",
+    title: "OSINT Data Aggregation Pipeline",
+    slug: "osint-data-pipeline",
+    author: "Tobin M. Albanese",
+    date: "2025-06-01",
+    excerpt: "Scalable ingestion with provenance and PII safety.",
+    archiveImage: "/assets/images/space.jpg",
+    banner: "/assets/images/space.jpg",
+    content: [
+      { text: "<p>Standing up resilient intake with dedupe, provenance tracking, and safe storage patterns.</p>" },
+      { text: "<p>Planned features: source scoring and alerting thresholds.</p>" }
+    ],
+    images: [
+      "/assets/images/stellarisScale.jpg",  // neon sign
+      "/assets/images/space.jpg",
+      "/assets/images/space.jpg",
+      "/assets/images/space.jpg",
+      "/assets/images/space.jpg"
+    ],
+    resources: {
+      Sightings: [
+        { label: "Project Hub", url: "/Portfolio", external: false },
+        { label: "OSINT Overview", url: "/MidnightBureau", external: false }
       ],
-      images: [
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
+      FormalStudies: [
+        { label: "About / CV", url: "/About", external: false },
+        { label: "ResearchGate", url: "https://www.researchgate.net/profile/Tobin-Albanese", external: true }
       ],
-      resources: {
-        Sightings: [
-          { label: "Project Hub", url: "/Portfolio", external: false },
-          { label: "OSINT Overview", url: "/MidnightBureau", external: false },
-        ],
-        FormalStudies: [
-          { label: "About / CV", url: "/About", external: false },
-          {
-            label: "ResearchGate",
-            url: "https://www.researchgate.net/profile/Tobin-Albanese",
-            external: true,
-          },
-        ],
-        PopularCulture: [
-          {
-            label: "GitHub",
-            url: "https://github.com/TobinAlbanese",
-            external: true,
-          },
-          { label: "Home", url: "/", external: false },
-        ],
-      },
-    },
-  ],
+      PopularCulture: [
+        { label: "GitHub", url: "https://github.com/TobinAlbanese", external: true },
+        { label: "Home", url: "/", external: false }
+      ]
+    }
+  }
+],
 
   "Education & Certifications": [
     {
@@ -1415,140 +1563,158 @@ const PortfolioData = {
     },
   ],
 
-  "Featured / Spotlight Projects": [
-    {
-      volume: "PORTFOLIO — SPOTLIGHT",
-      title: "NAOMI — Micro-Expression & Intent Analysis",
-      slug: "naomi",
-      author: "Tobin M. Albanese",
-      date: "2025-01-15",
-      excerpt: "Spotlight on NAOMI's temporal engine and overlays.",
-      archiveImage: "/assets/images/space.jpg",
-      banner: "/assets/images/space.jpg",
-      content: [
-        {
-          text: "<p>A deep look at temporal windows, calibration, and UI choices that keep analysts in control.</p>",
-        },
+ "Featured / Spotlight Projects": [
+  {
+    volume: "PORTFOLIO — SPOTLIGHT",
+    title: "NAOMI — Micro-Expression & Intent Analysis",
+    slug: "naomi", // links to actual project page
+    author: "Tobin M. Albanese",
+    date: "2025-01-15",
+    excerpt:
+      "An advanced AI platform designed to detect and analyze micro-expressions — tiny, fleeting facial movements that often reveal hidden emotions like stress, deception, or confidence. Neural Analysis Of Micro-Intent in real-time micro-expressions → inferred intent.",
+    archiveImage: "/assets/images/naomiPortfolio.jpg",
+    banner: "/assets/images/naomiBanner.jpg",
+    content: [
+      {
+        text: `<p>Spotlight on NAOMI’s temporal windows, micro-delta features, and calibration—why explainability and human-in-the-loop design matter for real decisions.</p>`
+      }
+    ],
+    images: [
+      "/assets/images/naomiWhy.jpg",
+      "/assets/images/naomiPipeline.jpg",
+      "/assets/images/naomiFeatures.jpg"
+    ],
+    resources: {
+      "Docs & Code": [
+        { label: "NAOMI GitHub Repo", url: "https://github.com/TobinAlbanese/naomi", external: true },
+        { label: "GitHub (Profile)", url: "https://github.com/TobinAlbanese", external: true }
       ],
-      images: [
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
+      "Project Links": [
+        { label: "Portfolio Hub", url: "/Portfolio", external: false },
+        { label: "About / CV", url: "/About", external: false }
+      ]
+    }
+  },
+
+  {
+    volume: "PORTFOLIO — SPOTLIGHT",
+    title: "STELLARIS — OSINT NLP Engine",
+    slug: "stellaris",
+    author: "Tobin M. Albanese",
+    date: "2024-10-01",
+    excerpt:
+      "From noisy text to interactive knowledge graphs with provenance-first extraction.",
+    archiveImage: "/assets/images/stellarisPortfolio.jpg",
+    banner: "/assets/images/stellarisBanner.jpg",
+    content: [
+      {
+        text: `<p>Entity resolution, relation/event extraction, and graph UX choices that keep context and lineage front-and-center.</p>`
+      }
+    ],
+    images: [
+      "/assets/images/stellarisOverview.jpg",
+      "/assets/images/stellarisWorkflow.jpg",
+      "/assets/images/stellarisStack.jpg"
+    ],
+    resources: {
+      "Platform Links": [
+        { label: "Project Hub", url: "/Portfolio", external: false },
+        { label: "OSINT Overview", url: "/MidnightBureau", external: false }
       ],
-      resources: {
-        Sightings: [
-          { label: "Project Hub", url: "/Portfolio", external: false },
-          { label: "Bureau Article", url: "/MidnightBureau", external: false },
-        ],
-        FormalStudies: [
-          { label: "About / CV", url: "/About", external: false },
-          {
-            label: "ResearchGate",
-            url: "https://www.researchgate.net/profile/Tobin-Albanese",
-            external: true,
-          },
-        ],
-        PopularCulture: [
-          {
-            label: "GitHub",
-            url: "https://github.com/TobinAlbanese",
-            external: true,
-          },
-          { label: "Home", url: "/", external: false },
-        ],
-      },
-    },
-    {
-      volume: "PORTFOLIO — SPOTLIGHT",
-      title: "STELLARIS — OSINT NLP Engine",
-      slug: "stellaris-spotlight",
-      author: "Tobin M. Albanese",
-      date: "2024-10-01",
-      excerpt: "Spotlight on STELLARIS graphs & entity resolution.",
-      archiveImage: "/assets/images/space.jpg",
-      banner: "/assets/images/space.jpg",
-      content: [
-        {
-          text: "<p>Design decisions behind relation scoring, graph UX, and provenance-first ingestion.</p>",
-        },
+      "Formal Studies": [
+        { label: "Methodology Notes", url: "/Notes/OSINT-Methods", external: false }
+      ]
+    }
+  },
+
+  {
+    volume: "PORTFOLIO — SPOTLIGHT",
+    title: "COSMOS — Cyber Threat Dashboard",
+    slug: "cosmos",
+    author: "Tobin M. Albanese",
+    date: "2025-03-01",
+    excerpt:
+      "Behavioral baselines, TTP clustering, and audit-ready incident workflows in one pane.",
+    archiveImage: "/assets/images/cosmosPortfolio.jpg",
+    banner: "/assets/images/cosmosEarth.jpg",
+    content: [
+      {
+        text: `<p>How COSMOS stitches feeds, DW intel, CVEs, and sandbox artifacts into drillable analytics that explain <em>why</em> an alert matters.</p>`
+      }
+    ],
+    images: [
+      "/assets/images/cosmosBanner.jpg",
+      "/assets/images/cosmosHeatmap.jpg",
+      "/assets/images/cosmosFeatures.jpg"
+    ],
+    resources: {
+      "Platform Links": [
+        { label: "Project Hub", url: "/Portfolio", external: false },
+        { label: "COSMOS Security Notes", url: "/Notes/Sec", external: false }
       ],
-      images: [
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-      ],
-      resources: {
-        Sightings: [
-          { label: "Project Hub", url: "/Portfolio", external: false },
-          { label: "OSINT Overview", url: "/MidnightBureau", external: false },
-        ],
-        FormalStudies: [
-          { label: "About / CV", url: "/About", external: false },
-          {
-            label: "ResearchGate",
-            url: "https://www.researchgate.net/profile/Tobin-Albanese",
-            external: true,
-          },
-        ],
-        PopularCulture: [
-          {
-            label: "GitHub",
-            url: "https://github.com/TobinAlbanese",
-            external: true,
-          },
-          { label: "Home", url: "/", external: false },
-        ],
-      },
-    },
-    {
-      volume: "PORTFOLIO — SPOTLIGHT",
-      title: "COSMOS — Cyber Threat Dashboard",
-      slug: "cosmos-spotlight",
-      author: "Tobin M. Albanese",
-      date: "2025-03-01",
-      excerpt: "Spotlight on COSMOS workflows & analytics.",
-      archiveImage: "/assets/images/space.jpg",
-      banner: "/assets/images/space.jpg",
-      content: [
-        {
-          text: "<p>From ingestion to incident response: how COSMOS stitches context with audit-ready trails.</p>",
-        },
-      ],
-      images: [
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-      ],
-      resources: {
-        Sightings: [
-          { label: "Project Hub", url: "/Portfolio", external: false },
-          { label: "Security Notes", url: "/Notes/Sec", external: false },
-        ],
-        FormalStudies: [
-          { label: "About / CV", url: "/About", external: false },
-          {
-            label: "ResearchGate",
-            url: "https://www.researchgate.net/profile/Tobin-Albanese",
-            external: true,
-          },
-        ],
-        PopularCulture: [
-          {
-            label: "GitHub",
-            url: "https://github.com/TobinAlbanese",
-            external: true,
-          },
-          { label: "Home", url: "/", external: false },
-        ],
-      },
-    },
-  ],
+      "Research & Methodology": [
+        { label: "Threat Modeling Write-up", url: "/Notes/Threat-Modeling", external: false }
+      ]
+    }
+  },
+
+  {
+    volume: "PORTFOLIO — SPOTLIGHT",
+    title: "VAULT — End-to-End Encrypted Storage",
+    slug: "vault-project",
+    author: "Tobin M. Albanese",
+    date: "2024-12-15",
+    excerpt:
+      "Client-side keys, ciphertext-only sync, and tamper-evident sharing with recovery that stays private.",
+    archiveImage: "/assets/images/vaultPortfolio.jpg",
+    banner: "/assets/images/vaultBanner.jpg",
+    content: [
+      {
+        text: `<p>Why VAULT separates cryptography from coordination, and how link keys + versioned audit logs make secure collaboration feel ordinary.</p>`
+      }
+    ],
+    images: [
+      "/assets/images/vaultOverview.jpg",
+      "/assets/images/vaultArchitecture.jpg",
+      "/assets/images/vaultUse.jpg"
+    ],
+    resources: {
+      "Platform Links": [
+        { label: "Project Hub", url: "/Portfolio", external: false },
+        { label: "Security Notes (VAULT)", url: "/Notes/Sec", external: false }
+      ]
+    }
+  },
+
+  {
+    volume: "PORTFOLIO — SPOTLIGHT",
+    title: "NOTES — Zero-Knowledge Notes",
+    slug: "notes-project",
+    author: "Tobin M. Albanese",
+    date: "2024-11-20",
+    excerpt:
+      "Offline-first writing with CRDT/OT sync and on-device encryption by default.",
+    archiveImage: "/assets/images/notesPortfolio.jpg",
+    banner: "/assets/images/notesBanner.jpg",
+    content: [
+      {
+        text: `<p>How NOTES balances rich editing with zero-knowledge sync, client-side previews, and key-based sharing.</p>`
+      }
+    ],
+    images: [
+      "/assets/images/notesWhy.jpg",
+      "/assets/images/notesHow.jpg",
+      "/assets/images/notesEdit.jpg"
+    ],
+    resources: {
+      "Platform Links": [
+        { label: "Project Hub", url: "/Portfolio", external: false },
+        { label: "App UX Notes", url: "/Notes/UX", external: false }
+      ]
+    }
+  }
+],
+
 
   "Skills & Technologies": [
     "Python",
@@ -1710,3 +1876,168 @@ const PortfolioData = {
 };
 
 export default PortfolioData;
+
+{
+  /* {
+      volume: "Computer Science Project 4",
+      title: "ECHO PROJECT",
+      slug: "echo",
+      author: "Tobin M. Albanese",
+      date: "2024-06-17",
+      excerpt:
+        "ASR + keyword heatmaps + stress/tone in noisy or degraded audio.",
+      archiveImage: "/assets/images/space.jpg",
+      banner: "/assets/images/space.jpg",
+      content: [
+        {
+          text: `
+      <p><strong>Scope.</strong> ECHO is a speech and acoustic intelligence pipeline built to pull truth from difficult audio. 
+      It ingests live streams or files, detects language and speakers, and extracts transcripts alongside high-resolution acoustic cues. 
+      The emphasis is operational robustness: strong performance in noisy rooms, low-bitrate radio, overlapping speech, and accented, multi-lingual conversations. 
+      Outputs remain analyst-friendly, with per-segment summaries, confidence, and clear links back to the original waveform for quick verification.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Pipeline.</strong> Audio is enhanced and normalized, then passed through diarization to separate speakers before transcription. 
+      A keyword/phrase spotter runs in parallel with contextual expansion (n-gram windows, synonyms, custom lexicons). 
+      Acoustic analysis computes pitch, jitter, shimmer, tempo, SNR, and voice quality features per segment. 
+      ECHO fuses these layers into time-aligned highlights and heatmaps so analysts can jump to moments that matter, export clips, or review full conversations with minimal scrubbing.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>UI.</strong> The interface centers on an interactive waveform and transcript timeline. 
+      Overlays mark speakers, keywords, silences, and acoustic spikes; a side panel surfaces per-segment metrics and intent cues. 
+      Analysts can filter by speaker, term, language, or confidence, then “jump-to-event” for rapid audit. 
+      Batch tools assemble quick reports with redaction toggles for PII (names, phone numbers, addresses) before export to PDF/JSON and downstream systems.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Security.</strong> All storage is encrypted at rest; transport uses modern TLS. 
+      Every processing step records parameters (model versions, VAD thresholds, denoising settings) for reproducibility and audit. 
+      Role-based access limits who can view raw audio versus redacted transcripts, and retention policies purge sensitive material on schedule. 
+      An on-device mode is available for air-gapped or field deployments where data sovereignty is paramount.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Next.</strong> Roadmap items include low-latency streaming over WebRTC, per-device/channel personalization for accents and microphones, 
+      improved far-field models for body-cam and vehicle audio, and adaptive keyword sets that learn from analyst tags. 
+      Longer-term, ECHO will add multimodal fusion (e.g., correlating radio traffic with location or video) and semi-supervised updates to keep models sharp without costly relabeling.</p>
+    `,
+        },
+      ],
+
+      images: [
+        "/assets/images/space.jpg",
+        "/assets/images/space.jpg",
+        "/assets/images/space.jpg",
+        "/assets/images/space.jpg",
+        "/assets/images/space.jpg",
+      ],
+      resources: {
+        "Platform Links": [
+          { label: "Project Hub", url: "/Portfolio", external: false },
+          {
+            label: "Audio Notes (DSP/ASR)",
+            url: "/Notes/Audio",
+            external: false,
+          },
+        ],
+        "Research & Methodology": [
+          {
+            label: "Signal Processing Primer",
+            url: "/Notes/DSP",
+            external: false,
+          },
+          {
+            label: "ResearchGate Profile",
+            url: "https://www.researchgate.net/profile/Tobin-Albanese",
+            external: true,
+          },
+        ],
+        "Code & Models": [
+          {
+            label: "GitHub (ECHO / ASR tooling)",
+            url: "https://github.com/TobinAlbanese",
+            external: true,
+          },
+          { label: "API & Schemas (Coming Soon)", url: "#", external: false },
+        ],
+        "Reports & Briefs": [
+          {
+            label: "Midnight Bureau (Case Notes)",
+            url: "/MidnightBureau",
+            external: false,
+          },
+          { label: "Home", url: "/", external: false },
+        ],
+      },
+    }, 
+    
+
+
+
+
+
+
+    
+    {
+      volume: "PORTFOLIO — PROJECT",
+      title: "4D — AI Visual Reconstruction from 2D",
+      slug: "4d-project",
+      author: "Tobin M. Albanese",
+      date: "2024-08-01",
+      excerpt: "2D → 3D/4D via depth + temporal layering; VR/AR-ready exports.",
+      archiveImage: "/assets/images/space.jpg",
+      banner: "/assets/images/space.jpg",
+      content: [
+        {
+          text: "<p><strong>Concept.</strong> Rebuild volumetric scenes from images with monocular depth, neural rendering, and temporal interpolation.</p>",
+        },
+        {
+          text: "<p><strong>Pipeline.</strong> Depth estimation → point cloud/mesh → temporal alignment → refinement & super-resolution → GLTF export.</p>",
+        },
+        {
+          text: "<p><strong>Applications.</strong> Surveillance review, cultural heritage, immersive media, and scientific visualization.</p>",
+        },
+        {
+          text: "<p><strong>Performance.</strong> GPU-accelerated reconstruction with progressive previews for large scenes.</p>",
+        },
+      ],
+      images: [
+        "/assets/images/space.jpg",
+        "/assets/images/space.jpg",
+        "/assets/images/space.jpg",
+        "/assets/images/space.jpg",
+        "/assets/images/space.jpg",
+      ],
+      resources: {
+        Sightings: [
+          { label: "Project Hub", url: "/Portfolio", external: false },
+          { label: "3D Showcase", url: "/Gallery/3D", external: false },
+        ],
+        FormalStudies: [
+          { label: "Papers & Notes", url: "/Notes/4D", external: false },
+          {
+            label: "ResearchGate",
+            url: "https://www.researchgate.net/profile/Tobin-Albanese",
+            external: true,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "GitHub",
+            url: "https://github.com/TobinAlbanese",
+            external: true,
+          },
+          { label: "Home", url: "/", external: false },
+        ],
+      },
+    },
+    
+    
+    */
+}

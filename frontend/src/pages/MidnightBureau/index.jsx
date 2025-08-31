@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 import MetaHead from "../../components/LandingPage/MetaHead.jsx";
 import SvgHead from "../../components/LandingPage/svgHead.jsx";
@@ -81,7 +82,7 @@ function getCategoryPosts(label) {
   }
 }
 
-// ---------- Updated text effect hook with space preservation ----------
+// ---------- Per-character animator (kept for anywhere else you still use it) ----------
 export function useSpanizedText(
   text,
   baseDelay = 0.05,
@@ -101,19 +102,140 @@ export function useSpanizedText(
   }, [text, baseDelay, className]);
 }
 
+// ---------- Title animator (per-word wrapper with char stagger) ----------
+export function useWordAnimatedText(
+  text,
+  baseDelay = 0.08,
+  charClass = "type-char-title",
+  startDelay = 0
+) {
+  return React.useMemo(() => {
+    const tokens = text.split(/(\s+)/); // keep spaces as tokens
+    let i = 0; // running char index for stagger timing
+
+    return tokens.map((tok, idx) => {
+      if (/^\s+$/.test(tok)) return <span key={`sp-${idx}`}>{tok}</span>;
+      const chars = tok.split("").map((ch) => {
+        const k = `c-${i++}`;
+        return (
+          <span
+            key={k}
+            className={charClass}
+            style={{ animationDelay: `${startDelay + i * baseDelay}s` }}
+          >
+            {ch}
+          </span>
+        );
+      });
+      return (
+        <span key={`w-${idx}`} style={{ display: "inline-block" }}>
+          {chars}
+        </span>
+      );
+    });
+  }, [text, baseDelay, charClass, startDelay]);
+}
+
+// ---------- Paragraph animator (per-word so wrapping NEVER splits a word) ----------
+export function useWordSpanizedText(
+  text,
+  baseDelay = 0.01,
+  charClass = "type-char",
+  startDelay = 0
+) {
+  return React.useMemo(() => {
+    const tokens = text.split(/(\s+)/); // keep spaces
+    let t = 0;
+    return tokens.map((tok, idx) => {
+      if (/^\s+$/.test(tok)) return <span key={`sp-${idx}`}>{tok}</span>;
+      const chars = tok.split("").map((ch, j) => {
+        t += 1;
+        return (
+          <span
+            key={`c-${idx}-${j}`}
+            className={charClass}
+            style={{ animationDelay: `${startDelay + t * baseDelay}s` }}
+          >
+            {ch}
+          </span>
+        );
+      });
+      return (
+        <span key={`w-${idx}`} style={{ display: "inline-block" }}>
+          {chars}
+        </span>
+      );
+    });
+  }, [text, baseDelay, charClass, startDelay]);
+}
+
+function MetaRow({ author, date }) {
+  return (
+    <div
+      className="body-l checkmarks c-text"
+      style={{
+        marginTop: 8,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        paddingLeft: 0,
+        marginLeft: 0,
+      }}
+    >
+      <small
+        style={{
+          fontSize: "0.9rem",
+          color: "var(--c-text-secondary)",
+          textTransform: "uppercase",
+          letterSpacing: 0.5,
+          marginLeft: 0,
+        }}
+      >
+        {author}
+      </small>
+
+      <small
+        style={{
+          fontSize: "0.9rem",
+          color: "var(--c-text-secondary)",
+          textTransform: "uppercase",
+          letterSpacing: 0.5,
+          textAlign: "right",
+          whiteSpace: "nowrap",
+        }}
+      >
+        <span aria-hidden="true">✵</span>
+        <span style={{ fontSize: "0.9rem", marginLeft: 6 }}>{date}</span>
+      </small>
+    </div>
+  );
+}
+
 function AnimatedPostCard({ post, index, isMain }) {
   const [visible, setVisible] = useState(false);
   const [hover, setHover] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const timeout = setTimeout(() => setVisible(true), index * 200);
     return () => clearTimeout(timeout);
   }, [index]);
 
+  const handleNav = () => router.push(`/MidnightBureau/${post.slug}`);
+
   return (
     <article
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
+      onClick={handleNav}
+      role="link"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          handleNav();
+        }
+      }}
       style={{
         opacity: visible ? 1 : 0,
         transform: visible
@@ -172,6 +294,8 @@ function AnimatedPostCard({ post, index, isMain }) {
                   fontWeight: 900,
                   margin: "0 0 8px 0",
                   color: "var(--c-text-primary)",
+                  textAlign: "left",
+                  lineHeight: 1.2,
                 }}
               >
                 {post.title}
@@ -182,45 +306,17 @@ function AnimatedPostCard({ post, index, isMain }) {
                   lineHeight: 1.8,
                   color: "var(--c-text-secondary)",
                   marginBottom: 8,
+                  display: "-webkit-box",
+                  WebkitLineClamp: 4,
+                  WebkitBoxOrient: "vertical",
+                  overflow: "hidden",
                 }}
               >
                 {post.excerpt}
               </p>
             </div>
 
-            <div
-              style={{
-                marginTop: "auto",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "flex-end",
-              }}
-            >
-              <small
-                style={{
-                  fontSize: "0.9rem",
-                  color: "var(--c-text-secondary)",
-                  textTransform: "uppercase",
-                  letterSpacing: 0.5,
-                }}
-              >
-                {post.date} • {post.author}
-              </small>
-              <Link
-                href={`/MidnightBureau/${post.slug}`}
-                style={{
-                  color: "var(--c-accent)",
-                  fontWeight: 700,
-                  fontSize: "1rem",
-                  letterSpacing: 0.5,
-                  textDecoration: "underline",
-                  whiteSpace: "nowrap",
-                }}
-                onClick={(e) => e.stopPropagation()}
-              >
-                Continue reading here →
-              </Link>
-            </div>
+            <MetaRow author={post.author} date={post.date} />
           </div>
         </>
       ) : (
@@ -243,8 +339,8 @@ function AnimatedPostCard({ post, index, isMain }) {
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
-              height: 260,
-              textAlign: "justify",
+              minHeight: 260,
+              textAlign: "left",
               paddingLeft: 0,
             }}
           >
@@ -253,8 +349,14 @@ function AnimatedPostCard({ post, index, isMain }) {
                 style={{
                   fontSize: "2rem",
                   fontWeight: 700,
-                  margin: "10px 0 16px 0",
+                  margin: "10px 0 12px 0",
                   color: "var(--c-text-primary)",
+                  textAlign: "left",
+                  lineHeight: 1.25,
+                  display: "-webkit-box",
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: "vertical",
+                  overflow: "hidden",
                 }}
               >
                 {post.title}
@@ -265,40 +367,16 @@ function AnimatedPostCard({ post, index, isMain }) {
                   lineHeight: 1.7,
                   color: "var(--c-text-secondary)",
                   marginBottom: 12,
+                  display: "-webkit-box",
+                  WebkitLineClamp: 3,
+                  WebkitBoxOrient: "vertical",
+                  overflow: "hidden",
                 }}
               >
                 {post.excerpt}
               </p>
             </div>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <small
-                style={{
-                  fontSize: "0.85rem",
-                  color: "var(--c-text-secondary)",
-                  textTransform: "uppercase",
-                  letterSpacing: 0.5,
-                }}
-              >
-                {post.date} • {post.author}
-              </small>
-              <Link
-                href={`/MidnightBureau/${post.slug}`}
-                style={{
-                  color: "var(--c-accent)",
-                  fontWeight: 600,
-                  fontSize: "0.95rem",
-                  textDecoration: "underline",
-                }}
-              >
-                Read full article →
-              </Link>
-            </div>
+            <MetaRow author={post.author} date={post.date} />
           </div>
         </>
       )}
@@ -323,15 +401,15 @@ export default function MidnightBureau() {
 
   // Text split into parts with line breaks and emphasis
   const paragraphLines = [
-    `At Midnight Bureau, you'll find a thoughtful space dedicated to deep dives, critical   analyses, and fresh perspectives. From engaging book reviews and carefully curated     resources to timely insights on culture and current events, every post is crafted with   care by myself, `,
+    `At Midnight Bureau, you'll find a thoughtful space dedicated to deep dives, critical analyses, and fresh perspectives. From engaging book reviews and carefully curated resources to timely insights on culture and current events, every post is crafted with care by myself, `,
     "Tobin Albanese",
     `, to inspire, inform, and spark meaningful wonders.`,
-    `Whether you're here to expand your knowledge, discover new ideas, or simply enjoy well-written content, take your time exploring the posts below—there’s something    here for every curious mind.`,
+    `Whether you're here to expand your knowledge, discover new ideas, or simply        enjoy well-written content, take your time exploring the posts below—there’s         something here for every curious mind.`,
     `Step inside, and let our journey begin.`,
   ];
 
-  const titleLine1 = useSpanizedText("Welcome to", 0.08, "type-char-title");
-  const titleLine2 = useSpanizedText(
+  const titleLine1 = useWordAnimatedText("Welcome to", 0.08, "type-char-title");
+  const titleLine2 = useWordAnimatedText(
     "Midnight Bureau",
     0.08,
     "type-char-title"
@@ -371,12 +449,19 @@ export default function MidnightBureau() {
                   <div
                     className={`col-12 col-lg-6 mb-20 mb-lg-0 d-flex flex-column justify-center ${animate ? "slide-in-left" : ""}`}
                     data-armstrong-id="personal-message"
+                    style={{
+                      position: "relative",
+                      isolation: "isolate",
+                      zIndex: 2,
+                      paddingRight: 16, // small buffer from the right image
+                      minWidth: 0, // lets text wrap instead of clipping
+                    }}
                   >
                     <h1
                       className="heading-l mb-15"
                       style={{
                         fontFamily: "inherit",
-                        overflow: "hidden",
+                        overflow: "visible",
                         whiteSpace: "pre-wrap",
                         color: "var(--c-text)",
                       }}
@@ -385,7 +470,7 @@ export default function MidnightBureau() {
                       <div>{titleLine2}</div>
                     </h1>
 
-                    {/* Paragraphs with staggered typewriter delays */}
+                    {/* Paragraphs with staggered typewriter delays (word-safe) */}
                     <p
                       className="body-m"
                       style={{
@@ -395,12 +480,20 @@ export default function MidnightBureau() {
                         fontFamily: "inherit",
                         whiteSpace: "normal",
                         marginBottom: "1em",
+                        wordBreak: "normal",
+                        overflowWrap: "normal",
+                        hyphens: "none",
                       }}
                     >
-                      {useSpanizedText(paragraphLines[0], 0.01, "type-char", 0)}
+                      {useWordSpanizedText(
+                        paragraphLines[0],
+                        0.01,
+                        "type-char",
+                        0
+                      )}
                       <b>
                         <em>
-                          {useSpanizedText(
+                          {useWordSpanizedText(
                             paragraphLines[1],
                             0.01,
                             "type-char",
@@ -408,7 +501,12 @@ export default function MidnightBureau() {
                           )}
                         </em>
                       </b>
-                      {useSpanizedText(paragraphLines[2], 0.01, "type-char", 3)}
+                      {useWordSpanizedText(
+                        paragraphLines[2],
+                        0.01,
+                        "type-char",
+                        3
+                      )}
                     </p>
 
                     <p
@@ -420,9 +518,12 @@ export default function MidnightBureau() {
                         fontFamily: "inherit",
                         whiteSpace: "normal",
                         marginBottom: "1em",
+                        wordBreak: "normal",
+                        overflowWrap: "normal",
+                        hyphens: "none",
                       }}
                     >
-                      {useSpanizedText(
+                      {useWordSpanizedText(
                         paragraphLines[3],
                         0.01,
                         "type-char",
@@ -438,9 +539,12 @@ export default function MidnightBureau() {
                         color: "var(--c-text-secondary)",
                         fontFamily: "inherit",
                         whiteSpace: "normal",
+                        wordBreak: "normal",
+                        overflowWrap: "normal",
+                        hyphens: "none",
                       }}
                     >
-                      {useSpanizedText(
+                      {useWordSpanizedText(
                         paragraphLines[4],
                         0.01,
                         "type-char",
@@ -449,7 +553,7 @@ export default function MidnightBureau() {
                     </p>
                   </div>
 
-                  {/* Hero section right image */}
+                  {/* Hero section right image (untouched) */}
                   <div className="heat-canvas-wrapper">
                     <HeatRevealCanvas width={800} height={800} />
                   </div>
@@ -620,7 +724,7 @@ export default function MidnightBureau() {
                 type="button"
                 style={{
                   backgroundColor: "#d62827",
-                  color: "var(--c-text-primary)",
+                  color: "#fff",
                   border: "none",
                   borderRadius: 4,
                   padding: "12px 24px",

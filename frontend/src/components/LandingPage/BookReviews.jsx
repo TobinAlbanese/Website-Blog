@@ -101,7 +101,7 @@ export default function BookReviews() {
                     </span>
                   </div>
 
-                  {/* Continue reading just below with tighter spacing */}
+      {/*          {/* Continue reading just below with tighter spacing */}
                   <div style={{ marginTop: 8 }}>
                     <span
                       className="arrow-link border-bottom-thin border-bottom lh-22 fs-18"
@@ -112,10 +112,8 @@ export default function BookReviews() {
                         gap: 6,
                       }}
                     >
-                      Continue reading
-                      <svg className="arrow-link__icon">
-                        <use href="#icon-right-arrow" />
-                      </svg>
+
+                      {/*this was previously "Read the review"*/}
                     </span>
                   </div>
                 </div>

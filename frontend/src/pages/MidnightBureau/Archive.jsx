@@ -240,6 +240,7 @@ export default function Archive() {
     container.scrollTo({ left: newScrollLeft, behavior: "smooth" });
   };
 
+  // --- CARD + IMAGE + CAPTION (ONLY change: image shorter + caption under) ---
   const cardStyle = {
     backgroundColor: "var(--c-bg)",
     boxShadow: "0 6px 12px rgba(0,0,0,0.1)",
@@ -247,18 +248,50 @@ export default function Archive() {
     cursor: "pointer",
     userSelect: "none",
     width: 280,
-    height: 380,
+    height: 380, // overall height unchanged
     flexShrink: 0,
     display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: "column",
+    alignItems: "stretch",
+    justifyContent: "flex-start",
+    borderRadius: 6,
   };
 
   const imgStyle = {
     width: "100%",
-    height: "100%",
+    height: 300, // shortened image height to leave room for caption
     objectFit: "cover",
     display: "block",
+    flex: "0 0 auto",
+  };
+
+  const captionStyle = {
+    padding: "8px 10px 10px",
+    display: "flex",
+    flexDirection: "column",
+    gap: 6,
+    flex: "1 1 auto",
+    position: "relative",
+    background: "transparent",
+  };
+
+  const captionTitleStyle = {
+    fontSize: "1.1rem", // slightly larger
+    fontWeight: 800, // stronger emphasis
+    color: "var(--c-text-primary)",
+    lineHeight: 1.25,
+    display: "-webkit-box", // clamp to two lines
+    WebkitLineClamp: 2,
+    WebkitBoxOrient: "vertical",
+    overflow: "hidden",
+  };
+
+  const captionAuthorStyle = {
+    fontSize: "0.85rem",
+    color: "var(--c-text-secondary)",
+    textAlign: "right",
+    lineHeight: 1.2,
+    marginTop: "auto", // locks to bottom of caption
   };
 
   const scrollButtonStyle = {
@@ -294,6 +327,90 @@ export default function Archive() {
     const y =
       el.getBoundingClientRect().top + window.pageYOffset - SCROLL_OFFSET;
     window.scrollTo({ top: y, behavior: "smooth" });
+  };
+
+  const renderMonthRow = (key, postsForMonth) => {
+    const showScrollButtons = postsForMonth.length > 4;
+
+    return (
+      <>
+        <div
+          style={{
+            display: "flex",
+            gap: 24,
+            overflowX: "auto",
+            scrollBehavior: "smooth",
+            paddingBottom: 8,
+            width: 280 * 4 + 24 * 3,
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
+          }}
+          ref={(el) => (scrollRefs.current[key] = el)}
+          className="hide-scrollbar"
+        >
+          {postsForMonth.map((post) => {
+            const author = post.author || "Tobin Albanese"; // fallback
+
+            return (
+              <Link
+                href={`/MidnightBureau/${post.slug}`}
+                key={post.slug}
+                legacyBehavior
+              >
+                <a
+                  className="archive-card"
+                  style={cardStyle}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = "translateY(-4px)";
+                    e.currentTarget.style.boxShadow =
+                      "0 12px 20px rgba(0,0,0,0.15)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = "translateY(0)";
+                    e.currentTarget.style.boxShadow =
+                      "0 6px 12px rgba(0,0,0,0.1)";
+                  }}
+                >
+                  <img src={pickImg(post)} alt={post.title} style={imgStyle} />
+                  <div style={captionStyle}>
+                    <div style={captionTitleStyle} title={post.title}>
+                      {post.title}
+                    </div>
+                    {/* Author locked to bottom-right */}
+                    <div style={captionAuthorStyle}>{author}</div>
+                  </div>
+                </a>
+              </Link>
+            );
+          })}
+        </div>
+        {showScrollButtons && (
+          <div
+            style={{
+              display: "flex",
+              gap: 12,
+              justifyContent: "flex-end",
+              marginTop: 8,
+            }}
+          >
+            <button
+              aria-label={`Scroll ${key} left`}
+              onClick={() => scrollMonth(key, "left")}
+              style={scrollButtonStyle}
+            >
+              ‹
+            </button>
+            <button
+              aria-label={`Scroll ${key} right`}
+              onClick={() => scrollMonth(key, "right")}
+              style={scrollButtonStyle}
+            >
+              ›
+            </button>
+          </div>
+        )}
+      </>
+    );
   };
 
   return (
@@ -467,7 +584,6 @@ export default function Archive() {
 
                   const postsForMonth =
                     postsByYearMonth[selectedYear][month] || [];
-                  const showScrollButtons = postsForMonth.length > 4;
 
                   return (
                     <article key={key}>
@@ -491,24 +607,6 @@ export default function Archive() {
                         >
                           {month} {selectedYear}
                         </h2>
-                        {showScrollButtons && (
-                          <div style={{ display: "flex", gap: 12 }}>
-                            <button
-                              aria-label={`Scroll ${month} ${selectedYear} left`}
-                              onClick={() => scrollMonth(key, "left")}
-                              style={scrollButtonStyle}
-                            >
-                              ‹
-                            </button>
-                            <button
-                              aria-label={`Scroll ${month} ${selectedYear} right`}
-                              onClick={() => scrollMonth(key, "right")}
-                              style={scrollButtonStyle}
-                            >
-                              ›
-                            </button>
-                          </div>
-                        )}
                       </div>
 
                       <div
@@ -520,51 +618,7 @@ export default function Archive() {
                         }}
                       />
 
-                      <div
-                        ref={(el) => (scrollRefs.current[key] = el)}
-                        style={{
-                          display: "flex",
-                          gap: 24,
-                          overflowX: "auto",
-                          scrollBehavior: "smooth",
-                          paddingBottom: 8,
-                          width: 280 * 4 + 24 * 3,
-                          scrollbarWidth: "none",
-                          msOverflowStyle: "none",
-                        }}
-                        className="hide-scrollbar"
-                      >
-                        {postsForMonth.map((post) => (
-                          <Link
-                            href={`/MidnightBureau/${post.slug}`}
-                            key={post.slug}
-                            legacyBehavior
-                          >
-                            <a
-                              className="archive-card"
-                              style={cardStyle}
-                              onMouseEnter={(e) => {
-                                e.currentTarget.style.transform =
-                                  "translateY(-4px)";
-                                e.currentTarget.style.boxShadow =
-                                  "0 12px 20px rgba(0,0,0,0.15)";
-                              }}
-                              onMouseLeave={(e) => {
-                                e.currentTarget.style.transform =
-                                  "translateY(0)";
-                                e.currentTarget.style.boxShadow =
-                                  "0 6px 12px rgba(0,0,0,0.1)";
-                              }}
-                            >
-                              <img
-                                src={pickImg(post)}
-                                alt={post.title}
-                                style={imgStyle}
-                              />
-                            </a>
-                          </Link>
-                        ))}
-                      </div>
+                      {renderMonthRow(key, postsForMonth)}
                     </article>
                   );
                 })
@@ -584,7 +638,6 @@ export default function Archive() {
                   if (!scrollRefs.current[key]) scrollRefs.current[key] = null;
 
                   const postsForMonth = postsByYearMonth[year][month] || [];
-                  const showScrollButtons = postsForMonth.length > 4;
 
                   return (
                     <article key={key}>
@@ -608,24 +661,6 @@ export default function Archive() {
                         >
                           {month} {year}
                         </h2>
-                        {showScrollButtons && (
-                          <div style={{ display: "flex", gap: 12 }}>
-                            <button
-                              aria-label={`Scroll ${month} ${year} left`}
-                              onClick={() => scrollMonth(key, "left")}
-                              style={scrollButtonStyle}
-                            >
-                              ‹
-                            </button>
-                            <button
-                              aria-label={`Scroll ${month} ${year} right`}
-                              onClick={() => scrollMonth(key, "right")}
-                              style={scrollButtonStyle}
-                            >
-                              ›
-                            </button>
-                          </div>
-                        )}
                       </div>
 
                       <div
@@ -637,51 +672,7 @@ export default function Archive() {
                         }}
                       />
 
-                      <div
-                        ref={(el) => (scrollRefs.current[key] = el)}
-                        style={{
-                          display: "flex",
-                          gap: 24,
-                          overflowX: "auto",
-                          scrollBehavior: "smooth",
-                          paddingBottom: 8,
-                          width: 280 * 4 + 24 * 3,
-                          scrollbarWidth: "none",
-                          msOverflowStyle: "none",
-                        }}
-                        className="hide-scrollbar"
-                      >
-                        {postsForMonth.map((post) => (
-                          <Link
-                            href={`/MidnightBureau/${post.slug}`}
-                            key={post.slug}
-                            legacyBehavior
-                          >
-                            <a
-                              className="archive-card"
-                              style={cardStyle}
-                              onMouseEnter={(e) => {
-                                e.currentTarget.style.transform =
-                                  "translateY(-4px)";
-                                e.currentTarget.style.boxShadow =
-                                  "0 12px 20px rgba(0,0,0,0.15)";
-                              }}
-                              onMouseLeave={(e) => {
-                                e.currentTarget.style.transform =
-                                  "translateY(0)";
-                                e.currentTarget.style.boxShadow =
-                                  "0 6px 12px rgba(0,0,0,0.1)";
-                              }}
-                            >
-                              <img
-                                src={pickImg(post)}
-                                alt={post.title}
-                                style={imgStyle}
-                              />
-                            </a>
-                          </Link>
-                        ))}
-                      </div>
+                      {renderMonthRow(key, postsForMonth)}
                     </article>
                   );
                 });

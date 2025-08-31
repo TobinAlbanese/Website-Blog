@@ -52,29 +52,60 @@ function ProjectCard({ project, index }) {
   const imgSrc = getProjectImage(project);
   const desc = getProjectExcerpt(project);
 
+  // tweak these to your preferred thumb size (keeps cards from getting tall)
+  const THUMB_W = 256; // px
+  const THUMB_H = 256; // px
+
   return (
     <div
       className={`project-card ${visible ? "visible" : ""} ${hover ? "hovered" : ""}`}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
+      style={{ display: "flex", flexDirection: "column" }}
     >
-      <div className="project-content">
-        <div className="project-text">
+      {/* text + fixed-size right thumb */}
+      <div
+        className="project-content"
+        style={{
+          display: "flex",
+          alignItems: "flex-start",
+          gap: "1rem",
+        }}
+      >
+        <div className="project-text" style={{ flex: 1, minWidth: 0 }}>
           <h3>{project.title}</h3>
           {desc && <p>{desc}</p>}
         </div>
 
-        {/* Use the resolved image source */}
-        <img
-          src={imgSrc}
-          alt={project.title}
-          loading="lazy"
-          decoding="async"
-          // style={{ objectFit: "cover" }} // uncomment if your CSS needs it
-        />
+        {/* fixed-size thumbnail (never grows/shrinks) */}
+        <div
+          className="project-thumb"
+          style={{
+            width: THUMB_W,
+            height: THUMB_H,
+            flex: "0 0 auto",
+            overflow: "hidden",
+            borderRadius: 12,
+            background: "var(--c-bg-secondary, #eee)",
+          }}
+        >
+          <img
+            src={imgSrc}
+            alt={project.title}
+            loading="lazy"
+            decoding="async"
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover", // crop without changing the box
+              display: "block",
+            }}
+          />
+        </div>
       </div>
 
-      <div className="project-link">
+      {/* keeps link from drifting if text length varies */}
+      <div className="project-link" style={{ marginTop: "0.75rem" }}>
         <Link href={`/Portfolio/${project.slug}`}>Click here for more</Link>
       </div>
     </div>
@@ -151,6 +182,7 @@ export default function Portfolio() {
                           <div
                             className="project-wrapper"
                             key={project.slug || project.title || idx}
+                            style={{ height: "100%" }}
                           >
                             <ProjectCard project={project} index={idx} />
                           </div>

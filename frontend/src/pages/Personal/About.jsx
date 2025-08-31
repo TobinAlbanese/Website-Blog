@@ -4,13 +4,10 @@ import MetaHead from "../../components/LandingPage/MetaHead.jsx";
 import SvgHead from "../../components/LandingPage/svgHead.jsx";
 import Footer from "../../components/LandingPage/Footer.jsx";
 import Navbar from "../../components/LandingPage/Navbar.jsx";
-// (ARCHIVED FEATURE) If you restore the heat-reveal effect below,
-// re-enable: import { gsap } from "gsap";
 
-const BW_IMG = "/assets/images/GradBW.png"; // used in archived heat reveal & right float (fallback)
-const COLOR_IMG = "/assets/images/Dylan-Tobin.jpg"; // used in live responsive hero & left float
+const COLOR_IMG = "/assets/images/Dylan-Tobin.jpg";
 
-// --- Layout knobs ---
+// --- Layout knobs (hero remains untouched) ---
 const DESKTOP_MIN = 900; // breakpoint for interactive mode
 const MAX_WIDTH = 1400; // px, cap for the hero container
 const MAX_HEIGHT = 560; // px, cap to avoid a super tall hero
@@ -38,7 +35,7 @@ export default function About() {
       return () => io.disconnect();
     }
 
-    // Fallback for older browsers
+    // Fallback
     const onScroll = () => {
       els.forEach((el) => {
         const r = el.getBoundingClientRect();
@@ -68,7 +65,7 @@ export default function About() {
         <div className="base d-flex">
           <Navbar />
 
-          {/* HERO (responsive image across TV / wide / desktop / iPad / iPhone) */}
+          {/* HERO — DO NOT TOUCH */}
           <div className="hero-wrap">
             <img
               src={COLOR_IMG}
@@ -80,193 +77,245 @@ export default function About() {
 
           {/* Content */}
           <section className="about-wrap">
-            <h2 className="about-title">My Story</h2>
+            <h2 className="about-title">About Me</h2>
 
             <article className="about-copy">
-              {/* 1) RIGHT */}
+              {/* RIGHT (uniform size) */}
               <img
-                src="/assets/images/space.jpg"
-                alt="Floating visual"
+                src="/assets/images/AboutMePhoto2.jpg"
+                alt="Notes and maps for research"
                 loading="lazy"
                 className="float-img right"
               />
 
               <p>
-                I grew up in a small town in California, in a small family that
-                held together through more than most people ever see. I spent
-                time in foster care and learned early how to keep moving, even
-                when the ground shifts under you. That experience made me
-                resourceful and stubborn in the best way: if something needs
-                doing, I figure it out piece by piece, no drama, just progress.
+                I’m <strong>Tobin Albanese</strong>—a proud American, a Computer
+                Science major with a mathematics emphasis at Sacramento State,
+                and someone who wakes up thinking about how technology,
+                intelligence, and international affairs collide in real life.
+                I’m not interested in performative takes; I’m interested in work
+                that <em>actually</em> helps people make better decisions. I’m
+                on track to graduate in May 2026, and after that I plan to
+                pursue a master’s in{" "}
+                <strong>strategic affairs and international politics</strong>.
+                My long-term goal is straightforward: defend and protect my
+                country with skill, humility, and relentless effort—and to keep
+                learning as the world changes around us.
               </p>
 
               <p>
-                These days I’m in Sacramento, studying Computer Science at
-                Sacramento State. I’ll finish in May 2026, and I’m trying to
-                make the years between now and then count. I like computers
-                because they’re brutally honest—your code runs or it doesn’t—but
-                I stay for the bigger picture: how technology shapes people, how
-                information flows, and how all of that intersects with security,
-                policy, and power.
+                I grew up in a tiny rural town in California—the kind of place
+                where you learn to improvise because there isn’t always a store
+                around the corner or someone who can fix things for you. My dad
+                served in the Navy and told stories about traveling during his
+                deployments—<strong>Turkey</strong>, <strong>Italy</strong>,
+                ports and bases and unfamiliar streets that suddenly felt like
+                home because you met good people there. I lost him when I was
+                twelve. That loss and my time in foster care showed me the
+                world’s sharp edges early, but also its better side: neighbors
+                who keep showing up; mentors who answer one more question; the
+                quiet routines that hold you together. That mix taught me two
+                useful habits: don’t dramatize problems, and don’t underestimate
+                what steady effort can do.
               </p>
 
-              {/* 2) LEFT */}
+              <p>
+                I’m the kind of person who reads both the book and the
+                footnotes. I’m an avid reader because it keeps my mind honest
+                and expands my world beyond what I’ve seen so far. I follow
+                international affairs, news, politics, presidencies, and foreign
+                policy not as a hobby but as a map for how power, narratives,
+                and incentives move. I pay attention to sources, how facts get
+                framed, and why two people reading the same thing can leave with
+                opposite conclusions. I like details—but only when they ladder
+                up to clarity.
+              </p>
+
+              {/* LEFT (uniform size) */}
               <img
-                src="/assets/images/space.jpg"
-                alt="Floating visual"
+                src="/assets/images/tobin-kenny.JPG"
+                alt="Building software and writing clearly"
                 loading="lazy"
                 className="float-img left"
               />
 
               <p>
-                The thread that ties it all together for me is curiosity about
-                the gray areas: how non-state actors work, how influence spreads
-                online, and what counter-terrorism looks like in a world where a
-                phone in a pocket can be both a newsroom and a command post. I’m
-                not in love with the drama of that domain—just the
-                responsibility of understanding it clearly enough to help build
-                better defenses and better decisions.
+                On the technical side, Computer Science (with a math lean) gives
+                me the tools to reason about systems—how to make them reliable,
+                secure, and explainable. Code doesn’t care about your
+                intentions—it runs or it doesn’t—so you learn to be precise and
+                patient. Math helps me separate the signal from the noise. I
+                like building small, testable parts; instrumenting what matters;
+                and documenting the path so a teammate at 2 a.m. can still do
+                the right thing. I believe in shipping and iterating. I believe
+                in boring, dependable solutions over clever ones that break
+                under stress.
               </p>
 
               <p>
-                Midnight Bureau is where I put that curiosity to work in public.
-                It’s my place to write plainly, link to primary sources, and
-                explain what I’m seeing without hype. I try to earn attention by
-                being useful: fewer opinions, more evidence; fewer hot takes,
-                more context; fewer buzzwords, more clear language and diagrams
-                when needed.
+                I’m also drawn to the places where human behavior meets
+                technology: open-source research, information flows, and the
+                structures that sustain or disrupt trust. The stakes feel real
+                there. It’s not just “does the app work,” it’s “does the
+                decision stand up to scrutiny,” and “can this be abused,” and
+                “did we balance speed with safety.” That’s where I want to do my
+                best work—on the bridge between analysis and action.
               </p>
 
-              {/* 3) RIGHT */}
+              <p>
+                And then there’s <strong>SPACE</strong>. I’m not shy about it:
+                I’m obsessed with space and exploration. Part of it is the human
+                story—the courage to go farther. But a big part is the systems
+                thinking: autonomy, comms, power, navigation, failure modes, and
+                the discipline it takes to make something work far from help.
+                Space forces you to respect constraints and design with
+                humility. That mindset translates back to Earth: plan for
+                failure, keep your loops tight, log what matters, and build so
+                the next person can pick up where you left off.
+              </p>
+
+              {/* RIGHT (uniform size) */}
               <img
-                src="/assets/images/space.jpg"
-                alt="Floating visual"
+                src="/assets/images/AFG4.jpg"
+                alt="Curiosity for the world and its stories"
                 loading="lazy"
                 className="float-img right"
               />
 
               <p>
-                I’m happiest when I’m building. I’ve shipped a real-time
-                micro-expression analysis prototype, an early
-                intelligence-platform concept, and multiple redesigns of my own
-                site using Next.js and Tailwind, with some SVG/GSAP animation
-                and scroll-aware UI sprinkled in. I’ve also explored a sovereign
-                productivity-suite idea—modular docs, databases, tasks, and AI
-                features stitched together on local infrastructure—and an
-                automation pipeline that takes longform scripts, turns them into
-                narrated videos, translates them, and publishes across platforms
-                using n8n and Google Sheets for orchestration.
+                I love the world and plan to see as much of it as I can. I want
+                to backpack the <strong>Middle East</strong>, not as a tourist
+                collecting photos but as a student of places—learning in markets
+                and mosques, on buses and back roads, eating what locals eat and
+                listening more than I talk. I want to visit{" "}
+                <strong>Russia</strong>
+                and understand it beyond the headlines and history class
+                summaries. I’m studying <strong>Russian</strong> and{" "}
+                <strong>Arabic</strong> because languages unlock context and
+                respect. You understand people better when you can listen in the
+                words they chose.
               </p>
 
               <p>
-                Those projects might sound different, but they’re all the same
-                muscle: take something complicated, break it into pieces, make
-                it repeatable, and show your work. If a system only works when
-                I’m standing next to it, it isn’t done yet.
+                Food is part of that. I’ve got a soft spot for{" "}
+                <strong>Muslim/Middle Eastern food</strong>—the spice profiles,
+                the hospitality, the way meals turn into long conversations. And
+                yes, I love <strong>cheese</strong>. I’ll try the fancy stuff,
+                the local stuff, and the random “you just have to try this”
+                thing from a corner store. It’s funny how small tastes can stick
+                with you like landmarks on a map.
               </p>
 
-              {/* 4) LEFT */}
+              <p>
+                Music is a big part of how I think and work. I love{" "}
+                <strong>heavy metal</strong> when I need to focus hard—there’s a
+                discipline to it, a precision that makes good code feel like a
+                riff locking into time. <strong>Reggae</strong> resets me; it’s
+                structure without stress. Stripped-down{" "}
+                <strong>acoustic</strong>
+                sets and <strong>piano instrumentals</strong> help me draft or
+                outline; it’s like someone cleared the room so the ideas can
+                walk around. And then there are the{" "}
+                <strong>guitar solos</strong> that say more than words—those
+                remind me that there’s a line between good and great that has
+                nothing to do with speed and everything to do with taste. Music
+                isn’t background noise for me; it’s a way to set intent.
+              </p>
+
+              <p>
+                I’m into the outdoors and the kinds of skills that reward
+                patience and practice. I enjoy hunting, range time, and
+                <strong> marksmanship</strong> because they make you slow down
+                and be honest about your habits. I like{" "}
+                <strong>working out</strong>, seeing my family, and time with
+                friends—dinners that stretch too long, late-night talks that get
+                to the point, and the kind of practical jokes that make memories
+                without crossing lines.
+                <strong> Horror movies</strong> are my go-to when I want tension
+                without the news cycle; good ones are about timing, control, and
+                choices under pressure—sounds a lot like engineering to me.
+              </p>
+
+              {/* LEFT (uniform size) */}
               <img
-                src="/assets/images/space.jpg"
-                alt="Floating visual"
+                src="/assets/images/WhiteHouse.jpg"
+                alt="Where policy, security, and technology meet"
                 loading="lazy"
                 className="float-img left"
               />
 
               <p>
-                Outside the editor, I like simple things: time with friends,
-                long walks, late-night diner coffee, and any excuse to be
-                outside. The outdoors resets me. It’s the opposite of alerts and
-                timelines—you can’t rush a sunset or negotiate with a trail. It
-                also keeps me from taking myself too seriously. The best ideas
-                tend to show up when I’m not trying to force them.
+                The thread running through all of this is service. I’m a
+                prideful American and I don’t hide it. Loving your country
+                doesn’t mean you think it’s perfect; it means you take
+                responsibility for helping it meet its ideals. I plan to defend
+                and protect it however I can—by building tools that surface
+                truth, by improving systems people rely on, by teaching what I
+                know, and by learning from the folks who’ve already done the
+                hard miles. I want to be useful when it matters, not just
+                impressive when it’s easy.
               </p>
 
               <p>
-                My “soul compass,” if I had to put it into words, is built on a
-                few rules: do quiet work that matters; keep your word; choose
-                clarity over cleverness; be useful before you try to be
-                impressive; and don’t let ambition outrun integrity. I try to
-                make decisions I’ll be proud of in five years, not just five
-                minutes.
+                I’m honest about trade-offs. In both policy and engineering,
+                perfect is rare and expensive, and reality shows up with a
+                deadline. The job is to choose constraints carefully and
+                document the why, so when conditions change you can adjust
+                without losing the plot. That’s how I approach research, code,
+                and writing: start with first principles, move in small proofs,
+                measure the right things, and communicate like the next person
+                will be smarter than you and busier than you. I respect people’s
+                time.
               </p>
 
               <p>
-                Counter-terrorism and security sit in my interests because they
-                combine human behavior with technical systems. I care about how
-                narratives spread, how small groups coordinate, and how
-                defenders can separate signal from noise without trampling the
-                openness that makes the internet valuable. I’m not here to
-                sensationalize threats; I’m here to understand them well enough
-                to help teams design better protections and better policy
-                choices.
+                I’m not trying to be everywhere at once. I’m trying to be
+                present where I am—whether that’s debugging a hard issue,
+                studying Russian verbs, reading about a presidency, mapping a
+                conflict’s actors, or cooking something new because a friend
+                swore it would change my life. I’m comfortable being the person
+                who quietly handles what needs handling, and I’m learning when
+                to step forward and lead. Good teams need both.
+              </p>
+
+              <p>
+                As for the future, I want work that bridges{" "}
+                <strong>research and operations</strong>. Give me a problem that
+                matters, incomplete information, and a team that cares more
+                about results than theatrics. I want to help build secure,
+                reliable systems; write analysis that people can act on; and
+                create automations that take the grind out of serious workflows.
+                I want to keep traveling, keep learning languages, and keep
+                asking better questions. If there’s a path that ties together
+                code, strategy, and service, that’s where I’ll be.
               </p>
 
               <img
-                src="/assets/images/space.jpg"
-                alt="Floating visual"
+                src="/assets/images/Snowboard2.jpg"
+                alt="The future"
                 loading="lazy"
                 className="float-img right"
               />
 
               <p>
-                School gives me the fundamentals—data structures, systems,
-                ML—but I treat class as a floor, not a ceiling. I read technical
-                papers, follow incident write-ups, and keep notes like I’m
-                building a field guide. I like conversations with people who run
-                real systems—engineers, analysts, policy folks—because they live
-                with consequences. That’s where theory meets the Monday morning
-                reality of budgets, logs, and deadlines.
+                I also want to keep a life outside of work: read widely, listen
+                deeply, stay strong, and show up for the people who show up for
+                me. I’m grateful for the mentors who’ve pushed me and the
+                friends who’ve kept me laughing. I know where I’m from, and I
+                know where I want to go. The plan is simple: build steadily,
+                travel often, study hard, and keep my word. If I do those things
+                consistently, the rest tends to sort itself out.
               </p>
 
               <p>
-                I’m also honest about trade-offs. Good engineering is less about
-                perfect answers and more about choosing which constraints you’re
-                willing to live with. That shows up in my code and my writing:
-                clear naming, tests where they actually prevent pain, dashboards
-                that favor the few signals that matter, and documents that
-                someone can skim at 2 a.m. and still do the right thing.
-              </p>
-
-              <p>
-                A lot of my life has been a solo grind—learning to build my own
-                momentum, making calls without a safety net, figuring things out
-                from first principles. I’m proud of that. But I also know I
-                stand on the shoulders of friends, mentors, and a small family
-                that kept showing up. Any time I can return that favor for
-                someone else, I try to.
-              </p>
-
-              <img
-                src="/assets/images/space.jpg"
-                alt="Floating visual"
-                loading="lazy"
-                className="float-img left"
-              />
-
-              <p>
-                If you’re here for a neat label, here’s mine: I’m a builder who
-                writes, a researcher who ships, and a teammate who tries to make
-                hard problems feel smaller. My objective is simple: contribute
-                to systems—technical and social—that make people safer and more
-                capable, especially when the stakes are high and the facts are
-                messy.
-              </p>
-
-              <p>
-                In the near term, that means finishing my degree, growing
-                Midnight Bureau, and taking on work that bridges research with
-                operations—whether that’s security-aware software, analysis that
-                guides real choices, or automation that turns fragile workflows
-                into reliable ones. Long term, I want to be the person you call
-                when the problem is serious, the time is short, and you need
-                clear thinking that leads to action.
-              </p>
-
-              <p>
-                Thanks for reading. If any of this resonates—if you like primary
-                sources, steady craft, good questions, and long walks—I’m glad
-                you’re here. Let’s build things worth keeping.
+                If you’ve read this far, thank you. If you share these
+                interests, or if you work on hard problems in the space where
+                policy and technology meet, I’d like to learn from you. If
+                you’ve got recommendations for books, maps, music, or
+                meals—especially from the Middle East—send them my way. And if
+                you ever need someone to split a cheese board and talk through a
+                complicated idea, I’m your guy. Let’s build things worth
+                keeping.
               </p>
             </article>
           </section>
@@ -290,12 +339,12 @@ export default function About() {
           width: 100%;
           height: 100%;
           display: block;
-          object-fit: cover; /* keeps the image flush at all times */
+          object-fit: cover; /* keep hero intact */
         }
         @media (max-width: ${DESKTOP_MIN - 1}px) {
           .hero-wrap {
             width: 96vw;
-            max-height: 46vh; /* slightly taller on phones but still restrained */
+            max-height: 46vh;
           }
         }
 
@@ -323,19 +372,23 @@ export default function About() {
           text-wrap: pretty;
           hyphens: auto;
         }
-        /* Clear floats at the end of the article */
         .about-copy::after {
           content: "";
           display: block;
           clear: both;
         }
 
-        /* Float images with animated slide-in */
+        /* ---------- Uniform floated images (flush with text) ---------- */
         .float-img {
-          width: min(42%, 360px);
-          height: auto;
+          width: min(40%, 340px);
+          height: 230px; /* uniform height */
+          object-fit: cover;
+          object-position: center;
           border-radius: 12px;
-          margin: 0 24px 16px;
+
+          /* Even spacing with text */
+          margin: 2px 24px 14px;
+          vertical-align: top;
           opacity: 0;
           transform: translateX(var(--shift, 0)) scale(0.98);
           transition:
@@ -343,32 +396,33 @@ export default function About() {
             transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
           box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
           will-change: transform, opacity;
+
+          /* Wrap text flush to rounded image edge */
+          shape-outside: inset(0 round 18px);
+          -webkit-shape-outside: inset(0 round 18px);
         }
         .float-img.left {
           float: left;
           --shift: -40px;
-          shape-outside: inset(0 round 18px);
-          -webkit-shape-outside: inset(0 round 18px);
         }
         .float-img.right {
           float: right;
           --shift: 40px;
-          shape-outside: inset(0 round 18px);
-          -webkit-shape-outside: inset(0 round 18px);
         }
         .float-img.visible {
           opacity: 1;
           transform: translateX(0) scale(1);
         }
 
-        /* Mobile: stack images and remove floats */
+        /* Mobile: stack images; keep uniform look */
         @media (max-width: 768px) {
           .float-img {
             float: none !important;
             display: block;
             width: 100%;
             max-width: 640px;
-            margin: 0 auto 24px;
+            height: 220px;
+            margin: 0 auto 22px;
             --shift: 0;
             shape-outside: auto;
             -webkit-shape-outside: auto;
@@ -378,6 +432,8 @@ export default function About() {
     </>
   );
 }
+
+/* (Archived heat-reveal notes remain below, unchanged) */
 
 {
   /**
