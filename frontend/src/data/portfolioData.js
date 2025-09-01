@@ -1318,50 +1318,6 @@ const PortfolioData = {
     },
   ],
 
-  // In src/data/PortfolioData.js
-  "Employers & Work Experience (Non-clickable)": [
-    {
-      volume: "PORTFOLIO — EXPERIENCE",
-      title:
-        "California Prison Industry Authority - Assistant",
-      author: "Tobin M. Albanese",
-      date: "2024-03-01",
-      location: "Folsom, CA",
-      excerpt:
-        "Built a reusable Excel automation to track revenue across 34 institutions for faster, cleaner reporting. Also processed vendor invoices end-to-end, coordinating approvals and keeping records audit-ready.",
-      archiveImage:
-        "https://images.unsplash.com/photo-1521785241181-092e2c5d2f4c?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cHJpc29ufGVufDB8fDB8fHww",
-      clickable: false,
-      slug: null,
-    },
-    {
-      volume: "PORTFOLIO — EXPERIENCE",
-      title: "7UP Bottling Co. — Sales",
-      author: "Tobin M. Albanese",
-      date: "2022-01-01",
-      location: "Roseville, CA",
-      excerpt:
-        "Managed a high-volume route, maintaining merchandising standards, inventory levels, and promo execution across key accounts. Built and sustained client relationships that drove repeat business and reliable in-store execution. Coordinated logistics and on-time deliveries to ensure efficiency.",
-      archiveImage:
-        "https://images.unsplash.com/photo-1577670772839-befb49f0bee5?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fDdVUHxlbnwwfHwwfHx8MA%3D%3D",
-      clickable: false,
-      slug: null,
-    },
-    {
-      volume: "PORTFOLIO — EXPERIENCE",
-      title: "McDonald’s — Manager",
-      author: "Tobin M. Albanese",
-      date: "2019-08-01",
-      location: "Jackson, CA",
-      excerpt:
-        "Led shifts of 6–12 crew members, trained new hires, and assigned stations while upholding food safety and service standards. Balanced drawers and completed nightly cash reconciliation. Used checklists and clear handoffs to reduce errors and keep throughput high during rushes.",
-      archiveImage:
-        "https://images.unsplash.com/photo-1542831371-d531d36971e6?w=900&auto=format&fit=crop&q=60",
-      clickable: false,
-      slug: null,
-    },
-  ],
-
   "Skills & Technologies (Non-clickable)": [
     {
       title: "Python",
