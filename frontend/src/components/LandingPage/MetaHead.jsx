@@ -31,10 +31,13 @@ export default function MetaHead({
       <meta name="application-name" content="Tobin Albanese" />
       <meta name="apple-mobile-web-app-title" content="Tobin Albanese" />
       <meta name="apple-mobile-web-app-capable" content="yes" />
+      <meta name="mobile-web-app-capable" content="yes" />
       <meta name="theme-color" content={themeColor} />
       <meta name="color-scheme" content="dark light" />
       <meta name="MobileOptimized" content="width" />
       <meta name="HandheldFriendly" content="true" />
+      {/* If you use Bing site verification, replace the value below */}
+      {/* <meta name="msvalidate.01" content="REPLACE_ME" /> */}
 
       {/* Open Graph */}
       <meta property="og:site_name" content="Tobin Albanese" />
@@ -47,39 +50,28 @@ export default function MetaHead({
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
       <meta property="og:image:alt" content="Tobin Albanese TA monogram logo" />
-      <meta
-        property="article:publisher"
-        content="https://www.facebook.com/TobinAlbanese"
-      />
+      <meta property="article:publisher" content="https://www.facebook.com/TobinAlbanese" />
 
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={ogAbs} />
-      <meta name="mobile-web-app-capable" content="yes" />
-      
-      {/* Icons & PWA (TA pack) */}
-      <link rel="icon" href="/favicon.ico?v=5" sizes="any" />
-      <link
-        rel="icon"
-        type="image/png"
-        href="/favicon-32x32.png?v=5"
-        sizes="32x32"
-      />
-      <link
-        rel="icon"
-        type="image/png"
-        href="/favicon-16x16.png?v=5"
-        sizes="16x16"
-      />
-      <link
-        rel="apple-touch-icon"
-        href="/apple-touch-icon.png?v=5"
-        sizes="180x180"
-      />
+
+      {/* Favicons & PWA Icons */}
+      {/* --- IMPORTANT: unversioned .ico so Google picks it up --- */}
+      <link rel="icon" href="/favicon.ico" />
+      <link rel="shortcut icon" href="/favicon.ico" />
+
+      {/* PNG fallbacks/sizes */}
+      <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png?v=5" />
+      <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=5" />
+      <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=5" />
+      <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=5" />
       <link rel="mask-icon" href="/safari-pinned-tab.svg?v=5" color="#0b1221" />
       <link rel="manifest" href="/site.webmanifest?v=5" />
+
+      {/* Windows tiles */}
       <meta name="msapplication-TileColor" content="#0b1221" />
       <meta name="msapplication-config" content="/browserconfig.xml?v=5" />
     </Head>
