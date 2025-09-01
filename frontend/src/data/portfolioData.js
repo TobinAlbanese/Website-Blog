@@ -746,50 +746,112 @@ const PortfolioData = {
 
   "Research & Analysis Projects": [
     {
-      volume: "PORTFOLIO — RESEARCH",
+      volume: "Research Project Volume 1",
       title: "Behavioral AI for Threat Detection",
       slug: "behavioral-ai-threat-detection",
       author: "Tobin M. Albanese",
       date: "2023-11-01",
-      excerpt: "Temporal facial cues as probabilistic indicators of risk.",
-      archiveImage: "/assets/images/space.jpg",
-      banner: "/assets/images/space.jpg",
+      excerpt:
+        "Micro-expression signals to augment risk assessment—measured, calibrated, never deterministic.",
+      archiveImage: "/assets/images/portfolio/behav-ai-cover.jpg",
+      banner: "/assets/images/portfolio/behav-ai-banner.jpg",
       content: [
         {
-          text: "<p>Explores whether micro-expressions can reliably augment traditional threat models without over-claiming certainty.</p>",
+          text: 'Measure what helps a human decide, not what flatters a metric.'
         },
         {
-          text: "<p>Focus areas: dataset bias, rater agreement, calibration, and operational thresholds for action.</p>",
+          text: `<h3>Abstract</h3>
+    <p>This work investigates whether brief facial events—micro-expressions and short Action Unit (AU) sequences—can serve as <em>probabilistic</em> signals that <em>augment</em> existing threat models. The ambition is deliberately narrow: provide calibrated, low-confidence prompts that help human operators decide when to look closer, not machines that claim certainty or intent. We treat model output as a nudge to interrogate context, never as a conclusion. The practical question is whether weak, time-bounded facial dynamics, when measured and calibrated correctly, can improve screening precision without inflating risk, bias, or overreach.</p>
+    <p>Success here looks like fewer unnecessary escalations at the same safety level (or better safety at the same workload), plus transparent documentation of where the approach works, where it fails, and how to retire it responsibly if the costs outweigh the benefits.</p>`,
         },
         {
-          text: "<p>Outcomes include evaluation protocols and guidance for human-over-machine decision loops.</p>",
+          text: `<h3>Problem &amp; Scope</h3>
+    <p>Protective and screening workflows operate under severe constraints: limited time, incomplete information, asymmetric costs for false positives and false negatives, and intense public scrutiny. In that setting, a tiny signal that occasionally highlights the right frame or moment—if it is honest about uncertainty—can be useful. Our scope therefore limits the system to <em>research, evaluation, and corroborative prompting</em>. The tool may flag segments for human review, but it cannot diagnose, attribute identity or intent, or trigger punitive action on its own.</p>
+    <p>We draw bright boundaries: <strong>prohibited uses</strong> include identity inference, face recognition, attribution of motive, or any downstream decision that meaningfully affects a person without independent corroboration. All contemplated uses must be documented with task definitions, accountable owners, and cost tables that make trade-offs explicit and reviewable.</p>`,
+        },
+        {
+          text: `<h3>Data &amp; Labeling</h3>
+    <p>Data collection is consent-based and contextual. Participants receive a plain-language overview of what is captured, why it is captured, how long it is kept, and how to opt out or request deletion. We avoid covert capture, “gotcha” designs, and any scenario that would surprise a reasonable participant. Every clip is paired with metadata describing lighting, camera, scenario, and timing so we can analyze confounders.</p>
+    <p>Labels acknowledge uncertainty. Multiple trained raters annotate AU events and micro-expressive segments with time-bounds and confidence scores. Disagreements are adjudicated using a written rubric; we report inter-rater reliability (e.g., Krippendorff’s α) alongside the dataset so consumers can see label noise rather than having it hidden. Ambiguous segments remain ambiguous: we mark them as such instead of forcing consensus that the data do not support.</p>
+    <p>Privacy controls include pre-defined retention windows, role-based access, encrypted storage, audit logs for every access, and documented deletion routes. Identity inference is excluded by design; we do not store or link identifying attributes beyond what is required for consent management.</p>`,
+        },
+        {
+          text: `<h3>Signals &amp; Modeling</h3>
+    <p>Features emphasize dynamics over static appearance. We analyze short temporal windows (≈300–800ms), onset/offset velocity, co-occurrence patterns among AUs, and simple temporal motifs (e.g., AU-12→AU-15 within a small lag). Landmarks are stabilized to reduce camera jitter; low-confidence frames are down-weighted or dropped.</p>
+    <p>Models produce <em>probabilities</em>, not verdicts. After training, we calibrate scores (isotonic or Platt) so that a predicted 0.30 behaves like “~30% of similar cases were positive” in evaluation. Outputs are grouped into <em>bands</em> intended for operational interpretation (e.g., “no action,” “log and move on,” “consider secondary review if another signal agrees”). We purposely avoid a single magic threshold and instead map bands to actions that reflect context and cost.</p>`,
+        },
+        {
+          text: `<h3>Evaluation Approach</h3>
+    <p>We report performance with the prevalence of the event (base rate) front and center. AUROC and AUPRC are included, but we also publish calibration error (ECE), coverage (what fraction of cases the model is willing to score with confidence), and decision-curve analyses tied to the documented cost tables. Thresholds are selected to minimize expected cost, not to maximize a headline metric.</p>
+    <p>To test real-world durability, we evaluate across cameras, focal lengths, lighting regimes, and environments, and we use time-based splits so we can see performance drift as conditions change. We also run “selective prediction” baselines (abstain when unsure) to compare “say less, say it better” policies against always-on scoring.</p>`,
+        },
+        {
+          text: `<h3>Bias &amp; Robustness</h3>
+    <p>Average metrics can hide harm. We therefore slice results by lighting, camera sensor type, skin-tone ranges, head pose, and occlusions (e.g., glasses, masks). We publish the deltas—not just the averages—so gaps are visible. Where gaps appear, we experiment with data balancing, confidence-weighted training, and abstention rules that refuse to score in known failure zones.</p>
+    <p>Robustness is probed with a red-team protocol: exaggerated expressions, partial occlusion, head motion, blur, low bitrate compression, deliberate mimicry, and stress-induced artifacts. Failures are cataloged with reproduction steps and recommended mitigations (often “do not use the model in this condition”). We view a documented “no-go” list as a sign of maturity, not weakness.</p>`,
+        },
+        {
+          text: `<h3>Governance &amp; Policy</h3>
+    <p>Permitted use is limited to research and evaluation with explicit corroboration requirements. Any pilot must pass a lightweight privacy and data-protection review, document the second-signal sources it will rely on, define operator training, and designate an accountable owner. Raw video is never shared externally; derived features are minimized and access-logged. We maintain a change log for models, features, and policies so that decisions can be reconstructed.</p>
+    <p>De-scoping is built in. If evaluation shows poor calibration, unacceptable subgroup gaps, or net-negative operational value, the model is frozen or retired. Governance artifacts (risk register, DPIA notes, and model cards) are versioned alongside code so policy doesn’t drift away from implementation.</p>`,
+        },
+        {
+          text: `<h3>Operator Guidance</h3>
+    <p>Outputs are <em>prompts</em>, not conclusions. A two-signal rule forbids acting on behavioral output alone; operators must cite an independent corroborating signal (contextual observation, independent sensor, or documented rule) before escalation. The UI shows the score, band, and a plain-language reminder of “what this means / does not mean.”</p>
+    <p>Runbooks include short checklists: what to record, who to notify, when to de-escalate, and when to stop. Every reviewed case logs inputs, banding, operator notes, and final disposition for audit and after-action review. Training materials emphasize failure modes and “don’t-use” scenarios as much as success cases to counter automation bias.</p>`,
+        },
+        {
+          text: `<h3>Deliverables</h3>
+    <p>The project ships more than a model. Deliverables include: (1) an evaluation protocol and rater handbook with labeling rubrics and adjudication steps; (2) calibration cards per model and context with recommended action bands; (3) an operator playbook covering checklists, escalation paths, and explicit “don’t-use” cases; (4) a fairness &amp; robustness report with subgroup deltas and red-team results; and (5) deprecation criteria that define when to retrain, freeze, or retire a model due to drift, gap growth, or negative cost-benefit.</p>
+    <p>All artifacts are versioned, with a simple README that explains how to reproduce results from raw data to final figures. If someone smarter and busier than us can’t repeat the evaluation in an afternoon, we consider that a bug to fix.</p>`,
+        },
+        {
+          text: `<h3>Limitations</h3>
+    <p>Behavioral signals are noisy, culturally and contextually shaped, and easy to misinterpret—especially under stress. This work does <strong>not</strong> claim lie detection, intent detection, or identity inference, and it should never be used to make unilateral, punitive decisions. The contribution is smaller and more practical: show when weak facial dynamics can help as corroboration, when they should be ignored, and how to document both with honesty.</p>
+    <p>If the evidence says the approach isn’t worth the operational complexity, we will say so and publish the negative result. Knowing when to stop is part of responsible research.</p>`,
         },
       ],
-      images: [
-        "https://images.unsplash.com/photo-1677212004257-103cfa6b59d0?q=80&w=2160&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/portfolioAccessibility.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-      ],
+
+      images: [],
       resources: {
         Sightings: [
           { label: "Project Hub", url: "/Portfolio", external: false },
           { label: "Bureau Article", url: "/MidnightBureau", external: false },
         ],
-        FormalStudies: [
+        "Methods & Notes": [
           {
-            label: "Research Notes",
-            url: "/Notes/Behavioral-AI",
+            label: "Protocol & Eval Plan",
+            url: "/Notes/Behavioral-AI/Protocol",
             external: false,
           },
           {
-            label: "ResearchGate",
-            url: "https://www.researchgate.net/profile/Tobin-Albanese",
-            external: true,
+            label: "Calibration Cards",
+            url: "/Notes/Behavioral-AI/Calibration-Card",
+            external: false,
+          },
+          {
+            label: "Rater Handbook",
+            url: "/Notes/Behavioral-AI/Rater-Handbook",
+            external: false,
+          },
+        ],
+        "Policy & Ethics": [
+          {
+            label: "Governance & Use Policy",
+            url: "/Notes/Behavioral-AI/Governance",
+            external: false,
+          },
+          {
+            label: "Consent & Retention",
+            url: "/Notes/Policy/Consent-Retention",
+            external: false,
+          },
+        ],
+        "Datasets (allowed)": [
+          {
+            label: "Dataset Inventory & Constraints",
+            url: "/Notes/Behavioral-AI/Datasets",
+            external: false,
           },
         ],
         PopularCulture: [
@@ -1273,112 +1335,152 @@ const PortfolioData = {
     },
   ],
 
-"Current & In-Progress Work": [
-  {
-    volume: "PORTFOLIO — IN PROGRESS",
-    title: "Midnight Bureau Blog Expansion",
-    slug: "midnight-bureau-expansion",
-    author: "Tobin M. Albanese",
-    date: "2025-02-01",
-    excerpt: "Better discovery, smoother reading, richer archives.",
-    archiveImage: "/assets/images/space.jpg",
-    banner: "/assets/images/space.jpg",
-    content: [
-      { text: "<p>Upgrading archive navigation, adding topic/entity filters, and refining long-form readability across devices.</p>" },
-      { text: "<p>Planned: unified tagging with portfolio and cross-search.</p>" }
-    ],
-    images: [
-      "/assets/images/Container.png",  // skyscrapers
-      "/assets/images/space.jpg",
-      "/assets/images/space.jpg",
-      "/assets/images/space.jpg",
-      "/assets/images/space.jpg"
-    ],
-    resources: {
-      Sightings: [
-        { label: "Midnight Bureau", url: "/MidnightBureau", external: false },
-        { label: "Live Site", url: "https://www.tobinalbanese.com", external: true }
+  "Current & In-Progress Work": [
+    {
+      volume: "PORTFOLIO — IN PROGRESS",
+      title: "Midnight Bureau Blog Expansion",
+      slug: "midnight-bureau-expansion",
+      author: "Tobin M. Albanese",
+      date: "2025-02-01",
+      excerpt: "Better discovery, smoother reading, richer archives.",
+      archiveImage: "/assets/images/space.jpg",
+      banner: "/assets/images/space.jpg",
+      content: [
+        {
+          text: "<p>Upgrading archive navigation, adding topic/entity filters, and refining long-form readability across devices.</p>",
+        },
+        {
+          text: "<p>Planned: unified tagging with portfolio and cross-search.</p>",
+        },
       ],
-      FormalStudies: [
-        { label: "About / CV", url: "/About", external: false },
-        { label: "ResearchGate", url: "https://www.researchgate.net/profile/Tobin-Albanese", external: true }
+      images: [
+        "/assets/images/Container.png", // skyscrapers
+        "/assets/images/space.jpg",
+        "/assets/images/space.jpg",
+        "/assets/images/space.jpg",
+        "/assets/images/space.jpg",
       ],
-      PopularCulture: [
-        { label: "GitHub", url: "https://github.com/TobinAlbanese", external: true },
-        { label: "Home", url: "/", external: false }
-      ]
-    }
-  },
-  {
-    volume: "PORTFOLIO — IN PROGRESS",
-    title: "Real-time Facial Recognition Prototype",
-    slug: "facial-recognition-prototype",
-    author: "Tobin M. Albanese",
-    date: "2025-04-01",
-    excerpt: "End-to-end live identity experiments with policy gates.",
-    archiveImage: "/assets/images/space.jpg",
-    banner: "/assets/images/space.jpg",
-    content: [
-      { text: "<p>Prototyping a low-latency video pipeline with detection, matching, and governance hooks for safe testing.</p>" },
-      { text: "<p>Focus on evaluation, latency budgets, and opt-in controls.</p>" }
-    ],
-    images: [
-      "/assets/images/naomiPortfolio.jpg",
-      "/assets/images/space.jpg",
-      "/assets/images/space.jpg",
-      "/assets/images/space.jpg"
-    ],
-    resources: {
-      Sightings: [
-        { label: "Project Hub", url: "/Portfolio", external: false },
-        { label: "Policy Notes", url: "/Notes/Policy", external: false }
+      resources: {
+        Sightings: [
+          { label: "Midnight Bureau", url: "/MidnightBureau", external: false },
+          {
+            label: "Live Site",
+            url: "https://www.tobinalbanese.com",
+            external: true,
+          },
+        ],
+        FormalStudies: [
+          { label: "About / CV", url: "/About", external: false },
+          {
+            label: "ResearchGate",
+            url: "https://www.researchgate.net/profile/Tobin-Albanese",
+            external: true,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "GitHub",
+            url: "https://github.com/TobinAlbanese",
+            external: true,
+          },
+          { label: "Home", url: "/", external: false },
+        ],
+      },
+    },
+    {
+      volume: "PORTFOLIO — IN PROGRESS",
+      title: "Real-time Facial Recognition Prototype",
+      slug: "facial-recognition-prototype",
+      author: "Tobin M. Albanese",
+      date: "2025-04-01",
+      excerpt: "End-to-end live identity experiments with policy gates.",
+      archiveImage: "/assets/images/space.jpg",
+      banner: "/assets/images/space.jpg",
+      content: [
+        {
+          text: "<p>Prototyping a low-latency video pipeline with detection, matching, and governance hooks for safe testing.</p>",
+        },
+        {
+          text: "<p>Focus on evaluation, latency budgets, and opt-in controls.</p>",
+        },
       ],
-      FormalStudies: [
-        { label: "About / CV", url: "/About", external: false },
-        { label: "ResearchGate", url: "https://www.researchgate.net/profile/Tobin-Albanese", external: true }
+      images: [
+        "/assets/images/naomiPortfolio.jpg",
+        "/assets/images/space.jpg",
+        "/assets/images/space.jpg",
+        "/assets/images/space.jpg",
       ],
-      PopularCulture: [
-        { label: "GitHub", url: "https://github.com/TobinAlbanese", external: true },
-        { label: "Home", url: "/", external: false }
-      ]
-    }
-  },
-  {
-    volume: "PORTFOLIO — IN PROGRESS",
-    title: "OSINT Data Aggregation Pipeline",
-    slug: "osint-data-pipeline",
-    author: "Tobin M. Albanese",
-    date: "2025-06-01",
-    excerpt: "Scalable ingestion with provenance and PII safety.",
-    archiveImage: "/assets/images/space.jpg",
-    banner: "/assets/images/space.jpg",
-    content: [
-      { text: "<p>Standing up resilient intake with dedupe, provenance tracking, and safe storage patterns.</p>" },
-      { text: "<p>Planned features: source scoring and alerting thresholds.</p>" }
-    ],
-    images: [
-      "/assets/images/stellarisScale.jpg",  // neon sign
-      "/assets/images/space.jpg",
-      "/assets/images/space.jpg",
-      "/assets/images/space.jpg",
-      "/assets/images/space.jpg"
-    ],
-    resources: {
-      Sightings: [
-        { label: "Project Hub", url: "/Portfolio", external: false },
-        { label: "OSINT Overview", url: "/MidnightBureau", external: false }
+      resources: {
+        Sightings: [
+          { label: "Project Hub", url: "/Portfolio", external: false },
+          { label: "Policy Notes", url: "/Notes/Policy", external: false },
+        ],
+        FormalStudies: [
+          { label: "About / CV", url: "/About", external: false },
+          {
+            label: "ResearchGate",
+            url: "https://www.researchgate.net/profile/Tobin-Albanese",
+            external: true,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "GitHub",
+            url: "https://github.com/TobinAlbanese",
+            external: true,
+          },
+          { label: "Home", url: "/", external: false },
+        ],
+      },
+    },
+    {
+      volume: "PORTFOLIO — IN PROGRESS",
+      title: "OSINT Data Aggregation Pipeline",
+      slug: "osint-data-pipeline",
+      author: "Tobin M. Albanese",
+      date: "2025-06-01",
+      excerpt: "Scalable ingestion with provenance and PII safety.",
+      archiveImage: "/assets/images/space.jpg",
+      banner: "/assets/images/space.jpg",
+      content: [
+        {
+          text: "<p>Standing up resilient intake with dedupe, provenance tracking, and safe storage patterns.</p>",
+        },
+        {
+          text: "<p>Planned features: source scoring and alerting thresholds.</p>",
+        },
       ],
-      FormalStudies: [
-        { label: "About / CV", url: "/About", external: false },
-        { label: "ResearchGate", url: "https://www.researchgate.net/profile/Tobin-Albanese", external: true }
+      images: [
+        "/assets/images/stellarisScale.jpg", // neon sign
+        "/assets/images/space.jpg",
+        "/assets/images/space.jpg",
+        "/assets/images/space.jpg",
+        "/assets/images/space.jpg",
       ],
-      PopularCulture: [
-        { label: "GitHub", url: "https://github.com/TobinAlbanese", external: true },
-        { label: "Home", url: "/", external: false }
-      ]
-    }
-  }
-],
+      resources: {
+        Sightings: [
+          { label: "Project Hub", url: "/Portfolio", external: false },
+          { label: "OSINT Overview", url: "/MidnightBureau", external: false },
+        ],
+        FormalStudies: [
+          { label: "About / CV", url: "/About", external: false },
+          {
+            label: "ResearchGate",
+            url: "https://www.researchgate.net/profile/Tobin-Albanese",
+            external: true,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "GitHub",
+            url: "https://github.com/TobinAlbanese",
+            external: true,
+          },
+          { label: "Home", url: "/", external: false },
+        ],
+      },
+    },
+  ],
 
   "Education & Certifications": [
     {
@@ -1563,158 +1665,181 @@ const PortfolioData = {
     },
   ],
 
- "Featured / Spotlight Projects": [
-  {
-    volume: "PORTFOLIO — SPOTLIGHT",
-    title: "NAOMI — Micro-Expression & Intent Analysis",
-    slug: "naomi", // links to actual project page
-    author: "Tobin M. Albanese",
-    date: "2025-01-15",
-    excerpt:
-      "An advanced AI platform designed to detect and analyze micro-expressions — tiny, fleeting facial movements that often reveal hidden emotions like stress, deception, or confidence. Neural Analysis Of Micro-Intent in real-time micro-expressions → inferred intent.",
-    archiveImage: "/assets/images/naomiPortfolio.jpg",
-    banner: "/assets/images/naomiBanner.jpg",
-    content: [
-      {
-        text: `<p>Spotlight on NAOMI’s temporal windows, micro-delta features, and calibration—why explainability and human-in-the-loop design matter for real decisions.</p>`
-      }
-    ],
-    images: [
-      "/assets/images/naomiWhy.jpg",
-      "/assets/images/naomiPipeline.jpg",
-      "/assets/images/naomiFeatures.jpg"
-    ],
-    resources: {
-      "Docs & Code": [
-        { label: "NAOMI GitHub Repo", url: "https://github.com/TobinAlbanese/naomi", external: true },
-        { label: "GitHub (Profile)", url: "https://github.com/TobinAlbanese", external: true }
+  "Featured / Spotlight Projects": [
+    {
+      volume: "PORTFOLIO — SPOTLIGHT",
+      title: "NAOMI — Micro-Expression & Intent Analysis",
+      slug: "naomi", // links to actual project page
+      author: "Tobin M. Albanese",
+      date: "2025-01-15",
+      excerpt:
+        "An advanced AI platform designed to detect and analyze micro-expressions — tiny, fleeting facial movements that often reveal hidden emotions like stress, deception, or confidence. Neural Analysis Of Micro-Intent in real-time micro-expressions → inferred intent.",
+      archiveImage: "/assets/images/naomiPortfolio.jpg",
+      banner: "/assets/images/naomiBanner.jpg",
+      content: [
+        {
+          text: `<p>Spotlight on NAOMI’s temporal windows, micro-delta features, and calibration—why explainability and human-in-the-loop design matter for real decisions.</p>`,
+        },
       ],
-      "Project Links": [
-        { label: "Portfolio Hub", url: "/Portfolio", external: false },
-        { label: "About / CV", url: "/About", external: false }
-      ]
-    }
-  },
-
-  {
-    volume: "PORTFOLIO — SPOTLIGHT",
-    title: "STELLARIS — OSINT NLP Engine",
-    slug: "stellaris",
-    author: "Tobin M. Albanese",
-    date: "2024-10-01",
-    excerpt:
-      "From noisy text to interactive knowledge graphs with provenance-first extraction.",
-    archiveImage: "/assets/images/stellarisPortfolio.jpg",
-    banner: "/assets/images/stellarisBanner.jpg",
-    content: [
-      {
-        text: `<p>Entity resolution, relation/event extraction, and graph UX choices that keep context and lineage front-and-center.</p>`
-      }
-    ],
-    images: [
-      "/assets/images/stellarisOverview.jpg",
-      "/assets/images/stellarisWorkflow.jpg",
-      "/assets/images/stellarisStack.jpg"
-    ],
-    resources: {
-      "Platform Links": [
-        { label: "Project Hub", url: "/Portfolio", external: false },
-        { label: "OSINT Overview", url: "/MidnightBureau", external: false }
+      images: [
+        "/assets/images/naomiWhy.jpg",
+        "/assets/images/naomiPipeline.jpg",
+        "/assets/images/naomiFeatures.jpg",
       ],
-      "Formal Studies": [
-        { label: "Methodology Notes", url: "/Notes/OSINT-Methods", external: false }
-      ]
-    }
-  },
+      resources: {
+        "Docs & Code": [
+          {
+            label: "NAOMI GitHub Repo",
+            url: "https://github.com/TobinAlbanese/naomi",
+            external: true,
+          },
+          {
+            label: "GitHub (Profile)",
+            url: "https://github.com/TobinAlbanese",
+            external: true,
+          },
+        ],
+        "Project Links": [
+          { label: "Portfolio Hub", url: "/Portfolio", external: false },
+          { label: "About / CV", url: "/About", external: false },
+        ],
+      },
+    },
 
-  {
-    volume: "PORTFOLIO — SPOTLIGHT",
-    title: "COSMOS — Cyber Threat Dashboard",
-    slug: "cosmos",
-    author: "Tobin M. Albanese",
-    date: "2025-03-01",
-    excerpt:
-      "Behavioral baselines, TTP clustering, and audit-ready incident workflows in one pane.",
-    archiveImage: "/assets/images/cosmosPortfolio.jpg",
-    banner: "/assets/images/cosmosEarth.jpg",
-    content: [
-      {
-        text: `<p>How COSMOS stitches feeds, DW intel, CVEs, and sandbox artifacts into drillable analytics that explain <em>why</em> an alert matters.</p>`
-      }
-    ],
-    images: [
-      "/assets/images/cosmosBanner.jpg",
-      "/assets/images/cosmosHeatmap.jpg",
-      "/assets/images/cosmosFeatures.jpg"
-    ],
-    resources: {
-      "Platform Links": [
-        { label: "Project Hub", url: "/Portfolio", external: false },
-        { label: "COSMOS Security Notes", url: "/Notes/Sec", external: false }
+    {
+      volume: "PORTFOLIO — SPOTLIGHT",
+      title: "STELLARIS — OSINT NLP Engine",
+      slug: "stellaris",
+      author: "Tobin M. Albanese",
+      date: "2024-10-01",
+      excerpt:
+        "From noisy text to interactive knowledge graphs with provenance-first extraction.",
+      archiveImage: "/assets/images/stellarisPortfolio.jpg",
+      banner: "/assets/images/stellarisBanner.jpg",
+      content: [
+        {
+          text: `<p>Entity resolution, relation/event extraction, and graph UX choices that keep context and lineage front-and-center.</p>`,
+        },
       ],
-      "Research & Methodology": [
-        { label: "Threat Modeling Write-up", url: "/Notes/Threat-Modeling", external: false }
-      ]
-    }
-  },
+      images: [
+        "/assets/images/stellarisOverview.jpg",
+        "/assets/images/stellarisWorkflow.jpg",
+        "/assets/images/stellarisStack.jpg",
+      ],
+      resources: {
+        "Platform Links": [
+          { label: "Project Hub", url: "/Portfolio", external: false },
+          { label: "OSINT Overview", url: "/MidnightBureau", external: false },
+        ],
+        "Formal Studies": [
+          {
+            label: "Methodology Notes",
+            url: "/Notes/OSINT-Methods",
+            external: false,
+          },
+        ],
+      },
+    },
 
-  {
-    volume: "PORTFOLIO — SPOTLIGHT",
-    title: "VAULT — End-to-End Encrypted Storage",
-    slug: "vault-project",
-    author: "Tobin M. Albanese",
-    date: "2024-12-15",
-    excerpt:
-      "Client-side keys, ciphertext-only sync, and tamper-evident sharing with recovery that stays private.",
-    archiveImage: "/assets/images/vaultPortfolio.jpg",
-    banner: "/assets/images/vaultBanner.jpg",
-    content: [
-      {
-        text: `<p>Why VAULT separates cryptography from coordination, and how link keys + versioned audit logs make secure collaboration feel ordinary.</p>`
-      }
-    ],
-    images: [
-      "/assets/images/vaultOverview.jpg",
-      "/assets/images/vaultArchitecture.jpg",
-      "/assets/images/vaultUse.jpg"
-    ],
-    resources: {
-      "Platform Links": [
-        { label: "Project Hub", url: "/Portfolio", external: false },
-        { label: "Security Notes (VAULT)", url: "/Notes/Sec", external: false }
-      ]
-    }
-  },
+    {
+      volume: "PORTFOLIO — SPOTLIGHT",
+      title: "COSMOS — Cyber Threat Dashboard",
+      slug: "cosmos",
+      author: "Tobin M. Albanese",
+      date: "2025-03-01",
+      excerpt:
+        "Behavioral baselines, TTP clustering, and audit-ready incident workflows in one pane.",
+      archiveImage: "/assets/images/cosmosPortfolio.jpg",
+      banner: "/assets/images/cosmosEarth.jpg",
+      content: [
+        {
+          text: `<p>How COSMOS stitches feeds, DW intel, CVEs, and sandbox artifacts into drillable analytics that explain <em>why</em> an alert matters.</p>`,
+        },
+      ],
+      images: [
+        "/assets/images/cosmosBanner.jpg",
+        "/assets/images/cosmosHeatmap.jpg",
+        "/assets/images/cosmosFeatures.jpg",
+      ],
+      resources: {
+        "Platform Links": [
+          { label: "Project Hub", url: "/Portfolio", external: false },
+          {
+            label: "COSMOS Security Notes",
+            url: "/Notes/Sec",
+            external: false,
+          },
+        ],
+        "Research & Methodology": [
+          {
+            label: "Threat Modeling Write-up",
+            url: "/Notes/Threat-Modeling",
+            external: false,
+          },
+        ],
+      },
+    },
 
-  {
-    volume: "PORTFOLIO — SPOTLIGHT",
-    title: "NOTES — Zero-Knowledge Notes",
-    slug: "notes-project",
-    author: "Tobin M. Albanese",
-    date: "2024-11-20",
-    excerpt:
-      "Offline-first writing with CRDT/OT sync and on-device encryption by default.",
-    archiveImage: "/assets/images/notesPortfolio.jpg",
-    banner: "/assets/images/notesBanner.jpg",
-    content: [
-      {
-        text: `<p>How NOTES balances rich editing with zero-knowledge sync, client-side previews, and key-based sharing.</p>`
-      }
-    ],
-    images: [
-      "/assets/images/notesWhy.jpg",
-      "/assets/images/notesHow.jpg",
-      "/assets/images/notesEdit.jpg"
-    ],
-    resources: {
-      "Platform Links": [
-        { label: "Project Hub", url: "/Portfolio", external: false },
-        { label: "App UX Notes", url: "/Notes/UX", external: false }
-      ]
-    }
-  }
-],
+    {
+      volume: "PORTFOLIO — SPOTLIGHT",
+      title: "VAULT — End-to-End Encrypted Storage",
+      slug: "vault-project",
+      author: "Tobin M. Albanese",
+      date: "2024-12-15",
+      excerpt:
+        "Client-side keys, ciphertext-only sync, and tamper-evident sharing with recovery that stays private.",
+      archiveImage: "/assets/images/vaultPortfolio.jpg",
+      banner: "/assets/images/vaultBanner.jpg",
+      content: [
+        {
+          text: `<p>Why VAULT separates cryptography from coordination, and how link keys + versioned audit logs make secure collaboration feel ordinary.</p>`,
+        },
+      ],
+      images: [
+        "/assets/images/vaultOverview.jpg",
+        "/assets/images/vaultArchitecture.jpg",
+        "/assets/images/vaultUse.jpg",
+      ],
+      resources: {
+        "Platform Links": [
+          { label: "Project Hub", url: "/Portfolio", external: false },
+          {
+            label: "Security Notes (VAULT)",
+            url: "/Notes/Sec",
+            external: false,
+          },
+        ],
+      },
+    },
 
+    {
+      volume: "PORTFOLIO — SPOTLIGHT",
+      title: "NOTES — Zero-Knowledge Notes",
+      slug: "notes-project",
+      author: "Tobin M. Albanese",
+      date: "2024-11-20",
+      excerpt:
+        "Offline-first writing with CRDT/OT sync and on-device encryption by default.",
+      archiveImage: "/assets/images/notesPortfolio.jpg",
+      banner: "/assets/images/notesBanner.jpg",
+      content: [
+        {
+          text: `<p>How NOTES balances rich editing with zero-knowledge sync, client-side previews, and key-based sharing.</p>`,
+        },
+      ],
+      images: [
+        "/assets/images/notesWhy.jpg",
+        "/assets/images/notesHow.jpg",
+        "/assets/images/notesEdit.jpg",
+      ],
+      resources: {
+        "Platform Links": [
+          { label: "Project Hub", url: "/Portfolio", external: false },
+          { label: "App UX Notes", url: "/Notes/UX", external: false },
+        ],
+      },
+    },
+  ],
 
   "Skills & Technologies": [
     "Python",
