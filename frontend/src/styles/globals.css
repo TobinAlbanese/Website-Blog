@@ -3741,3 +3741,67 @@ body {
   outline: 3px solid var(--c-accent, #d62827);
   outline-offset: 2px;
 }
+
+/* ---- Focus ring tokens (tweak once, use everywhere) ---- */
+:root {
+  --focus-ring: 3px;
+  --focus-color: var(--c-accent, #d62827);
+  --focus-radius: 12px; /* match your card radius */
+}
+
+/* ---- Global: links, buttons, inputs, anything focusable ---- */
+:where(
+  a[href],
+  button,
+  [role="button"],
+  summary,
+  input,
+  select,
+  textarea,
+  [tabindex]:not([tabindex="-1"])
+):focus-visible {
+  outline: var(--focus-ring) solid var(--focus-color);
+  outline-offset: 2px;
+}
+
+/* Safari/old fallback if :focus-visible isn't supported */
+@supports not (selector(:focus-visible)) {
+  :where(
+    a[href],
+    button,
+    [role="button"],
+    summary,
+    input,
+    select,
+    textarea,
+    [tabindex]:not([tabindex="-1"])
+  ):focus {
+    outline: var(--focus-ring) solid var(--focus-color);
+    outline-offset: 2px;
+  }
+}
+
+/* ---- Card-style links (project, archive, book cards, etc.) ---- */
+/* Add any other card classes you use */
+:where(.project-card, .archive-card, .book-card):focus-visible {
+  outline: none; /* we’ll use a glow instead */
+  box-shadow: 0 0 0 var(--focus-ring) color-mix(in srgb, var(--focus-color) 55%, transparent);
+  border-radius: var(--focus-radius);
+}
+
+/* High contrast mode: ensure ring is visible */
+@media (forced-colors: active) {
+  :where(
+    a[href],
+    button,
+    [role="button"],
+    summary,
+    input,
+    select,
+    textarea,
+    [tabindex]:not([tabindex="-1"])
+  ):is(:focus, :focus-visible) {
+    outline: 2px solid CanvasText;
+    outline-offset: 2px;
+  }
+}

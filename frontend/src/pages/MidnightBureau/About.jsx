@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import MetaHead from "../../components/LandingPage/MetaHead.jsx";
 import SvgHead from "../../components/LandingPage/svgHead.jsx";
 import Footer from "../../components/LandingPage/Footer.jsx";
-import Navbar from "../../components/LandingPage/Navbar.jsx";
+import NavbarMB from "../../components/LandingPage/NavbarMB.jsx";
 
 const BW_IMG = "/assets/images/GradBW.png";
 const COLOR_IMG = "/assets/images/Dylan-Tobin.jpg";
@@ -64,7 +64,7 @@ export default function About() {
         </div>
         <div id="js-dfp-tag-outofpage--2" />
         <div className="base d-flex">
-          <Navbar />
+          <NavbarMB />
 
           {/* HERO (leave untouched) */}
           <div className="hero-wrap">
@@ -81,7 +81,7 @@ export default function About() {
             <h2 className="about-title">About Me</h2>
 
             <article className="about-copy">
-              {/* RIGHT (uniform size, same as main About) */}
+              {/* RIGHT (uniform size) */}
               <img
                 src="/assets/images/AboutMePhoto2.jpg"
                 alt="Notes and maps for research"
@@ -90,218 +90,188 @@ export default function About() {
               />
 
               <p>
-                I’m <strong>Tobin Albanese</strong>—a proud American, a Computer
-                Science major with a mathematics emphasis at Sacramento State,
-                and someone who wakes up thinking about how technology,
-                intelligence, and international affairs collide in the real
-                world. I’m not chasing hot takes. I’m building toward a life of
-                service where good engineering and clear thinking help the right
-                decisions get made under pressure. I graduate in May 2026 and
-                plan to pursue a master’s in{" "}
-                <strong>strategic affairs and international politics</strong>.
-                My long-term aim is simple and steady: defend and protect my
-                country, keep learning, and do work that stands up when it
-                matters most.
+                I’m <strong>Tobin Albanese</strong>, a proud American and a
+                Computer Science major with a mathematics emphasis at Sacramento
+                State. I wake up thinking about where technology, intelligence,
+                and international affairs collide, and how real decisions get
+                made when the stakes are high. I’m not here for performative
+                takes; I care about work that helps people see clearly and act
+                smart. Graduating in May of 2026 and I’m aiming next at a master’s
+                in <strong>strategic affairs and international politics</strong>
+                . That’s the ground I plan to work on: sharp analysis, real
+                technical fluency, and disciplined judgment. Building skills to
+                protect and strengthen this country while adapting as the facts
+                change. If you’re wondering where that fire comes from, it
+                started long before college, this drive to become something of
+                myself, something impactful for my country and the world all
+                together.
               </p>
 
               <p>
-                I grew up in a tiny rural California town—the kind of place
-                where you figure things out because there isn’t someone to do it
-                for you. My dad served in the Navy and brought home stories that
-                put pins in the map—<strong>Turkey</strong>,{" "}
-                <strong>Italy</strong>, ports and bases, strangers who weren’t
-                strangers by the end of a meal. I lost him when I was twelve. I
-                spent time in foster care, learned to keep going when the ground
-                moved under me, and saw enough of the dark side of the world to
-                respect the light. Those experiences didn’t make me cynical;
-                they made me disciplined and calm. I don’t dramatize problems. I
-                take them apart and keep moving.
+                I grew up in a tiny rural town in California. The kind of place
+                where you learn to improvise because there isn’t always a store
+                around the corner or someone who can fix things for you. My dad
+                served in the Navy and told stories about traveling during his
+                deployments. Travelling all across the ocean and specifically
+                enjoying our
+                <strong> Turkey</strong> and <strong>Italy </strong>
+                ports and bases. I've learned that there's this sense of
+                unfamiliarity of exploring places that suddenly felt like home
+                because you met people who weren't what you really expected.
+                Sadly enough, I lost my father when I was twelve. That loss has
+                empowered me to try and fill the shoes that he once had, even
+                though I know that I can never do so. This sense of
+                responsibility has driven me to work harder and be more
+                disciplined in my life so that I can make something of myself.
+                Prove not to just myself but him and everyone else around me
+                that I can be something more than just ordinary but excel in
+                everything I do. With all that's happened, I learned that God
+                has given me this fate and it's up to me to make the best out of
+                it and shine through the dark points and realize there's always
+                something new to come tomorrow. I like to say this to my friends
+                and family, "God gave us the moon not for the sake of it, but
+                for you to realize there is light no matter the darkness around
+                you." and that this place is truly infinite, and that we are
+                infinite.
               </p>
 
               <p>
-                I read a lot, and I read widely—international affairs, news,
-                politics, presidencies, and foreign policy. I care about how
-                narratives move, how coalitions form, and why different actors
-                read the same facts and see different worlds. I track sources
-                and try to understand incentives. It’s not trivia to me; it’s a
-                map of how influence, legitimacy, and power actually function.
-                The question I’m always asking is:{" "}
-                <em>
-                  What would I do with this information if the stakes were high
-                  and time was short?
-                </em>
+                Growing up living in and out of foster care has truly shaped me
+                into the person I am today. I understand how judicial processes
+                work, how unfortunate my life could have turned out, and how so
+                many young individuals go through different hardships. Something
+                you would never think about day to day, but is a reality we have
+                to all share. I always like to think that someone's worse is
+                truly there worse, there is no comparison. It's the way we go
+                about these circumstances that make or break us, the way a
+                person can turn a horrible situation into something incredible
+                is truly amazing. I think this is where I get my interest in
+                global affairs. This sense or calling to help people, and do
+                something bigger than myself, and understanding that this tiny
+                blue dot we all call home, actually holds more than what's
+                confined to the places I am constrainted too. Knowing, there's
+                always someone to help, an adventure to explore, and new things
+                to learn and see truly excites me for what's to come. Do you
+                ever feel like there's something calling you? Something inside
+                you that eats at you and keeps you up at night. This sense of
+                wanderlust and curiosity for the world and its stories is what
+                keeps me up. I want to be that person for someone else, to be a
+                light in the dark for someone who needs it, no matter the
+                distance, no matter the background but just help the entirety of
+                our world and most importantly the people residing in my great
+                nation.
               </p>
 
-              {/* LEFT */}
+              {/* LEFT (uniform size) */}
               <img
-                src="/assets/images/tobin-kenny.JPG"
+                src="/assets/images/AFG4.jpg"
                 alt="Building software and writing clearly"
                 loading="lazy"
                 className="float-img left"
               />
 
               <p>
-                On the technical side, Computer Science gives me the tools to
-                build and reason about systems. Math keeps my head clear. Code
-                is honest in a way that’s useful: it runs or it doesn’t; the
-                logs are either telling you what you need or they aren’t. I like
-                breaking complex things into testable parts, writing names that
-                mean something, instrumenting what actually matters, and leaving
-                trails a teammate can follow at 2 a.m. If a system only works
-                when I’m standing next to it, it isn’t finished. The bar is
-                reliability under stress, not vibes.
+                That pull to do something bigger than myself shows up in how I
+                work. Computer Science lets me turn conviction into tools, and
+                code doesn’t care about intentions; it runs or it doesn’t. The
+                strategic side of me, headed towards international politics and
+                security, keeps me honest about incentives, second-order
+                effects, and what happens after we press “deploy.” Separately,
+                languages are for the world I plan to operate in, not for
+                coding. I’m studying Russian and Arabic to deal with
+                international conflicts more intelligently and to understand
+                people on their own terms, and to sharpen my intelligence
+                gathering and conversational skills across different
+                environments. I want to backpack the Middle East and step into
+                places my family never imagined I’d go, places many Americans
+                have also only ever heard about as well. Night markets at full
+                buzz, bus stations at first light, and border towns where
+                history is something you feel under your shoes and inside
+                entirely. I want to eat what locals eat, ride through towns in
+                tuk tuks, and speak with the many great individuals residing in
+                these places. Especially immersing myself completely and being
+                able to speak Russian and Arabic whenever I can even though we
+                both know I will probably butcher the languages haha. I also
+                would really love to visit eastern Europe and get the
+                opportunity to see Russia beyond headlines and classroom
+                summaries, from provincial cities and long rail stretches to
+                small towns where life moves at a human pace. Distancing myself
+                from the everyday societal norms and get to experience the world
+                for what it truly is. Down to earth and off grid from the usual
+                tik-toks and youtube content but truly experience what goes on
+                beyond the screens. This is about pushing past comfort, facing
+                my fears, and opening new horizons the way my dad did when he
+                experienced the navy. I want to meet people who build, think,
+                and serve, and get the opportunities to learn how they solve
+                problems in their own context, and collect the kind of stories
+                that help me bridge cultures when it matters. Honestly, just to
+                have as many stories and adventures as I can to tell my family
+                and future kids at the end of the day.
               </p>
 
               <p>
-                My interests sit in the overlap of security, intelligence, and
-                technology—places where human behavior meets code. I’m drawn to
-                open-source research, information flows, cyber defense, and the
-                gray areas where non-state actors coordinate and influence
-                outcomes. I’m not in love with the drama; I’m in love with the
-                responsibility. The work isn’t about being loud—it’s about being
-                right, careful, and useful.
+                I gravitate to skills that reward patience and accountability.
+                In the field, hunting, range time, and marksmanship slow my
+                breathing, make me read wind and terrain, and keep me honest
+                about fundamentals. In the gym, lifting clears the static and
+                gives me a routine I can measure: add a rep, add five pounds,
+                show up tomorrow. Around the table, time with family and friends
+                keeps the compass straight with long dinners, straight talk, and
+                good jokes. All of that discipline isn’t for its own sake; it’s
+                how I stay ready to carry responsibility when it counts. The
+                through line is service. I’m a prideful American, and loving
+                this country isn’t about pretending it’s perfect; it’s about
+                taking responsibility to help it meet its ideals. That’s the
+                lane I choose: build tools that surface truth, harden systems
+                people rely on, teach what I know, listen to people who’ve
+                carried real responsibility, and be useful when it actually
+                matters most. I like to show up, take responsibility, finish the
+                job, and leave things stronger than I found them.
               </p>
 
-              <p>
-                And then there’s <strong>SPACE</strong>. I’m not shy about it:
-                I’m obsessed with space and exploration. Part of it is the human
-                story—the courage to go farther. But a big part is the systems
-                thinking: autonomy, comms, power, navigation, failure modes, and
-                the discipline it takes to make something work far from help.
-                Space forces you to respect constraints and design with
-                humility. That mindset translates back to Earth: plan for
-                failure, keep your loops tight, log what matters, and build so
-                the next person can pick up where you left off.
-              </p>
-
-              {/* RIGHT */}
+              {/* RIGHT (uniform size) */}
               <img
-                src="/assets/images/AFG4.jpg"
+                src="/assets/images/tobin-kenny.JPG"
                 alt="Curiosity for the world and its stories"
                 loading="lazy"
                 className="float-img right"
               />
 
               <p>
-                I love the world and plan to see as much of it as I can. I want
-                to backpack the <strong>Middle East</strong>, not as a tourist
-                collecting photos but as a student of places—learning in markets
-                and mosques, on buses and back roads, eating what locals eat and
-                listening more than I talk. I want to visit{" "}
-                <strong>Russia</strong>
-                and understand it beyond the headlines and history class
-                summaries. I’m studying <strong>Russian</strong> and{" "}
-                <strong>Arabic</strong> because languages unlock context and
-                respect. You understand people better when you can listen in the
-                words they chose.
+                Looking ahead, I want work that bridges research and operations.
+                Give me a problem that matters, incomplete information, and a
+                team that cares more about results than theatrics, and I’ll
+                gladly take the first watch. I want to help build secure,
+                reliable systems that hold up under pressure; write analysis
+                people can act on when the clock is running; and design
+                automations that turn fragile, manual workflows into durable,
+                auditable ones. I’ll keep traveling, learning languages, and
+                sharpening my questions, not as a checklist, but as a way to
+                earn better judgment. Listening more than I talk, using Russian
+                and Arabic in real conversations, and chasing primary sources
+                until the picture gets clearer. The goal is simple: work hard,
+                widen my field of view, and turn curiosity into disciplined
+                outcomes. If there’s a path that ties together responsibility,
+                strategy, and service, that’s where I’ll be. I also want a life
+                outside of work however. I love to read widely, listen to music,
+                stay fit, and show up for the people who show up for me. I’m
+                grateful for all my mentors who push me and friends who keep me
+                going through hard times. I know where I’m from, and I know
+                where I want to go, and there's nothing I won't do to get there.
+                My passions and interests go deeper than just work and school,
+                this is something I live for.
               </p>
 
               <p>
-                Food is part of that. I’ve got a soft spot for{" "}
-                <strong>Muslim/Middle Eastern food</strong>—the spice profiles,
-                the hospitality, the way meals turn into long conversations. And
-                yes, I love <strong>cheese</strong>. I’ll try the fancy stuff,
-                the local stuff, and the random “you just have to try this”
-                thing from a corner store. It’s funny how small tastes can stick
-                with you like landmarks on a map.
-              </p>
-
-              <p>
-                Music is a big part of how I think and work. I love{" "}
-                <strong>heavy metal</strong> when I need to focus hard—there’s a
-                discipline to it, a precision that makes good code feel like a
-                riff locking into time. <strong>Reggae</strong> resets me; it’s
-                structure without stress. Stripped-down{" "}
-                <strong>acoustic</strong>
-                sets and <strong>piano instrumentals</strong> help me draft or
-                outline; it’s like someone cleared the room so the ideas can
-                walk around. And then there are the{" "}
-                <strong>guitar solos</strong> that say more than words—those
-                remind me that there’s a line between good and great that has
-                nothing to do with speed and everything to do with taste. Music
-                isn’t background noise for me; it’s a way to set intent.
-              </p>
-
-              {/* LEFT */}
-              <img
-                src="/assets/images/WhiteHouse.jpg"
-                alt="Where policy, security, and technology meet"
-                loading="lazy"
-                className="float-img left"
-              />
-
-              <p>
-                The thread running through all of this is service. I’m a
-                prideful American and I don’t hide it. Loving your country
-                doesn’t mean you think it’s perfect; it means you take
-                responsibility for helping it meet its ideals. I plan to defend
-                and protect it however I can—by building tools that surface
-                truth, by improving systems people rely on, by teaching what I
-                know, and by learning from the folks who’ve already done the
-                hard miles. I want to be useful when it matters, not just
-                impressive when it’s easy.
-              </p>
-
-              <p>
-                I’m honest about trade-offs. In both policy and engineering,
-                perfect is rare and expensive, and reality shows up with a
-                deadline. The job is to choose constraints carefully and
-                document the why, so when conditions change you can adjust
-                without losing the plot. That’s how I approach research, code,
-                and writing: start with first principles, move in small proofs,
-                measure the right things, and communicate like the next person
-                will be smarter than you and busier than you. I respect people’s
-                time.
-              </p>
-
-              <p>
-                I’m not trying to be everywhere at once. I’m trying to be
-                present where I am—whether that’s debugging a hard issue,
-                studying Russian verbs, reading about a presidency, mapping a
-                conflict’s actors, or cooking something new because a friend
-                swore it would change my life. I’m comfortable being the person
-                who quietly handles what needs handling, and I’m learning when
-                to step forward and lead. Good teams need both.
-              </p>
-
-              <p>
-                As for the future, I want work that bridges{" "}
-                <strong>research and operations</strong>. Give me a problem that
-                matters, incomplete information, and a team that cares more
-                about results than theatrics. I want to help build secure,
-                reliable systems; write analysis that people can act on; and
-                create automations that take the grind out of serious workflows.
-                I want to keep traveling, keep learning languages, and keep
-                asking better questions. If there’s a path that ties together
-                code, strategy, and service, that’s where I’ll be.
-              </p>
-
-              <img
-                src="/assets/images/Snowboard2.jpg"
-                alt="The future"
-                loading="lazy"
-                className="float-img right"
-              />
-
-              <p>
-                I also want to keep a life outside of work: read widely, listen
-                deeply, stay strong, and show up for the people who show up for
-                me. I’m grateful for the mentors who’ve pushed me and the
-                friends who’ve kept me laughing. I know where I’m from, and I
-                know where I want to go. The plan is simple: build steadily,
-                travel often, study hard, and keep my word. If I do those things
-                consistently, the rest tends to sort itself out.
-              </p>
-
-              <p>
-                If you’ve read this far, thank you. If you share these
-                interests, or if you work on hard problems in the space where
-                policy and technology meet, I’d like to learn from you. If
-                you’ve got recommendations for books, maps, music, or
-                meals—especially from the Middle East—send them my way. And if
-                you ever need someone to split a cheese board and talk through a
-                complicated idea, I’m your guy. Let’s build things worth
-                keeping.
+                If you’ve read this far, thank you for taking the time out of
+                your day to step a little bit inside mr version of our shared
+                reality. And, If you work on hard problems where policy and
+                technology meet and need help I am always there to listen and
+                input. Or if you have recommendations for books, music, or FOOD
+                (I am a sucker for new foods) please feel free to send them my
+                way. And if you ever just need someone to eat some cheese with
+                and talk and be heard, I'm your guy. Let’s build things, work
+                hard, and be the best people we can be.
               </p>
             </article>
           </section>
