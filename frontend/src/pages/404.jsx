@@ -11,7 +11,6 @@ export default function NotFoundPage() {
   const router = useRouter();
   const [theme, setTheme] = useState("light");
 
-  // Track system theme without re-render loops, and update live on changes
   useEffect(() => {
     const mql = window.matchMedia("(prefers-color-scheme: dark)");
     const apply = () => setTheme(mql.matches ? "dark" : "light");
@@ -20,9 +19,8 @@ export default function NotFoundPage() {
     return () => mql.removeEventListener("change", apply);
   }, []);
 
-  // GSAP animations (run once, clean up on unmount)
   useEffect(() => {
-    gsap.set("svg", { visibility: "visible" });
+    + gsap.set(".art svg", { visibility: "visible" });
 
     const tweens = [
       gsap.to("#headStripe", {
@@ -584,7 +582,7 @@ M483.985,127.43c23.462,1.531,52.515,2.436,83.972,2.436c36.069,0,68.978-1.19,93.9
                       />
                     </g>
                   </g>
-                  <g id="spaceman" clipPath="url(cordClip)">
+                  <g id="spaceman" clipPath="url(#cordClip)">
                     <path
                       id="cord"
                       fill="none"
@@ -911,3 +909,4 @@ s33.181,12.591,38.725,16.498c2.387,1.682,3.461,4.668,2.705,7.488L380.857,346.164
     </div>
   );
 }
+

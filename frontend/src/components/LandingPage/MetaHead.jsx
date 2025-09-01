@@ -13,6 +13,7 @@ export default function MetaHead({
   const abs = (p) =>
     p?.startsWith("http") ? p : `${origin}${p.startsWith("/") ? "" : "/"}${p}`;
   const rss = `${origin}/rss.xml`;
+  const ogAbs = `${origin}/og-ta.png?v=5`; // cache-busted absolute OG image
 
   return (
     <Head>
@@ -22,7 +23,6 @@ export default function MetaHead({
       {/* Basic SEO */}
       <meta name="description" content={description} />
       <link rel="canonical" href={origin} />
-      <link rel="shortlink" href={origin} />
       <meta name="robots" content="max-image-preview:large" />
       <link rel="alternate" hrefLang="en" href={origin} />
       <link rel="alternate" type="application/rss+xml" href={rss} />
@@ -35,8 +35,6 @@ export default function MetaHead({
       <meta name="color-scheme" content="dark light" />
       <meta name="MobileOptimized" content="width" />
       <meta name="HandheldFriendly" content="true" />
-      {/* Replace with your real Bing site verification if you use it */}
-      <meta name="msvalidate.01" content="Replace this" />
 
       {/* Open Graph */}
       <meta property="og:site_name" content="Tobin Albanese" />
@@ -44,8 +42,8 @@ export default function MetaHead({
       <meta property="og:url" content={origin} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
-      <meta property="og:image" content={abs(ogImage)} />
-      <meta property="og:image:secure_url" content={abs(ogImage)} />
+      <meta property="og:image" content={ogAbs} />
+      <meta property="og:image:secure_url" content={ogAbs} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
       <meta property="og:image:alt" content="Tobin Albanese TA monogram logo" />
@@ -58,17 +56,32 @@ export default function MetaHead({
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={abs(ogImage)} />
-
+      <meta name="twitter:image" content={ogAbs} />
+      <meta name="mobile-web-app-capable" content="yes" />
+      
       {/* Icons & PWA (TA pack) */}
-      <link rel="icon" href="/favicon.ico" sizes="any" />
-      <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
-      <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16" />
-      <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
-      <link rel="manifest" href="/site.webmanifest" />
-      <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#0b1221" />
+      <link rel="icon" href="/favicon.ico?v=5" sizes="any" />
+      <link
+        rel="icon"
+        type="image/png"
+        href="/favicon-32x32.png?v=5"
+        sizes="32x32"
+      />
+      <link
+        rel="icon"
+        type="image/png"
+        href="/favicon-16x16.png?v=5"
+        sizes="16x16"
+      />
+      <link
+        rel="apple-touch-icon"
+        href="/apple-touch-icon.png?v=5"
+        sizes="180x180"
+      />
+      <link rel="mask-icon" href="/safari-pinned-tab.svg?v=5" color="#0b1221" />
+      <link rel="manifest" href="/site.webmanifest?v=5" />
       <meta name="msapplication-TileColor" content="#0b1221" />
-      <meta name="msapplication-config" content="/browserconfig.xml" />
+      <meta name="msapplication-config" content="/browserconfig.xml?v=5" />
     </Head>
   );
 }

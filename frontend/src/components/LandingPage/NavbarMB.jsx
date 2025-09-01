@@ -568,7 +568,7 @@ export default function Navbar() {
                     >
                       <figure>
                         <img
-                          src="/assets/images/Midnight Bureau.png"
+                          src="https://images.pexels.com/photos/408503/pexels-photo-408503.jpeg"
                           alt="Post 1 cover"
                           loading="lazy"
                           width={160}
@@ -588,7 +588,7 @@ export default function Navbar() {
                     >
                       <figure>
                         <img
-                          src="/assets/images/2.png"
+                          src="https://images.unsplash.com/photo-1529070538774-1843cb3265df"
                           alt="Post 2 cover"
                           loading="lazy"
                           width={160}
@@ -608,7 +608,7 @@ export default function Navbar() {
                     >
                       <figure>
                         <img
-                          src="/assets/images/3.png"
+                          src="https://unsplash.com/photos/iiFfGsMppBA/download?force=true&w=2000"
                           alt="Post 3 cover"
                           loading="lazy"
                           width={160}
