@@ -1,0 +1,7 @@
+User-agent: *
+Disallow:
+
+Allow: /favicon.ico
+Allow: /apple-touch-icon.png
+Allow: /site.webmanifest
+Sitemap: https://www.tobinalbanese.com/sitemap.xml
