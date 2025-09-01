@@ -45,24 +45,25 @@ function ProjectCard({ project, index }) {
   const [hover, setHover] = useState(false);
 
   useEffect(() => {
-    const timeout = setTimeout(() => setVisible(true), index * 150);
-    return () => clearTimeout(timeout);
+    const t = setTimeout(() => setVisible(true), index * 150);
+    return () => clearTimeout(t);
   }, [index]);
 
   const imgSrc = getProjectImage(project);
   const desc = getProjectExcerpt(project);
 
-  // keeps cards compact/consistent
   const THUMB_W = 256;
   const THUMB_H = 256;
 
-  return (
-    <Link
-      href={`/Portfolio/${project.slug}`}
-      aria-label={`Open ${project.title}`}
+  // Default: clickable if it has a slug. Explicitly setting clickable:false disables it.
+  const isClickable = project.clickable !== false && !!project.slug;
+
+  const cardBody = (
+    <div
       className={`project-card ${visible ? "visible" : ""} ${hover ? "hovered" : ""}`}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
+      data-clickable={isClickable ? "true" : "false"}
       style={{
         display: "flex",
         flexDirection: "column",
@@ -75,6 +76,7 @@ function ProjectCard({ project, index }) {
           : "0 6px 12px rgba(0,0,0,.08)",
         transform: hover ? "translateY(-2px)" : "translateY(0)",
         opacity: visible ? 1 : 0,
+        cursor: isClickable ? "pointer" : "default",
       }}
     >
       <div
@@ -111,10 +113,22 @@ function ProjectCard({ project, index }) {
           />
         </div>
       </div>
+    </div>
+  );
+
+  // Only wrap in <Link> if allowed
+  return isClickable ? (
+    <Link
+      href={`/Portfolio/${project.slug}`}
+      aria-label={`Open ${project.title}`}
+      style={{ textDecoration: "none", color: "inherit" }}
+    >
+      {cardBody}
     </Link>
+  ) : (
+    cardBody
   );
 }
-
 
 // ---------- Page ----------
 export default function Portfolio() {

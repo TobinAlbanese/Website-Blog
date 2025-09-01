@@ -1,13 +1,185 @@
 // src/data/PortfolioData.js
 
 const PortfolioData = {
-  "Employers & Work Experience": [
-    // populate later from your DB/resume; schema kept consistent across file
+  "Featured / Spotlight Projects": [
+    {
+      volume: "PORTFOLIO — SPOTLIGHT 1",
+      title: "NAOMI - Facial Expression Software",
+      slug: "naomi", // links to actual project page
+      author: "Tobin M. Albanese",
+      date: "2025-01-15",
+      excerpt:
+        "An advanced AI platform designed to detect and analyze micro-expressions — tiny, fleeting facial movements that often reveal hidden emotions like stress, deception, or confidence. Neural Analysis Of Micro-Intent in real-time micro-expressions → inferred intent.",
+      archiveImage: "/assets/images/naomiPortfolio.jpg",
+      banner: "/assets/images/naomiBanner.jpg",
+      content: [
+        {
+          text: `<p>Spotlight on NAOMI’s temporal windows, micro-delta features, and calibration—why explainability and human-in-the-loop design matter for real decisions.</p>`,
+        },
+      ],
+      images: [
+        "/assets/images/naomiWhy.jpg",
+        "/assets/images/naomiPipeline.jpg",
+        "/assets/images/naomiFeatures.jpg",
+      ],
+      resources: {
+        "Docs & Code": [
+          {
+            label: "NAOMI GitHub Repo",
+            url: "https://github.com/TobinAlbanese/naomi",
+            external: true,
+          },
+          {
+            label: "GitHub (Profile)",
+            url: "https://github.com/TobinAlbanese",
+            external: true,
+          },
+        ],
+        "Project Links": [
+          { label: "Portfolio Hub", url: "/Portfolio", external: false },
+          { label: "About / CV", url: "/About", external: false },
+        ],
+      },
+    },
+
+    {
+      volume: "PORTFOLIO — SPOTLIGHT",
+      title: "STELLARIS — OSINT NLP Engine",
+      slug: "stellaris",
+      author: "Tobin M. Albanese",
+      date: "2024-10-01",
+      excerpt:
+        "From noisy text to interactive knowledge graphs with provenance-first extraction.",
+      archiveImage: "/assets/images/stellarisPortfolio.jpg",
+      banner: "/assets/images/stellarisBanner.jpg",
+      content: [
+        {
+          text: `<p>Entity resolution, relation/event extraction, and graph UX choices that keep context and lineage front-and-center.</p>`,
+        },
+      ],
+      images: [
+        "/assets/images/stellarisOverview.jpg",
+        "/assets/images/stellarisWorkflow.jpg",
+        "/assets/images/stellarisStack.jpg",
+      ],
+      resources: {
+        "Platform Links": [
+          { label: "Project Hub", url: "/Portfolio", external: false },
+          { label: "OSINT Overview", url: "/MidnightBureau", external: false },
+        ],
+        "Formal Studies": [
+          {
+            label: "Methodology Notes",
+            url: "/Notes/OSINT-Methods",
+            external: false,
+          },
+        ],
+      },
+    },
+
+    {
+      volume: "PORTFOLIO — SPOTLIGHT",
+      title: "COSMOS — Cyber Threat Dashboard",
+      slug: "cosmos",
+      author: "Tobin M. Albanese",
+      date: "2025-03-01",
+      excerpt:
+        "Behavioral baselines, TTP clustering, and audit-ready incident workflows in one pane.",
+      archiveImage: "/assets/images/cosmosPortfolio.jpg",
+      banner: "/assets/images/cosmosEarth.jpg",
+      content: [
+        {
+          text: `<p>How COSMOS stitches feeds, DW intel, CVEs, and sandbox artifacts into drillable analytics that explain <em>why</em> an alert matters.</p>`,
+        },
+      ],
+      images: [
+        "/assets/images/cosmosBanner.jpg",
+        "/assets/images/cosmosHeatmap.jpg",
+        "/assets/images/cosmosFeatures.jpg",
+      ],
+      resources: {
+        "Platform Links": [
+          { label: "Project Hub", url: "/Portfolio", external: false },
+          {
+            label: "COSMOS Security Notes",
+            url: "/Notes/Sec",
+            external: false,
+          },
+        ],
+        "Research & Methodology": [
+          {
+            label: "Threat Modeling Write-up",
+            url: "/Notes/Threat-Modeling",
+            external: false,
+          },
+        ],
+      },
+    },
+
+    {
+      volume: "PORTFOLIO — SPOTLIGHT",
+      title: "VAULT — End-to-End Encrypted Storage",
+      slug: "vault-project",
+      author: "Tobin M. Albanese",
+      date: "2024-12-15",
+      excerpt:
+        "Client-side keys, ciphertext-only sync, and tamper-evident sharing with recovery that stays private.",
+      archiveImage: "/assets/images/vaultPortfolio.jpg",
+      banner: "/assets/images/vaultBanner.jpg",
+      content: [
+        {
+          text: `<p>Why VAULT separates cryptography from coordination, and how link keys + versioned audit logs make secure collaboration feel ordinary.</p>`,
+        },
+      ],
+      images: [
+        "/assets/images/vaultOverview.jpg",
+        "/assets/images/vaultArchitecture.jpg",
+        "/assets/images/vaultUse.jpg",
+      ],
+      resources: {
+        "Platform Links": [
+          { label: "Project Hub", url: "/Portfolio", external: false },
+          {
+            label: "Security Notes (VAULT)",
+            url: "/Notes/Sec",
+            external: false,
+          },
+        ],
+      },
+    },
+
+    {
+      volume: "PORTFOLIO — SPOTLIGHT",
+      title: "NOTES — Zero-Knowledge Notes",
+      slug: "notes-project",
+      author: "Tobin M. Albanese",
+      date: "2024-11-20",
+      excerpt:
+        "Offline-first writing with CRDT/OT sync and on-device encryption by default.",
+      archiveImage: "/assets/images/notesPortfolio.jpg",
+      banner: "/assets/images/notesBanner.jpg",
+      content: [
+        {
+          text: `<p>How NOTES balances rich editing with zero-knowledge sync, client-side previews, and key-based sharing.</p>`,
+        },
+      ],
+      images: [
+        "/assets/images/notesWhy.jpg",
+        "/assets/images/notesHow.jpg",
+        "/assets/images/notesEdit.jpg",
+      ],
+      resources: {
+        "Platform Links": [
+          { label: "Project Hub", url: "/Portfolio", external: false },
+          { label: "App UX Notes", url: "/Notes/UX", external: false },
+        ],
+      },
+    },
   ],
 
   "Computer Science Projects": [
     {
-      volume: "PORTFOLIO — PROJECT",
+      volume: "Computer Science Project 1",
       title: "NAOMI PROJECT",
       slug: "naomi",
       author: "Tobin M. Albanese",
@@ -180,30 +352,6 @@ const PortfolioData = {
         "/assets/images/naomiArchitecture.jpg",
         "/assets/images/naomiPipeline.jpg",
         "/assets/images/naomiFeatures.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
       ],
 
       resources: {
@@ -483,7 +631,7 @@ const PortfolioData = {
     },
 
     {
-      volume: "Computer Science Project 5",
+      volume: "Computer Science Project 4",
       title: "VAULT PROJECT",
       slug: "vault-project",
       author: "Tobin M. Albanese",
@@ -668,7 +816,7 @@ const PortfolioData = {
       author: "Tobin M. Albanese",
       date: "2025-01-01",
       excerpt:
-        "My personal website for exploring my portfolio, stories about me & my interests, along with the curation of my blog page; Midnight Bureau where I dive into topics I'm most interested in & real time Intelligence analysis :)!",
+        "My personal website for exploring my portfolio, stories about me & my interests, along with the curation of my blog page; Midnight Bureau where I dive into topics I'm most interested in & real time Intelligence analysis!",
       archiveImage: "/assets/images/portfolioHub.jpg",
       banner: "/assets/images/portfolioBanner.jpg",
       content: [
@@ -752,12 +900,13 @@ const PortfolioData = {
       author: "Tobin M. Albanese",
       date: "2023-11-01",
       excerpt:
-        "Micro-expression signals to augment risk assessment—measured, calibrated, never deterministic.",
-      archiveImage: "/assets/images/portfolio/behav-ai-cover.jpg",
+        "Probabilistic micro expression cues that support human risk assessment; carefully measured and calibrated, never presented as certainty.",
+      archiveImage:
+        "https://images.unsplash.com/photo-1571325004705-0f26f602e53f?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YmVoYXZpb3JhbCUyMGFuYWx5c2lzfGVufDB8fDB8fHww",
       banner: "/assets/images/portfolio/behav-ai-banner.jpg",
       content: [
         {
-          text: 'Measure what helps a human decide, not what flatters a metric.'
+          text: "Measure what helps a human decide, not what flatters a metric.",
         },
         {
           text: `<h3>Abstract</h3>
@@ -812,7 +961,9 @@ const PortfolioData = {
         },
       ],
 
-      images: [],
+      images: [
+        "https://images.unsplash.com/photo-1571325004705-0f26f602e53f?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YmVoYXZpb3JhbCUyMGFuYWx5c2lzfGVufDB8fDB8fHww",
+      ],
       resources: {
         Sightings: [
           { label: "Project Hub", url: "/Portfolio", external: false },
@@ -870,8 +1021,10 @@ const PortfolioData = {
       slug: "osint-methodologies",
       author: "Tobin M. Albanese",
       date: "2023-11-15",
-      excerpt: "Provenance, verification, and fusion at OSINT scale.",
-      archiveImage: "/assets/images/space.jpg",
+      excerpt:
+        "Intake, de-duplication, verification, and fusion with source provenance preserved and reproducible workflows at OSINT scale.",
+      archiveImage:
+        "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       banner: "/assets/images/space.jpg",
       content: [
         {
@@ -883,10 +1036,6 @@ const PortfolioData = {
       ],
       images: [
         "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
       ],
       resources: {
         Sightings: [
@@ -915,195 +1064,6 @@ const PortfolioData = {
         ],
       },
     },
-    {
-      volume: "PORTFOLIO — RESEARCH",
-      title: "Disinformation & Social Media Influence",
-      slug: "disinformation-social-media",
-      author: "Tobin M. Albanese",
-      date: "2023-12-01",
-      excerpt: "Coordination patterns, amplifier nodes, and counter-measures.",
-      archiveImage: "/assets/images/space.jpg",
-      banner: "/assets/images/space.jpg",
-      content: [
-        {
-          text: "<p>Identifies narrative supply chains and temporal dynamics of campaigns.</p>",
-        },
-        {
-          text: "<p>Tests inoculation strategies and friction-based interventions while monitoring collateral impact.</p>",
-        },
-      ],
-      images: [
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-      ],
-      resources: {
-        Sightings: [
-          { label: "Project Hub", url: "/Portfolio", external: false },
-          { label: "Bureau Article", url: "/MidnightBureau", external: false },
-        ],
-        FormalStudies: [
-          { label: "Study Notes", url: "/Notes/Disinfo", external: false },
-          {
-            label: "ResearchGate",
-            url: "https://www.researchgate.net/profile/Tobin-Albanese",
-            external: true,
-          },
-        ],
-        PopularCulture: [
-          {
-            label: "GitHub",
-            url: "https://github.com/TobinAlbanese",
-            external: true,
-          },
-          { label: "Home", url: "/", external: false },
-        ],
-      },
-    },
-    {
-      volume: "PORTFOLIO — RESEARCH",
-      title: "Ethical AI Governance Models",
-      slug: "ethical-ai-governance",
-      author: "Tobin M. Albanese",
-      date: "2024-01-10",
-      excerpt:
-        "Oversight, auditability, and deployment constraints for sensitive AI.",
-      archiveImage: "/assets/images/space.jpg",
-      banner: "/assets/images/space.jpg",
-      content: [
-        {
-          text: "<p>Compares governance frameworks emphasizing measurable safeguards and red-team rituals.</p>",
-        },
-        {
-          text: "<p>Outlines accountability layers from model cards to operational waivers.</p>",
-        },
-      ],
-      images: [
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-      ],
-      resources: {
-        Sightings: [
-          { label: "Project Hub", url: "/Portfolio", external: false },
-          { label: "Ethics Notes", url: "/Notes/Ethics", external: false },
-        ],
-        FormalStudies: [
-          { label: "About / CV", url: "/About", external: false },
-          {
-            label: "ResearchGate",
-            url: "https://www.researchgate.net/profile/Tobin-Albanese",
-            external: true,
-          },
-        ],
-        PopularCulture: [
-          {
-            label: "GitHub",
-            url: "https://github.com/TobinAlbanese",
-            external: true,
-          },
-          { label: "Home", url: "/", external: false },
-        ],
-      },
-    },
-    {
-      volume: "PORTFOLIO — RESEARCH",
-      title: "Facial Recognition & Privacy",
-      slug: "facial-recognition-privacy",
-      author: "Tobin M. Albanese",
-      date: "2024-02-01",
-      excerpt: "Balancing capability with consent, minimization, and policy.",
-      archiveImage: "/assets/images/space.jpg",
-      banner: "/assets/images/space.jpg",
-      content: [
-        {
-          text: "<p>Surveys regulatory regimes and proposes deployment patterns with privacy by design.</p>",
-        },
-        {
-          text: "<p>Argues for conservative defaults, transparency, and independent auditing.</p>",
-        },
-      ],
-      images: [
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-      ],
-      resources: {
-        Sightings: [
-          { label: "Project Hub", url: "/Portfolio", external: false },
-          { label: "Policy Notes", url: "/Notes/Policy", external: false },
-        ],
-        FormalStudies: [
-          { label: "About / CV", url: "/About", external: false },
-          {
-            label: "ResearchGate",
-            url: "https://www.researchgate.net/profile/Tobin-Albanese",
-            external: true,
-          },
-        ],
-        PopularCulture: [
-          {
-            label: "GitHub",
-            url: "https://github.com/TobinAlbanese",
-            external: true,
-          },
-          { label: "Home", url: "/", external: false },
-        ],
-      },
-    },
-    {
-      volume: "PORTFOLIO — RESEARCH",
-      title: "Cyber Threat Actor Profiling",
-      slug: "cyber-threat-profiling",
-      author: "Tobin M. Albanese",
-      date: "2024-03-01",
-      excerpt: "Clustering adversary behavior by TTPs and infra reuse.",
-      archiveImage: "/assets/images/space.jpg",
-      banner: "/assets/images/space.jpg",
-      content: [
-        {
-          text: "<p>Builds behavioral profiles from campaign telemetry and infrastructure linkages.</p>",
-        },
-        {
-          text: "<p>Targets durable signals that survive obfuscation and copycatting.</p>",
-        },
-      ],
-      images: [
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-      ],
-      resources: {
-        Sightings: [
-          { label: "Project Hub", url: "/Portfolio", external: false },
-          { label: "Threat Notes", url: "/Notes/Threats", external: false },
-        ],
-        FormalStudies: [
-          { label: "About / CV", url: "/About", external: false },
-          {
-            label: "ResearchGate",
-            url: "https://www.researchgate.net/profile/Tobin-Albanese",
-            external: true,
-          },
-        ],
-        PopularCulture: [
-          {
-            label: "GitHub",
-            url: "https://github.com/TobinAlbanese",
-            external: true,
-          },
-          { label: "Home", url: "/", external: false },
-        ],
-      },
-    },
   ],
 
   "Analytical Writing & Publications": [
@@ -1113,8 +1073,10 @@ const PortfolioData = {
       slug: "ai-ethics-national-security",
       author: "Tobin M. Albanese",
       date: "2023-05-01",
-      excerpt: "Where mission requirements meet ethical constraints.",
-      archiveImage: "/assets/images/space.jpg",
+      excerpt:
+        "Operational guardrails for high stakes AI: mission fit, accountability, auditability, and clear lines of responsibility.",
+      archiveImage:
+        "https://plat.ai/wp-content/uploads/Shutterstock_567338095.jpg.webp",
       banner: "/assets/images/space.jpg",
       content: [
         {
@@ -1160,8 +1122,9 @@ const PortfolioData = {
       slug: "behavioral-surveillance",
       author: "Tobin M. Albanese",
       date: "2023-06-01",
-      excerpt: "Behavioral sensing vs. civil liberties.",
-      archiveImage: "/assets/images/space.jpg",
+      excerpt:
+        "How behavioral sensing turns signals into power, what can go wrong, and the civil liberties guardrails that keep it honest.",
+      archiveImage: "/assets/images/stellarisStack.jpg",
       banner: "/assets/images/space.jpg",
       content: [
         {
@@ -1201,138 +1164,6 @@ const PortfolioData = {
         ],
       },
     },
-    {
-      volume: "PORTFOLIO — WRITING",
-      title: "Open-Source Intelligence in Modern Conflict",
-      slug: "osint-modern-conflict",
-      author: "Tobin M. Albanese",
-      date: "2023-07-01",
-      excerpt: "How OSINT changes tempo, attribution, and narrative.",
-      archiveImage: "/assets/images/space.jpg",
-      banner: "/assets/images/space.jpg",
-      content: [
-        {
-          text: "<p>Explores transparency effects on strategy and public diplomacy, and the tooling required for verification at speed.</p>",
-        },
-      ],
-      images: [
-        "https://images.unsplash.com/photo-1677212004257-103cfa6b59d0?q=80&w=928&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-      ],
-      resources: {
-        Sightings: [
-          { label: "Project Hub", url: "/Portfolio", external: false },
-          { label: "Bureau Article", url: "/MidnightBureau", external: false },
-        ],
-        FormalStudies: [
-          { label: "About / CV", url: "/About", external: false },
-          {
-            label: "ResearchGate",
-            url: "https://www.researchgate.net/profile/Tobin-Albanese",
-            external: true,
-          },
-        ],
-        PopularCulture: [
-          {
-            label: "GitHub",
-            url: "https://github.com/TobinAlbanese",
-            external: true,
-          },
-          { label: "Home", url: "/", external: false },
-        ],
-      },
-    },
-    {
-      volume: "PORTFOLIO — WRITING",
-      title: "Digital Disinformation: Challenges & Solutions",
-      slug: "digital-disinformation",
-      author: "Tobin M. Albanese",
-      date: "2023-08-01",
-      excerpt: "Detection to inoculation — a practical playbook.",
-      archiveImage: "/assets/images/space.jpg",
-      banner: "/assets/images/space.jpg",
-      content: [
-        {
-          text: "<p>Catalogs tactics (bots, brigading, laundering) and countermeasures (friction, counterspeech, provenance).</p>",
-        },
-      ],
-      images: [
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-      ],
-      resources: {
-        Sightings: [
-          { label: "Project Hub", url: "/Portfolio", external: false },
-          { label: "Bureau Article", url: "/MidnightBureau", external: false },
-        ],
-        FormalStudies: [
-          { label: "About / CV", url: "/About", external: false },
-          {
-            label: "ResearchGate",
-            url: "https://www.researchgate.net/profile/Tobin-Albanese",
-            external: true,
-          },
-        ],
-        PopularCulture: [
-          {
-            label: "GitHub",
-            url: "https://github.com/TobinAlbanese",
-            external: true,
-          },
-          { label: "Home", url: "/", external: false },
-        ],
-      },
-    },
-    {
-      volume: "PORTFOLIO — WRITING",
-      title: "Future of Autonomous Systems in Warfare",
-      slug: "autonomous-systems-future",
-      author: "Tobin M. Albanese",
-      date: "2023-09-01",
-      excerpt: "Doctrine, risk, and guardrails for autonomy.",
-      archiveImage: "/assets/images/space.jpg",
-      banner: "/assets/images/space.jpg",
-      content: [
-        {
-          text: "<p>Argues that speed without accountability increases strategic risk; proposes layered controls and testing regimes.</p>",
-        },
-      ],
-      images: [
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-      ],
-      resources: {
-        Sightings: [
-          { label: "Project Hub", url: "/Portfolio", external: false },
-          { label: "Bureau Article", url: "/MidnightBureau", external: false },
-        ],
-        FormalStudies: [
-          { label: "About / CV", url: "/About", external: false },
-          {
-            label: "ResearchGate",
-            url: "https://www.researchgate.net/profile/Tobin-Albanese",
-            external: true,
-          },
-        ],
-        PopularCulture: [
-          {
-            label: "GitHub",
-            url: "https://github.com/TobinAlbanese",
-            external: true,
-          },
-          { label: "Home", url: "/", external: false },
-        ],
-      },
-    },
   ],
 
   "Current & In-Progress Work": [
@@ -1342,8 +1173,9 @@ const PortfolioData = {
       slug: "midnight-bureau-expansion",
       author: "Tobin M. Albanese",
       date: "2025-02-01",
-      excerpt: "Better discovery, smoother reading, richer archives.",
-      archiveImage: "/assets/images/space.jpg",
+      excerpt:
+        "Smarter discovery, faster archives, and cleaner long reads. Adding topic and entity filters, cross search with the portfolio, and a print friendly mode for deep dives.",
+      archiveImage: "/assets/images/AFG4.jpg",
       banner: "/assets/images/space.jpg",
       content: [
         {
@@ -1393,8 +1225,10 @@ const PortfolioData = {
       slug: "facial-recognition-prototype",
       author: "Tobin M. Albanese",
       date: "2025-04-01",
-      excerpt: "End-to-end live identity experiments with policy gates.",
-      archiveImage: "/assets/images/space.jpg",
+      excerpt:
+        "Low latency video with explicit policy gates, opt in testing, and hard limits. Focus on evaluation, latency budgets, consent flows, and repeatable audits before any pilot.",
+      archiveImage:
+        "https://images.unsplash.com/photo-1706025090711-377b00b51332?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGZhY2UlMjB1cGNsb3NlfGVufDB8fDB8fHww",
       banner: "/assets/images/space.jpg",
       content: [
         {
@@ -1439,8 +1273,10 @@ const PortfolioData = {
       slug: "osint-data-pipeline",
       author: "Tobin M. Albanese",
       date: "2025-06-01",
-      excerpt: "Scalable ingestion with provenance and PII safety.",
-      archiveImage: "/assets/images/space.jpg",
+      excerpt:
+        "High throughput intake with dedupe, provenance tracking, and PII safety. Next steps include source scoring, alert thresholds, and reproducible exports that analysts can defend.",
+      archiveImage:
+        "https://images.unsplash.com/photo-1679325134596-6cd425a05dc8?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGFnZ3JlZ2F0aW9uc3xlbnwwfHwwfHx8MA%3D%3D",
       banner: "/assets/images/space.jpg",
       content: [
         {
@@ -1482,470 +1318,234 @@ const PortfolioData = {
     },
   ],
 
-  "Education & Certifications": [
+  // In src/data/PortfolioData.js
+  "Employers & Work Experience (Non-clickable)": [
+    {
+      volume: "PORTFOLIO — EXPERIENCE",
+      title:
+        "California Prison Industry Authority - Assistant",
+      author: "Tobin M. Albanese",
+      date: "2024-03-01",
+      location: "Folsom, CA",
+      excerpt:
+        "Built a reusable Excel automation to track revenue across 34 institutions for faster, cleaner reporting. Also processed vendor invoices end-to-end, coordinating approvals and keeping records audit-ready.",
+      archiveImage:
+        "https://images.unsplash.com/photo-1521785241181-092e2c5d2f4c?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cHJpc29ufGVufDB8fDB8fHww",
+      clickable: false,
+      slug: null,
+    },
+    {
+      volume: "PORTFOLIO — EXPERIENCE",
+      title: "7UP Bottling Co. — Sales",
+      author: "Tobin M. Albanese",
+      date: "2022-01-01",
+      location: "Roseville, CA",
+      excerpt:
+        "Managed a high-volume route, maintaining merchandising standards, inventory levels, and promo execution across key accounts. Built and sustained client relationships that drove repeat business and reliable in-store execution. Coordinated logistics and on-time deliveries to ensure efficiency.",
+      archiveImage:
+        "https://images.unsplash.com/photo-1577670772839-befb49f0bee5?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fDdVUHxlbnwwfHwwfHx8MA%3D%3D",
+      clickable: false,
+      slug: null,
+    },
+    {
+      volume: "PORTFOLIO — EXPERIENCE",
+      title: "McDonald’s — Manager",
+      author: "Tobin M. Albanese",
+      date: "2019-08-01",
+      location: "Jackson, CA",
+      excerpt:
+        "Led shifts of 6–12 crew members, trained new hires, and assigned stations while upholding food safety and service standards. Balanced drawers and completed nightly cash reconciliation. Used checklists and clear handoffs to reduce errors and keep throughput high during rushes.",
+      archiveImage:
+        "https://images.unsplash.com/photo-1542831371-d531d36971e6?w=900&auto=format&fit=crop&q=60",
+      clickable: false,
+      slug: null,
+    },
+  ],
+
+  "Skills & Technologies (Non-clickable)": [
+    {
+      title: "Python",
+      excerpt:
+        "My go-to for prototyping, data tooling, and small services. Comfortable with pandas, FastAPI, asyncio, and testing to keep things repeatable.",
+      tags: ["pandas", "FastAPI", "pytest"],
+      images: [
+        "https://plus.unsplash.com/premium_photo-1661897061191-da22183ea142?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDl8fHB5dGhvbnxlbnwwfHwwfHx8MA%3D%3D",
+      ],
+      clickable: false,
+      slug: null,
+    },
+    {
+      title: "JavaScript (React, Node.js)",
+      excerpt:
+        "Builds frontends in React/Next.js and lightweight APIs in Node. Focus on clean state, accessible UI, and SSR where it improves UX.",
+      tags: ["Next.js", "React", "Node"],
+      images: [
+        "https://images.unsplash.com/photo-1523800503107-5bc3ba2a6f81?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTV8fGphdmFzY3JpcHR8ZW58MHx8MHx8fDA%3D",
+      ],
+      clickable: false,
+      slug: null,
+    },
+    {
+      title: "Docker & Kubernetes",
+      excerpt:
+        "Containerize apps for reliable dev/prod parity. Compose for local; Helm and basic K8s objects for staging/production deploys.",
+      tags: ["Dockerfile", "Compose", "Helm"],
+      images: [
+        "https://images.unsplash.com/photo-1646627927863-19874c27316b?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZG9ja2VyfGVufDB8fDB8fHww",
+      ],
+      clickable: false,
+      slug: null,
+    },
+    {
+      title: "AWS Cloud Services",
+      excerpt:
+        "Hands-on with EC2, S3, CloudFront, IAM, and CloudWatch. Bias toward simple architectures with clear cost/observability tradeoffs.",
+      tags: ["EC2", "S3", "CloudFront"],
+      images: [
+        "https://images.unsplash.com/photo-1662947368770-7cf87e565cdd?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YW1hem9uJTIwd2ViJTIwc2VydmljZXN8ZW58MHx8MHx8fDA%3D",
+      ],
+      clickable: false,
+      slug: null,
+    },
+    {
+      title: "TensorFlow & PyTorch",
+      excerpt:
+        "Train/evaluate small models and fine-tunes; track metrics and calibration, keep data/labels organized, and document failure modes.",
+      tags: ["fine-tuning", "evaluation", "calibration"],
+      images: [
+        "https://plus.unsplash.com/premium_photo-1674827394056-90d4b40c41ab?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzN8fHRlbnNvcmZsb3d8ZW58MHx8MHx8fDA%3D",
+      ],
+      clickable: false,
+      slug: null,
+    },
+    {
+      title: "Natural Language Processing (NLP)",
+      excerpt:
+        "Text classification, NER, and retrieval pipelines using spaCy/HuggingFace. Emphasis on data quality, baselines, and error analysis.",
+      tags: ["spaCy", "HF Transformers", "RAG"],
+      images: [
+        "https://images.unsplash.com/photo-1711399492272-78099e75ef07?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8amFwYW5lc2UlMjBsZXR0ZXJzfGVufDB8fDB8fHww",
+      ],
+      clickable: false,
+      slug: null,
+    },
+    {
+      title: "Computer Vision & OpenCV",
+      excerpt:
+        "Real-time preprocessing, detection/tracking, and landmarks. Careful about latency budgets, lighting variance, and dataset bias.",
+      tags: ["OpenCV", "onnxruntime", "tracking"],
+      images: [
+        "https://images.unsplash.com/photo-1691683145273-ab95f46d7c16?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8ZXllJTIwYmFsbHxlbnwwfHwwfHx8MA%3D%3D",
+      ],
+      clickable: false,
+      slug: null,
+    },
+    {
+      title: "Cybersecurity & Ethical Hacking",
+      excerpt:
+        "Threat modeling, secure defaults, and hands-on recon/appsec basics. Aim is resilient systems and clear audit trails—not theatrics.",
+      tags: ["OWASP", "threat modeling", "SDLC"],
+      images: [
+        "https://plus.unsplash.com/premium_photo-1663091769346-215f459f964c?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjF8fHNlY3VyaXR5fGVufDB8fDB8fHww",
+      ],
+      clickable: false,
+      slug: null,
+    },
+    {
+      title: "SQL & NoSQL Databases",
+      excerpt:
+        "Design schemas, write explainable queries, and index what matters. Postgres for consistency, Mongo when flexible docs win.",
+      tags: ["Postgres", "MongoDB", "Indexes"],
+      images: [
+        "https://images.unsplash.com/photo-1597852074816-d933c7d2b988?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGRhdGFiYXNlfGVufDB8fDB8fHww",
+      ],
+      clickable: false,
+      slug: null,
+    },
+    {
+      title: "Git & CI/CD Pipelines",
+      excerpt:
+        "Branch strategy, code review discipline, and pipelines that run tests/lints before deploy. Shipping small and often.",
+      tags: ["GitHub Actions", "Vercel", "lint/tests"],
+      images: [
+        "https://images.unsplash.com/photo-1618401479427-c8ef9465fbe1?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z2l0aHVifGVufDB8fDB8fHww",
+      ],
+      clickable: false,
+      slug: null,
+    },
+  ],
+
+  "Education & Certifications (Non-clickable)": [
     {
       volume: "PORTFOLIO — EDUCATION",
-      title: "B.S. Computer Science",
-      slug: "csus-computer-science",
+      title: "B.S. Computer Science (Undergraduate, In Progress)",
       author: "Tobin M. Albanese",
-      date: "2026-12-01",
-      excerpt: "CSU Sacramento — AI, cybersecurity, software engineering.",
-      archiveImage: "/assets/images/space.jpg",
-      banner: "/assets/images/space.jpg",
-      content: [
-        {
-          text: "<p>Coursework spans algorithms, systems, ML, and security with applied projects and research threads.</p>",
-        },
-      ],
-      images: [
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-      ],
-      resources: {
-        Sightings: [
-          { label: "About / CV", url: "/About", external: false },
-          { label: "Project Hub", url: "/Portfolio", external: false },
-        ],
-        FormalStudies: [
-          { label: "Study Notes", url: "/Notes/CS", external: false },
-          {
-            label: "ResearchGate",
-            url: "https://www.researchgate.net/profile/Tobin-Albanese",
-            external: true,
-          },
-        ],
-        PopularCulture: [
-          { label: "Home", url: "/", external: false },
-          {
-            label: "GitHub",
-            url: "https://github.com/TobinAlbanese",
-            external: true,
-          },
-        ],
-      },
-    },
-    {
-      volume: "PORTFOLIO — CERTIFICATION",
-      title: "Certified Ethical Hacker (CEH)",
-      slug: "ceh-certification",
-      author: "Tobin M. Albanese",
-      date: "2024-04-01",
-      excerpt: "EC-Council CEH (2024).",
-      archiveImage: "/assets/images/space.jpg",
-      banner: "/assets/images/space.jpg",
-      content: [
-        {
-          text: "<p>Hands-on exposure to adversarial techniques that inform practical defensive engineering.</p>",
-        },
-      ],
-      images: [
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-      ],
-      resources: {
-        Sightings: [
-          { label: "About / CV", url: "/About", external: false },
-          { label: "Project Hub", url: "/Portfolio", external: false },
-        ],
-        FormalStudies: [
-          { label: "Cert Details", url: "/Notes/CEH", external: false },
-          {
-            label: "ResearchGate",
-            url: "https://www.researchgate.net/profile/Tobin-Albanese",
-            external: true,
-          },
-        ],
-        PopularCulture: [
-          { label: "Home", url: "/", external: false },
-          {
-            label: "GitHub",
-            url: "https://github.com/TobinAlbanese",
-            external: true,
-          },
-        ],
-      },
+      date: "2026-05-01",
+      excerpt:
+        "California State University, Sacramento — undergraduate; expected May 2026. Focus: algorithms, systems, security, ML. Clubs: Cyber Security, Data Structures & Algorithms.",
+      archiveImage:
+        "https://images.unsplash.com/photo-1587847870627-a34356e5ae67?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHNhY3JhbWVudG98ZW58MHx8MHx8fDA%3D",
+      clickable: false,
     },
     {
       volume: "PORTFOLIO — EDUCATION",
-      title: "AI Ethics Workshop (MIT Professional Education)",
-      slug: "ai-ethics-mit",
+      title: "A.S. Computer Science (Folsom Lake College)",
       author: "Tobin M. Albanese",
-      date: "2023-08-15",
-      excerpt: "Responsible AI development workshop.",
-      archiveImage: "/assets/images/space.jpg",
-      banner: "/assets/images/space.jpg",
-      content: [
-        {
-          text: "<p>Covered risk assessment, documentation, and oversight patterns for responsible AI deployment.</p>",
-        },
-      ],
-      images: [
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-      ],
-      resources: {
-        Sightings: [
-          { label: "About / CV", url: "/About", external: false },
-          { label: "Project Hub", url: "/Portfolio", external: false },
-        ],
-        FormalStudies: [
-          { label: "Notes", url: "/Notes/Ethics", external: false },
-          {
-            label: "ResearchGate",
-            url: "https://www.researchgate.net/profile/Tobin-Albanese",
-            external: true,
-          },
-        ],
-        PopularCulture: [
-          { label: "Home", url: "/", external: false },
-          {
-            label: "GitHub",
-            url: "https://github.com/TobinAlbanese",
-            external: true,
-          },
-        ],
-      },
+      excerpt:
+        "Associate’s degree in Computer Science. Clubs: AI & Data Science and FLC++ Programming.",
+      archiveImage:
+        "https://images.unsplash.com/photo-1649260347712-00db37a401c4?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDN8fGZvbHNvbSUyMGNhbGlmb3JuaWF8ZW58MHx8MHx8fDA%3D",
+      clickable: false,
     },
     {
-      volume: "PORTFOLIO — EDUCATION",
-      title: "OSINT Fundamentals (SANS Institute)",
-      slug: "osint-fundamentals",
+      volume: "PORTFOLIO — CERTIFICATE",
+      title: "Certificate in Information Assurance and Security (CSUS)",
       author: "Tobin M. Albanese",
-      date: "2023-06-01",
-      excerpt: "Foundations of open-source intelligence.",
-      archiveImage: "/assets/images/space.jpg",
-      banner: "/assets/images/space.jpg",
-      content: [
-        {
-          text: "<p>Introduces disciplined collection, verification, and analyst hygiene for public data.</p>",
-        },
-      ],
-      images: [
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-      ],
-      resources: {
-        Sightings: [
-          { label: "About / CV", url: "/About", external: false },
-          { label: "Project Hub", url: "/Portfolio", external: false },
-        ],
-        FormalStudies: [
-          {
-            label: "OSINT Notes",
-            url: "/Notes/OSINT-Methods",
-            external: false,
-          },
-          {
-            label: "ResearchGate",
-            url: "https://www.researchgate.net/profile/Tobin-Albanese",
-            external: true,
-          },
-        ],
-        PopularCulture: [
-          { label: "Home", url: "/", external: false },
-          {
-            label: "GitHub",
-            url: "https://github.com/TobinAlbanese",
-            external: true,
-          },
-        ],
-      },
+      excerpt:
+        "12-unit certificate focused on cryptography, forensics, and system countermeasures; planning and managing incident response with clear governance.",
+      archiveImage:
+        "https://images.unsplash.com/photo-1568667256549-094345857637?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bGlicmFyeXxlbnwwfHwwfHx8MA%3D%3D",
+      clickable: false,
+      slug: null,
+    },
+    {
+      volume: "PORTFOLIO — CERTIFICATE",
+      title: "Information Technology Certificate (FLC)",
+      author: "Tobin M. Albanese",
+      excerpt:
+        "Foundations in IT, networking, and cybersecurity—prepares for entry-level roles and further study.",
+      archiveImage:
+        "https://images.unsplash.com/photo-1568952433726-3896e3881c65?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHRlY2hub2xvZ3l8ZW58MHx8MHx8fDA%3D",
+      clickable: false,
+      slug: null,
+    },
+    {
+      volume: "PORTFOLIO — CERTIFICATE",
+      title: "Computer Programming Certificate (FLC)",
+      author: "Tobin M. Albanese",
+      excerpt:
+        "Core programming proficiency for junior software roles; strong base for CS transfer and projects.",
+      archiveImage:
+        "https://images.unsplash.com/photo-1609379788613-74f52b8f6847?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDF8fGZpcnN0JTIwY29tcHV0ZXJ8ZW58MHx8MHx8fDA%3D",
+      clickable: false,
+      slug: null,
+    },
+    {
+      volume: "PORTFOLIO — CERTIFICATE OF ACHIEVEMENT",
+      title: "Algorithmic & Logical Thinking Certificate (FLC)",
+      author: "Tobin M. Albanese",
+      excerpt:
+        "Problem decomposition, algorithmic reasoning, and structured problem-solving fundamentals.",
+      archiveImage:
+        "https://images.unsplash.com/photo-1617083320253-92b730b58d20?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDB8fGNoZXNzfGVufDB8fDB8fHww",
+      clickable: false,
+      slug: null,
     },
   ],
 
-  "Featured / Spotlight Projects": [
-    {
-      volume: "PORTFOLIO — SPOTLIGHT",
-      title: "NAOMI — Micro-Expression & Intent Analysis",
-      slug: "naomi", // links to actual project page
-      author: "Tobin M. Albanese",
-      date: "2025-01-15",
-      excerpt:
-        "An advanced AI platform designed to detect and analyze micro-expressions — tiny, fleeting facial movements that often reveal hidden emotions like stress, deception, or confidence. Neural Analysis Of Micro-Intent in real-time micro-expressions → inferred intent.",
-      archiveImage: "/assets/images/naomiPortfolio.jpg",
-      banner: "/assets/images/naomiBanner.jpg",
-      content: [
-        {
-          text: `<p>Spotlight on NAOMI’s temporal windows, micro-delta features, and calibration—why explainability and human-in-the-loop design matter for real decisions.</p>`,
-        },
-      ],
-      images: [
-        "/assets/images/naomiWhy.jpg",
-        "/assets/images/naomiPipeline.jpg",
-        "/assets/images/naomiFeatures.jpg",
-      ],
-      resources: {
-        "Docs & Code": [
-          {
-            label: "NAOMI GitHub Repo",
-            url: "https://github.com/TobinAlbanese/naomi",
-            external: true,
-          },
-          {
-            label: "GitHub (Profile)",
-            url: "https://github.com/TobinAlbanese",
-            external: true,
-          },
-        ],
-        "Project Links": [
-          { label: "Portfolio Hub", url: "/Portfolio", external: false },
-          { label: "About / CV", url: "/About", external: false },
-        ],
-      },
-    },
+  "Speaking & Media (Non-clickable)": [],
 
-    {
-      volume: "PORTFOLIO — SPOTLIGHT",
-      title: "STELLARIS — OSINT NLP Engine",
-      slug: "stellaris",
-      author: "Tobin M. Albanese",
-      date: "2024-10-01",
-      excerpt:
-        "From noisy text to interactive knowledge graphs with provenance-first extraction.",
-      archiveImage: "/assets/images/stellarisPortfolio.jpg",
-      banner: "/assets/images/stellarisBanner.jpg",
-      content: [
-        {
-          text: `<p>Entity resolution, relation/event extraction, and graph UX choices that keep context and lineage front-and-center.</p>`,
-        },
-      ],
-      images: [
-        "/assets/images/stellarisOverview.jpg",
-        "/assets/images/stellarisWorkflow.jpg",
-        "/assets/images/stellarisStack.jpg",
-      ],
-      resources: {
-        "Platform Links": [
-          { label: "Project Hub", url: "/Portfolio", external: false },
-          { label: "OSINT Overview", url: "/MidnightBureau", external: false },
-        ],
-        "Formal Studies": [
-          {
-            label: "Methodology Notes",
-            url: "/Notes/OSINT-Methods",
-            external: false,
-          },
-        ],
-      },
-    },
-
-    {
-      volume: "PORTFOLIO — SPOTLIGHT",
-      title: "COSMOS — Cyber Threat Dashboard",
-      slug: "cosmos",
-      author: "Tobin M. Albanese",
-      date: "2025-03-01",
-      excerpt:
-        "Behavioral baselines, TTP clustering, and audit-ready incident workflows in one pane.",
-      archiveImage: "/assets/images/cosmosPortfolio.jpg",
-      banner: "/assets/images/cosmosEarth.jpg",
-      content: [
-        {
-          text: `<p>How COSMOS stitches feeds, DW intel, CVEs, and sandbox artifacts into drillable analytics that explain <em>why</em> an alert matters.</p>`,
-        },
-      ],
-      images: [
-        "/assets/images/cosmosBanner.jpg",
-        "/assets/images/cosmosHeatmap.jpg",
-        "/assets/images/cosmosFeatures.jpg",
-      ],
-      resources: {
-        "Platform Links": [
-          { label: "Project Hub", url: "/Portfolio", external: false },
-          {
-            label: "COSMOS Security Notes",
-            url: "/Notes/Sec",
-            external: false,
-          },
-        ],
-        "Research & Methodology": [
-          {
-            label: "Threat Modeling Write-up",
-            url: "/Notes/Threat-Modeling",
-            external: false,
-          },
-        ],
-      },
-    },
-
-    {
-      volume: "PORTFOLIO — SPOTLIGHT",
-      title: "VAULT — End-to-End Encrypted Storage",
-      slug: "vault-project",
-      author: "Tobin M. Albanese",
-      date: "2024-12-15",
-      excerpt:
-        "Client-side keys, ciphertext-only sync, and tamper-evident sharing with recovery that stays private.",
-      archiveImage: "/assets/images/vaultPortfolio.jpg",
-      banner: "/assets/images/vaultBanner.jpg",
-      content: [
-        {
-          text: `<p>Why VAULT separates cryptography from coordination, and how link keys + versioned audit logs make secure collaboration feel ordinary.</p>`,
-        },
-      ],
-      images: [
-        "/assets/images/vaultOverview.jpg",
-        "/assets/images/vaultArchitecture.jpg",
-        "/assets/images/vaultUse.jpg",
-      ],
-      resources: {
-        "Platform Links": [
-          { label: "Project Hub", url: "/Portfolio", external: false },
-          {
-            label: "Security Notes (VAULT)",
-            url: "/Notes/Sec",
-            external: false,
-          },
-        ],
-      },
-    },
-
-    {
-      volume: "PORTFOLIO — SPOTLIGHT",
-      title: "NOTES — Zero-Knowledge Notes",
-      slug: "notes-project",
-      author: "Tobin M. Albanese",
-      date: "2024-11-20",
-      excerpt:
-        "Offline-first writing with CRDT/OT sync and on-device encryption by default.",
-      archiveImage: "/assets/images/notesPortfolio.jpg",
-      banner: "/assets/images/notesBanner.jpg",
-      content: [
-        {
-          text: `<p>How NOTES balances rich editing with zero-knowledge sync, client-side previews, and key-based sharing.</p>`,
-        },
-      ],
-      images: [
-        "/assets/images/notesWhy.jpg",
-        "/assets/images/notesHow.jpg",
-        "/assets/images/notesEdit.jpg",
-      ],
-      resources: {
-        "Platform Links": [
-          { label: "Project Hub", url: "/Portfolio", external: false },
-          { label: "App UX Notes", url: "/Notes/UX", external: false },
-        ],
-      },
-    },
-  ],
-
-  "Skills & Technologies": [
-    "Python",
-    "JavaScript (React, Node.js)",
-    "Docker & Kubernetes",
-    "AWS Cloud Services",
-    "TensorFlow & PyTorch",
-    "Natural Language Processing (NLP)",
-    "Computer Vision & OpenCV",
-    "Cybersecurity & Ethical Hacking",
-    "SQL & NoSQL Databases",
-    "Git & CI/CD Pipelines",
-  ],
-
-  "Speaking & Media": [
-    {
-      volume: "PORTFOLIO — MEDIA",
-      title: "Webinar: Ethics in AI Surveillance",
-      slug: "ethics-ai-webinar",
-      author: "Tobin M. Albanese",
-      date: "2025-03-10",
-      excerpt: "Live webinar on surveillance ethics.",
-      archiveImage: "/assets/images/space.jpg",
-      banner: "/assets/images/space.jpg",
-      content: [
-        {
-          text: "<p>Key themes and Q&A on oversight, measurement, and risk in applied surveillance AI.</p>",
-        },
-      ],
-      images: [
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-      ],
-      resources: {
-        Sightings: [
-          { label: "Project Hub", url: "/Portfolio", external: false },
-          { label: "Bureau Article", url: "/MidnightBureau", external: false },
-        ],
-        FormalStudies: [
-          { label: "About / CV", url: "/About", external: false },
-          {
-            label: "ResearchGate",
-            url: "https://www.researchgate.net/profile/Tobin-Albanese",
-            external: true,
-          },
-        ],
-        PopularCulture: [
-          { label: "Home", url: "/", external: false },
-          {
-            label: "GitHub",
-            url: "https://github.com/TobinAlbanese",
-            external: true,
-          },
-        ],
-      },
-    },
-    {
-      volume: "PORTFOLIO — MEDIA",
-      title: "Podcast: Open-Source Intelligence",
-      slug: "osint-podcast",
-      author: "Tobin M. Albanese",
-      date: "2024-12-10",
-      excerpt: "Conversation on scaling OSINT tooling.",
-      archiveImage: "/assets/images/space.jpg",
-      banner: "/assets/images/space.jpg",
-      content: [
-        {
-          text: "<p>Highlights around verification at speed, graph reasoning, and human-centered analyst tools.</p>",
-        },
-      ],
-      images: [
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-      ],
-      resources: {
-        Sightings: [
-          { label: "Project Hub", url: "/Portfolio", external: false },
-          { label: "OSINT Overview", url: "/MidnightBureau", external: false },
-        ],
-        FormalStudies: [
-          { label: "About / CV", url: "/About", external: false },
-          {
-            label: "ResearchGate",
-            url: "https://www.researchgate.net/profile/Tobin-Albanese",
-            external: true,
-          },
-        ],
-        PopularCulture: [
-          { label: "Home", url: "/", external: false },
-          {
-            label: "GitHub",
-            url: "https://github.com/TobinAlbanese",
-            external: true,
-          },
-        ],
-      },
-    },
-  ],
-
-  Collaborations: [
+  "Collaborations (Non-clickable)": [
     {
       volume: "PORTFOLIO — COLLAB",
       title: "C-R-US — Dental Clinic Management System (CSC 131, Spring 2025)",
@@ -1954,48 +1554,10 @@ const PortfolioData = {
       date: "2025-05-01",
       excerpt:
         "Team DCMS: records, appointments, histories, performance analytics.",
-      archiveImage: "/assets/images/space.jpg",
-      banner: "/assets/images/space.jpg",
-      content: [
-        {
-          text: "<p>Full-stack clinic system supporting patient records, appointment scheduling, treatment histories, and staff analytics.</p>",
-        },
-        {
-          text: "<p>Role-based UI for patients, employees, and admins with straightforward, learnable navigation.</p>",
-        },
-        {
-          text: "<p>Team: Imran Ahmad, Tobin Graham, Alyssa Jimenez, Glory King, Ryland Porter, Harkeerat Uppal.</p>",
-        },
-      ],
-      images: [
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-      ],
-      resources: {
-        Sightings: [
-          { label: "Project Hub", url: "/Portfolio", external: false },
-          { label: "Midnight Bureau", url: "/MidnightBureau", external: false },
-        ],
-        FormalStudies: [
-          { label: "About / CV", url: "/About", external: false },
-          {
-            label: "ResearchGate",
-            url: "https://www.researchgate.net/profile/Tobin-Albanese",
-            external: true,
-          },
-        ],
-        PopularCulture: [
-          {
-            label: "GitHub",
-            url: "https://github.com/TobinAlbanese",
-            external: true,
-          },
-          { label: "Home", url: "/", external: false },
-        ],
-      },
+      archiveImage:
+        "https://images.unsplash.com/photo-1609918438269-9a4c5f8fe3a4?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZGVudGlzdHJ5fGVufDB8fDB8fHww",      
+      clickable: false,
+      slug: null,
     },
   ],
 };
