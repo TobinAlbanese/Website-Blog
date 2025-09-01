@@ -230,7 +230,7 @@ export default function About() {
 
               {/* RIGHT (uniform size) */}
               <img
-                src="/assets/images/tobin-kenny.JPG"
+                src="/assets/images/tobin-kenny.jpg"
                 alt="Curiosity for the world and its stories"
                 loading="lazy"
                 className="float-img right"
