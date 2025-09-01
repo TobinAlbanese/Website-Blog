@@ -95,7 +95,7 @@ export default function FeaturedPapers() {
             {/* Left visual */}
             <div className="col-12 col-md-5 d-flex justify-center align-items-center">
               <img
-                src="/assets/images/russia4.jpg"
+                src="/assets/images/Russia4.jpg"
                 alt="Featured papers artwork"
                 style={{
                   maxWidth: "100%",
