@@ -12,10 +12,7 @@ const getImg = (item) =>
 const clamp = (s = "", n = 200) =>
   s.length > n ? s.slice(0, n).trim() + "…" : s;
 const firstSentenceFromHTML = (html = "") => {
-  const text = html
-    .replace(/<[^>]*>/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
+  const text = html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
   const m = text.match(/.*?[.!?](\s|$)/);
   return (m ? m[0] : text) || "";
 };
@@ -32,20 +29,20 @@ export default function BookReviews() {
   const side = items.slice(1, 5); // up to 4
 
   return (
-    <section
-      className="theme-accent"
-      data-armstrong-id="wrapper"
-      id=".home-section-book-review"
-    >
+    <section className="theme-accent" data-armstrong-id="wrapper" id="home-section-book-review">
       <div className="base__main pt-60 pb-40 row">
-        <div className="col-12 m-auto ">
-          <h3 className="font-style-italic c-accent mb-25">Book Reviews</h3>
+        <div className="col-12 m-auto">
+          <h3 className="font-style-italic c-accent mb-10">Book Reviews</h3>
+
+          <h4 className="fs-18 mb-15 fs-md-16" data-armstrong-id="module_subtitle">
+            Thoughts on books I've read recently.
+          </h4>
 
           <div className="row justify-between">
             {/* LEFT: Primary feature */}
             <div className="col-12 col-lg-8">
               <div
-                className="border-bottom border-bottom-thin c-input-border border-0-lg pb-25 mb-25"
+                className="br-card border-bottom border-bottom-thin c-input-border border-0-lg pb-25 mb-25"
                 style={{ position: "relative" }}
               >
                 <Link
@@ -58,6 +55,7 @@ export default function BookReviews() {
                   <img
                     src={getImg(primary)}
                     alt={primary.title}
+                    className="br-thumb"
                     style={{
                       height: 650,
                       width: 400,
@@ -69,6 +67,7 @@ export default function BookReviews() {
                   />
                 </figure>
 
+                {/* TEXT UNDER PRIMARY IMAGE (restored) */}
                 <div
                   className="col-12 col-lg-10"
                   style={{ position: "relative", zIndex: 2, marginTop: 14 }}
@@ -79,6 +78,7 @@ export default function BookReviews() {
                   >
                     <span>{primary.title}</span>
                   </h2>
+
                   <h3
                     className="body-l c-text-secondary"
                     style={{ marginBottom: 10 }}
@@ -86,41 +86,26 @@ export default function BookReviews() {
                     <span>{clamp(getDescription(primary), 220)}</span>
                   </h3>
 
-                  {/* Written by — now LEFT aligned */}
-                  <div
-                    style={{ display: "flex", justifyContent: "flex-start" }}
-                  >
-                    <span
-                      className="body-m"
-                      style={{ color: "var(--c-text-secondary)" }}
-                    >
+                  <div style={{ display: "flex", justifyContent: "flex-start" }}>
+                    <span className="body-m" style={{ color: "var(--c-text-secondary)" }}>
                       Written by{" "}
-                      <i style={{ color: "var(--c-accent)" }}>
-                        {primary.author}
-                      </i>
+                      <i style={{ color: "var(--c-accent)" }}>{primary.author}</i>
                     </span>
                   </div>
 
-      {/*          {/* Continue reading just below with tighter spacing */}
                   <div style={{ marginTop: 8 }}>
                     <span
                       className="arrow-link border-bottom-thin border-bottom lh-22 fs-18"
-                      style={{
-                        color: "var(--c-accent)",
-                        display: "inline-flex",
-                        alignItems: "center",
-                        gap: 6,
-                      }}
+                      style={{ color: "var(--c-accent)", display: "inline-flex", alignItems: "center", gap: 6 }}
                     >
-
-                      {/*this was previously "Read the review"*/}
+                      {/* CTA (optional) */}
                     </span>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* RIGHT: four covers in a 2×2; nudge LEFT column only */}
+            {/* RIGHT: four covers */}
             <div className="col-12 col-lg-4" style={{ marginRight: "auto" }}>
               <div
                 style={{
@@ -134,9 +119,12 @@ export default function BookReviews() {
                 {side.map((b, idx) => (
                   <div
                     key={b.slug || idx}
+                    className="br-card"
                     style={{
-                      transform: `translate(${idx % 2 === 0 ? -200 : -100}px, ${idx >= 2 ? 25 : 15}px)`,
+                      transform: `translate(${idx % 2 === 0 ? -200 : -75}px, ${idx >= 2 ? 65 : 15}px)`,
                       transition: "transform 0.2s",
+                      position: "relative",
+                      zIndex: 3, // above the left overlay while shifted left
                     }}
                   >
                     <Link href={getHref(b)} aria-label={b.title}>
@@ -145,6 +133,7 @@ export default function BookReviews() {
                           src={getImg(b)}
                           alt={b.title}
                           loading="lazy"
+                          className="br-thumb"
                           style={{
                             width: "100%",
                             maxWidth: 220,
@@ -159,16 +148,10 @@ export default function BookReviews() {
 
                     {/* mobile-only text */}
                     <div className="d-lg-none body-s" style={{ marginTop: 8 }}>
-                      <h2
-                        className="body-s"
-                        style={{ marginBottom: 4, textTransform: "none" }}
-                      >
+                      <h2 className="body-s" style={{ marginBottom: 4, textTransform: "none" }}>
                         <Link href={getHref(b)}>{b.title}</Link>
                       </h2>
-                      <p
-                        className="body-s c-text-secondary"
-                        style={{ marginBottom: 6 }}
-                      >
+                      <p className="body-s c-text-secondary" style={{ marginBottom: 6 }}>
                         {clamp(getDescription(b), 100)}
                       </p>
                       <div className="body-s">
@@ -180,7 +163,51 @@ export default function BookReviews() {
               </div>
             </div>
 
-            {/* /RIGHT */}
+            <style jsx>{`
+              /* Shared card thumb styling (works in light & dark) */
+              .br-thumb {
+                box-shadow:
+                  0 12px 32px rgba(0, 0, 0, 0.28),
+                  0 3px 10px rgba(0, 0, 0, 0.18);
+                outline: 1px solid rgba(0, 0, 0, 0.06);
+                border-radius: 8px;
+                transition: transform 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease;
+                will-change: transform;
+                backface-visibility: hidden;
+              }
+              .br-card:hover .br-thumb,
+              .br-card:focus-within .br-thumb {
+                transform: translateY(-3px) scale(1.03);
+                box-shadow:
+                  0 28px 70px rgba(0, 0, 0, 0.45),
+                  0 10px 24px rgba(0, 0, 0, 0.28);
+              }
+              .br-card a:focus-visible .br-thumb {
+                box-shadow:
+                  0 0 0 3px var(--c-accent, #6aa6ff),
+                  0 28px 70px rgba(0, 0, 0, 0.45),
+                  0 10px 24px rgba(0, 0, 0, 0.28);
+              }
+              @media (prefers-color-scheme: dark) {
+                .br-thumb {
+                  box-shadow:
+                    0 16px 42px rgba(0, 0, 0, 0.6),
+                    0 4px 14px rgba(0, 0, 0, 0.45);
+                  outline: 1px solid rgba(255, 255, 255, 0.09);
+                }
+                .br-card:hover .br-thumb,
+                .br-card:focus-within .br-thumb {
+                  box-shadow:
+                    0 36px 90px rgba(0, 0, 0, 0.75),
+                    0 14px 32px rgba(0, 0, 0, 0.55);
+                }
+              }
+              @media (hover: none) and (pointer: coarse) {
+                .br-card:hover .br-thumb {
+                  transform: none;
+                }
+              }
+            `}</style>
           </div>
         </div>
       </div>

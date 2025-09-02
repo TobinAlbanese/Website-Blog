@@ -495,7 +495,7 @@ export default function Navbar() {
                     >
                       <figure>
                         <img
-                          src="https://images.pexels.com/photos/408503/pexels-photo-408503.jpeg"
+                          src="https://images.pexels.com/photos/3938029/pexels-photo-3938029.jpeg"
                           alt="Post 1 cover"
                           loading="lazy"
                           width={160}
@@ -515,7 +515,7 @@ export default function Navbar() {
                     >
                       <figure>
                         <img
-                          src="https://images.unsplash.com/photo-1529070538774-1843cb3265df"
+                          src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"
                           alt="Post 2 cover"
                           loading="lazy"
                           width={160}

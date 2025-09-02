@@ -36,7 +36,6 @@ export default function Footer() {
     "Current-&-In-Progress-Work": "/Portfolio",
     "research-&-analysis-projects": "/Portfolio",
     "computer-science-projects": "/Portfolio",
-    "employers-&-work-experience": "/Portfolio",
     "education-&-certifications": "/Portfolio",
     "featured-projects": "/Portfolio",
     "speaking-&-media": "/Portfolio",
@@ -372,17 +371,6 @@ export default function Footer() {
                   Portfolio Sections
                 </div>
                 <ul className="d-flex flex-column">
-                  <li>
-                    <span
-                      onClick={() =>
-                        handleScrollToSection("employers-&-work-experience")
-                      }
-                      className="site-footer-section-menu__item d-block lh-lg fs-12"
-                      style={{ cursor: "pointer" }}
-                    >
-                      Employers & Work Experience
-                    </span>
-                  </li>
                   <li>
                     <span
                       onClick={() =>

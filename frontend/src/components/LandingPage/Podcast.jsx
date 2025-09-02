@@ -7,10 +7,7 @@ const getItems = () =>
   Array.isArray(PodcastData?.items) ? PodcastData.items : [];
 
 const pickHeroImg = (ep) =>
-  ep?.images?.[0] ||
-  ep?.banner ||
-  ep?.coverImage ||
-  "/assets/images/Podcast.png";
+  ep?.images?.[0] || ep?.banner || ep?.coverImage || "/assets/images/Podcast.png";
 
 const pickLogo = (ep) =>
   ep?.logo || PodcastData?.logo || "/assets/images/Podcast.png";
@@ -26,9 +23,8 @@ const formatDuration = (mins) => {
 };
 
 const getDurationLabel = (ep) => {
-  if (ep?.duration) return String(ep.duration); // e.g. "90 minutes"
-  if (typeof ep?.durationMinutes === "number")
-    return formatDuration(ep.durationMinutes);
+  if (ep?.duration) return String(ep.duration);
+  if (typeof ep?.durationMinutes === "number") return formatDuration(ep.durationMinutes);
   return "";
 };
 
@@ -57,14 +53,13 @@ export default function Podcast() {
         className="row base__main position-relative z-above-base c-text-third"
         data-armstrong-id="primary"
       >
-        <div className="col-12">
-          <div
-            className="row justify-between justify-center"
-            data-armstrong-id="row"
-          >
+        {/* add a touch of top padding so the block isn't glued to the top */}
+        <div className="col-12" style={{ paddingTop: 18 }}>
+
+          <div className="row justify-between justify-center" data-armstrong-id="row">
             {/* ORDER: image LEFT, info RIGHT */}
             <div className="row ml-0 mr-0" data-armstrong-id="grid_1">
-              {/* LEFT: Episode artwork (tall like other sections) */}
+              {/* LEFT: Episode artwork */}
               <div className="col-lg-6 mb-20 mt-md-60 mb-md-60">
                 <Link href={epHref}>
                   <figure style={{ margin: 0 }}>
@@ -78,8 +73,8 @@ export default function Podcast() {
                         marginLeft: "auto",
                         marginRight: "auto",
                         borderRadius: 8,
-                        height: 650, // tall + consistent
-                        width: 400, // vertical aspect
+                        height: 650,
+                        width: 400,
                         objectFit: "cover",
                       }}
                     />
@@ -95,7 +90,7 @@ export default function Podcast() {
                     marginLeft: "auto",
                     paddingRight: 8,
                     textAlign: "center",
-                    transform: "translateX(clamp(0px, 12vw, 220px))", // nudge block further right
+                    transform: "translateX(clamp(0px, 12vw, 220px))",
                   }}
                 >
                   <figure style={{ margin: 0 }}>
@@ -116,21 +111,14 @@ export default function Podcast() {
                     />
                   </figure>
 
-                  <h2
-                    className="heading-l c-text-primary"
-                    style={{ textTransform: "none" }}
-                  >
+                  <h2 className="heading-l c-text-primary" style={{ textTransform: "none" }}>
                     <Link href={epHref}>{title}</Link>
                   </h2>
 
-                  <h3
-                    className="body-l c-text-2third mt-5"
-                    style={{ maxWidth: 680, margin: "6px auto 0" }}
-                  >
+                  <h3 className="body-l c-text-2third mt-5" style={{ maxWidth: 680, margin: "6px auto 0" }}>
                     <Link href={epHref}>{excerpt}</Link>
                   </h3>
 
-                  {/* Faux audio player (links to episode) */}
                   <div className="audio-player d-flex items-center c-border border-thin border-radius js--audio-player mt-60 mx-auto max-445">
                     <div className="audio-player__item pl-10 pr-10 d-flex audio-player__controls">
                       <Link
@@ -138,15 +126,12 @@ export default function Podcast() {
                         className="audio-player__play-button border-radius-full d-flex"
                         aria-label={`Play ${title}`}
                       >
-                        <span className="audio-player__play-icon-label visually-hidden">
-                          Play
-                        </span>
+                        <span className="audio-player__play-icon-label visually-hidden">Play</span>
                         <svg className="play-icon play-pause-icon">
                           <use xlinkHref="#icon-play" />
                         </svg>
                       </Link>
 
-                      {/* Label row with duration right-aligned */}
                       <div
                         className="audio-player__label"
                         style={{
@@ -159,10 +144,7 @@ export default function Podcast() {
                       >
                         <span>Listen to the Episode</span>
                         {durationLabel && (
-                          <span
-                            className="audio-player__duration-label"
-                            style={{ whiteSpace: "nowrap", opacity: 0.85 }}
-                          >
+                          <span className="audio-player__duration-label" style={{ whiteSpace: "nowrap", opacity: 0.85 }}>
                             {durationLabel}
                           </span>
                         )}

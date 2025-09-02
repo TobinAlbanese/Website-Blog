@@ -12,16 +12,172 @@ const PortfolioData = {
         "An advanced AI platform designed to detect and analyze micro-expressions — tiny, fleeting facial movements that often reveal hidden emotions like stress, deception, or confidence. Neural Analysis Of Micro-Intent in real-time micro-expressions → inferred intent.",
       archiveImage: "/assets/images/naomiPortfolio.jpg",
       banner: "/assets/images/naomiBanner.jpg",
+
       content: [
         {
-          text: `<p>Spotlight on NAOMI’s temporal windows, micro-delta features, and calibration—why explainability and human-in-the-loop design matter for real decisions.</p>`,
+          text: `
+      <p><strong>Overview.</strong> NAOMI (Neural Analysis of Micro-Intent) is an advanced behavioral analytics system designed to detect and interpret micro-expressions — subtle, fleeting facial movements that occur in fractions of a second. 
+      These signals, often invisible to casual human observation, can provide important cues about a person’s underlying state such as stress, confidence, or possible deception. 
+      NAOMI processes both live and recorded video, tracking facial landmarks at high frequency, and computing temporal deltas across micro-windows of tens of milliseconds. 
+      The platform translates this into structured, calibrated outputs that can be reviewed by human analysts, making it a powerful augmentation tool in interviews, intelligence gathering, psychology, user research, and training environments.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Why this matters.</strong> Human evaluators are skilled at interpreting broad body language, but the reality is that rapid micro-expressions often occur too quickly for the eye to register, especially under time pressure or distraction. 
+      A subtle twitch of an eyebrow, a half-suppressed smile, or a fleeting tightening around the eyes can carry critical meaning — yet they vanish in less than a quarter of a second. 
+      NAOMI offers analysts a second layer of observation: a consistent, explainable, high-frequency sensor that runs in parallel with human judgment. 
+      Rather than replacing intuition, it strengthens it, ensuring that critical signals are not lost and that evaluators can pause, review, and assess cues in context rather than relying solely on memory or impression.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Objectives.</strong> The design of NAOMI is shaped around four central objectives. 
+      First, it must deliver true real-time performance, with latencies under 40ms per frame so that overlays remain usable in live scenarios. 
+      Second, it must provide explainable outputs — not just black-box classifications, but visible action units, heatmaps, and frame-to-frame deltas that users can understand. 
+      Third, it must demonstrate robustness against environmental factors such as poor lighting, angled faces, or partial occlusions like glasses and masks. 
+      And fourth, it must maintain full auditability and privacy-conscious design, producing exportable traces for later review while never storing or transmitting sensitive footage unnecessarily. 
+      Together, these objectives ensure that NAOMI is not just a research demo, but a deployable and responsible system.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Architecture.</strong> NAOMI uses a modular architecture with both edge and server deployment options. 
+      At the edge — in-browser or on-device — lightweight models run directly on user hardware, ensuring video never leaves the system. 
+      In server deployments, GPU-backed services process streams at scale, enabling batch analytics and long-term archival of inference traces. 
+      The end-to-end flow follows a structured pipeline: capture, preprocessing, landmark detection, temporal feature modeling, intent classification, calibration, and finally reporting. 
+      Each stage is decoupled, meaning models can be swapped or upgraded independently, giving the system long-term adaptability as methods and hardware evolve.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Signal pipeline.</strong> At the heart of NAOMI is its signal-processing chain. 
+      Each incoming frame undergoes face detection and landmark tracking. 
+      These landmarks are compared across micro-windows of 30–80ms, capturing tiny deltas in x/y coordinates that correspond to micro-movements. 
+      Temporal models such as BiLSTMs and Temporal CNNs ingest these sequences, smoothing noise, interpolating across small gaps, and handling jitter or occlusion. 
+      The model outputs intent predictions, which are then calibrated before being surfaced to the analyst. 
+      This pipeline is engineered to balance sensitivity with stability, flagging meaningful signals while suppressing irrelevant motion.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Features.</strong> NAOMI’s outputs go far beyond a single probability score. 
+      Analysts can access normalized 68- or 106-point landmark maps, per-landmark micro-deltas over short windows, localized action unit activations derived from the Facial Action Coding System, and stabilized overlays produced via optical-flow tracking. 
+      Heatmaps highlight regions of the face most associated with detected intent, while frame-level charts show how probabilities rise and fall over time. 
+      These multi-layered features ensure that signals remain interpretable and actionable, rather than being hidden inside an opaque classifier.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Modeling & training.</strong> The NAOMI models are trained through transfer learning on expression recognition corpora, then fine-tuned with domain-specific adaptations. 
+      Datasets are curated with an emphasis on annotation quality: multiple human raters label the same footage, disagreements are adjudicated, and only consensus examples make it into training sets. 
+      Probability calibration methods like Platt scaling and temperature scaling ensure outputs reflect real likelihoods rather than overconfident guesses. 
+      The training process is not just about maximizing accuracy — it is about producing models whose outputs can be trusted in sensitive human-facing contexts.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Data & labeling.</strong> High-quality data underpins NAOMI’s reliability. 
+      The system draws from a combination of public corpora, in-house datasets, and synthetic augmentations that simulate different poses, lighting conditions, and occlusions. 
+      Each dataset is version-controlled with tools like DVC, enabling traceability of labels and models across iterations. 
+      Double-labeling with adjudication ensures inter-rater reliability, reducing noise and bias in the data. 
+      By maintaining meticulous provenance of all training material, NAOMI ensures both reproducibility and accountability in its evolution.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Evaluation.</strong> NAOMI’s performance is validated through comprehensive benchmarks. 
+      On RTX-class GPUs, it achieves frame latencies of 25–38ms, enabling real-time overlays. 
+      On modern laptops running edge deployments, it sustains 12–18fps with acceptable accuracy. 
+      Robustness testing demonstrates reliable performance up to ±15° yaw/pitch rotation before significant drift. 
+      Calibration results show Expected Calibration Error under 0.06 after scaling, meaning probabilities align closely with true likelihoods. 
+      These metrics confirm that NAOMI is not only fast, but also trustworthy across varied conditions.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Interface.</strong> The analyst interface is designed to make complex signals usable in real-world workflows. 
+      In live mode, overlays highlight landmarks, heatmaps, and intent scores directly on the video feed. 
+      Analysts can scrub back through footage, adjust playback speed, and inspect frame-level probability charts. 
+      Batch mode supports uploads of large video sets with automated summary reports. 
+      Adjustable sampling rates let users tune the balance between performance and fidelity. 
+      The goal is not just to present data, but to present it in a way that supports fast comprehension and confident decision-making.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>API.</strong> NAOMI exposes its functionality through a developer-friendly API that delivers structured, machine-readable outputs. 
+      Responses include frame indices, raw landmark coordinates, action unit activations, micro-delta RMS values, calibrated intent scores, and precise timestamps. 
+      This allows integration into larger systems — from training simulators to research dashboards — without requiring analysts to parse visualizations. 
+      By being transparent and consistent, the API ensures NAOMI can plug into diverse ecosystems smoothly.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Deployment.</strong> Flexibility in deployment is a core design feature. 
+      NAOMI can run entirely on-device for privacy-sensitive use cases, leveraging WebAssembly and WebGL for inference in browsers or desktop applications. 
+      In server mode, GPU workers scale elastically via container orchestration, with gRPC/REST endpoints serving multiple clients. 
+      Traces and outputs are stored securely in object storage, while CI/CD pipelines automate build and deployment across environments. 
+      This versatility allows NAOMI to be deployed in secure labs, enterprise servers, or distributed field environments with equal ease.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Security & privacy.</strong> NAOMI was designed with security and privacy as first-class priorities. 
+      Role-based access controls determine who can access data and outputs. 
+      Encryption protects information at rest and in transit, while retention policies allow organizations to automatically expire sensitive records. 
+      Analysts can export anonymized inference traces without exposing raw video. 
+      An on-device-only mode is available for the highest-security environments, ensuring no data ever leaves the analyst’s machine. 
+      This safeguards trust and compliance in contexts where data protection is essential.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Limitations.</strong> Like any AI system, NAOMI has known boundaries. 
+      Extreme occlusions such as masks, scarves, or sunglasses reduce accuracy. 
+      Cultural and individual differences in expression mean thresholds must be tuned carefully for context. 
+      The system is best viewed as an indicator, not a verdict: it surfaces additional cues for human evaluators but is never intended to provide definitive judgments about truth or intent. 
+      Being transparent about these limitations is central to NAOMI’s design and ethical positioning.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Ethics.</strong> Ethical safeguards are embedded into NAOMI’s deployment philosophy. 
+      The system is always human-in-the-loop, requiring explicit consent and documented limits of use. 
+      Error rates are disclosed openly rather than hidden, preventing overconfidence. 
+      Red-team reviews simulate misuse cases — such as coercive interrogation or surveillance overreach — to identify risks and build mitigations. 
+      By prioritizing transparency, consent, and accountability, NAOMI ensures that powerful technology is applied responsibly.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Roadmap.</strong> NAOMI’s future development roadmap extends beyond facial micro-expression analysis. 
+      Planned milestones include multimodal fusion with audio prosody and keystroke dynamics, enabling richer behavioral insights. 
+      Advances in self-supervised pretraining will improve robustness in low-light conditions, while distilled transformer models will bring higher accuracy to lightweight edge deployments. 
+      Collaborative analyst note-taking will generate weak labels that feed back into continual learning pipelines. 
+      These roadmap items point toward NAOMI evolving into a comprehensive, multimodal human-behavior analytics platform.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Stack.</strong> NAOMI is built on a stack of proven technologies and modern ML frameworks. 
+      PyTorch provides the foundation for model training and inference, with ONNX enabling optimized, portable runtime execution. 
+      OpenCV and MediaPipe power real-time video analysis and landmark tracking. 
+      FastAPI and gRPC provide efficient APIs, while React and D3.js render intuitive analyst interfaces. 
+      Deployment pipelines use Docker for containerization and Terraform for infrastructure as code, with CI/CD automating continuous delivery. 
+      This combination makes NAOMI adaptable, developer-friendly, and production-ready.</p>
+    `,
         },
       ],
+
       images: [
         "/assets/images/naomiWhy.jpg",
+        "/assets/images/naomiPillars.jpg",
+        "/assets/images/naomiArchitecture.jpg",
         "/assets/images/naomiPipeline.jpg",
         "/assets/images/naomiFeatures.jpg",
       ],
+
       resources: {
         "Docs & Code": [
           {
@@ -39,6 +195,26 @@ const PortfolioData = {
           { label: "Portfolio Hub", url: "/Portfolio", external: false },
           { label: "About / CV", url: "/About", external: false },
         ],
+        "Research & References": [
+          {
+            label: "ResearchGate",
+            url: "https://www.researchgate.net/profile/Tobin-Albanese",
+            external: true,
+          },
+          {
+            label: "Facial Action Coding System (FACS) — Overview",
+            url: "https://en.wikipedia.org/wiki/Facial_Action_Coding_System",
+            external: true,
+          },
+        ],
+        "Related Work": [
+          {
+            label: "Midnight Bureau (Case Notes)",
+            url: "/MidnightBureau",
+            external: false,
+          },
+          { label: "Home", url: "/", external: false },
+        ],
       },
     },
 
@@ -54,25 +230,128 @@ const PortfolioData = {
       banner: "/assets/images/stellarisBanner.jpg",
       content: [
         {
-          text: `<p>Entity resolution, relation/event extraction, and graph UX choices that keep context and lineage front-and-center.</p>`,
+          text: `
+      <p><strong>Mission.</strong> STELLARIS (Structured Textual Extraction & Linking for Live Analysis of Real-time Intelligence Sources) exists to transform the unstructured noise of the open web into structured, defensible, and actionable intelligence. 
+      The platform continuously ingests massive volumes of text streams — ranging from news articles and government filings to online forums, RSS feeds, and PDF reports — and converts this raw, unstructured material into a living web of linked data. 
+      Analysts are no longer forced to manually sift through documents, guess at connections, or rely on brittle keyword searches; instead, they can follow a clear thread from a single individual to their associated addresses, companies, financial transactions, and cross-border shipments. 
+      Every connection remains anchored in its original source, so context and evidentiary lineage are never lost. The mission is simple but ambitious: empower investigators, researchers, and intelligence professionals to understand complex realities faster, more reliably, and with complete transparency.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>What it does.</strong> At its core, STELLARIS is a pipeline for turning words into structured networks of knowledge. 
+      The system applies advanced natural language processing (NLP) techniques — including named entity recognition, cross-document entity resolution, relation extraction, event detection, and temporal normalization — to every incoming document. 
+      This means the platform doesn’t just identify “who” is mentioned in a text, but also “how” those people or organizations are connected, “what” events they participated in, and “when” those events occurred. 
+      The extracted information is assembled into an interactive knowledge graph where analysts can explore relationships, filter by attributes, overlay geospatial or temporal views, and pivot across different types of entities seamlessly. 
+      Instead of static search results, users receive a living map of connections that evolves as new information flows in, making the invisible visible in real time.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Analyst workflow.</strong> STELLARIS is designed around the way human analysts actually work. 
+      A typical workflow might begin with a single seed — a company, a username, a shipping record, or even a fragment of leaked data. 
+      From this starting point, the analyst can explore first- and second-degree relationships, visualizing how seemingly unrelated entities begin to cluster into meaningful patterns. 
+      They can pin subgraphs of interest, annotate edges with hypotheses or questions, and save customized views that preserve filters, time windows, and notes for future sessions or team sharing. 
+      Every node and edge is annotated with citations, model confidence, and version history, so nothing is ever taken on faith. 
+      This design makes it possible for teams to review, challenge, and reproduce each other’s findings, turning the platform into not just a discovery tool but also a collaborative research environment where insights are defensible and transparent.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Stack.</strong> The technology stack behind STELLARIS combines distributed data engineering with cutting-edge machine learning. 
+      On the ingestion side, distributed workers handle incoming streams with robust backpressure controls, ensuring no single source overwhelms the system. 
+      Message queues balance loads, while FastAPI services orchestrate requests across the pipeline. 
+      Transformer-based NLP models (built on Hugging Face and spaCy) handle tasks like entity recognition, relation extraction, and event detection, producing structured records from messy text. 
+      ElasticSearch powers fast keyword and semantic search, while a graph database (Neo4j or JanusGraph) stores and queries the resulting networks. 
+      On the frontend, a React/Vite application renders graphs at scale with GPU-accelerated layouts, type-ahead entity search, and keyboard-driven pivoting, giving analysts a responsive, interactive workspace even with millions of nodes and edges. 
+      The result is a stack that is both modern and battle-tested, capable of handling real-world data at real-world scale.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Data quality & provenance.</strong> In intelligence analysis, trust is everything. 
+      That is why STELLARIS treats provenance as a first-class concern. 
+      Every edge in the graph is linked back to the exact source from which it was derived — including the document URI, the paragraph offset, the model version that produced it, and the scoring features used in extraction. 
+      Ingestion processes are idempotent, relying on hashing to detect duplicates, while assertions can be re-scored as models improve over time. 
+      Analysts can invoke an “explain-this-edge” action to see the raw snippet, the extraction process, and even model confidence. 
+      Rollbacks are supported at every level, making it possible to test new models, audit old ones, or red-team sensitive cases without corrupting the graph. 
+      This rigorous approach ensures that every claim in the system can be verified, challenged, or disproven — the opposite of a black box.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Scale & reliability.</strong> Real-world OSINT environments are messy and bursty — some days the system must absorb thousands of routine filings, while other days it is hit with floods of breaking news or viral posts. 
+      STELLARIS is engineered to handle both extremes gracefully. 
+      Message queues smooth out ingestion spikes, while batch and streaming modes run in parallel to balance throughput with latency. 
+      Retry policies and dead-letter queues ensure that problematic documents don’t clog the pipeline, while monitoring dashboards track queue depths, error rates, and model latencies in real time. 
+      Nightly compaction tasks merge duplicate entities and refresh indexes to keep queries fast. 
+      Schema migration scripts evolve the graph database without downtime, so analysts never lose access even during upgrades. 
+      The overall design principle is simple: reliability at scale, because analysts can’t afford gaps or outages in the middle of an investigation.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Security & governance.</strong> Because STELLARIS often deals with sensitive or personally identifiable information, governance is embedded into the platform itself. 
+      Fine-grained role-based access controls (RBAC) allow administrators to control who can view, edit, or export specific segments of the graph. 
+      Sensitive attributes can be masked or hidden entirely depending on clearance level, while export bundles are signed with checksums to prevent tampering. 
+      Secrets and credentials are rotated automatically, and all data — both at rest and in transit — is encrypted with modern standards. 
+      Audit logs capture every action, making it possible to review not just what the data says, but who accessed it, when, and how. 
+      This makes STELLARIS suitable not only for open-source research, but also for regulated environments where compliance and accountability are non-negotiable.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Impact.</strong> The practical outcome of all this engineering is measurable acceleration in the way analysts work. 
+      Tasks that once took hours — verifying an alias across multiple reports, surfacing intermediaries in a financial network, or mapping supply chain hops across borders — now take minutes. 
+      Instead of emailing screenshots or exporting static reports, teams can share reproducible graph views that carry all the filters, time windows, and citations baked in. 
+      This reduces duplication of effort, makes peer review far easier, and ensures that insights scale across an organization rather than living in individual silos. 
+      For organizations facing information overload, STELLARIS doesn’t just speed up analysis; it changes the very culture of how intelligence is produced, reviewed, and disseminated.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Roadmap.</strong> STELLARIS is already powerful, but its future is even more ambitious. 
+      Upcoming milestones include cross-lingual models that can normalize entities across languages and scripts, enabling global investigations without linguistic blind spots. 
+      Stance and claim clustering will allow analysts to group related narratives, distinguish between factual reporting and opinion, and identify coordinated campaigns. 
+      Natural-language graph queries will let users type questions like “Show all shell companies linked to X in 2022” and receive structured subgraphs as answers. 
+      Event-sequence anomaly detection will flag unusual chains of activity — like logistics routes that don’t match normal patterns. 
+      Finally, collaborative playbooks will allow teams to codify repeatable workflows as templates, so that common investigative patterns can be reused, audited, and improved over time. 
+      Together, these roadmap items point to a system that doesn’t just document the world, but actively helps analysts stay ahead of it.</p>
+    `,
         },
       ],
+
       images: [
         "/assets/images/stellarisOverview.jpg",
         "/assets/images/stellarisWorkflow.jpg",
         "/assets/images/stellarisStack.jpg",
+        "/assets/images/stellarisQuality.jpg",
+        "/assets/images/stellarisScale.jpg",
       ],
       resources: {
-        "Platform Links": [
+        Sightings: [
           { label: "Project Hub", url: "/Portfolio", external: false },
           { label: "OSINT Overview", url: "/MidnightBureau", external: false },
         ],
-        "Formal Studies": [
+        FormalStudies: [
           {
             label: "Methodology Notes",
             url: "/Notes/OSINT-Methods",
             external: false,
           },
+          {
+            label: "ResearchGate",
+            url: "https://www.researchgate.net/profile/Tobin-Albanese",
+            external: true,
+          },
+        ],
+        PopularCulture: [
+          {
+            label: "GitHub",
+            url: "https://github.com/TobinAlbanese",
+            external: true,
+          },
+          { label: "Home", url: "/", external: false },
         ],
       },
     },
@@ -89,7 +368,40 @@ const PortfolioData = {
       banner: "/assets/images/cosmosEarth.jpg",
       content: [
         {
-          text: `<p>How COSMOS stitches feeds, DW intel, CVEs, and sandbox artifacts into drillable analytics that explain <em>why</em> an alert matters.</p>`,
+          text: `
+      <p><strong>Purpose.</strong> COSMOS consolidates heterogeneous cyber threat data—commercial/open feeds, dark-web chatter, vulnerability disclosures, malware sandboxes, and internal telemetry—into a single operational pane. 
+      By eliminating swivel-chair analysis across tabs and tools, analysts can triage faster, correlate indicators of compromise (IOCs) with real assets, and move from signal to decision with full context. 
+      COSMOS is designed for 24/7 situational awareness: it ingests continuously, normalizes formats, enriches artifacts, and preserves provenance so every alert can be traced back to its source.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Features.</strong> The platform performs multi-feed ingestion with per-source parsing and enrichment, unifies IOCs (hashes, IPs, domains, URLs) into entity-centric views, and monitors the dark web for leaks, targeting chatter, and sale of stolen data. 
+      Vulnerability tracking ties CVEs to your asset inventory and patch posture, prioritizing exploit-in-the-wild and KEV (Known Exploited Vulnerabilities). 
+      Analyst playbooks provide step-by-step checklists, notes, and evidence capture, turning tribal knowledge into repeatable, auditable response workflows.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Analytics.</strong> COSMOS builds behavioral baselines from historical telemetry, then scores anomalies across users, hosts, and network segments. 
+      TTP clustering groups related events by ATT&CK techniques, surfacing campaigns rather than isolated alerts. 
+      Every analytic view is drillable: pivot from a cluster to raw artifacts, sandbox detonation reports, PCAP slices, and original feed entries. 
+      Confidence and severity are explained with contributing features so analysts understand <em>why</em> something is prioritized—not just that it is.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Integrations.</strong> COSMOS connects to SIEM/SOAR platforms via webhooks and REST, opens tickets in incident systems with pre-filled context, and notifies channels (email/ChatOps) with deduplicated alerts. 
+      Role-based access control (RBAC) and workspace isolation support multi-team and multi-tenant operations, while API keys and signed export bundles enable safe sharing with partners. 
+      A plugin model allows new feed connectors, enrichment services, and automations to be added without redeploying the core.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Outcome.</strong> Teams move from feeds to findings quickly, with end-to-end traceability. 
+      COSMOS cuts time-to-triage by centralizing evidence, reduces false positives through correlation and context, and captures institutional knowledge in reusable playbooks. 
+      Every action—ingest, enrich, score, escalate—is logged for audit, enabling after-action reviews that actually improve posture over time.</p>
+    `,
         },
       ],
       images: [
@@ -97,6 +409,7 @@ const PortfolioData = {
         "/assets/images/cosmosHeatmap.jpg",
         "/assets/images/cosmosFeatures.jpg",
       ],
+
       resources: {
         "Platform Links": [
           { label: "Project Hub", url: "/Portfolio", external: false },
@@ -112,6 +425,31 @@ const PortfolioData = {
             url: "/Notes/Threat-Modeling",
             external: false,
           },
+          {
+            label: "ResearchGate Profile",
+            url: "https://www.researchgate.net/profile/Tobin-Albanese",
+            external: true,
+          },
+        ],
+        "Code & Integrations": [
+          {
+            label: "COSMOS GitHub Repo",
+            url: "https://github.com/TobinAlbanese",
+            external: true,
+          },
+          {
+            label: "API Documentation (Coming Soon)",
+            url: "#",
+            external: false,
+          },
+        ],
+        "Reports & Case Studies": [
+          {
+            label: "Midnight Bureau (Case Notes)",
+            url: "/MidnightBureau",
+            external: false,
+          },
+          { label: "Home", url: "/", external: false },
         ],
       },
     },
@@ -128,13 +466,42 @@ const PortfolioData = {
       banner: "/assets/images/vaultBanner.jpg",
       content: [
         {
-          text: `<p>Why VAULT separates cryptography from coordination, and how link keys + versioned audit logs make secure collaboration feel ordinary.</p>`,
+          text: `
+      <p><strong>Project Overview.</strong> VAULT-PROJECT is a zero-knowledge, end-to-end encrypted file and folder manager designed to keep plaintext on the client at all times. Users encrypt locally and synchronize only ciphertext and minimal metadata to the cloud, preserving privacy without sacrificing collaboration. Modern cryptography protects documents at rest and in transit, while straightforward sharing and access controls make it practical for everyday work. The guiding promise is convenience that never compromises user sovereignty over data.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Vision &amp; Goals.</strong> The aim is to make strong security feel ordinary: encryption happens automatically on-device, sync is seamless across desktops and mobiles, and permissions are understandable at a glance. VAULT-PROJECT favors clarity over complexity—clear indicators show what is encrypted and who can decrypt it—while backups and recovery remain encrypted end-to-end so resilience never dilutes privacy. The cross-platform experience is intentionally consistent, so moving between devices does not change the security model.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>What it Provides.</strong> In practical terms, VAULT-PROJECT encrypts files and folders before any upload, syncs ciphertext to cloud object storage, and lets owners share access by exchanging keys instead of exposing content. Version history is preserved without revealing prior plaintext, and every significant action—shares, revocations, and device changes—leaves a signed, tamper-evident trace for audit. The interface keeps the workflow familiar—drag and drop, previews where possible, and clear status badges—so teams can adopt stronger practices without relearning file management from scratch.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Architecture &amp; Tech Stack.</strong> VAULT-PROJECT separates cryptography from coordination. Clients built with Electron (desktop) and React Native (mobile) handle key generation, wrapping, and AES-GCM encryption locally, deriving keys with PBKDF2 or scrypt and never releasing plaintext to servers. Lightweight Node.js services coordinate identities, device enrollment, and sharing graphs, while cloud object storage retains encrypted blobs and version chunks. Key management—generation, rotation, and revocation—remains client-side by design, preserving the zero-knowledge model even when syncing or collaborating.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Typical Use.</strong> Individuals and teams use VAULT-PROJECT to safeguard legal, medical, and financial documents; collaborate privately across locations; and maintain compliant, tamper-evident archives. It suits personal backups as much as shared workspaces, because encryption is the default and sharing simply extends decryption rights to the intended recipients—nothing more.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Getting Started.</strong> Setup involves installing the desktop or mobile client, creating a workspace, and enrolling devices. From there, files dropped into VAULT-PROJECT are encrypted on the spot and synchronized as ciphertext; inviting collaborators issues keys rather than exposing content. Recovery can be configured with encrypted backups and a user-held recovery key so that resilience does not depend on the server knowing anything about the data itself.</p>
+    `,
         },
       ],
       images: [
         "/assets/images/vaultOverview.jpg",
+        "/assets/images/vaultProvider.jpg",
         "/assets/images/vaultArchitecture.jpg",
         "/assets/images/vaultUse.jpg",
+        "/assets/images/vault5.jpg",
       ],
       resources: {
         "Platform Links": [
@@ -142,6 +509,34 @@ const PortfolioData = {
           {
             label: "Security Notes (VAULT)",
             url: "/Notes/Sec",
+            external: false,
+          },
+        ],
+        "Crypto & Methodology": [
+          { label: "Crypto Basics", url: "/Notes/Crypto", external: false },
+          {
+            label: "Threat Modeling Notes",
+            url: "/Notes/Threat-Modeling",
+            external: false,
+          },
+          {
+            label: "ResearchGate Profile",
+            url: "https://www.researchgate.net/profile/Tobin-Albanese",
+            external: true,
+          },
+        ],
+        "Code & SDKs": [
+          {
+            label: "GitHub (VAULT / clients / tooling)",
+            url: "https://github.com/TobinAlbanese",
+            external: true,
+          },
+          { label: "API Schemas (Coming Soon)", url: "#", external: false },
+        ],
+        "Threat Models & Audits": [
+          {
+            label: "Transparency / Audit Log Overview (Coming Soon)",
+            url: "#",
             external: false,
           },
         ],
@@ -160,19 +555,81 @@ const PortfolioData = {
       banner: "/assets/images/notesBanner.jpg",
       content: [
         {
-          text: `<p>How NOTES balances rich editing with zero-knowledge sync, client-side previews, and key-based sharing.</p>`,
+          text: `
+      <p><strong>Project Overview.</strong> NOTES-PROJECT is a privacy-first notes application that treats encryption as a default, not an add-on. Every note, attachment, and index entry is encrypted locally before it ever touches a server, and only the minimum metadata required for sync is transmitted. The experience is intentionally simple—open, type, search, tag—while strong cryptography and careful key handling keep content private to the owner. The result is a familiar note-taking workflow with end-to-end security and zero-knowledge guarantees.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Why.</strong> Capturing ideas should be fast and portable, but it shouldn’t compromise privacy. NOTES-PROJECT aims to make strong security feel invisible: it works offline on a flight or in a dead zone, then safely syncs when a connection returns. Whether the content is a personal journal or sensitive meeting minutes, the system assumes untrusted networks and honest-but-curious servers, so plaintext never leaves the device and decryption keys never reside on the backend.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>How it Works.</strong> Notes live in encrypted notebooks that synchronize across devices using conflict-tolerant data structures (CRDT/OT) so edits from multiple places merge predictably. Client apps handle key generation, wrapping, and encryption on the device; servers store ciphertext blobs and lightweight sync state. When two edits collide, the app preserves intent and offers a clear, local resolution view rather than dropping content or exposing it server-side for reconciliation.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Editing & Organization.</strong> The editor supports rich text, markdown-style shortcuts, attachments, and inline media, with tagging and fast, local-first search. Notes can be grouped into notebooks or filtered across tags and dates. Previews render client-side so no plaintext or thumbnails are generated on the server. Export flows produce encrypted backups by default, with optional client-side decrypt when a readable archive is required.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Privacy & Sharing.</strong> The architecture is zero-knowledge: servers see ciphertext only. When collaboration is needed, owners grant access by sharing keys—either out-of-band or via time-boxed link keys—so recipients decrypt locally and the service never gains read capability. All significant actions—new share, revoked key, device enrollment—are recorded as signed events, creating a tamper-evident activity history that can be reviewed offline.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Extensibility.</strong> NOTES-PROJECT exposes guarded plugin hooks for templates, task extraction, and integrations while maintaining the same trust boundaries: plugins operate on decrypted content within the client sandbox and never transmit plaintext externally without explicit user intent. Over time, the plugin surface will grow to include importers, exporters, and automations that keep the security model intact.</p>
+    `,
+        },
+        {
+          text: `
+      <p><strong>Getting Started.</strong> Install the desktop or mobile client, create a notebook, and enroll your devices. From that moment, keystrokes are encrypted on-device, synchronized as ciphertext, and instantly searchable locally. If you choose to share, the app guides you through key delivery so collaborators can decrypt on their own devices without changing the zero-knowledge posture of the service.</p>
+    `,
         },
       ],
       images: [
         "/assets/images/notesWhy.jpg",
         "/assets/images/notesHow.jpg",
         "/assets/images/notesEdit.jpg",
+        "/assets/images/notesEnigma.jpg",
+        "/assets/images/notesLibrary.jpg",
       ],
       resources: {
         "Platform Links": [
           { label: "Project Hub", url: "/Portfolio", external: false },
           { label: "App UX Notes", url: "/Notes/UX", external: false },
         ],
+        "Sync & Data Structures": [
+          { label: "CRDT Primer", url: "/Notes/CRDT", external: false },
+        ],
+        "Privacy & Methods": [
+          {
+            label: "Zero-Knowledge Design Notes",
+            url: "/Notes/ZeroKnowledge",
+            external: false,
+          },
+          {
+            label: "ResearchGate Profile",
+            url: "https://www.researchgate.net/profile/Tobin-Albanese",
+            external: true,
+          },
+        ],
+        "Code & Integrations": [
+          {
+            label: "GitHub (NOTES-PROJECT)",
+            url: "https://github.com/TobinAlbanese",
+            external: true,
+          },
+          {
+            label: "API / Plugin Hooks (Coming Soon)",
+            url: "#",
+            external: false,
+          },
+        ],
+        Home: [{ label: "Home", url: "/", external: false }],
       },
     },
   ],
@@ -1511,7 +1968,7 @@ const PortfolioData = {
       excerpt:
         "Team DCMS: records, appointments, histories, performance analytics.",
       archiveImage:
-        "https://images.unsplash.com/photo-1609918438269-9a4c5f8fe3a4?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZGVudGlzdHJ5fGVufDB8fDB8fHww",      
+        "https://images.unsplash.com/photo-1609918438269-9a4c5f8fe3a4?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZGVudGlzdHJ5fGVufDB8fDB8fHww",
       clickable: false,
       slug: null,
     },

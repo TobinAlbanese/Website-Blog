@@ -336,7 +336,7 @@ export default function About() {
         /* ---------- Uniform floated images (flush with text) ---------- */
         .float-img {
           width: min(40%, 340px);
-          height: 230px; /* uniform height */
+          height: 510px; /* uniform height */
           object-fit: cover;
           object-position: center;
           border-radius: 12px;

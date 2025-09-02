@@ -93,8 +93,7 @@ export default function FeaturedProjects() {
             className="fs-18 mb-15 mb-25 fs-md-16"
             data-armstrong-id="module_subtitle"
           >
-            Showcase of full-stack builds, web interfaces, and team
-            collaborations that moved from idea to deployment.{" "}
+            From idea to production: apps & UIs.
           </h3>
 
           {/* If no content yet, keep the anchor visible */}
