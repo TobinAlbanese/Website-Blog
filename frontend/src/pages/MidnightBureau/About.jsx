@@ -96,9 +96,10 @@ export default function About() {
                 and international affairs collide, and how real decisions get
                 made when the stakes are high. I’m not here for performative
                 takes; I care about work that helps people see clearly and act
-                smart. Graduating in May of 2026 and I’m aiming next at a master’s
-                in <strong>strategic affairs and international politics</strong>
-                . That’s the ground I plan to work on: sharp analysis, real
+                smart. Graduating in May of 2026 and I’m aiming next at a
+                master’s in{" "}
+                <strong>strategic affairs and international politics</strong>.
+                That’s the ground I plan to work on: sharp analysis, real
                 technical fluency, and disciplined judgment. Building skills to
                 protect and strengthen this country while adapting as the facts
                 change. If you’re wondering where that fire comes from, it
@@ -337,7 +338,7 @@ export default function About() {
         /* ---------- Uniform floated images (flush with text) ---------- */
         .float-img {
           width: min(40%, 340px);
-          height: 230px; /* uniform height */
+          height: 510px; /* uniform height */
           object-fit: cover;
           object-position: center;
           border-radius: 12px;

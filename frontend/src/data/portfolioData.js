@@ -1479,39 +1479,182 @@ const PortfolioData = {
       author: "Tobin M. Albanese",
       date: "2023-11-15",
       excerpt:
-        "Intake, de-duplication, verification, and fusion with source provenance preserved and reproducible workflows at OSINT scale.",
+        "Intake, de-duplication, verification, and fusion with provenance and reproducible workflows—practical OSINT at scale.",
       archiveImage:
         "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      banner: "/assets/images/space.jpg",
+      banner:
+        "https://images.unsplash.com/photo-1618722939571-83a17f96ecac?q=80&w=1812&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       content: [
         {
-          text: "<p>Codifies intake pipelines, de-duplication, and reliability scoring for public-data environments.</p>",
+          text: `
+<p><strong>What this covers.</strong> A practical OSINT pipeline from collection to publication: intake, normalization &amp; de-duplication, enrichment, verification, fusion, and reporting—designed for reproducibility and minimal capture of accidental PII.</p>
+`,
         },
         {
-          text: "<p>Emphasizes reproducibility, audit trails, and minimization of accidental PII capture.</p>",
+          text: `
+<h3><Strong>Principles</Strong></h3>
+<ul>
+  <li><strong>Legality &amp; consent first:</strong> respect terms of service, data-use policies, and local law; collect the minimum necessary.</li>
+  <li><strong>Reproducible by others:</strong> every figure or claim can be regenerated from preserved inputs, config, and code.</li>
+  <li><strong>Provenance preserved:</strong> every artifact carries origin, timestamp, and transformation history.</li>
+  <li><strong>Evidence > opinion:</strong> confidence is scored; uncertainty is explicit.</li>
+</ul>
+`,
+        },
+        {
+          text: `
+<h3><Strong>Pipeline Overview</Strong></h3>
+<p><em>Collect → Normalize → De-dup → Enrich → Verify → Label → Report</em></p>
+<ul>
+  <li><strong>Collect:</strong> public web pages, RSS/Atom feeds, official reports, satellite or weather layers, and reputable open datasets.</li>
+  <li><strong>Normalize:</strong> store raw &amp; normalized copies (UTF-8 text, canonical URLs, stable filenames).</li>
+  <li><strong>De-dup:</strong> detect near-duplicates (shingling + simhash / perceptual hash for images) to reduce noise.</li>
+  <li><strong>Enrich:</strong> extract entities, locations, languages; compute media hashes; pull basic EXIF if present.</li>
+  <li><strong>Verify:</strong> cross-source corroboration, geo/chrono-location, metadata checks, archive lookups.</li>
+  <li><strong>Label &amp; Report:</strong> assign confidence, note contradictions, publish with a methods appendix.</li>
+</ul>
+`,
+        },
+        {
+          text: `
+<h3><Strong>Intake &amp; Normalization</Strong></h3>
+<ul>
+  <li><strong>Watchlists:</strong> seed with official sources and reputable monitoring feeds; prefer feeds over ad-hoc scraping.</li>
+  <li><strong>Archival snapshots:</strong> when citing pages, capture an archive URI alongside the live URL.</li>
+  <li><strong>Canonicalization:</strong> strip tracking params, resolve redirects, and store a stable <code>source_id</code>.</li>
+</ul>
+`,
+        },
+        {
+          text: `
+<h3><Strong>De-duplication</Strong></h3>
+<ul>
+  <li><strong>Text:</strong> tokenize → shingles → simhash/TLSH to cluster near-duplicates; keep the earliest or most complete.</li>
+  <li><strong>Images:</strong> compute perceptual hash (pHash/aHash/dHash) to group re-uploads &amp; crops.</li>
+  <li><strong>URL-level:</strong> canonical URL + content hash to avoid double counting mirrors.</li>
+</ul>
+<p><em>Goal:</em> reduce volume without losing unique claims or first-source material.</p>
+`,
+        },
+        {
+          text: `
+<h3><Strong>Enrichment</Strong></h3>
+<ul>
+  <li><strong>Entities:</strong> persons, orgs, locations with confidence scores and source spans.</li>
+  <li><strong>Geocoding:</strong> resolve place names; store lat/lon with precision and method tags (exact, inferred, admin-centroid).</li>
+  <li><strong>Media metadata:</strong> safe EXIF parsing when available; store hashes and dimensions for dedup/verification.</li>
+  <li><strong>L10n:</strong> language ID &amp; translation notes; keep original text alongside any translation.</li>
+</ul>
+`,
+        },
+        {
+          text: `
+<h3<Strong>Verification &amp; Chrono/Geolocation</Strong></h3>
+<ul>
+  <li><strong>Triangulate:</strong> corroborate claims across independent sources; prefer primary over aggregated posts.</li>
+  <li><strong>Geo:</strong> match skylines, landmarks, signage, terrain, road geometry; confirm with maps/satellite.</li>
+  <li><strong>Chrono:</strong> shadows, weather, tide, traffic, vegetation; look for seasonal cues and construction timelines.</li>
+  <li><strong>Metadata sanity:</strong> EXIF can mislead—treat as <em>clues</em>, not truth; check for editing traces.</li>
+</ul>
+<p>Record the verification <em>method</em> (e.g., “landmark match + satellite layer”) and any counter-evidence considered.</p>
+`,
+        },
+        {
+          text: `
+<h3><Strong>Provenance &amp; Reproducibility</Strong></h3>
+<p>Every artifact gets a manifest entry—hashes, timestamps, and transforms. Example:</p>
+<pre><code>{
+  "id": "src_2023-11-15_00123",
+  "uri_live": "https://example.gov/report.pdf",
+  "uri_archive": "https://web.archive.org/web/20231115/https://example.gov/report.pdf",
+  "sha256": "…",
+  "collected_at": "2023-11-15T13:03:22Z",
+  "transforms": ["pdf→text v1.2", "langid en", "ner v0.9"],
+  "notes": "Official statement; broken link replaced with archived copy"
+}</code></pre>
+<p>Keep raw inputs immutable; version configs; pin library versions; export a <em>methods appendix</em> with the report.</p>
+`,
+        },
+        {
+          text: `
+<h3><Strong>Fusion &amp; Reporting</Strong></h3>
+<ul>
+  <li><strong>Entity resolution:</strong> merge references that are the same real-world thing; keep a cross-reference table.</li>
+  <li><strong>Timelines &amp; maps:</strong> present where/when alongside who/what; show gaps and contradictions.</li>
+  <li><strong>Confidence rubric:</strong> e.g., 0–5 with criteria; justify the score in one sentence per key claim.</li>
+  <li><strong>Risk review:</strong> scrub inadvertent PII; consider source safety before publishing sensitive details.</li>
+</ul>
+`,
+        },
+        {
+          text: `
+<h3><Strong>Operating Safely</Strong></h3>
+<ul>
+  <li>Respect platform terms and legal constraints; prefer official export tools and archives to brittle scraping.</li>
+  <li>Minimize retention of identifiers that aren’t essential to the analytic question.</li>
+  <li>Document ethics choices where they affect what you collected or chose not to publish.</li>
+</ul>
+`,
         },
       ],
-      images: [
-        "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      ],
+      images: [],
       resources: {
-        Sightings: [
+        "Methodology & Tradecraft": [
+          {
+            label: "Bellingcat — How-Tos & OSINT Guides",
+            url: "https://www.bellingcat.com/resources/how-tos/",
+            external: true,
+          },
+          {
+            label: "GIJN — OSINT Resource Guide",
+            url: "https://gijn.org/resource/gijns-osint-resources/",
+            external: true,
+          },
+        ],
+        "Verification & Geolocation": [
+          {
+            label: "Amnesty — Citizen Evidence Lab (verification methods)",
+            url: "https://citizenevidence.org/",
+            external: true,
+          },
+          {
+            label: "InVID/WeVerify — Video Verification Plugin",
+            url: "https://www.invid-project.eu/tools-and-services/invid-verification-plugin/",
+            external: true,
+          },
+          {
+            label: "ExifTool — Read/inspect image metadata",
+            url: "https://exiftool.org/",
+            external: true,
+          },
+        ],
+        "Archiving & Provenance": [
+          {
+            label: "Internet Archive — Wayback Machine",
+            url: "https://web.archive.org/",
+            external: true,
+          },
+        ],
+        "Datasets & Event Feeds": [
+          {
+            label: "GDELT Project — Global media event database",
+            url: "https://www.gdeltproject.org/",
+            external: true,
+          },
+          {
+            label: "ACLED — Armed Conflict Location & Event Data",
+            url: "https://acleddata.com/",
+            external: true,
+          },
+        ],
+        "Project Pages": [
           { label: "Project Hub", url: "/Portfolio", external: false },
           {
             label: "OSINT Notes",
             url: "/Notes/OSINT-Methods",
             external: false,
           },
-        ],
-        FormalStudies: [
           { label: "About / CV", url: "/About", external: false },
-          {
-            label: "ResearchGate",
-            url: "https://www.researchgate.net/profile/Tobin-Albanese",
-            external: true,
-          },
-        ],
-        PopularCulture: [
           {
             label: "GitHub",
             url: "https://github.com/TobinAlbanese",
@@ -1531,16 +1674,137 @@ const PortfolioData = {
       author: "Tobin M. Albanese",
       date: "2023-05-01",
       excerpt:
-        "Operational guardrails for high stakes AI: mission fit, accountability, auditability, and clear lines of responsibility.",
+        "Operational guardrails for high-stakes AI: mission fit, accountability, auditability, and clear lines of responsibility.",
       archiveImage:
         "https://plat.ai/wp-content/uploads/Shutterstock_567338095.jpg.webp",
       banner: "/assets/images/space.jpg",
       content: [
         {
-          text: "<p>Discusses frameworks for deploying high-stakes AI with measurable safeguards.</p>",
+          text: `
+<p><strong>Abstract.</strong> This piece proposes a practical assurance frame for deploying AI in national-security missions. It focuses on mission triage, accountability structures, provenance and audit, red-team practice, and incident response—emphasizing <em>operational priors</em> over lab-only metrics. The throughline is simple: reliability is a system property earned by process, proof, and humility, not a model statistic alone.</p>
+`,
         },
         {
-          text: "<p>Emphasizes accountability, transparency, and the cost of false positives/negatives in operational contexts.</p>",
+          text: `
+<h3>Executive Summary</h3>
+<ul>
+  <li><strong>Mission-first fit:</strong> Only deploy where the <em>cost of error</em> is acceptable and understood.</li>
+  <li><strong>Clear ownership:</strong> A RACI-L matrix prevents ethical diffusion and ensures actionability.</li>
+  <li><strong>Assurance evidence:</strong> Decisions must be backed by test artifacts, logs, and red-team findings.</li>
+  <li><strong>Human authority:</strong> Define HITL/HOTL roles and keep a real kill-switch with pre-rehearsed rollback.</li>
+  <li><strong>Ongoing monitoring:</strong> Shift-aware evaluation and subgroup calibration are non-optional.</li>
+</ul>
+`,
+        },
+        {
+          text: `
+<h3>Context & Problem Framing</h3>
+<p>“High stakes” is not a vibe; it’s a measurable harm model. We map use cases by <em>consequence</em> (strategic, legal, human) and <em>controllability</em> (time to intervene, reversibility). Systems that front-run human judgment or route kinetic effects demand stronger guarantees than advisory analytics. This framing turns abstract ethics into concrete gates.</p>
+`,
+        },
+        {
+          text: `
+<h3>MARA: A Working Frame</h3>
+<ul>
+  <li><strong>Mission:</strong> What decision is supported, who is affected, and what alternative exists without AI?</li>
+  <li><strong>Accountability:</strong> Who is responsible, who is accountable, who is consulted, who is informed—and what is <em>logged</em>?</li>
+  <li><strong>Risk:</strong> What are FP/FN harms at operational base rates? What are adversarial and abuse risks?</li>
+  <li><strong>Assurance:</strong> What evidence shows the system is fit for purpose under shift and stress?</li>
+</ul>
+`,
+        },
+        {
+          text: `
+<h3>Data Governance & Provenance</h3>
+<ul>
+  <li><strong>Lineage manifests:</strong> dataset IDs, hashes, licenses, collection conditions, and exclusions.</li>
+  <li><strong>PII hygiene:</strong> minimization and masking; legal bases documented; retention with TTLs.</li>
+  <li><strong>Documentation:</strong> model cards + <em>system cards</em> describing human workflow and limits.</li>
+</ul>
+<pre><code>{
+  "dataset": "imagery_v5",
+  "hash": "sha256:…",
+  "license": "gov-owned",
+  "pii_controls": ["face_blur"],
+  "exclusions": ["schools", "hospitals"]
+}</code></pre>
+`,
+        },
+        {
+          text: `
+<h3>Development Lifecycle & Gates</h3>
+<ol>
+  <li><strong>Sandbox:</strong> offline evals, ablations, threat modeling.</li>
+  <li><strong>Shadow mode:</strong> compare against human baseline; no operational impact.</li>
+  <li><strong>Limited release:</strong> time-boxed, narrow population, SLOs + rollback rehearsed.</li>
+  <li><strong>Operationalization:</strong> 24/7 on-call, dashboards, post-incident protocol, version pinning.</li>
+</ol>
+`,
+        },
+        {
+          text: `
+<h3>Evaluation Under Operational Priors</h3>
+<p>Confusion matrices are necessary; <em>confusion costs</em> are decisive. We weight FP/FN by mission harm and pick thresholds accordingly. We report <em>reliability curves</em> (calibration) per subgroup and use drift detectors to flag base-rate shifts. The goal is not a single AUC but a portfolio of stress results that survive contact with reality.</p>
+<table>
+  <thead><tr><th>Scenario</th><th>Shift</th><th>Mitigation</th><th>Owner</th></tr></thead>
+  <tbody>
+    <tr><td>Night imagery</td><td>SNR drop</td><td>Threshold raise + HOTL</td><td>Ops lead</td></tr>
+    <tr><td>New sensor</td><td>Domain shift</td><td>Recalibrate + gate to shadow</td><td>Model lead</td></tr>
+    <tr><td>Adversarial spoof</td><td>Distribution spike</td><td>Rule-based block + IR</td><td>Sec engineer</td></tr>
+  </tbody>
+</table>
+`,
+        },
+        {
+          text: `
+<h3>Red-Teaming & Safety Cases</h3>
+<ul>
+  <li><strong>Threats:</strong> data poisoning, prompt/goal injection, sensor spoofing, targeted subgroup failure.</li>
+  <li><strong>Evidence:</strong> attach red-team reports to a <em>safety case</em> dossier with hazard analysis and residual risk acceptance signed by the accountable owner.</li>
+</ul>
+`,
+        },
+        {
+          text: `
+<h3>Runtime Controls & Logging</h3>
+<ul>
+  <li>Full decision trace (<em>input → features → model/version → policy → human action</em>).</li>
+  <li>Override capture with rationale and authority level.</li>
+  <li>Immutable, queryable logs supporting external audit.</li>
+</ul>
+<pre><code>{
+  "ts":"2025-02-10T03:12Z",
+  "model":"recce-v3.2",
+  "ver":"a1b2c3",
+  "score":0.91,
+  "threshold":0.95,
+  "action":"HITL escalate",
+  "override":true,
+  "by":"ops_412",
+  "reason":"low-illumination edge case"
+}</code></pre>
+`,
+        },
+        {
+          text: `
+<h3>Incident Response & Learning</h3>
+<ol>
+  <li>Declare severity; freeze model version; preserve evidence.</li>
+  <li>Root-cause (people, process, tech); assign corrective actions.</li>
+  <li>Update safety case; communicate to oversight; schedule follow-up eval.</li>
+</ol>
+`,
+        },
+        {
+          text: `
+<h3>Policy Notes & Open Questions</h3>
+<ul>
+  <li>Binding the <em>kill-switch</em> to a specific role with audit.</li>
+  <li>How to write <em>sunset clauses</em> for models when mission context changes.</li>
+  <li>Publishing red-team summaries without operational leakage.</li>
+</ul>
+<p><em>Forthcoming ResearchGate preprint link will be added here.</em></p>
+`,
         },
       ],
       images: [
@@ -1551,19 +1815,66 @@ const PortfolioData = {
         "/assets/images/space.jpg",
       ],
       resources: {
-        Sightings: [
-          { label: "Project Hub", url: "/Portfolio", external: false },
-          { label: "Bureau Article", url: "/MidnightBureau", external: false },
-        ],
-        FormalStudies: [
-          { label: "About / CV", url: "/About", external: false },
+        "Government & Defense Guidance": [
           {
-            label: "ResearchGate",
-            url: "https://www.researchgate.net/profile/Tobin-Albanese",
+            label: "DoD — Ethical Principles for AI",
+            url: "https://www.defense.gov/Newsroom/Releases/",
+            external: true,
+          },
+          {
+            label: "DoD — Responsible AI (Strategy & Implementation)",
+            url: "https://www.ai.mil/",
+            external: true,
+          },
+          {
+            label: "White House — AI Bill of Rights (Blueprint)",
+            url: "https://www.whitehouse.gov/ostp/ai-bill-of-rights/",
+            external: true,
+          },
+          {
+            label: "NATO — AI Strategy (public summary)",
+            url: "https://www.nato.int/",
             external: true,
           },
         ],
-        PopularCulture: [
+        "Standards & Assurance": [
+          {
+            label: "NIST — AI Risk Management Framework",
+            url: "https://www.nist.gov/itl/ai-risk-management-framework",
+            external: true,
+          },
+          {
+            label: "ISO/IEC 23894 — AI Risk Management (overview)",
+            url: "https://www.iso.org/standard/77304.html",
+            external: true,
+          },
+          {
+            label: "Model Cards for Model Reporting (paper)",
+            url: "https://arxiv.org/abs/1810.03993",
+            external: true,
+          },
+        ],
+        "Testing, Red-Team & Safety": [
+          {
+            label: "NIST — Adversarial ML & Evaluations (overview)",
+            url: "https://www.nist.gov/itl/iad/mig/adversarial-ml",
+            external: true,
+          },
+          {
+            label: "Google — ML Test Score (practical checks)",
+            url: "https://research.google/pubs/ml-test-score/",
+            external: true,
+          },
+        ],
+        "Project Pages": [
+          { label: "Project Hub", url: "/Portfolio", external: false },
+          { label: "Bureau Article", url: "/MidnightBureau", external: false },
+          { label: "About / CV", url: "/About", external: false },
+          {
+            label: "ResearchGate (profile)",
+            url: "https://www.researchgate.net/profile/Tobin-Albanese",
+            external: true,
+          },
           {
             label: "GitHub",
             url: "https://github.com/TobinAlbanese",
@@ -1585,10 +1896,133 @@ const PortfolioData = {
       banner: "/assets/images/space.jpg",
       content: [
         {
-          text: "<p>Examines inference pipelines that turn behavior into decisions, and the governance needed to bound misuse.</p>",
+          text: `
+<p><strong>Abstract.</strong> Behavioral surveillance transforms ambient signals—movement, clicks, proximity, purchases—into inferences that shape real outcomes. This essay maps the pipeline from collection to consequence, catalogs failure modes, and proposes governance patterns centered on purpose limitation, minimization, transparency, and contestability.</p>
+`,
         },
         {
-          text: "<p>Argues for purpose limitation, data minimization, and independent oversight.</p>",
+          text: `
+<h3>Executive Summary</h3>
+<ul>
+  <li><strong>Pipeline clarity:</strong> collection → linkage → enrichment → inference → action.</li>
+  <li><strong>Primary risks:</strong> purpose creep, chilling effects, disparate error, re-identification via linkage.</li>
+  <li><strong>Guardrails:</strong> tight purpose statements, aggressive minimization, retention TTLs, DP-backed reporting, independent oversight.</li>
+</ul>
+`,
+        },
+        {
+          text: `
+<h3>Taxonomy of Signals & Sources</h3>
+<ul>
+  <li><strong>Device & network:</strong> location pings, Wi-Fi/Bluetooth telemetry, traffic metadata.</li>
+  <li><strong>Platform exhaust:</strong> clickstreams, dwell times, search terms, recommendation traces.</li>
+  <li><strong>Physical sensors:</strong> cameras (counts, not faces), badge swipes, environmental sensors.</li>
+  <li><strong>Commercial brokers:</strong> purchased segments with uncertain provenance—highest re-ID risk.</li>
+</ul>
+<p>Each source carries different consent, accuracy, and linkage properties; conflation is where many harms begin.</p>
+`,
+        },
+        {
+          text: `
+<h3>From Signals to Decisions</h3>
+<ol>
+  <li><strong>Collection:</strong> define lawful basis; exclude sensitive categories by policy and enforcement.</li>
+  <li><strong>Linkage:</strong> join keys, embeddings, or fuzzy matching; quantify re-ID risk explicitly.</li>
+  <li><strong>Enrichment:</strong> derive features; document transformations; avoid proxy discrimination.</li>
+  <li><strong>Inference:</strong> clustering, anomaly detection, propensity, risk scoring—with calibration checks.</li>
+  <li><strong>Action:</strong> interventions, routing, enforcement; ensure due process and human review where rights are implicated.</li>
+</ol>
+`,
+        },
+        {
+          text: `
+<h3>Risk & Civil Liberties</h3>
+<ul>
+  <li><strong>Purpose creep:</strong> secondary uses without renewed consent/authorization.</li>
+  <li><strong>Chilling effects:</strong> measurable behavior changes (assembly, speech) due to perceived surveillance.</li>
+  <li><strong>Disparate error:</strong> uneven FPR/FNR across groups; harms compound with feedback loops.</li>
+  <li><strong>Singling-out & linkability:</strong> individual traceability through dataset joins.</li>
+</ul>
+<blockquote>Guardrails should be built where harm materializes: at linkage, inference, and action—not only at collection.</blockquote>
+`,
+        },
+        {
+          text: `
+<h3>Design Patterns for Guardrails</h3>
+<ul>
+  <li><strong>Purpose limitation:</strong> a binding, testable purpose clause; new purposes require a fresh DPIA.</li>
+  <li><strong>Data minimization:</strong> collect the least precise, lowest granularity signal that still meets mission need.</li>
+  <li><strong>Edge processing:</strong> prefer on-device aggregation; transmit only aggregates or alerts.</li>
+  <li><strong>Privacy-preserving analytics:</strong> differential privacy for reports; secure enclaves or MPC for joins when needed.</li>
+  <li><strong>Separation of duties:</strong> data stewards distinct from policy decision-makers; approvals logged.</li>
+  <li><strong>Retention budgets:</strong> default TTLs with auto-deletion; no indefinite “just in case.”</li>
+  <li><strong>Transparency & contestability:</strong> affected parties can understand, appeal, and correct outcomes.</li>
+</ul>
+<pre><code># policy.yaml (excerpt)
+purpose: "crowd safety analytics"
+forbidden_uses: ["discipline","unrelated_investigations"]
+inputs:
+  - camera_counts       # no identity capture
+  - gate_badges        # hashed, rotated keys
+retention_days: 14
+aggregation: { grid: "500m", interval: "15m" }
+privacy_reporting: { dp_epsilon_monthly: 2.0 }
+</code></pre>
+`,
+        },
+        {
+          text: `
+<h3>Evaluation, Fairness, and Shift</h3>
+<ul>
+  <li><strong>Operating point rationale:</strong> choose thresholds using <em>harm-weighted</em> error costs.</li>
+  <li><strong>Calibration:</strong> reliability diagrams per subgroup; apply post-hoc fixes if necessary.</li>
+  <li><strong>Shift tests:</strong> base-rate drift, seasonality, covariate shift; pre-commit adaptation rules.</li>
+  <li><strong>Privacy attacks:</strong> test for membership inference and linkage leakage.</li>
+</ul>
+`,
+        },
+        {
+          text: `
+<h3>Oversight & Accountability</h3>
+<ol>
+  <li><strong>DPIA:</strong> assess necessity, proportionality, safeguards, residual risk, and alternatives.</li>
+  <li><strong>Independent review:</strong> periodic external audits; publish summaries.</li>
+  <li><strong>Transparency reports:</strong> usage counts, overrides, complaints, policy changes.</li>
+  <li><strong>Appeals:</strong> documented path for individuals to challenge outcomes.</li>
+</ol>
+`,
+        },
+        {
+          text: `
+<h3>Case Sketches (Anonymized)</h3>
+<ul>
+  <li><em>Transit surge sensing:</em> counts improved staffing but required coarse grids and strict TTLs to avoid tracking.</li>
+  <li><em>Campus anomaly alerts:</em> initial false positives clustered in under-lit areas; calibration + signage reduced harm.</li>
+</ul>
+`,
+        },
+        {
+          text: `
+<h3>Research Agenda</h3>
+<ul>
+  <li>Operational measures of <em>chill</em> and practical thresholds for intervention.</li>
+  <li>Shift-robust calibration that honors retention limits.</li>
+  <li>Public audit formats that preserve privacy while delivering accountability.</li>
+</ul>
+<p><em>Forthcoming ResearchGate preprint link will be added here.</em></p>
+`,
+        },
+        {
+          text: `
+<h3>Implementation Checklist</h3>
+<ul>
+  <li>Purpose statement and forbidden uses approved.</li>
+  <li>Minimization & aggregation documented; DPIA completed.</li>
+  <li>Subgroup calibration verified; thresholds justified.</li>
+  <li>Retention TTLs enforced; transparency report cadence set.</li>
+  <li>Appeals workflow staffed; audit log schema deployed.</li>
+</ul>
+`,
         },
       ],
       images: [
@@ -1599,19 +2033,49 @@ const PortfolioData = {
         "/assets/images/space.jpg",
       ],
       resources: {
-        Sightings: [
-          { label: "Project Hub", url: "/Portfolio", external: false },
-          { label: "Bureau Article", url: "/MidnightBureau", external: false },
-        ],
-        FormalStudies: [
-          { label: "About / CV", url: "/About", external: false },
+        "Civil Liberties & Law": [
           {
-            label: "ResearchGate",
-            url: "https://www.researchgate.net/profile/Tobin-Albanese",
+            label: "ACLU — Surveillance & Privacy (overview)",
+            url: "https://www.aclu.org/issues/privacy-technology/surveillance-technologies",
+            external: true,
+          },
+          {
+            label: "EFF — Surveillance (guides & cases)",
+            url: "https://www.eff.org/issues/surveillance",
+            external: true,
+          },
+          {
+            label: "UK ICO — DPIA Guidance",
+            url: "https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/data-protection-impact-assessments-dpias/",
             external: true,
           },
         ],
-        PopularCulture: [
+        "Technical & Governance References": [
+          {
+            label: "NIST — Privacy Engineering (overview)",
+            url: "https://www.nist.gov/privacy-engineering",
+            external: true,
+          },
+          {
+            label: "Differential Privacy — Primer (PDF)",
+            url: "https://www.apple.com/privacy/docs/Differential_Privacy_Overview.pdf",
+            external: true,
+          },
+          {
+            label: "AI Now — Surveillance Reports",
+            url: "https://ainowinstitute.org/reports.html",
+            external: true,
+          },
+        ],
+        "Project Pages": [
+          { label: "Project Hub", url: "/Portfolio", external: false },
+          { label: "Bureau Article", url: "/MidnightBureau", external: false },
+          { label: "About / CV", url: "/About", external: false },
+          {
+            label: "ResearchGate (profile)",
+            url: "https://www.researchgate.net/profile/Tobin-Albanese",
+            external: true,
+          },
           {
             label: "GitHub",
             url: "https://github.com/TobinAlbanese",
@@ -1622,7 +2086,6 @@ const PortfolioData = {
       },
     },
   ],
-
   "Current & In-Progress Work": [
     {
       volume: "PORTFOLIO — IN PROGRESS",

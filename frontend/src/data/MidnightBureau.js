@@ -12,7 +12,7 @@ const MidnightBureauData = {
       archiveImage:
         "https://images.pexels.com/photos/408503/pexels-photo-408503.jpeg",
       banner:
-        "https://images.pexels.com/photos/1481998/pexels-photo-1481998.jpeg",
+        "https://images.unsplash.com/photo-1601313775089-fb9ca283c04b?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGhlemJvbGxhaHxlbnwwfHwwfHx8MA%3D%3D",
 
       content: [
         {
@@ -49,12 +49,11 @@ const MidnightBureauData = {
       ],
 
       images: [
-        "https://images.pexels.com/photos/408503/pexels-photo-408503.jpeg", // quadcopter/drone against sky
-        "https://images.pexels.com/photos/951336/pexels-photo-951336.jpeg", // barbed wire close-up
-        "https://images.pexels.com/photos/408503/pexels-photo-408503.jpeg", // map with pins / planning desk
-        "https://images.pexels.com/photos/6377835/pexels-photo-6377835.jpeg", // satellite dish / comms
-        "https://images.pexels.com/photos/6150604/pexels-photo-6150604.jpeg", // protest crowd (neutral, editorial-feel)
-        "https://images.pexels.com/photos/3938029/pexels-photo-3938029.jpeg", // radio tower / signals at dusk
+        "https://plus.unsplash.com/premium_photo-1697729976900-1089e894f05b?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8aXNyYWVsfGVufDB8fDB8fHww",
+        "https://images.unsplash.com/photo-1520194214988-89bd9c3d3780?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8bGViYW5vbnxlbnwwfHwwfHx8MA%3D%3D",
+        "https://images.unsplash.com/photo-1660853539131-65c5db684b9e?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHR1cmtpeWV8ZW58MHx8MHx8fDA%3D",
+        "https://images.unsplash.com/photo-1704477263453-bd124e991e1b?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZGlwbG9tYWN5fGVufDB8fDB8fHww",
+        "https://images.unsplash.com/photo-1609987415571-5da58a25a024?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGRjfGVufDB8fDB8fHww",
       ],
 
       resources: {
@@ -150,8 +149,10 @@ const MidnightBureauData = {
       date: "2025-07-18",
       excerpt:
         "A college reporter’s field guide to a grinding war: history, steel-manned arguments on both sides, U.S. stakes, and what off-ramps could actually look like.",
-      archiveImage: "https://images.unsplash.com/photo-1529070538774-1843cb3265df",
-      banner: "https://images.unsplash.com/photo-1529070538774-1843cb3265df",
+      archiveImage:
+        "https://images.unsplash.com/photo-1534598974068-2d51eda7628f?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      banner:
+        "https://images.unsplash.com/photo-1491736525576-4954bf3e3187?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fHJ1c3NpYXxlbnwwfHwwfHx8MA%3D%3D",
 
       content: [
         {
@@ -159,69 +160,99 @@ const MidnightBureauData = {
         },
 
         {
-          text: `<p><strong>Dateline, campus library.</strong> I’m writing this as a student with two tabs open—one a battlefield map that refreshes more often than my class schedule, the other a reading list that insists history is a crowded room, not a hallway. The Ukraine–Russia war is easier to sloganize than to understand because it carries the weight of older arguments—empires, languages, borders, spheres of influence—while colliding with newer realities—drones, sanctions, energy markets, alliance credibility, and the industrial math of shells per day. To even say when the war “started” is a choice: set the clock in 2022 and you get a clean story of interstate aggression; set it in 2014 and you center Crimea, Donbas, and the Minsk frameworks that froze a conflict that wouldn’t stay frozen; push it back to the 1990s and you’re arguing about NATO’s expansion, Russia’s strategic anxieties, and the post–Cold War settlement that never quite settled. For modern Ukraine, the scaffolding begins with the 1991 independence referendum and the 1994 Budapest Memorandum—Kyiv traded the world’s third-largest nuclear stockpile for assurances that borders mean something. After the Orange Revolution (2004) and the Maidan movement (2013–14), identity consolidated around a civic idea: Ukraine would lean West by choice, not by permission. In 2014 Russia annexed Crimea under arms and kindled a war in Donbas; in 2022 it tried to finish the job. That escalation didn’t just redraw a front line; it reordered Europe’s energy flows, defense budgets, and assumptions about what the twenty-first century would allow.</p>`,
+          text: `<p><strong>Dateline, campus library.</strong> I’m writing this as a 21-year-old with two tabs open—one a live map that refreshes more often than my class schedule, the other a stack of books reminding me that wars are never just a single year’s problem. The Russia–Ukraine war is tempting to turn into a slogan; the hard part is resisting that and actually reading it: older arguments about empires, languages, borders, and spheres of influence colliding with newer realities like drones, sanctions, energy markets, alliance credibility, and the industrial math of “shells per day.” Even deciding when the war “started” is a choice that reveals your priors. Set the clock to 2022 and you get a clean story of interstate aggression; set it to 2014 and you center the annexation of Crimea, the Donbas fight, and the Minsk process; push it back to the 1990s and you’re arguing about NATO enlargement, Russia’s strategic anxieties, and a post-Cold War settlement that never fully settled. For modern Ukraine, the scaffolding begins with the 1991 independence referendum and the 1994 Budapest Memorandum: Kyiv gave up the world’s third-largest nuclear stockpile in exchange for assurances that borders and sovereignty would be respected. After the Orange Revolution (2004) and the Maidan movement (2013–14), identity consolidated around a civic idea: Ukraine would lean West by choice, not by permission. In 2014 Russia annexed Crimea under arms and helped ignite the Donbas war; in 2022 it tried to finish the job. That escalation didn’t just redraw a front line; it reordered Europe’s energy flows, defense budgets, and assumptions about what the twenty-first century would allow.</p>`,
         },
 
         {
-          text: `<p><strong>Russia’s strongest case—and where it runs aground.</strong> If you steel-man Moscow’s argument, you start with the security dilemma: NATO, a military alliance built to deter the USSR, expanded toward Russia’s borders, ignoring what Kremlin elites claim were informal understandings from the 1990s; for a state with bitter memories of invasion from the West, strategic depth is not an academic concept. That logic wraps around protection claims—Crimea as “always Russian,” Donbas as “Russophone and endangered”—and a great-power premise that big states have spheres whether lawyers like it or not. A neutral, non-aligned Ukraine, in this telling, would have stabilized the frontier. What gives this case traction isn’t legality; it’s the emotional fluency of fear and the realist grammar of power. The counter-case answers in layered terms: sovereign consent is not encirclement; “spheres” are tradition, not law; Crimea’s referendum followed an armed occupation and cannot launder the act that created it; the Donbas war was incubated by Russian support, and “protection” blurred quickly into “pretext.” Most importantly, the Budapest swap—nukes for assurances—wasn’t a poetic metaphor; it was a concrete bargain. Violating it doesn’t just injure Ukraine; it also teaches smaller states that disarmament is for suckers. Even if you grant Moscow’s fear as sincere, fear does not legalize the invasion of a neighbor, filtration and deportation practices, or the routinized targeting of civilian infrastructure. Defensive language does not transform revisionist aims into self-defense.</p>`,
+          text: `<Strong>“When did this begin?” depends on what you’re trying to explain</strong>
+<p>If you’re explaining legal posture, you lead with February 2022: a full-scale invasion condemned by most of the world, territorial integrity shattered, and UN votes isolating Moscow. If you’re explaining political sequence, you lead with 2014: the annexation of Crimea, the self-proclaimed “people’s republics” in Donetsk and Luhansk, and the Minsk I/II agreements that reduced but never ended the shooting. If you’re explaining strategic mistrust, you begin in the 1990s: NATO growing eastward, Russian elites warning about encirclement, and Western capitals arguing that sovereign states choose their alliances. If you’re explaining identity, you zoom out centuries and immediately get lost in contested memories—Kyivan Rus’, imperial Russification, the Holodomor, WWII, and Soviet collapse. None of these clocks are wrong; they’re just measuring different things.</p>`,
         },
 
         {
-          text: `<p><strong>Ukraine’s strongest case—and its honest constraints.</strong> Steel-man Kyiv and you get a clean civic claim: self-determination backed by repeated popular mandates, a defensive war against an existential threat, and an orientation toward Europe chosen at the ballot box, not imposed at gunpoint. Aid and arms are not charity but deterrence maintenance—if borders can be moved by force here, they can be moved elsewhere. Ukrainian identity is multilingual and plural; the invasion killed and displaced the very communities Moscow claims to shield. Still, honest analysis admits constraints that aren’t moral but material: escalation risks from deep interdiction, the drag of wartime centralization on post-war governance, the brutality of industrial warfare where drone iterations and EW cat-and-mouse can erase months of doctrine in days, and the coalition problem—can partners sustain interceptors, artillery tubes, and budgets across election cycles and recessions? Kyiv’s best argument is not utopian; it’s procedural: hold the line, keep the state functional, protect cities, make occupation costly, and convert sympathy into steel and software at a pace that outruns Russian adaptation.</p>`,
+          text: `<Strong>Steel-manning Moscow</strong>
+<p>If you build Russia’s best case, you start with the security dilemma: an alliance created to deter the USSR expanded toward Russia’s borders; for a state repeatedly invaded from the West, strategic depth isn’t a seminar concept. That logic wraps around protection claims—Crimea as “always Russian,” Donbas as “Russophone and endangered”—and a great-power premise that spheres of influence exist whether lawyers like it or not. A neutral, non-aligned Ukraine, in this telling, would have stabilized the frontier and avoided an escalatory spiral. There’s also a global-order gripe: Western interventions elsewhere are cited as proof that rules are pliable when big players want something. This case has emotional traction inside Russia because it translates fear into policy and frames the war as preemption rather than revision.</p>
+<p>But it runs aground on sovereignty and conduct. “Spheres” are tradition, not law. Consent is not encirclement. Crimea’s “referendum” occurred after an armed takeover. The Donbas war did not self-ignite; outside support helped it burn. Most of all, the Budapest trade—nuclear disarmament for security assurances—was not poetry; it was a bargain. Violating it doesn’t only injure Ukraine; it also tells smaller states that disarmament is for suckers. Even if you grant Moscow’s fear as sincere, fear does not legalize invading a neighbor, deportations, filtration practices, or routine strikes on civilian power infrastructure. Defensive language doesn’t convert revisionist aims into self-defense.</p>`,
         },
 
         {
-          text: `<p><strong>Material reality beats rhetoric.</strong> Fronts rise and fall on ratios: shells fired versus shells produced; drones built versus drones jammed; glide bombs dropped versus air defenses replenished; trench density versus rotation schedules; the cadence of repair crews versus the tempo of strikes. When FPV swarms make precision cheap, doctrine must adapt or bleed. When Patriot and IRIS-T stocks lag, the cost is counted at night in apartment stairwells. When mobilization politics harden, brigades feel it at the line. This is why “time” is strategic: weeks lost to procurement fights or factory tooling translate into kilometers surrendered and kilowatts missing from city grids. It’s also why oversight is not the enemy of urgency. Transparent ledgers, serial numbers, and delivery timelines are the price of keeping democratic coalitions intact for the kind of long, boring work that actually moves war’s arithmetic.</p>`,
+          text: `<Strong>Steel-manning Kyiv</strong>
+<p>Build Ukraine’s best case and you get a fairly clean civic claim: self-determination backed by repeated mandates at the ballot box, a defensive war against an existential threat, and a public choice to orient toward Europe. Aid and arms are framed not as charity but as deterrence maintenance—if borders can be moved by force here, they can be moved elsewhere. Ukrainian identity is multilingual and plural; the invasion killed, displaced, or radicalized the very communities Moscow claims to shield.</p>
+<p>Honesty also means naming constraints that are material, not moral. There’s escalation risk when long-range strikes hit deep. There’s the drag that wartime centralization puts on post-war governance. There’s the brutality of industrial warfare where rapidly iterating drones and electronic warfare can erase months of doctrine in days. And there’s the coalition problem: can partners sustain interceptors, shells, and budgets across election cycles and recessions? Kyiv’s best operational theory isn’t utopian; it’s procedural: hold the line; keep cities powered and the state functional; make occupation costly; convert sympathy into steel, silicon, and software at a tempo that outpaces Russian adaptation.</p>`,
         },
 
         {
-          text: `<p><strong>Where the United States fits (and a nuanced Republican lens).</strong> Strip away slogans and you get a narrow, durable case for U.S. interest: preventing conquest in Europe preserves alliance credibility at a cost far lower than fighting to restore it later; degrading a revanchist military without deploying U.S. brigades is the definition of cost-effective forward defense; and signaling that borders can’t be redrawn by invasion dampens copycat temptations in other theaters. A serious conservative posture doesn’t live at the extremes. On one hand, Reaganite hawks argue that arming Ukraine imposes cheap costs on aggression and keeps the fight outside NATO; on the other, America-First skeptics demand hard oversight, robust European burden-sharing, linkage to border security at home, and a pivot of industrial capacity toward the Indo-Pacific. A grown-up Republican synthesis looks like this: support with audits; tranches tied to measurable effects (cities defended, grids hardened, lines stabilized); Europe locked into multi-year production by law, not sentiment; and diplomacy with leverage rather than vibes. Hawkish on deterrence, frugal on exposure. Values inform it, but interests set the guardrails.</p>`,
+          text: `<Strong>2014 to 2022: the bridge years that still structure the debate</strong>
+<p>Euromaidan was a fight about direction: association with the EU versus a turn toward Moscow. The aftermath hardened identities. Crimea’s annexation created a legal cliff and a military fait accompli. The Donbas conflict became a grinder with sporadic escalations and frozen-conflict fatigue. Minsk I and II lowered the temperature but never solved the dispute: Ukraine read them as a path back to sovereignty; Russia read them as a tool to federalize Ukraine and veto Kyiv’s strategic choices. When the full invasion came in 2022, it arrived wearing the language of “protection,” “denazification,” and “demilitarization,” but the strategic goal looked like regime change or forced capitulation. Resistance in Kyiv and the north upset that plan; the war pivoted east and south, toward artillery duels, glide bombs, drones, and logistics math.</p>`,
         },
 
         {
-          text: `<p><strong>Endgames live between absolutes.</strong> Public rhetoric sells two poles: total Russian withdrawal with tribunals on one side; acceptance of new borders and a sullen peace on the other. Policy almost always occupies the unhappy middle: sequenced, babysat arrangements that good people dislike for opposite reasons. Imagine a cease-fire line monitored with real sensors and third-party verification; phased withdrawals coupled to calibrated sanctions relief; special regimes for disputed districts on long timelines; security assurances short of formal alliance but strong enough to shape behavior; reconstruction funds gated by compliance; documented returns of deported civilians; prisoner exchanges that don’t vanish into press conferences. None of this delivers moral closure. But it is how ugly wars usually stop: with architectures that reduce daily death while preserving the evidentiary chain for justice later. “No peace without justice” meets “no justice without peace,” and responsible states try to bank enough peace to keep the books open for justice instead of burning them.</p>`,
+          text: `<Strong>Material reality beats rhetoric</strong>
+<p>Fronts rise and fall on ratios: shells fired versus shells produced; drones built versus drones jammed; glide bombs dropped versus air defenses replenished; trench density versus rotation schedules; the cadence of repair crews versus the tempo of strikes. When FPV swarms make precision cheap, doctrine bleeds until it adapts. When Patriot, IRIS-T, or SAMP/T stocks lag, the cost is counted at night in apartment stairwells. When mobilization policies harden or wobble, brigades feel it immediately. That’s why “time” is strategic: weeks lost to procurement fights or factory tooling translate into kilometers surrendered and kilowatts missing from a city grid. It’s also why oversight isn’t the enemy of urgency. Serial numbers, delivery ledgers, and live dashboards are the price of keeping democratic coalitions intact for the sort of long, boring work that actually changes outcomes.</p>`,
         },
 
         {
-          text: `<p><strong>Ripple effects: energy, food, and the non-aligned eye test.</strong> A Europe-centered war does not stay in Europe. Grain corridors, fertilizer logistics, and maritime insurance premiums show up in food prices from Lagos to Lahore; whispers about pipeline sabotage move markets; sanctions compliance taxes the Global South in ways Western speeches often underrate. Many states hedge not from malice but memory: they’ve watched rules bent by great powers before. That’s another reason for documented restraint and transparent aims—hypocrisy is a luxury good, and fewer capitals can afford to buy it from us than we think.</p>`,
+          text: `<Strong>As of September 2025: a grinding war shaped by drones, EW, and production</strong>
+<p>By the fall of 2025, the front is less a single line than a thick belt of attrition that shifts by villages, not provinces. Russia leans on massed glide bombs, artillery, and a war economy that has reoriented industry toward munitions; Ukraine leans on air defenses, precision strikes, and a rapidly innovating but resource-strained drone ecosystem. Electronic warfare is the cat-and-mouse that underwrites everything—jam, adapt, re-route, repeat. Both sides have learned to harden logistics, disperse depots, and rotate units under constant surveillance. Europe has moved from speeches to factories, but throughput is still catching up to demand curves. The United States remains pivotal on high-end air defense and ISR; European commitments are more durable than early skeptics predicted but still uneven across capitals. In numbers, the picture is grim: civilian harm remains a constant, refugees and IDPs are still measured in millions, and recovery costs keep compounding. It’s not “frozen,” but it is stuck enough that politics keeps looking for off-ramps.</p>`,
         },
 
         {
-          text: `<p><strong>Information war: how not to become someone else’s logistics train.</strong> Claims and clips travel faster than verification. Treat every viral video, casualty figure, and intercepted call like a lab result awaiting replication: note the original source, date, and cut; separate confirmed from probable from unknown; leave margin for revision. That’s not performative “both-sidesism.” It’s disciplined humility in fog. The civic skill here is corrigibility: change your mind in public when the evidence forces you, and say so without flinching.</p>`,
+          text: `<Strong>“Could this have ended early?” Istanbul, then and now</strong>
+<p>There’s a bitter argument that the deals being discussed today rhyme with what was on the table in spring 2022: neutrality frameworks, security guarantees, phased withdrawals, special regimes for disputed territories, and long timelines for status questions. In the Istanbul talks of March–April 2022, drafts reportedly explored permanent neutrality for Ukraine with robust security guarantees; some proposals punted the question of Crimea’s status to a later period, and discussions touched on Russian withdrawals in exchange for guarantees. Those drafts were never ratified and were overtaken by battlefield events and atrocities that hardened positions. Fast-forward to 2024–2025 and you see offers and trial balloons about ceasefires along current lines, freezes supervised by monitors, and “security assurances” short of NATO’s Article 5. They are not identical to 2022—too much blood and occupation has passed for that—but the family resemblance is there: territorially ambiguous pauses backed by paperwork and third-party guarantors. Whether that’s prudent realism or moral hazard depends on the weight you assign to sovereignty, deterrence, and the value of stopping death now versus litigating justice later.</p>`,
         },
 
         {
-          text: `<p><strong>If I were advising from a campus desk (humbly).</strong> Define aims in actionable increments—protect city X with interceptors Y by month Z; harden substation clusters against winter; restore brigade rotation cadence to N days. Publish live oversight dashboards for aid and procurement. Push Europe to lock multi-year shell and air-defense production by statute, not communiqué. Pilot verification tech for any cease-fire architecture now, so proposals have mechanics, not adjectives. Keep crisis hotlines open to cap escalation risk. Don’t promise what can’t be delivered; deliver what’s promised on time. And explain to voters, in sentences without acronyms, why patience is not apathy but the thing that keeps wars rarer.</p>`,
+          text: `<Strong>How the war changed both countries</Strong>
+<p><strong>Ukraine.</strong> The war accelerated a civic nation that had been forming for decades. Language politics softened as Russian-speaking Ukrainians bled for a Ukrainian future. Institutions learned to operate under fire: digital services stayed up, education went hybrid, conscription politics got louder, and civil society built parallel logistics when the state was stretched. War centralizes; the danger is that emergency shortcuts become habits. The opportunity is that a generation learned hard skills in power resilience, trauma care, repair logistics, and local governance. The bill is enormous: lives, infrastructure, and the steady loss of a cohort abroad that may not return quickly. Reconstruction planning is no longer an afterthought; it’s a second front.</p>
+<p><strong>Russia.</strong> The state tightened, the economy militarized, and the war became normal in daily life even as censorship and risk concentrated at the center. Sanctions didn’t collapse the economy; they re-routed it, raising costs and pushing industry into import substitution and shadow logistics. Military losses created churn; prison recruiting and financial incentives filled gaps; regional inequalities deepened. The Kremlin’s narrative fused historical grievance with present-tense survival: the West wants to break us, so we must bear this. That story works—until it doesn’t. A war economy can grow fast on paper and still be brittle; the social costs come later.</p>`,
         },
 
         {
-          text: `<p><strong>Devil’s-advocate stress test.</strong> Maybe deterrence is already achieved and more arms simply prolong suffering. Maybe Russia’s war economy can outlast Western attention spans. Maybe a frozen conflict is the worst of both worlds: no justice, no peace, just militarized poverty at the edge of Europe. Or maybe apparent stasis hides fragility and the system will break suddenly, for good or ill. The point of rehearsing these possibilities isn’t to paralyze judgment; it’s to make sure what survives is analysis, not posture. If your view can’t withstand the strongest argument against it, it isn’t ready for policy.</p>`,
+          text: `<Strong>Energy, food, and the non-aligned eye test</Strong>
+<p>War in Europe refuses to stay in Europe. Grain corridors, fertilizer logistics, maritime insurance, and sanctions ripples show up in food prices from Lagos to Lahore. The Black Sea grain deal died and was replaced by risk-managed alternatives; Danube and overland routes have kept volumes moving, just with higher friction. Energy re-routing—pipeline whispers, LNG contracts, price caps—turned into a new normal rather than a temporary fix. Many states hedge not from malice but memory; they’ve watched great powers bend rules before. That’s another argument for documented restraint and transparent aims: hypocrisy is a luxury good, and fewer capitals can afford to buy it from us than we think.</p>`,
         },
 
         {
-          text: `<p><strong>What I’ll watch next.</strong> Ammunition and interceptor throughput (industry over speeches); mobilization politics in both countries; the sprint-counter-sprint between drones and electronic warfare; any cease-fire proposal with verifiable mechanics rather than adjectives; European fiscal votes that convert sympathy into factories and delivery schedules; and whether the U.S. can keep a stance that is hawkish on deterrence and frugal on exposure—the overlap where a lot of citizens, including many Republicans, actually live. Wars end when someone loses clearly or when enough leaders decide losing more is worse than compromising now. Between those poles is the art of politics: imperfect, incremental, human. From a dorm room a continent away, the task is to read closely, argue in good faith, and remember that maps don’t show who is cold, hungry, or missing. Good analysis should bend policy toward mercy at the margins. Sometimes those margins are all we get, and they still matter.</p>`,
+          text: `<Strong>Information war, or: how not to become someone else’s logistics train</Strong>
+<p>Claims travel faster than verification. Treat every viral video, casualty figure, and intercepted call like a lab result awaiting replication: note the origin, date, and cut; separate confirmed from probable from unknown; leave margin for revision. That’s not performative “both-sidesism.” It’s disciplined humility in fog. The civic skill here is corrigibility: change your mind in public when forced by evidence, and say so without flinching. For analysts, the checklist is boring on purpose: geolocate, time-stamp, triangulate, and keep receipts. For civilians, it’s okay to say “I don’t know yet.”</p>`,
+        },
+
+        {
+          text: `<Strong>What an end might actually look like</Strong>
+<p>Public rhetoric sells two poles: total Russian withdrawal with tribunals on one side; acceptance of new borders and a sullen peace on the other. Policy almost always lives in the unhappy middle: sequenced, babysat arrangements that good people dislike for opposite reasons. Imagine a monitored cease-fire with real sensors and third-party verification; phased withdrawals tied to calibrated sanctions relief; special regimes for disputed districts on long timelines; security assurances short of formal alliance but thick enough to shape behavior; reconstruction funds gated by compliance; documented returns of abducted civilians; prisoner exchanges that don’t vanish into press releases. None of this delivers moral closure. But it is how ugly wars usually stop: with architectures that save lives now and preserve an evidentiary chain for justice later. “No peace without justice” meets “no justice without peace,” and responsible states try to bank enough peace to keep the books open for justice instead of burning them.</p>`,
+        },
+
+        {
+          text: `<Strong>Could it have been resolved at the beginning?</Strong>
+<p>Maybe—if you freeze the tape at Istanbul 2022, squint at the drafts, and assume trust that wasn’t there. Neutrality with ironclad guarantees might have been possible before atrocities hardened Ukrainian politics and before Russian goals narrowed from regime change to attrition. But “could have” is doing a lot of work. Security guarantees are only as credible as the guarantors’ willingness to enforce them; verification means something only if someone is willing to call a violation and act. A pause without teeth becomes a prelude. That’s why proposals in 2025 that echo parts of 2022 generate both hope and dread: the hope is fewer funerals; the dread is rewarding force. If there’s a responsible answer, it lives in design details—what exactly is guaranteed, by whom, with which triggers, and what happens when someone cheats.</p>`,
+        },
+
+        {
+          text: `<Strong>If I were advising from a campus desk (humbly)</Strong>
+<p>Define aims in actionable increments—protect city X with interceptor Y by month Z; harden substation clusters before winter; restore rotation cadence to N days. Publish transparent aid and procurement dashboards. Lock European shell and air-defense production into multi-year law, not communiqués. Pilot verification tech now for any future cease-fire architecture so proposals have mechanics, not adjectives. Keep crisis hotlines open to cap escalation risk. Don’t promise what can’t be delivered; deliver what’s promised on time. Explain to voters, in acronyms-free sentences, why patience isn’t apathy but the thing that keeps wars rarer.</p>`,
+        },
+
+        {
+          text: `<Strong>Devil’s-advocate stress test</Strong>
+<p>Maybe deterrence is already achieved and more arms simply prolong suffering. Maybe Russia’s war economy can outlast Western attention spans. Maybe a frozen conflict is the worst of both worlds: no justice, no peace, just militarized poverty on Europe’s edge. Or maybe apparent stasis hides fragility, and the system will break suddenly, for good or ill. The point of rehearsing these isn’t to paralyze judgment; it’s to make sure what survives is analysis, not posture. If your view can’t withstand the strongest argument against it, it isn’t ready for policy.</p>`,
+        },
+
+        {
+          text: `<Strong>What I’ll watch next</Strong>
+<p>Ammunition and interceptor throughput (factories over speeches); mobilization politics in both countries; the sprint-counter-sprint between drones and electronic warfare; any cease-fire proposal with verifiable mechanics rather than adjectives; European fiscal votes that convert sympathy into deliveries; and whether the United States can keep a posture that is hawkish on deterrence and frugal on exposure—the overlap where a lot of citizens actually live. Wars end when someone loses clearly or when enough leaders decide losing more is worse than compromising now. Between those poles is the art of politics: imperfect, incremental, human. From a dorm room a continent away, the task is to read closely, argue in good faith, and remember that maps don’t show who is cold, hungry, or missing. Good analysis should bend policy toward mercy at the margins. Sometimes those margins are all we get, and they still matter.</p>`,
         },
       ],
 
       images: [
-        "https://images.unsplash.com/photo-1519682337058-a94d519337bc",
-        "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
-        "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df",
-        "https://images.unsplash.com/photo-1519682337058-a94d519337bc",
-        "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
-        "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df",
-        "https://images.unsplash.com/photo-1519682337058-a94d519337bc",
-        "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
-        "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df",
-        "https://images.unsplash.com/photo-1519682337058-a94d519337bc",
-        "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
-        "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df",
-        "https://images.unsplash.com/photo-1519682337058-a94d519337bc",
-        "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
-        "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df",
-        "https://images.unsplash.com/photo-1519682337058-a94d519337bc",
-        "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
-        "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df",
+        "https://images.unsplash.com/photo-1520106212299-d99c443e4568?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cnVzc2lhfGVufDB8fDB8fHww",
+        "https://images.unsplash.com/photo-1559588485-27e8606e0ad3?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjN8fHVrcmFpbmV8ZW58MHx8MHx8fDA%3D",
+        "https://images.unsplash.com/photo-1572516124264-b8c453a34178?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHVrcmFpbmV8ZW58MHx8MHx8fDA%3D",
+        "https://images.unsplash.com/photo-1561542320-9a18cd340469?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHVrcmFpbmV8ZW58MHx8MHx8fDA%3D",
+        "https://images.unsplash.com/photo-1565711561500-49678a10a63f?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dWtyYWluZXxlbnwwfHwwfHx8MA%3D%3D",
+        "https://images.unsplash.com/photo-1692546781354-0bf4e4c272c1?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTF8fHJ1c3NpYSUyMHdhcnxlbnwwfHwwfHx8MA%3D%3D",
+        "https://images.unsplash.com/photo-1735603598090-8efd0ecfbf9e?q=80&w=872&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "https://images.unsplash.com/photo-1665758886246-e991200f237a?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dWtyYWluZSUyMHBlb3BsZXxlbnwwfHwwfHx8MA%3D%3D",
+        "https://images.unsplash.com/photo-1580922110301-a666f6745565?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8d2FyfGVufDB8fDB8fHww",
+        "https://images.unsplash.com/photo-1645940516176-895efb443c1f?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NjJ8fHVrcmFpbmUlMjBjaGlsZHxlbnwwfHwwfHx8MA%3D%3D",
       ],
 
       resources: {
@@ -292,9 +323,9 @@ const MidnightBureauData = {
 
       // Hero assets switched to Unsplash 'source' for reliability
       archiveImage:
-        "https://unsplash.com/photos/iiFfGsMppBA/download?force=true&w=2000",
+        "https://images.unsplash.com/photo-1633167606207-d840b5070fc2?q=80&w=904&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       banner:
-        "https://unsplash.com/photos/iiFfGsMppBA/download?force=true&w=2000",
+        "https://images.unsplash.com/photo-1643780668909-580822430155?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       content: [
         {
           text: `<p><em>“We used to write memories on stone and clay, then on film and silicon; now we’re learning to write them into life’s own alphabet.”</em></p>`,
@@ -304,8 +335,8 @@ const MidnightBureauData = {
 <p><strong>Dateline, campus lab bench.</strong> I’m writing with nitrile gloves in my pocket and a compiler open, trying to reconcile two worlds that rarely share a syllabus: molecular biology and systems design. The wager behind DNA storage is simple and strange—take the molecule built to preserve heredity and conscript it to preserve culture. The physics case is compelling: DNA offers extreme volumetric density and longevity in conditions where drives die and tapes beg for refresh. The engineering case is more conditional: sequencing keeps improving while synthesis still taxes the budget and calendar. Economically, this isn’t about hot reads or low-latency interaction; it’s about memory that waits—archives that must remain legible for decades or centuries with minimal energy. Once you list the institutions that live on time scales longer than any vendor’s support window—national libraries, legal repositories, scientific observatories—the niche starts to look like most of civilization.</p>
 
 <figure style="margin:2rem 0; text-align:center;">
-  <img src="https://source.unsplash.com/2000x1200/?pipette,well-plate" alt="Pipette over well plate in a genomics workflow" style="max-width:100%;height:auto;border-radius:12px;" />
-  <figcaption style="font-size:.9rem;color:#666;margin-top:.5rem;">Bench reality: encoding bytes into bases means caring about both code rate and clean tips.</figcaption>
+  <img src="https://images.unsplash.com/photo-1539814858141-928517f6afd3?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YW5hdG9teXxlbnwwfHwwfHx8MA%3D%3D" alt="Pipette over well plate in a genomics workflow" style="max-width:100%;height:auto;border-radius:12px;" />
+  <figcaption style="font-size:.9rem;color:#text-bg;margin-top:.25rem;">Our DNA goes further than just molecules and spectacle, but are the building blocks of all life across the universe itself</figcaption>
 </figure>
 
 <p><strong>A compressed history without the footnote sprawl.</strong> The modern arc began when researchers encoded text and media into synthetic DNA and recovered them through sequencing with error correction. Those demos were modest in size but huge in implication: biology’s alphabet can carry any alphabet; DNA is gloriously format-agnostic; and the channel is noisy in ways that invite coding theory rather than defeat it. Substitutions, insertions, deletions, GC-bias, homopolymer runs—these are not bugs so much as environmental facts, akin to a radio link with peculiar weather. From there the field stopped being a stunt and became a marriage: wet bench craft braided with software rigor, where quality control looks like both gel images and unit tests.</p>
@@ -317,6 +348,10 @@ const MidnightBureauData = {
 <p><strong>Sequencing and the discipline of listening well.</strong> Reading is the bright spot. Short-read platforms deliver accuracy and depth that make consensus calling feel like cheating, while long-read platforms supply contiguity and speed for complex constructs. The trick is to treat the sequencer as a noisy microphone recording a choir of near-duplicates: align, vote, and infer the intended strand. That posture reframes “wet noise” as a design constraint rather than an existential threat. It also gives software people a cultural reset: you can’t mock your way out of stochasticity, but you can engineer for it—suspicious decoders, confidence scores, provenance trails—and get reliability from statistics instead of fantasy determinism.</p>
 
 <p><strong>Addressing, random access, and molecular file systems.</strong> Names matter. In a DNA archive, addresses pull triple duty: they locate (primer namespaces, indexes, barcodes), guard (limit crosstalk and mis-amplification), and testify (carry provenance that can be re-scored as libraries age). Random access is real—PCR or probe capture can fish out subsets—but it carries amplification bias and depletion risk, so architectures lean on physical partitioning (capsules, beads, layers) and on conservative copy policies that never endanger the master. A practical “molecular file system” looks less like NTFS and more like a postal service: clean namespaces, tamper-evident labels, and routes that minimize damage.</p>
+<figure style="margin:2rem 0; text-align:center;">
+  <img src="https://plus.unsplash.com/premium_photo-1674203955515-7c886004f1f3?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fHNlcXVlbmNpbmclMjBkbmElMjBtb2xlY3VsfGVufDB8fDB8fHww" alt="Pipette over well plate in a genomics workflow" style="max-width:100%;width:900px;height:450px;border-radius:12px;" />
+  <figcaption style="font-size:.9rem;color:#text-bg;margin-top:.25rem;">Random access points also play a key role inside Autonomous Intelligence mathematics as well in re-correcting code itself</figcaption>
+</figure>
 
 <p><strong>Densities, lifetimes, and where DNA actually wins.</strong> Headline densities are fun, but practical density lives after you pay taxes: code overhead, primer padding, failed strands, packaging. Even then, DNA’s volumetric advantage over tape remains dramatic, and its energy profile for deep-cold archiving is exceptional—no spinning disks, no migration churn, no thermal budgets stalking your opex. Longevity is the quiet giant: properly encapsulated DNA at cool temperatures can outlast every consumer format we’ve tried. The catch isn’t physics; it’s librarianship. Centuries from now, a lab must reconstruct your decoder. So the duty of care includes not just the sample but the <em>spec</em>—container formats, codebooks, and reference implementations robust enough to survive vendor extinction.</p>
 
@@ -334,17 +369,14 @@ const MidnightBureauData = {
       ],
 
       images: [
-        "https://unsplash.com/photos/iiFfGsMppBA/download?force=true&w=2000",
-        "https://unsplash.com/photos/iiFfGsMppBA/download?force=true&w=2000",
-        "https://unsplash.com/photos/iiFfGsMppBA/download?force=true&w=2000",
-        "https://unsplash.com/photos/iiFfGsMppBA/download?force=true&w=2000",
-        "https://unsplash.com/photos/iiFfGsMppBA/download?force=true&w=2000",
-        "https://unsplash.com/photos/iiFfGsMppBA/download?force=true&w=2000",
-        "https://unsplash.com/photos/iiFfGsMppBA/download?force=true&w=2000",
-        "https://unsplash.com/photos/iiFfGsMppBA/download?force=true&w=2000",
-        "https://unsplash.com/photos/iiFfGsMppBA/download?force=true&w=2000",
-        "https://unsplash.com/photos/iiFfGsMppBA/download?force=true&w=2000",
-        "https://unsplash.com/photos/iiFfGsMppBA/download?force=true&w=2000",
+        "https://images.unsplash.com/photo-1633167606207-d840b5070fc2?q=80&w=904&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "https://plus.unsplash.com/premium_photo-1676029884537-44fec9a5ca66?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "https://images.unsplash.com/photo-1630959305606-3123a081dada?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "https://images.unsplash.com/photo-1693919653649-27492e78899d?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fG1vbGVjdWxlfGVufDB8fDB8fHww",
+        "https://images.unsplash.com/photo-1730387525836-16ea5e46eb19?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjZ8fHN5bnRoZXNpemUlMjBkbmF8ZW58MHx8MHx8fDA%3D",
+        "https://images.unsplash.com/photo-1719650592946-55163c4994cb?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bmV1cm9zY2llbmNlfGVufDB8fDB8fHww",
+        "https://plus.unsplash.com/premium_photo-1730043018179-9cf1c2fc891e?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDF8fG5ldXJvc2NpZW5jZXxlbnwwfHwwfHx8MA%3D%3D",
+        "https://images.unsplash.com/photo-1661166850077-8a9ab5caf456?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fHNlcXVlbmNpbmclMjBkbmElMjBtb2xlY3VsfGVufDB8fDB8fHww",
       ],
 
       resources: {
@@ -522,15 +554,17 @@ const MidnightBureauData = {
       ],
 
       images: [
-        "https://unsplash.com/photos/gyxz70oXgzI/download?force=true&w=2000", // space rock (banner-matched angle)
-        "https://unsplash.com/photos/nZF0xFE0Z8o/download?force=true&w=2000", // distant star system (background explainer)
-        "https://unsplash.com/photos/C66RV2bRS3Y/download?force=true&w=2000", // masked worker (operations/logistics)
-        "https://unsplash.com/photos/gyxz70oXgzI/download?force=true&w=2000", // space rock (banner-matched angle)
-        "https://unsplash.com/photos/nZF0xFE0Z8o/download?force=true&w=2000", // distant star system (background explainer)
-        "https://unsplash.com/photos/C66RV2bRS3Y/download?force=true&w=2000", // masked worker (operations/logistics)
-        "https://unsplash.com/photos/C66RV2bRS3Y/download?force=true&w=2000", // masked worker (operations/logistics)
-        "https://unsplash.com/photos/C66RV2bRS3Y/download?force=true&w=2000", // masked worker (operations/logistics)
-        "https://unsplash.com/photos/gyxz70oXgzI/download?force=true&w=2000", // space rock (banner-matched angle)
+        "https://unsplash.com/photos/gyxz70oXgzI/download?force=true&w=2000",
+        "https://images.unsplash.com/photo-1664352603314-6047584b3e10?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fG1ldGFsc3xlbnwwfHwwfHx8MA%3D%3D",
+
+        "https://unsplash.com/photos/C66RV2bRS3Y/download?force=true&w=2000",
+        "https://plus.unsplash.com/premium_photo-1733983990725-efe831f53e32?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8c3BhY2UlMjBkaXN0YW5jZXxlbnwwfHwwfHx8MA%3D%3D",
+        "https://plus.unsplash.com/premium_photo-1680391379670-5907f52bb0d9?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8b3V0ZXJzcGFjZSUyMGVjb25vbWljc3xlbnwwfHwwfHx8MA%3D%3D",
+        "https://images.unsplash.com/photo-1454789548928-9efd52dc4031?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGRlZXAlMjBzcGFjZXxlbnwwfHwwfHx8MA%3D%3D",
+     "https://images.unsplash.com/photo-1479142506502-19b3a3b7ff33?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGxhd3xlbnwwfHwwfHx8MA%3D%3D",
+     "https://images.unsplash.com/photo-1651960693464-5367391bd79d?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjZ8fGF0b21zfGVufDB8fDB8fHww",
+     "https://plus.unsplash.com/premium_photo-1680391380231-1fbae53e5858?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8c3BhY2UlMjBzYXR0ZWxpdGV8ZW58MHx8MHx8fDA%3D",
+     
       ],
 
       resources: {
