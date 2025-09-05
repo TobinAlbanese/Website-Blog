@@ -2086,157 +2086,197 @@ privacy_reporting: { dp_epsilon_monthly: 2.0 }
       },
     },
   ],
-  "Current & In-Progress Work": [
-    {
-      volume: "PORTFOLIO — IN PROGRESS",
-      title: "Midnight Bureau Blog Expansion",
-      slug: "midnight-bureau-expansion",
-      author: "Tobin M. Albanese",
-      date: "2025-02-01",
-      excerpt:
-        "Smarter discovery, faster archives, and cleaner long reads. Adding topic and entity filters, cross search with the portfolio, and a print friendly mode for deep dives.",
-      archiveImage: "/assets/images/AFG4.jpg",
-      banner: "/assets/images/space.jpg",
-      content: [
-        {
-          text: "<p>Upgrading archive navigation, adding topic/entity filters, and refining long-form readability across devices.</p>",
-        },
-        {
-          text: "<p>Planned: unified tagging with portfolio and cross-search.</p>",
-        },
-      ],
-      images: [
-        "/assets/images/Container.png", // skyscrapers
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-      ],
-      resources: {
-        Sightings: [
-          { label: "Midnight Bureau", url: "/MidnightBureau", external: false },
-          {
-            label: "Live Site",
-            url: "https://www.tobinalbanese.com",
-            external: true,
-          },
-        ],
-        FormalStudies: [
-          { label: "About / CV", url: "/About", external: false },
-          {
-            label: "ResearchGate",
-            url: "https://www.researchgate.net/profile/Tobin-Albanese",
-            external: true,
-          },
-        ],
-        PopularCulture: [
-          {
-            label: "GitHub",
-            url: "https://github.com/TobinAlbanese",
-            external: true,
-          },
-          { label: "Home", url: "/", external: false },
-        ],
+
+"Current & In-Progress Work": [
+  {
+    volume: "PORTFOLIO — IN PROGRESS",
+    title: "Midnight Bureau Blog Expansion",
+    slug: "midnight-bureau-expansion",
+    author: "Tobin M. Albanese",
+    date: "2025-02-01",
+    excerpt:
+      "Smarter discovery, faster archives, and cleaner long reads. Adding topic and entity filters, cross search with the portfolio, and a print friendly mode for deep dives.",
+    archiveImage: "/assets/images/AFG4.jpg",
+    banner: "/assets/images/space.jpg",
+    content: [
+      {
+        text: `<p><strong>Why expand now.</strong> Readers land on a single post from search, bounce, and never discover the rest. The expansion focuses on discovery: topic/entity filters, cross-search with portfolio entries, and clean printing so deep reads don’t feel like wrestling a billboard on letter paper.</p>`
       },
-    },
-    {
-      volume: "PORTFOLIO — IN PROGRESS",
-      title: "Real-time Facial Recognition Prototype",
-      slug: "facial-recognition-prototype",
-      author: "Tobin M. Albanese",
-      date: "2025-04-01",
-      excerpt:
-        "Low latency video with explicit policy gates, opt in testing, and hard limits. Focus on evaluation, latency budgets, consent flows, and repeatable audits before any pilot.",
-      archiveImage:
-        "https://images.unsplash.com/photo-1706025090711-377b00b51332?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGZhY2UlMjB1cGNsb3NlfGVufDB8fDB8fHww",
-      banner: "/assets/images/space.jpg",
-      content: [
-        {
-          text: "<p>Prototyping a low-latency video pipeline with detection, matching, and governance hooks for safe testing.</p>",
-        },
-        {
-          text: "<p>Focus on evaluation, latency budgets, and opt-in controls.</p>",
-        },
-      ],
-      images: [
-        "/assets/images/naomiPortfolio.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-      ],
-      resources: {
-        Sightings: [
-          { label: "Project Hub", url: "/Portfolio", external: false },
-          { label: "Policy Notes", url: "/Notes/Policy", external: false },
-        ],
-        FormalStudies: [
-          { label: "About / CV", url: "/About", external: false },
-          {
-            label: "ResearchGate",
-            url: "https://www.researchgate.net/profile/Tobin-Albanese",
-            external: true,
-          },
-        ],
-        PopularCulture: [
-          {
-            label: "GitHub",
-            url: "https://github.com/TobinAlbanese",
-            external: true,
-          },
-          { label: "Home", url: "/", external: false },
-        ],
+      {
+        text: `<p><strong>Unified taxonomy.</strong> I’m merging tags, topics, and entities into one shared schema used by both the blog and the portfolio. One label = one ID = one facet across the whole site. That lets the archive page, post pages, and portfolio listings stay in sync without custom exceptions.</p>`
       },
-    },
-    {
-      volume: "PORTFOLIO — IN PROGRESS",
-      title: "OSINT Data Aggregation Pipeline",
-      slug: "osint-data-pipeline",
-      author: "Tobin M. Albanese",
-      date: "2025-06-01",
-      excerpt:
-        "High throughput intake with dedupe, provenance tracking, and PII safety. Next steps include source scoring, alert thresholds, and reproducible exports that analysts can defend.",
-      archiveImage:
-        "https://images.unsplash.com/photo-1679325134596-6cd425a05dc8?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGFnZ3JlZ2F0aW9uc3xlbnwwfHwwfHx8MA%3D%3D",
-      banner: "/assets/images/space.jpg",
-      content: [
-        {
-          text: "<p>Standing up resilient intake with dedupe, provenance tracking, and safe storage patterns.</p>",
-        },
-        {
-          text: "<p>Planned features: source scoring and alerting thresholds.</p>",
-        },
-      ],
-      images: [
-        "/assets/images/stellarisScale.jpg", // neon sign
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-      ],
-      resources: {
-        Sightings: [
-          { label: "Project Hub", url: "/Portfolio", external: false },
-          { label: "OSINT Overview", url: "/MidnightBureau", external: false },
-        ],
-        FormalStudies: [
-          { label: "About / CV", url: "/About", external: false },
-          {
-            label: "ResearchGate",
-            url: "https://www.researchgate.net/profile/Tobin-Albanese",
-            external: true,
-          },
-        ],
-        PopularCulture: [
-          {
-            label: "GitHub",
-            url: "https://github.com/TobinAlbanese",
-            external: true,
-          },
-          { label: "Home", url: "/", external: false },
-        ],
+      {
+        text: `<p><strong>Search architecture.</strong> For a hosted index, I’ll consider Typesense/Algolia with per-record weights for title, deck, headings, and resource labels. For a zero-dependency fallback, Lunr.js builds a client-side index at build-time with chunked loading. Either path supports synonym maps (“U.S.” ↔ “United States”) and typo tolerance without smearing relevancy.</p>`
       },
-    },
-  ],
+      {
+        text: `<p><strong>Archive navigation.</strong> Year-month slices stay, but the UX adds quick-jumps for Topics (World & Diplomacy, Security, Energy, etc.) and Entities (countries, orgs, people). Pagination becomes cursor-based so I can prefetch the next slab while you’re still reading.</p>`
+      },
+      {
+        text: `<p><strong>Long-form readability.</strong> Better typography, hyphenation, and rhythm (narrower measure on mobile, larger first-line height), sticky subhead mini-TOC for long reads, and a “focus” toggle that hides chrome. Pull-quotes and figures get semantic markup so they survive print/export.</p>`
+      },
+      {
+        text: `<p><strong>Print & offline mode.</strong> A real <code>@media print</code> stylesheet (CMYK-safe colors, link URLs inline, no nav, no ads), plus an optional Service Worker to cache the current post, its images, and linked resources for subway reading.</p>`
+      },
+      {
+        text: `<p><strong>Accessibility & performance.</strong> Keyboard-first filters, visible focus states, and color contrast that clears WCAG 2.2 AA. Images lazy-load with correct intrinsic sizes; headings are linearized for screen readers; Lighthouse budgets keep CLS and LCP honest.</p>`
+      },
+      {
+        text: `<p><strong>Analytics you can defend.</strong> Events are boring on purpose: filter use, search queries (with privacy guardrails), time-on-section, and print/export clicks. The goal is editorial feedback, not surveillance: no keystroke logging, no cross-site tracking.</p>`
+      },
+      {
+        text: `<p><strong>Risks & next steps.</strong> Index bloat on the client is the main risk; mitigations include splitting by route and compressing the index. Next steps: migrate legacy tags → unified IDs, ship entity filter, wire cross-search with portfolio, then layer print and offline.</p>`
+      }
+    ],
+    images: [
+      "/assets/images/Container.png",
+      "/assets/images/space.jpg",
+      "/assets/images/space.jpg",
+      "/assets/images/space.jpg",
+      "/assets/images/space.jpg"
+    ],
+    resources: {
+      LiveAndDemos: [
+        { label: "Midnight Bureau", url: "/MidnightBureau", external: false },
+        { label: "Live Site", url: "https://www.tobinalbanese.com", external: true }
+      ],
+      CodeAndRoadmap: [
+        { label: "GitHub — @TobinAlbanese", url: "https://github.com/TobinAlbanese", external: true }
+      ],
+      TechReferences: [
+        { label: "Next.js Docs", url: "https://nextjs.org/docs", external: true },
+        { label: "Typesense Guide", url: "https://typesense.org/docs/", external: true },
+        { label: "Algolia — Relevance", url: "https://www.algolia.com/doc/guides/managing-results/relevance-overview/", external: true },
+        { label: "Lunr.js", url: "https://lunrjs.com/", external: true },
+        { label: "MDN — @media print", url: "https://developer.mozilla.org/en-US/docs/Web/CSS/@media/print", external: true },
+        { label: "WCAG 2.2 Overview", url: "https://www.w3.org/WAI/standards-guidelines/wcag/", external: true }
+      ]
+    }
+  },
+
+  {
+    volume: "PORTFOLIO — IN PROGRESS",
+    title: "Real-time Facial Recognition Prototype",
+    slug: "facial-recognition-prototype",
+    author: "Tobin M. Albanese",
+    date: "2025-04-01",
+    excerpt:
+      "Low latency video with explicit policy gates, opt in testing, and hard limits. Focus on evaluation, latency budgets, consent flows, and repeatable audits before any pilot.",
+    archiveImage:
+      "https://images.unsplash.com/photo-1706025090711-377b00b51332?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGZhY2UlMjB1cGNsb3NlfGVufDB8fDB8fHww",
+    banner: "/assets/images/space.jpg",
+    content: [
+      {
+        text: `<p><strong>Scope & gates.</strong> This is a governance-first prototype: closed dataset, small opt-in group, visible consent, and hard “no” on production deployment until evaluation clears explicit thresholds. The point is to stress the controls, not to chase accuracy at any cost.</p>`
+      },
+      {
+        text: `<p><strong>Pipeline (high level only).</strong> Ingest → detect → embed → match, all with audit hooks. Detection runs at the edge to avoid streaming PII; embeddings are ephemeral for non-matches; retention and export are locked behind policy toggles so the demo can’t silently grow into a system.</p>`
+      },
+      {
+        text: `<p><strong>Latency budget.</strong> Targets are split: camera→embed under 40ms for smooth UX; embed→match under 60ms; end-to-end below 120ms on commodity GPUs. When budgets burst, the system must degrade gracefully (lower FPS, not higher false positives).</p>`
+      },
+      {
+        text: `<p><strong>Evaluation plan.</strong> Report DET/ROC curves, not vibes; measure demographic differentials explicitly; log false-positive costs in scenario context; and publish repeatable test harnesses. If thresholds aren’t met, the answer is “no,” not “almost.”</p>`
+      },
+      {
+        text: `<p><strong>Privacy & security.</strong> Default to on-device processing, minimize retention windows, encrypt at rest/in transit, and document what’s not kept. Access is role-based, with kill-switches that disable matching without taking the camera stack down.</p>`
+      },
+      {
+        text: `<p><strong>Governance & consent.</strong> Clear signage, informed opt-in, operator training, and red-team drills for abuse scenarios (function creep, post-hoc search, selective enforcement). Every action must leave a trace in an immutable log so audits are real, not theater.</p>`
+      },
+      {
+        text: `<p><strong>What the prototype will not do.</strong> No watchlists in public spaces, no covert collection, no scraping, and no deployment beyond lab conditions. The safest prototype is one that refuses to cross its own lines.</p>`
+      }
+    ],
+    images: [
+      "/assets/images/naomiPortfolio.jpg",
+      "/assets/images/space.jpg",
+      "/assets/images/space.jpg",
+      "/assets/images/space.jpg"
+    ],
+    resources: {
+      CodeAndRoadmap: [
+        { label: "GitHub — @TobinAlbanese", url: "https://github.com/TobinAlbanese", external: true }
+      ],
+      EvaluationAndStandards: [
+        { label: "NIST FRVT (Face Recognition Vendor Test)", url: "https://www.nist.gov/programs-projects/face-recognition-vendor-test-frvt", external: true },
+        { label: "ISO/IEC 19795 — Biometric Performance Testing", url: "https://www.iso.org/standard/41447.html", external: true },
+        { label: "NIST Privacy Framework", url: "https://www.nist.gov/privacy-framework", external: true },
+        { label: "IEEE P7003 — Algorithmic Bias Considerations", url: "https://standards.ieee.org/ieee/7003/6781/", external: true }
+      ],
+      PolicyAndCompliance: [
+        { label: "GDPR — Special Categories (Biometrics)", url: "https://gdpr-info.eu/art-9-gdpr/", external: true },
+        { label: "UK ICO — Biometrics Guidance", url: "https://ico.org.uk/for-organisations/biometrics/", external: true },
+        { label: "US FTC — Biometric Policy Statement", url: "https://www.ftc.gov/legal-library/browse/policy-statement-biometric-information", external: true }
+      ]
+    }
+  },
+
+  {
+    volume: "PORTFOLIO — IN PROGRESS",
+    title: "OSINT Data Aggregation Pipeline",
+    slug: "osint-data-pipeline",
+    author: "Tobin M. Albanese",
+    date: "2025-06-01",
+    excerpt:
+      "High throughput intake with dedupe, provenance tracking, and PII safety. Next steps include source scoring, alert thresholds, and reproducible exports that analysts can defend.",
+    archiveImage:
+      "https://images.unsplash.com/photo-1679325134596-6cd425a05dc8?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGFnZ3JlZ2F0aW9uc3xlbnwwfHwwfHx8MA%3D%3D",
+    banner: "/assets/images/space.jpg",
+    content: [
+      {
+        text: `<p><strong>Goal.</strong> Build an ingest→normalize→verify→export pipeline that scales with public data but keeps provenance and privacy intact. Analysts should be able to defend every record with a paper trail and reproduce the same view later.</p>`
+      },
+      {
+        text: `<p><strong>Intake & de-duplication.</strong> Multiple feeds (APIs, scrapes, hand-curated tips) collapse into a queue with content hashes, fuzzy URL canonicalization, and near-duplicate detection. The system saves time by not asking humans to re-read the same story with a different UTM tag.</p>`
+      },
+      {
+        text: `<p><strong>Normalization & schema.</strong> Everything lands in a slim common schema—entities, events, places, times, and links—so cross-source joins don’t become regex archaeology. Where fields don’t map, we keep a raw sidecar for full-fidelity retrieval.</p>`
+      },
+      {
+        text: `<p><strong>Provenance & chain of custody.</strong> Each transformation appends to a provenance trail (source URL, access date, transform version, human edits). Exports include this trail so downstream readers can audit without phoning the original collector.</p>`
+      },
+      {
+        text: `<p><strong>PII safety.</strong> Default to minimization: redact or hash sensitive fields, segregate storage, and require higher privileges for re-identification. Automated checks flag accidental PII (faces, license plates) and route for human review before publication.</p>`
+      },
+      {
+        text: `<p><strong>Source scoring.</strong> Reliability scores are evidence-based: outlet track record, author identity confidence, corroboration count, and historical correction rate. Scores decay over time and update when retractions land.</p>`
+      },
+      {
+        text: `<p><strong>Alerts & thresholds.</strong> Instead of “ping for everything,” alerts require a rule that combines source score + topic + location + novelty. Analysts can subscribe to saved queries and receive a digest with diffs, not a firehose.</p>`
+      },
+      {
+        text: `<p><strong>Reproducible exports.</strong> Every chart/table in the reporting layer can be regenerated from a saved query with pinned transform versions. If a result made it into a brief, there’s a button to see the lineage, no hand-waving.</p>`
+      },
+      {
+        text: `<p><strong>Next steps.</strong> Wire scoring to the alert engine, ship the PII scanner on image/video, and publish a red-team guide that tries to break the pipeline on purpose (poisoned sources, mass duplication, metadata tampering).</p>`
+      }
+    ],
+    images: [
+      "/assets/images/stellarisScale.jpg",
+      "/assets/images/space.jpg",
+      "/assets/images/space.jpg",
+      "/assets/images/space.jpg",
+      "/assets/images/space.jpg"
+    ],
+    resources: {
+      CodeAndRoadmap: [
+        { label: "GitHub — @TobinAlbanese", url: "https://github.com/TobinAlbanese", external: true }
+      ],
+      MethodologyAndTools: [
+        { label: "Bellingcat — OSINT Guides", url: "https://www.bellingcat.com/category/resources/how-tos/", external: true },
+        { label: "OCCRP Aleph", url: "https://aleph.occrp.org/", external: true },
+        { label: "OpenSanctions", url: "https://www.opensanctions.org/", external: true },
+        { label: "W3C PROV — Provenance Model", url: "https://www.w3.org/TR/prov-overview/", external: true },
+        { label: "MISP — Threat Intelligence Platform", url: "https://www.misp-project.org/", external: true }
+      ],
+      PrivacyAndEthics: [
+        { label: "ICRC — Data Protection in Humanitarian Action", url: "https://www.icrc.org/en/data-protection", external: true },
+        { label: "UK ICO — Anonymisation Guidance", url: "https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/data-sharing/anonymisation/", external: true }
+      ]
+    }
+  }
+],
+
 
   "Skills & Technologies (Non-clickable)": [
     {
@@ -2604,3 +2644,40 @@ export default PortfolioData;
     
     */
 }
+
+
+
+
+{/*https://wikileaks.org/+-War-Military-+.html
+https://shoppinglist.wikileaks.org/search?embassy_location_facet=Russian+Federation&page=1
+https://wikileaks.org//vault8/#Hive
+https://wikileaks.org//spyfiles/russia/
+https://wikileaks.org/vault7/#Protego
+https://wikileaks.org/vault7/#Angelfire
+https://wikileaks.org/vault7/#ExpressLane
+https://wikileaks.org/vault7/#CouchPotato
+https://wikileaks.org/vault7/#Dumbo
+https://wikileaks.org/vault7/#Imperial
+https://wikileaks.org/vault7/#UCL%20/%20Raytheon
+https://wikileaks.org/vault7/#Highrise
+https://wikileaks.org/vault7/#BothanSpy
+https://wikileaks.org/vault7/#OutlawCountry
+https://wikileaks.org/vault7/#Elsa
+https://wikileaks.org/vault7/#Brutal%20Kangaroo
+https://wikileaks.org/vault7/#Cherry%20Blossom
+https://wikileaks.org/vault7/#Pandemic
+https://wikileaks.org/vault7/#Athena
+https://wikileaks.org/vault7/#AfterMidnight
+https://wikileaks.org/vault7/#Archimedes
+https://wikileaks.org/vault7/#Scribbles
+https://wikileaks.org/vault7/#Weeping%20Angel
+https://wikileaks.org/vault7/#Hive
+https://wikileaks.org/vault7/#Grasshopper
+https://wikileaks.org/vault7/#Marble%20Framework
+https://wikileaks.org/vault7/#Dark%20Matter
+https://wikileaks.org/ciav7p1/
+https://wikileaks.org//nsa-201602/
+https://wikileaks.org/spyfiles/
+https://wikileaks.org/ciav7p1/
+https://wikileaks.org//wiki/United_Nations_confidential_reports
+https://wikileaks.org//clinton-emails/ */}

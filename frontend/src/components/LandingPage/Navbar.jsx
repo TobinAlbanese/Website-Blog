@@ -1,7 +1,21 @@
-import React, { useEffect, useState } from "react";
+// components/LandingPage/Navbar.jsx (or your current path)
+import React, { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/router";
 import MetaHead from "../../components/LandingPage/MetaHead.jsx";
 import SvgHead from "../../components/LandingPage/svgHead.jsx";
+// ⬇️ NEW: import your Midnight Bureau data (adjust path if needed)
+import MidnightBureauData from "../../data/MidnightBureau";
+
+// ⬇️ NEW: small helpers (safe, resilient)
+const arr = (x) => (Array.isArray(x) ? x : []);
+const toDate = (p) => {
+  const d = new Date(p?.date || p?.published || p?.createdAt || 0);
+  return Number.isNaN(d.getTime()) ? new Date(0) : d;
+};
+const pickArchiveImg = (p) =>
+  p?.archiveImage ||
+  p?.banner ||
+  (Array.isArray(p?.images) ? p.images[0] : "/assets/images/space.jpg");
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -45,20 +59,17 @@ export default function Navbar() {
     sessionStorage.setItem("scrollTarget", id);
 
     if (router.pathname === path) {
-      // same page
       requestAnimationFrame(() => scrollWithOffset(id));
-      // also update the URL hash so reloads/deep links work
       router.replace(`${path}#${encodeURIComponent(id)}`, undefined, {
         shallow: true,
       });
       return;
     }
-
-    // cross-page: navigate WITH hash so the browser knows the intent too
     await router.push(`${path}#${encodeURIComponent(id)}`, undefined, {
       shallow: true,
     });
   };
+
   useEffect(() => {
     const tryScroll = (id, attemptsLeft = 20) => {
       const el = document.getElementById(id);
@@ -72,21 +83,17 @@ export default function Navbar() {
     };
 
     const applyStoredScroll = () => {
-      // 1) sessionStorage (menu/footer set this)
       const stored = sessionStorage.getItem("scrollTarget");
       if (stored) {
         sessionStorage.removeItem("scrollTarget");
-        // try immediately + retry while content mounts
         tryScroll(stored);
       }
 
-      // 2) native hash in URL (deep links / reloads)
       const hashRaw = window.location.hash?.slice(1);
       const hash = hashRaw ? decodeURIComponent(hashRaw) : null;
       if (hash) tryScroll(hash);
     };
 
-    // on mount and after client-side navigation
     applyStoredScroll();
     router.events.on("routeChangeComplete", applyStoredScroll);
     return () => router.events.off("routeChangeComplete", applyStoredScroll);
@@ -96,15 +103,31 @@ export default function Navbar() {
   const goToArchiveGroup = (group) => async (e) => {
     e.preventDefault();
     setMenuOpen(false);
-
-    // Ask Archive to scroll to its content marker
     sessionStorage.setItem("scrollTarget", "archive-content");
     await router.push(
-      `/MidnightBureau/Archive?group=${encodeURIComponent(group)}#archive-content`,
+      `/MidnightBureau/Archive?group=${encodeURIComponent(
+        group
+      )}#archive-content`,
       undefined,
       { shallow: true }
     );
   };
+
+  // ⬇️ NEW: compute truly recent posts (deduped across categories, sorted by date desc)
+  const recentPosts = useMemo(() => {
+    const arrays = Object.values(MidnightBureauData).filter(Array.isArray);
+    const flat = arrays.flat().filter((p) => p && p.slug);
+    const seen = new Set();
+    const deduped = flat.filter((p) => {
+      if (seen.has(p.slug)) return false;
+      seen.add(p.slug);
+      return true;
+    });
+    return deduped
+      .map((p) => ({ ...p, __date: toDate(p) }))
+      .sort((a, b) => b.__date - a.__date)
+      .slice(0, 3);
+  }, []);
 
   return (
     <>
@@ -348,7 +371,7 @@ export default function Navbar() {
           </div>
         </nav>
 
-        {/* Overlay menu (unchanged structure; updated links below white line) */}
+        {/* Overlay menu */}
         <nav
           className="js--menu theme-accent"
           aria-hidden={!menuOpen}
@@ -440,7 +463,7 @@ export default function Navbar() {
               </li>
             </ul>
 
-            {/* top section kept the same (Browse by Section + Recent + Browse by Topic) */}
+            {/* Browse + Recent + Browse by Topic */}
             <div className="menu__section d-flex flex-wrap justify-between gap-y-30 -ml-10 -mr-10 mt-30 mb-80">
               <div className="menu__topics col-12 col-sm-6 col-lg-4-base-10">
                 <p className="menu__overline mb-20">Browse by Section</p>
@@ -487,67 +510,57 @@ export default function Navbar() {
 
               <div className="menu__issues col-12 col-sm-6 col-lg-4-base-10">
                 <p className="menu__overline mb-20">Recent Posts</p>
+
                 <ul className="menu__issues-list d-flex">
-                  <li>
-                    <a
-                      className="menu__post-link"
-                      href="/MidnightBureau/post-1"
-                    >
-                      <figure>
-                        <img
-                          src="https://images.pexels.com/photos/3938029/pexels-photo-3938029.jpeg"
-                          alt="Post 1 cover"
-                          loading="lazy"
-                          width={160}
-                          height={228}
-                          sizes="(max-width: 767px) 26vw, (min-width: 1024px) 100vw"
-                        />
-                      </figure>
-                      <span className="body-xs-smallcaps fs-15 d-inline-block pt-5">
-                        Post 1
-                      </span>
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      className="menu__post-link"
-                      href="/MidnightBureau/post-2"
-                    >
-                      <figure>
-                        <img
-                          src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"
-                          alt="Post 2 cover"
-                          loading="lazy"
-                          width={160}
-                          height={228}
-                          sizes="(max-width: 767px) 26vw, (min-width: 1024px) 100vw"
-                        />
-                      </figure>
-                      <span className="body-xs-smallcaps fs-15 d-inline-block pt-5">
-                        Post 2
-                      </span>
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      className="menu__post-link"
-                      href="/MidnightBureau/post-3"
-                    >
-                      <figure>
-                        <img
-                          src="https://unsplash.com/photos/iiFfGsMppBA/download?force=true&w=2000"
-                          alt="Post 3 cover"
-                          loading="lazy"
-                          width={160}
-                          height={228}
-                          sizes="(max-width: 767px) 26vw, (min-width: 1024px) 100vw"
-                        />
-                      </figure>
-                      <span className="body-xs-smallcaps fs-15 d-inline-block pt-5">
-                        Post 3
-                      </span>
-                    </a>
-                  </li>
+                  {recentPosts.slice(0, 3).map((p, i) => (
+                    <li key={p.slug}>
+                      <a
+                        className="menu__post-link"
+                        href={`/MidnightBureau/${p.slug}`}
+                        onClick={() => setMenuOpen(false)}
+                      >
+                        <figure
+                          style={{
+                            width: 160,
+                            height: 228,
+                            overflow: "hidden",
+                            borderRadius: 6,
+                            margin: 0,
+                          }}
+                        >
+                          <img
+                            src={pickArchiveImg(p)}
+                            alt={p.title || `Post ${i + 1}`}
+                            loading="lazy"
+                            width={160}
+                            height={228}
+                            style={{
+                              width: "160px",
+                              height: "228px",
+                              objectFit: "cover",
+                              display: "block",
+                            }}
+                            sizes="(max-width: 767px) 26vw, (min-width: 1024px) 160px"
+                          />
+                        </figure>
+
+                        <span
+                          className="body-xs-smallcaps fs-15 pt-5"
+                          style={{
+                            width: 160,
+                            display: "-webkit-box",
+                            WebkitLineClamp: 2,
+                            WebkitBoxOrient: "vertical",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            lineHeight: 1.25,
+                          }}
+                        >
+                          {p.title?.trim() || `Post ${i + 1}`}
+                        </span>
+                      </a>
+                    </li>
+                  ))}
                 </ul>
 
                 <div>

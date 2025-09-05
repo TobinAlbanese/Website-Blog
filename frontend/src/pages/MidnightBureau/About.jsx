@@ -165,7 +165,7 @@ export default function About() {
 
               {/* LEFT (uniform size) */}
               <img
-                src="/assets/images/AFG4.jpg"
+                src="/assets/images/Cross.jpg"
                 alt="Building software and writing clearly"
                 loading="lazy"
                 className="float-img left"

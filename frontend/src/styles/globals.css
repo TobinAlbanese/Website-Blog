@@ -3810,6 +3810,73 @@ body {
 
 
 
+/* === Mobile safety shim (desktop untouched) === */
+html { overflow-x: hidden; }
+
+/* Phone & small phablets */
+@media (max-width: 600px) {
+  /* gentle side padding on content areas */
+  .base__main, .base__content, main {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  /* remove big logo push on MB nav */
+  .site-nav__logo-firstMB,
+  .site-nav__logo-lastMB {
+    margin-left: 0;
+  }
+
+  /* make custom <banner> element responsive */
+  .midnight-bureau-article banner {
+    width: 100%;
+    height: clamp(120px, 24vw, 200px);
+    display: block;
+  }
+
+  /* scale the tall card image proportionally (keeps your 260x380 vibe) */
+  .midnight-bureau-article .card-image {
+    width: 46vw;
+    height: 68vw;
+  }
+
+  /* gallery/boxes: allow horizontal scroll instead of squishing */
+  .midnight-bureau-article .box-container {
+    height: 280px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .midnight-bureau-article .box {
+    min-width: 70%;
+    height: 100%;
+  }
+
+  /* avoid 100vw negative margin trick on phones */
+  .projects-container {
+    margin-left: 0;
+    width: 100%;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+/* Very small phones */
+@media (max-width: 414px) {
+  .midnight-bureau-article .box-container { height: 240px; }
+  .midnight-bureau-article .card-image { width: 60vw; height: 88vw; }
+}
+
+/* Hard wrap long URLs/text on small screens */
+:where(p, li, blockquote, figcaption) { overflow-wrap: anywhere; }
+
+
+
+
+
+
+
+
+
 
 
 
