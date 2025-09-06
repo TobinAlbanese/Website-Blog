@@ -87,7 +87,8 @@ export default function Home() {
 
   // On hash deep-link, focus the target section wrapper (if it exists)
   useEffect(() => {
-    const hash = typeof window !== "undefined" ? window.location.hash.slice(1) : "";
+    const hash =
+      typeof window !== "undefined" ? window.location.hash.slice(1) : "";
     if (hash && SECTION_IDS.includes(hash)) {
       // wait a tick for layout
       setTimeout(() => focusSection(hash), 50);
@@ -121,10 +122,15 @@ export default function Home() {
       </>
 
       {/* Accessible skip link */}
-      <a className="skip-link" href="#content">Skip to main content</a>
+      <a className="skip-link" href="#content">
+        Skip to main content
+      </a>
 
       {/* NAVBAR + Layout */}
-      <div className="dialog-off-canvas-main-canvas" data-off-canvas-main-canvas="">
+      <div
+        className="dialog-off-canvas-main-canvas"
+        data-off-canvas-main-canvas=""
+      >
         <div className="text-align-center pt-15 d-flex dfp-tag-wrapper justify-around">
           <div id="js-dfp-tag-top--2" />
         </div>
@@ -144,7 +150,6 @@ export default function Home() {
 
             {/* Container keeps content readable on all breakpoints */}
             <div className="container">
-
               {/* Each section gets a keyboard-focusable wrapper */}
               <section
                 id="hero"
@@ -255,7 +260,6 @@ export default function Home() {
                 <h2 className="visually-hidden">Stay connected</h2>
                 <StayConnected />
               </section>
-
             </div>
           </main>
 

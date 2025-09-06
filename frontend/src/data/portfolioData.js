@@ -1483,7 +1483,7 @@ const PortfolioData = {
       archiveImage:
         "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       banner:
-        "https://images.unsplash.com/photo-1618722939571-83a17f96ecac?q=80&w=1812&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "https://images.unsplash.com/photo-1684347417284-1271ef9b078c?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjN8fHJlc291cmNlJTIwaW50ZWxsaWdlbmNlfGVufDB8fDB8fHww",
       content: [
         {
           text: `
@@ -1677,7 +1677,7 @@ const PortfolioData = {
         "Operational guardrails for high-stakes AI: mission fit, accountability, auditability, and clear lines of responsibility.",
       archiveImage:
         "https://plat.ai/wp-content/uploads/Shutterstock_567338095.jpg.webp",
-      banner: "/assets/images/space.jpg",
+      banner: "https://plus.unsplash.com/premium_photo-1663126655768-85ec528ba4fe?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fG5hdGlvbmFsJTIwc2VjdXJpdHl8ZW58MHx8MHx8fDA%3D",
       content: [
         {
           text: `
@@ -1808,11 +1808,11 @@ const PortfolioData = {
         },
       ],
       images: [
-        "https://plat.ai/wp-content/uploads/Shutterstock_567338095.jpg.webp",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
+        "https://images.unsplash.com/photo-1658713981289-435ae3cb648c?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mzd8fGNvbXB1dHRlciUyMHNodXQlMjBvZmZ8ZW58MHx8MHx8fDA%3D",
+        "https://images.unsplash.com/photo-1716637644831-e046c73be197?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fEFJfGVufDB8fDB8fHww",
+        "https://plus.unsplash.com/premium_photo-1681586533774-1d9d42425712?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8ZGF0YSUyMGdvdmVybmFuY2V8ZW58MHx8MHx8fDA%3D",
+        "https://plus.unsplash.com/premium_photo-1687119905661-fa10ab752a02?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y29tcHV0ZXIlMjBsb2dzfGVufDB8fDB8fHww",
+        "https://images.unsplash.com/photo-1630756539201-f435ba29f1fe?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjF8fGRhdGElMjBsaWZlY3ljbGV8ZW58MHx8MHx8fDA%3D",
       ],
       resources: {
         "Government & Defense Guidance": [
@@ -1893,7 +1893,7 @@ const PortfolioData = {
       excerpt:
         "How behavioral sensing turns signals into power, what can go wrong, and the civil liberties guardrails that keep it honest.",
       archiveImage: "/assets/images/stellarisStack.jpg",
-      banner: "/assets/images/space.jpg",
+      banner: "https://media.istockphoto.com/id/2097949780/photo/satellite-antenna-array-under-the-milky-way-sky.webp?a=1&b=1&s=612x612&w=0&k=20&c=hIyMxCEd9ANP5Ge1LRIyCJKTeQYCOZrZec9LoHwYHEE=",
       content: [
         {
           text: `
@@ -2026,11 +2026,11 @@ privacy_reporting: { dp_epsilon_monthly: 2.0 }
         },
       ],
       images: [
-        "/assets/images/stellarisStack.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
+        "https://plus.unsplash.com/premium_photo-1669298094293-98614cd7df12?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHVuZGVyd3RlciUyMGNhYmxlc3xlbnwwfHwwfHx8MA%3D%3D",
+        "https://images.unsplash.com/photo-1665865455078-4f9f8e2259db?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8c2lnbmFsJTIwc2VydmljZXxlbnwwfHwwfHx8MA%3D%3D",
+        "https://images.unsplash.com/photo-1664854953181-b12e6dda8b7c?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDZ8fGRhdGFzZXR8ZW58MHx8MHx8fDA%3D",
+        "https://images.unsplash.com/photo-1523274620588-4c03146581a1?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjh8fHByaXZhY3l8ZW58MHx8MHx8fDA%3D",
+        "https://plus.unsplash.com/premium_photo-1670402130476-25aa8c1986c9?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Njh8fGN5YmVyc2VjdXJpdHl8ZW58MHx8MHx8fDA%3D",
       ],
       resources: {
         "Civil Liberties & Law": [
