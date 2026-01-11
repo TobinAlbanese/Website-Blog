@@ -25,14 +25,22 @@ export default function HeatRevealCanvas({
       this.fontSize = options.fontSize || 10;
       this.fontFamily = options.fontFamily || "Zodiac";
       this.words = options.words || [
-        "TRUTH",
-        "IS",
-        "BURIED",
-        "BENEATH",
-        "LAYERS",
-        "OF",
-        "SILENT",
-        "POWER",
+         "TRUTH",
+  "IS",
+  "BURIED",
+  "BENEATH",
+  "LAYERS",
+  "OF",
+  "SILENT",
+  "POWER",
+  "HIDDEN",
+  "IN",
+  "SYSTEMS",
+  "DESIGNED",
+  "NOT",
+  "TO",
+  "BE",
+  "SEEN",
       ];
 
       this.heat = {
