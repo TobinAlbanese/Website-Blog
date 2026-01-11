@@ -1,3 +1,4 @@
+// pages/MidnightBureau/Archive.jsx (or wherever this file lives)
 import { useRouter } from "next/router";
 import { useState, useMemo, useRef, useEffect } from "react";
 import Link from "next/link";
@@ -27,13 +28,7 @@ const MONTHS_DESC = [
   "January",
 ];
 
-const META_CATEGORIES = [
-  "All",
-  "Recent",
-  "Popular",
-  "Favorites",
-  "Book Reviews",
-];
+const META_CATEGORIES = ["All", "Recent", "Popular", "Favorites", "Book Reviews"];
 
 const TOPIC_GROUPS = {
   "World & Diplomacy": ["Foreign Policy", "Geopolitics", "Diplomacy"],
@@ -80,7 +75,7 @@ const galleryImages = [
   "/assets/images/Snowboarding1.jpg",
 ];
 
-// ---------- NEW: small safety helpers ----------
+// ---------- small safety helpers ----------
 const arr = (x) => (Array.isArray(x) ? x : []);
 const toDate = (p) => {
   const d = new Date(p?.date || p?.published || p?.createdAt || 0);
@@ -93,6 +88,28 @@ const pickImg = (p) =>
   (Array.isArray(p?.images) ? p.images[0] : "") ||
   "/assets/images/space.jpg";
 
+// ---------- tiny media hook (layout-only response) ----------
+function useMediaQuery(query) {
+  const [matches, setMatches] = useState(false);
+
+  useEffect(() => {
+    const mql = window.matchMedia(query);
+    const onChange = (e) => setMatches(e.matches);
+
+    setMatches(mql.matches);
+
+    if (mql.addEventListener) mql.addEventListener("change", onChange);
+    else mql.addListener(onChange);
+
+    return () => {
+      if (mql.removeEventListener) mql.removeEventListener("change", onChange);
+      else mql.removeListener(onChange);
+    };
+  }, [query]);
+
+  return matches;
+}
+
 export default function Archive() {
   const totalYears = START_YEAR - END_YEAR + 1;
   const totalPages = Math.ceil(totalYears / YEARS_PER_PAGE);
@@ -101,6 +118,18 @@ export default function Archive() {
   const [selectedYear, setSelectedYear] = useState(START_YEAR);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [categoriesOpen, setCategoriesOpen] = useState(false);
+
+  // Breakpoints:
+  // - Mobile: <= 767
+  // - Tablet: 768 - 1024
+  // Desktop: >= 1025
+  const isMobile = useMediaQuery("(max-width: 767px)");
+  const isTablet = useMediaQuery("(min-width: 768px) and (max-width: 1024px)");
+  const isSmallScreen = isMobile || isTablet;
+
+  // Viewport cards per row (locked)
+  // Desktop: 3, Tablet: 2, Mobile: 1
+  const viewCount = isMobile ? 1 : isTablet ? 2 : 3;
 
   const yearsForPage = useMemo(() => {
     const years = [];
@@ -113,7 +142,7 @@ export default function Archive() {
     return years;
   }, [yearPage]);
 
-  // ---------- FIX: build safely + dedupe ----------
+  // ---------- build safely + dedupe ----------
   const allPosts = useMemo(() => {
     const spec = [
       ["Recent", "Recent"],
@@ -139,7 +168,6 @@ export default function Archive() {
       arr(MidnightBureauData?.[key]).map((p) => ({ ...p, category: label }))
     );
 
-    // dedupe by slug
     const seen = new Set();
     const deduped = combined.filter((p) => {
       if (!p?.slug) return false;
@@ -148,20 +176,17 @@ export default function Archive() {
       return true;
     });
 
-    // add dateObj (resilient) and sort newest first
     return deduped
       .map((p) => ({ ...p, dateObj: toDate(p) }))
       .sort((a, b) => b.dateObj - a.dateObj);
   }, []);
 
-  // ---------- FIX: safe filters when categories may be missing ----------
+  // ---------- safe filters ----------
   const filteredPosts = useMemo(() => {
     if (selectedCategory === "All") return allPosts;
 
     if (selectedCategory === "Book Reviews") {
-      const pool = new Set(
-        arr(MidnightBureauData?.BookReviews).map((q) => q.slug)
-      );
+      const pool = new Set(arr(MidnightBureauData?.BookReviews).map((q) => q.slug));
       return allPosts.filter((p) => pool.has(p.slug));
     }
     if (selectedCategory === "Popular") {
@@ -169,16 +194,13 @@ export default function Archive() {
       return allPosts.filter((p) => pool.has(p.slug));
     }
     if (selectedCategory === "Favorites") {
-      return allPosts.filter(
-        (p) => Array.isArray(p.tags) && p.tags.includes("Favorite")
-      );
+      return allPosts.filter((p) => Array.isArray(p.tags) && p.tags.includes("Favorite"));
     }
     if (selectedCategory === "Recent") {
       const pool = new Set(arr(MidnightBureauData?.Recent).map((q) => q.slug));
       return allPosts.filter((p) => pool.has(p.slug));
     }
 
-    // Topic groups
     if (selectedCategory in TOPIC_GROUPS) {
       const members = new Set(TOPIC_GROUPS[selectedCategory]);
       return allPosts.filter((p) => members.has(p.category));
@@ -199,9 +221,7 @@ export default function Archive() {
     return obj;
   }, [filteredPosts]);
 
-  const monthsAvailable = postsByYearMonth[selectedYear]
-    ? Object.keys(postsByYearMonth[selectedYear])
-    : [];
+  const monthsAvailable = postsByYearMonth[selectedYear] ? Object.keys(postsByYearMonth[selectedYear]) : [];
   const monthsToShow = MONTHS_DESC.filter((m) => monthsAvailable.includes(m));
 
   const [loadedYears, setLoadedYears] = useState([START_YEAR - 1]);
@@ -227,28 +247,43 @@ export default function Archive() {
   }, [loadedYears]);
 
   const scrollRefs = useRef({});
+
+  // IMPORTANT: keep your visual sizing the same; just make scroll math consistent and rows responsive
+  const CARD_W = 280;
+  const CARD_GAP = 24;
+
+  // Locked viewport width by breakpoint:
+  // Desktop: 3 cards, Tablet: 2 cards, Mobile: 1 card
+  const VIEWPORT_W = viewCount * CARD_W + (viewCount - 1) * CARD_GAP;
+
   const scrollMonth = (key, direction) => {
     const container = scrollRefs.current[key];
     if (!container) return;
-    const cardWidth = 280 + 24;
-    const scrollAmount = cardWidth * 4;
+
+    const cardWidth = CARD_W + CARD_GAP;
+
+    // Scroll exactly one “viewport page”
+    const scrollAmount = cardWidth * viewCount;
+
     const maxScrollLeft = container.scrollWidth - container.clientWidth;
-    let newScrollLeft =
+
+    const newScrollLeft =
       direction === "right"
         ? Math.min(container.scrollLeft + scrollAmount, maxScrollLeft)
         : Math.max(container.scrollLeft - scrollAmount, 0);
+
     container.scrollTo({ left: newScrollLeft, behavior: "smooth" });
   };
 
-  // --- CARD + IMAGE + CAPTION (ONLY change: image shorter + caption under) ---
+  // --- CARD + IMAGE + CAPTION (kept same look) ---
   const cardStyle = {
     backgroundColor: "var(--c-bg)",
     boxShadow: "0 6px 12px rgba(0,0,0,0.1)",
     overflow: "hidden",
     cursor: "pointer",
     userSelect: "none",
-    width: 280,
-    height: 380, // overall height unchanged
+    width: CARD_W,
+    height: 380,
     flexShrink: 0,
     display: "flex",
     flexDirection: "column",
@@ -259,7 +294,7 @@ export default function Archive() {
 
   const imgStyle = {
     width: "100%",
-    height: 300, // shortened image height to leave room for caption
+    height: 300,
     objectFit: "cover",
     display: "block",
     flex: "0 0 auto",
@@ -276,11 +311,11 @@ export default function Archive() {
   };
 
   const captionTitleStyle = {
-    fontSize: "1.1rem", // slightly larger
-    fontWeight: 800, // stronger emphasis
+    fontSize: "1.1rem",
+    fontWeight: 800,
     color: "var(--c-text-primary)",
     lineHeight: 1.25,
-    display: "-webkit-box", // clamp to two lines
+    display: "-webkit-box",
     WebkitLineClamp: 2,
     WebkitBoxOrient: "vertical",
     overflow: "hidden",
@@ -291,7 +326,7 @@ export default function Archive() {
     color: "var(--c-text-secondary)",
     textAlign: "right",
     lineHeight: 1.2,
-    marginTop: "auto", // locks to bottom of caption
+    marginTop: "auto",
   };
 
   const scrollButtonStyle = {
@@ -305,86 +340,117 @@ export default function Archive() {
     padding: 0,
     lineHeight: 1,
   };
+const headerArrowFontSize = isMobile ? 40 : isTablet ? 60 : 28;
 
-  const heroRef = useRef(null);
+
+  const headerScrollButtonStyle = {
+  cursor: "pointer",
+  border: "none",
+  background: "none",
+
+  // 🎯 breakpoint-controlled size
+  fontSize: headerArrowFontSize,
+
+  // generous tap target for touch devices
+  padding: "6px 10px",
+
+  fontWeight: 600,
+  color: "var(--c-accent)",
+  userSelect: "none",
+  lineHeight: 1,
+
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+
+  transition: "transform 0.15s ease, opacity 0.15s ease",
+};
+
+
   const router = useRouter();
   useEffect(() => {
-    const g =
-      typeof router.query.group === "string"
-        ? decodeURIComponent(router.query.group)
-        : null;
+    const g = typeof router.query.group === "string" ? decodeURIComponent(router.query.group) : null;
     if (g && CATEGORIES.includes(g)) {
       setSelectedCategory(g);
       setCategoriesOpen(true);
       setTimeout(() => scrollWithOffset("archive-content"), 50);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.query.group]);
 
   const SCROLL_OFFSET = 250;
   const scrollWithOffset = (id) => {
     const el = document.getElementById(id);
     if (!el) return;
-    const y =
-      el.getBoundingClientRect().top + window.pageYOffset - SCROLL_OFFSET;
+    const y = el.getBoundingClientRect().top + window.pageYOffset - SCROLL_OFFSET;
     window.scrollTo({ top: y, behavior: "smooth" });
   };
 
   const renderMonthRow = (key, postsForMonth) => {
-    const showScrollButtons = postsForMonth.length > 4;
+    const showScrollButtons = postsForMonth.length > viewCount;
 
     return (
       <>
+        {/* Locked viewport wrapper:
+            - Desktop: left aligned (3 cards)
+            - Tablet: left aligned (2 cards)
+            - Mobile: centered (1 card)
+        */}
         <div
           style={{
-            display: "flex",
-            gap: 24,
-            overflowX: "auto",
-            scrollBehavior: "smooth",
-            paddingBottom: 8,
-            width: 280 * 4 + 24 * 3,
-            scrollbarWidth: "none",
-            msOverflowStyle: "none",
+            width: "100%",
+            maxWidth: VIEWPORT_W,
+            margin: isMobile ? "0 auto" : 0,
           }}
-          ref={(el) => (scrollRefs.current[key] = el)}
-          className="hide-scrollbar"
         >
-          {postsForMonth.map((post) => {
-            const author = post.author || "Tobin Albanese"; // fallback
-
-            return (
-              <Link
-                href={`/MidnightBureau/${post.slug}`}
-                key={post.slug}
-                legacyBehavior
-              >
-                <a
-                  className="archive-card"
-                  style={cardStyle}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = "translateY(-4px)";
-                    e.currentTarget.style.boxShadow =
-                      "0 12px 20px rgba(0,0,0,0.15)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = "translateY(0)";
-                    e.currentTarget.style.boxShadow =
-                      "0 6px 12px rgba(0,0,0,0.1)";
-                  }}
-                >
-                  <img src={pickImg(post)} alt={post.title} style={imgStyle} />
-                  <div style={captionStyle}>
-                    <div style={captionTitleStyle} title={post.title}>
-                      {post.title}
+          <div
+            style={{
+              display: "flex",
+              gap: CARD_GAP,
+              overflowX: "auto",
+              scrollBehavior: "smooth",
+              paddingBottom: 8,
+              width: "100%",
+              flexWrap: "nowrap", // ✅ never drop to next line
+              scrollbarWidth: "none",
+              msOverflowStyle: "none",
+              WebkitOverflowScrolling: "touch",
+            }}
+            ref={(el) => (scrollRefs.current[key] = el)}
+            className="hide-scrollbar"
+          >
+            {postsForMonth.map((post) => {
+              const author = post.author || "Tobin Albanese";
+              return (
+                <Link href={`/MidnightBureau/${post.slug}`} key={post.slug} legacyBehavior>
+                  <a
+                    className="archive-card"
+                    style={cardStyle}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = "translateY(-4px)";
+                      e.currentTarget.style.boxShadow = "0 12px 20px rgba(0,0,0,0.15)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = "translateY(0)";
+                      e.currentTarget.style.boxShadow = "0 6px 12px rgba(0,0,0,0.1)";
+                    }}
+                  >
+                    <img src={pickImg(post)} alt={post.title} style={imgStyle} />
+                    <div style={captionStyle}>
+                      <div style={captionTitleStyle} title={post.title}>
+                        {post.title}
+                      </div>
+                      <div style={captionAuthorStyle}>{author}</div>
                     </div>
-                    {/* Author locked to bottom-right */}
-                    <div style={captionAuthorStyle}>{author}</div>
-                  </div>
-                </a>
-              </Link>
-            );
-          })}
+                  </a>
+                </Link>
+              );
+            })}
+          </div>
         </div>
-        {showScrollButtons && (
+
+        {/* Desktop only: keep arrows below row (your original behavior) */}
+        {!isSmallScreen && showScrollButtons && (
           <div
             style={{
               display: "flex",
@@ -393,18 +459,10 @@ export default function Archive() {
               marginTop: 8,
             }}
           >
-            <button
-              aria-label={`Scroll ${key} left`}
-              onClick={() => scrollMonth(key, "left")}
-              style={scrollButtonStyle}
-            >
+            <button aria-label={`Scroll ${key} left`} onClick={() => scrollMonth(key, "left")} style={scrollButtonStyle}>
               ‹
             </button>
-            <button
-              aria-label={`Scroll ${key} right`}
-              onClick={() => scrollMonth(key, "right")}
-              style={scrollButtonStyle}
-            >
+            <button aria-label={`Scroll ${key} right`} onClick={() => scrollMonth(key, "right")} style={scrollButtonStyle}>
               ›
             </button>
           </div>
@@ -413,38 +471,95 @@ export default function Archive() {
     );
   };
 
+  const renderMonthHeader = (key, monthLabel, yearLabel, postsForMonth) => {
+    const showHeaderArrows = isSmallScreen && postsForMonth.length > viewCount;
+
+    return (
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          marginBottom: 8,
+          userSelect: "none",
+          gap: 16,
+        }}
+      >
+        <h2
+          style={{
+            fontSize: "1.75rem",
+            fontWeight: 700,
+            color: "var(--c-text-primary)",
+            textTransform: "uppercase",
+            margin: 0,
+            flex: "1 1 auto",
+            minWidth: 0,
+          }}
+        >
+          {monthLabel} {yearLabel}
+        </h2>
+
+        {/* Tablet + Mobile: arrows to the right of date */}
+        {showHeaderArrows && (
+          <div style={{ display: "flex", gap: 10, alignItems: "center", flex: "0 0 auto" }}>
+            <button
+              aria-label={`Scroll ${key} left`}
+              onClick={() => scrollMonth(key, "left")}
+              style={headerScrollButtonStyle}
+            >
+              ‹
+            </button>
+            <button
+              aria-label={`Scroll ${key} right`}
+              onClick={() => scrollMonth(key, "right")}
+              style={headerScrollButtonStyle}
+            >
+              ›
+            </button>
+          </div>
+        )}
+      </div>
+    );
+  };
+
   return (
     <>
       <MetaHead />
       <SvgHead />
-      <div
-        className="dialog-off-canvas-main-canvas"
-        data-off-canvas-main-canvas=""
-      >
+
+      <div className="dialog-off-canvas-main-canvas" data-off-canvas-main-canvas="">
         <div className="text-align-center pt-15 d-flex dfp-tag-wrapper justify-around">
           <div id="js-dfp-tag-top--2"></div>
         </div>
         <div id="js-dfp-tag-outofpage--2"></div>
+
         <div className="base d-flex">
           <NavbarMB />
           <MBHeroGallery images={galleryImages} />
+
           <div id="archive-content" />
+
           <main
             style={{
               maxWidth: 1440,
               margin: "24px auto 60px",
               padding: "0 24px",
               display: "flex",
-              gap: 48,
+
+              // ✅ Mobile: stack sidebar above posts
+              // ✅ Tablet+Desktop: keep sidebar left, posts right
+              flexDirection: isMobile ? "column" : "row",
+
+              gap: isMobile ? 24 : 48,
               userSelect: "none",
             }}
           >
-            {/* SIDEBAR (unchanged) */}
-            {/* ... your sidebar code stays the same ... */}
+            {/* SIDEBAR */}
             <aside
               style={{
-                flex: "0 0 200px",
-                marginBottom: "100px",
+                flex: isMobile ? "0 0 auto" : "0 0 200px",
+                width: isMobile ? "100%" : undefined,
+                marginBottom: isMobile ? 0 : "100px",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "flex-start",
@@ -462,20 +577,20 @@ export default function Archive() {
                   cursor: "pointer",
                   border: "2px solid var(--c-accent)",
                   borderRadius: 4,
-                  backgroundColor: categoriesOpen
-                    ? "var(--c-bg-secondary)"
-                    : "transparent",
-                  color: categoriesOpen
-                    ? "var(--c-text-third)"
-                    : "var(--c-text)",
+                  backgroundColor: categoriesOpen ? "var(--c-bg-secondary)" : "transparent",
+                  color: categoriesOpen ? "var(--c-text-third)" : "var(--c-text)",
                   userSelect: "none",
                   transition: "transform 0.3s",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-between",
+
+                  // ✅ Mobile: button spans nicely
+                  width: isMobile ? "100%" : undefined,
                 }}
               >
                 <span style={{ paddingTop: "4px" }}>Categories</span>
+
                 <svg
                   className={`ham ham6 ${categoriesOpen ? "active" : ""}`}
                   viewBox="0 0 100 100"
@@ -498,35 +613,30 @@ export default function Archive() {
               </div>
 
               {categoriesOpen && (
-                <ul style={{ paddingLeft: 0, marginTop: 4 }}>
+                <ul
+                  style={{
+                    paddingLeft: 0,
+                    marginTop: 4,
+
+                    // ✅ Mobile: prevent gigantic dropdown; allow internal scroll
+                    maxHeight: isMobile ? 320 : undefined,
+                    overflowY: isMobile ? "auto" : undefined,
+                    WebkitOverflowScrolling: isMobile ? "touch" : undefined,
+                  }}
+                >
                   {CATEGORIES.map((cat) => (
-                    <li
-                      key={cat}
-                      style={{ listStyle: "none", marginBottom: 8 }}
-                    >
+                    <li key={cat} style={{ listStyle: "none", marginBottom: 8 }}>
                       <button
                         onClick={() => setSelectedCategory(cat)}
                         style={{
                           fontWeight: selectedCategory === cat ? "600" : "400",
-                          color:
-                            selectedCategory === cat
-                              ? "var(--c-text-third)"
-                              : "var(--c-text-secondary)",
-                          backgroundColor:
-                            selectedCategory === cat
-                              ? "var(--c-bg-secondary)"
-                              : "transparent",
-                          borderLeft:
-                            selectedCategory === cat
-                              ? "4px solid #d62827"
-                              : "4px solid transparent",
+                          color: selectedCategory === cat ? "var(--c-text-third)" : "var(--c-text-secondary)",
+                          backgroundColor: selectedCategory === cat ? "var(--c-bg-secondary)" : "transparent",
+                          borderLeft: selectedCategory === cat ? "4px solid #d62827" : "4px solid transparent",
                           padding: "8px 16px",
                           margin: 0,
                           cursor: "pointer",
-                          boxShadow:
-                            selectedCategory === cat
-                              ? "inset 4px 0 0 0 #d62827"
-                              : "none",
+                          boxShadow: selectedCategory === cat ? "inset 4px 0 0 0 #d62827" : "none",
                           borderRadius: 4,
                           textAlign: "left",
                           width: "100%",
@@ -542,9 +652,7 @@ export default function Archive() {
                           lineHeight: 1.2,
                           minHeight: 40,
                         }}
-                        aria-current={
-                          selectedCategory === cat ? "true" : undefined
-                        }
+                        aria-current={selectedCategory === cat ? "true" : undefined}
                         title={cat}
                       >
                         {cat}
@@ -562,6 +670,7 @@ export default function Archive() {
                 display: "flex",
                 flexDirection: "column",
                 gap: 48,
+                minWidth: 0, // ✅ prevent overflow/side scroll from long content
               }}
             >
               {monthsToShow.length === 0 ? (
@@ -574,45 +683,23 @@ export default function Archive() {
                     userSelect: "text",
                   }}
                 >
-                  No posts found for {selectedYear} in "{selectedCategory}"
-                  category.
+                  No posts found for {selectedYear} in "{selectedCategory}" category.
                 </p>
               ) : (
                 monthsToShow.map((month) => {
                   const key = `${selectedYear}-${month}`;
                   if (!scrollRefs.current[key]) scrollRefs.current[key] = null;
-
-                  const postsForMonth =
-                    postsByYearMonth[selectedYear][month] || [];
+                  const postsForMonth = postsByYearMonth[selectedYear][month] || [];
 
                   return (
                     <article key={key}>
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "space-between",
-                          marginBottom: 8,
-                          userSelect: "none",
-                        }}
-                      >
-                        <h2
-                          style={{
-                            fontSize: "1.75rem",
-                            fontWeight: 700,
-                            color: "var(--c-text-primary)",
-                            textTransform: "uppercase",
-                            margin: 0,
-                          }}
-                        >
-                          {month} {selectedYear}
-                        </h2>
-                      </div>
+                      {renderMonthHeader(key, month, selectedYear, postsForMonth)}
 
                       <div
                         style={{
                           height: 4,
-                          width: 600,
+                          width: isMobile ? "100%" : 600,
+                          maxWidth: 600,
                           backgroundColor: "#d62827",
                           margin: "0 0 24px 0",
                         }}
@@ -626,47 +713,23 @@ export default function Archive() {
 
               {/* Loaded years (same rendering) */}
               {loadedYears.map((year) => {
-                const monthsAvail = postsByYearMonth[year]
-                  ? Object.keys(postsByYearMonth[year])
-                  : [];
-                const monthsToShowYear = MONTHS_DESC.filter((m) =>
-                  monthsAvail.includes(m)
-                );
+                const monthsAvail = postsByYearMonth[year] ? Object.keys(postsByYearMonth[year]) : [];
+                const monthsToShowYear = MONTHS_DESC.filter((m) => monthsAvail.includes(m));
 
                 return monthsToShowYear.map((month) => {
                   const key = `${year}-${month}`;
                   if (!scrollRefs.current[key]) scrollRefs.current[key] = null;
-
                   const postsForMonth = postsByYearMonth[year][month] || [];
 
                   return (
                     <article key={key}>
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "space-between",
-                          marginBottom: 8,
-                          userSelect: "none",
-                        }}
-                      >
-                        <h2
-                          style={{
-                            fontSize: "1.75rem",
-                            fontWeight: 700,
-                            color: "var(--c-text-primary)",
-                            textTransform: "uppercase",
-                            margin: 0,
-                          }}
-                        >
-                          {month} {year}
-                        </h2>
-                      </div>
+                      {renderMonthHeader(key, month, year, postsForMonth)}
 
                       <div
                         style={{
                           height: 4,
-                          width: 600,
+                          width: isMobile ? "100%" : 600,
+                          maxWidth: 600,
                           backgroundColor: "#d62827",
                           margin: "0 0 24px 0",
                         }}
@@ -677,6 +740,9 @@ export default function Archive() {
                   );
                 });
               })}
+
+              {/* sentinel (kept) */}
+              <div ref={sentinelRef} style={{ height: 1 }} />
             </section>
           </main>
 

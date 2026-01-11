@@ -135,15 +135,16 @@ export default function Portfolio() {
   const scrollRefs = useRef({});
 
   const scroll = (category, direction) => {
-    const el = scrollRefs.current[category];
-    if (!el) return;
-    const scrollAmount = el.clientWidth;
-    const newScrollLeft =
-      direction === "left"
-        ? el.scrollLeft - scrollAmount
-        : el.scrollLeft + scrollAmount;
-    el.scrollTo({ left: newScrollLeft, behavior: "smooth" });
-  };
+  const el = scrollRefs.current[category];
+  if (!el) return;
+
+  const amount = el.clientWidth; // one “page” (2 cards visible)
+  el.scrollBy({
+    left: direction === "left" ? -amount : amount,
+    behavior: "smooth",
+  });
+};
+
 
   return (
     <>
@@ -177,7 +178,7 @@ export default function Portfolio() {
                   >
                     <div className="carousel-header">
                       <h2>{category}</h2>
-                      {safeProjects.length > 3 && (
+                      {safeProjects.length > 2 && (
                         <div className="carousel-controls">
                           <button onClick={() => scroll(category, "left")}>
                             &lt;

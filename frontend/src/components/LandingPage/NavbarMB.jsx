@@ -389,18 +389,13 @@ export default function NavbarMB() {
                     </a>
                   </li>
                   <li className="menu__topics-list-item mb-10">
-                    <a href="/MidnightBureau/BookReviews" onClick={() => setMenuOpen(false)}>
-                      Book Reviews
+                    <a href="/MidnightBureau/Login" onClick={() => setMenuOpen(false)}>
+                      Login
                     </a>
                   </li>
                   <li className="menu__topics-list-item mb-10">
                     <a href="/MidnightBureau/Newsletter" onClick={() => setMenuOpen(false)}>
                       Newsletter
-                    </a>
-                  </li>
-                  <li className="menu__topics-list-item mb-10">
-                    <a href="/MidnightBureau/Podcasts" onClick={() => setMenuOpen(false)}>
-                      Podcasts
                     </a>
                   </li>
                   <li className="menu__topics-list-item mb-10">
@@ -418,6 +413,7 @@ export default function NavbarMB() {
                       Contact
                     </a>
                   </li>
+                  
                 </ul>
 
                 {/* MOBILE ONLY: Browse by Topic lives under Browse by Section (design match to home menu) */}

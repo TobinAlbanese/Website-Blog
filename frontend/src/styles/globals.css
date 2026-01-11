@@ -3323,10 +3323,11 @@ body {
 /* ==================================================
    BANNER
    ================================================== */
-.midnight-bureau-article banner {
-  width: 1400px;
+.midnight-bureau-article .banner {
+  width: 100%;
   height: 200px;
   object-fit: cover;
+  display: block;
 }
 
 /* ==================================================
@@ -4650,3 +4651,534 @@ html { overflow-x: hidden; }
 
 
 
+
+
+/* =========================
+   MIDNIGHT BUREAU — MOBILE LAYOUT
+   Keep same content hierarchy, change geometry for phone widths.
+   ========================= */
+
+@media (max-width: 767px) {
+  /* Hero: stack text + canvas instead of side-by-side */
+  .mb-hero-row {
+    flex-direction: column !important;
+    gap: 22px !important;
+  }
+
+  .mb-hero-media {
+    width: 100% !important;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* Reduce overall page side padding slightly on mobile */
+  main {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  /* Latest + Recent: switch from 2 columns to 1 column */
+  .mb-briefing-recent {
+    flex-direction: column !important;
+    gap: 28px !important;
+  }
+
+  /* Make the main post image less extreme on mobile */
+  .latest-briefing-wrapper img {
+    height: 320px !important;
+  }
+
+  /* Recent posts: tighten spacing a bit */
+  .mb-recent-col {
+    gap: 18px !important;
+  }
+
+  /* Topics grid: force 1 column on phones */
+  .mb-topics-grid {
+    grid-template-columns: 1fr !important;
+    gap: 36px !important;
+  }
+
+  /* Topic columns: reduce internal gap */
+  .mb-topics-grid > div {
+    gap: 18px !important;
+  }
+}
+
+
+
+/* Hide horizontal scrollbar, keep scroll functional */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -webkit-overflow-scrolling: touch;
+}
+
+
+
+/* =========================================================
+   SLUG LAYOUT FIXES (ALL SCREENS)
+   - stops title bleed
+   - keeps content centered + readable
+========================================================= */
+
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.midnight-bureau-article {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden; /* clamps any child overflow */
+}
+
+.mb-article-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 24px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.mb-article-inner * {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Banner should inherit the inner width without stretching content wider */
+.mb-banner,
+.midnight-bureau-article .banner {
+  display: block;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: 200px;
+  object-fit: cover;
+  position: relative;
+  z-index: 1;
+}
+
+/* =========================================================
+   MB TITLE — SINGLE SOURCE OF TRUTH (TITLE ONLY)
+   - always wraps (tablet + desktop + mobile)
+   - never ellipsis
+   - always below banner (no overlap)
+   - cleaner typography on smaller screens
+========================================================= */
+
+.midnight-bureau-article h1.mb-title {
+  /* layout */
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 100%;
+  margin: 18px 0 10px;   /* controls spacing under banner */
+  padding: 0;
+
+  /* force wrap; kill truncation/ellipsis from any legacy rule */
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+
+  /* if any global clamp exists, this neutralizes it */
+  display: block;
+  -webkit-line-clamp: unset !important;
+  -webkit-box-orient: unset !important;
+
+  /* wrapping behavior */
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  hyphens: auto;
+
+  /* alignment */
+  text-align: left;
+
+  /* typography (desktop baseline) */
+  font-size: clamp(2.1rem, 3.2vw, 4.2rem);
+  line-height: 1.06;
+  letter-spacing: 0.01em;
+
+  /* nicer wraps in modern browsers */
+  text-wrap: balance;
+}
+
+/* iPad / tablet */
+@media (max-width: 1024px) {
+  .midnight-bureau-article h1.mb-title {
+    margin-top: 16px;
+    font-size: clamp(1.9rem, 4.2vw, 3.2rem);
+    line-height: 1.08;
+  }
+}
+
+/* mobile */
+@media (max-width: 767px) {
+  .midnight-bureau-article h1.mb-title {
+    margin-top: 14px;         /* bring title down slightly from banner */
+    margin-bottom: 8px;       /* reduce space below title */
+    font-size: clamp(1.55rem, 7vw, 2.35rem);
+    line-height: 1.12;
+    letter-spacing: 0.005em;
+  }
+}
+
+
+/* =========================================================
+   Keep subtitle/meta contained as well
+========================================================= */
+
+.mb-subtitle,
+.mb-meta,
+.intro-paragraph,
+.outro-paragraph,
+.mb-text {
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* =========================================================
+   TABLET / iPAD (768–1024)
+   - push the vertical links slightly right (more spacing)
+========================================================= */
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .vertical-link {
+    left: 24px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .midnight-bureau-article .top-link {
+    left: 96px;
+  }
+  .midnight-bureau-article .bottom-link {
+    right: 96px;
+  }
+}
+
+/* =========================================================
+   MOBILE (<= 767)
+   - shrink/flush everything like desktop (readability)
+   - banner, text, and images stop stretching
+   - float images become stacked and centered
+   - TITLE wraps normally (no justify)
+========================================================= */
+
+@media (max-width: 767px) {
+  .mb-article-inner {
+    padding: 0 16px;
+  }
+
+  .mb-banner,
+  .midnight-bureau-article .banner {
+    height: 140px !important;
+    object-fit: cover;
+  }
+
+
+
+  .mb-subtitle {
+    font-size: 1rem;
+  }
+
+  .mb-meta {
+    font-size: 0.95rem;
+  }
+
+  .intro-paragraph,
+  .outro-paragraph,
+  .mb-text {
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  .mb-float-img {
+    float: none !important;
+    display: block !important;
+    width: 100% !important;
+    max-width: 420px;
+    height: auto !important;
+    aspect-ratio: 260 / 380;
+    object-fit: cover;
+    margin: 0 auto 16px !important;
+  }
+
+  .mb-block-row {
+    overflow: visible !important;
+  }
+
+  .gallery-wrapper {
+    padding: 0 0;
+  }
+}
+
+/* =========================================================
+   Keep vertical links on screen across all widths
+========================================================= */
+
+.midnight-bureau-article .top-link {
+  left: clamp(12px, 4vw, 120px);
+}
+
+.midnight-bureau-article .bottom-link {
+  right: clamp(12px, 4vw, 120px);
+}
+
+.midnight-bureau-article .vertical-link {
+  white-space: nowrap;
+}
+
+/* Tablet: move vertical links inward more */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .midnight-bureau-article .top-link {
+    left: clamp(40px, 6vw, 140px);
+  }
+  .midnight-bureau-article .bottom-link {
+    right: clamp(40px, 6vw, 140px);
+  }
+}
+
+/* Mobile: move vertical links inward more */
+@media (max-width: 767px) {
+  .midnight-bureau-article .top-link {
+    left: clamp(26px, 8vw, 90px);
+  }
+  .midnight-bureau-article .bottom-link {
+    right: clamp(26px, 8vw, 90px);
+  }
+}
+
+/* =========================================================
+   Gallery containment (unchanged)
+========================================================= */
+
+.gallery-wrapper {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+.gallery-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  max-width: 100%;
+}
+
+.gallery-arrows {
+  display: flex;
+  gap: 12px;
+  flex: 0 0 auto;
+  align-items: center;
+}
+
+.gallery-arrows button {
+  font-size: 28px;
+  padding: 6px 10px;
+}
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   PORTFOLIO CAROUSEL — 2-UP DESKTOP/iPAD, 1-UP MOBILE
+   Fixes:
+   - REAL horizontal overflow so arrows work
+   - NO left shift: cards start flush with header/content column
+   - EXACTLY 2 cards visible on desktop + iPad (no 3rd peek)
+   - Mobile shows 1 card
+   - Hide arrows on iPad + mobile
+   - Do NOT affect Navbar (scoped to .PortfolioPage)
+========================================================= */
+
+.PortfolioPage .projects-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 24px;
+  box-sizing: border-box;
+}
+
+.PortfolioPage .carousel-section {
+  margin: 0 0 64px 0;
+}
+
+.PortfolioPage .carousel-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.PortfolioPage .carousel-header h2 {
+  margin: 0;
+}
+
+/* Scroll area (this is what your buttons scroll) */
+.PortfolioPage .carousel-scroll-wrapper {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+
+  /* snap */
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: 0px;
+
+  /* IMPORTANT: no mystery inset */
+  padding: 18px 0 6px;
+  margin: 0;
+}
+
+/* The track MUST be max-content so it actually overflows and scrolls */
+.PortfolioPage .projects-grid {
+  display: flex;
+  align-items: stretch;
+  gap: 24px;
+
+  width: max-content;  /* KEY: enables real overflow */
+  min-width: 100%;     /* keeps first view flush */
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* Each item is a fixed “card width” so only 2 are visible */
+.PortfolioPage .project-wrapper {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  box-sizing: border-box;
+  display: flex;
+
+  /* Two-up sizing: (viewport - paddings - gap) / 2, clamped for large screens */
+  width: clamp(520px, calc((100vw - 48px - 24px) / 2), 680px);
+}
+
+/* Card fills wrapper */
+.PortfolioPage .project-card {
+  width: 100%;
+  height: 100%;
+  min-height: 280px;
+  box-sizing: border-box;
+}
+
+/* Keep content + image together (no drifting) */
+.PortfolioPage .project-card .project-content {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.PortfolioPage .project-card .project-text {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.PortfolioPage .project-card .project-text h3 {
+  margin: 0 0 0.35rem 0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.PortfolioPage .project-card .project-text p {
+  margin: 0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+  overflow: hidden;
+}
+
+/* Thumb sizing */
+.PortfolioPage .project-card .project-thumb {
+  width: 256px;
+  height: 256px;
+  flex: 0 0 auto;
+}
+
+/* =========================
+   iPad + smaller laptops
+   Still 2-up, slightly tighter
+   ALSO: hide arrows here
+========================= */
+@media (max-width: 1024px) {
+  .PortfolioPage .projects-container {
+    padding: 0 16px;
+  }
+
+  .PortfolioPage .projects-grid {
+    gap: 18px;
+  }
+
+  .PortfolioPage .project-wrapper {
+    width: clamp(420px, calc((100vw - 32px - 18px) / 2), 600px);
+  }
+
+  .PortfolioPage .project-card {
+    min-height: 260px;
+  }
+
+  .PortfolioPage .project-card .project-thumb {
+    width: 220px;
+    height: 220px;
+  }
+
+  .PortfolioPage .project-card .project-text p {
+    -webkit-line-clamp: 4;
+  }
+
+  /* Hide arrows on iPad */
+  .PortfolioPage .carousel-controls {
+    display: none !important;
+  }
+}
+
+/* =========================
+   Mobile
+   1-up + reduce tall cards
+   ALSO: hide arrows here
+========================= */
+@media (max-width: 640px) {
+  /* shrink image more aggressively */
+  .PortfolioPage .project-card .project-thumb {
+    width: 96px;
+    height: 96px;
+    flex: 0 0 96px; /* HARD stop — image cannot grow */
+  }
+
+  /* let text take remaining space */
+  .PortfolioPage .project-card .project-text {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+}
+@media (max-width: 640px) {
+  .PortfolioPage .projects-grid {
+    gap: 18px;
+  }
+}
+@media (max-width: 640px) {
+  .PortfolioPage .project-card .project-text p {
+    -webkit-line-clamp: 6;
+  }
+}
+@media (max-width: 640px) {
+  .PortfolioPage .project-card .project-thumb {
+    width: 200px !important;
+    height: 225px !important;
+    flex: 0 0 96px !important;
+  }
+}

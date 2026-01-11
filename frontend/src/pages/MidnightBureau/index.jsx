@@ -442,7 +442,7 @@ export default function MidnightBureau() {
             >
               <div className="col-12">
                 <div
-                  className="row justify-between d-flex"
+                  className="row justify-between d-flex mb-hero-row"
                   data-armstrong-id="row"
                 >
                   {/* Hero section left */}
@@ -554,7 +554,7 @@ export default function MidnightBureau() {
                   </div>
 
                   {/* Hero section right image (untouched) */}
-                  <div className="heat-canvas-wrapper">
+                  <div className="heat-canvas-wrapper mb-hero-media">
                     <HeatRevealCanvas width={800} height={800} />
                   </div>
                 </div>
@@ -576,6 +576,7 @@ export default function MidnightBureau() {
               {/* Latest + Recent side-by-side */}
               <section
                 id="briefing-recent"
+                className="mb-briefing-recent"
                 style={{
                   display: "flex",
                   gap: "48px",
@@ -609,6 +610,7 @@ export default function MidnightBureau() {
                 {/* Recent Posts */}
                 <div
                   id="recent-posts"
+                  className="mb-recent-col"
                   style={{
                     flex: 1,
                     display: "flex",
@@ -671,6 +673,7 @@ export default function MidnightBureau() {
 
               {/* Categories Section */}
               <div
+                className="mb-topics-grid"
                 style={{
                   maxWidth: "1350px",
                   margin: "0 auto 100px auto",

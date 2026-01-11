@@ -109,7 +109,7 @@ const ProjectPost = ({ project }) => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [pairedCount]);
 
-  // Freeze body scroll when menu is open
+  // Freeze body scroll when menu is open (kept as-is; does not change navbar)
   useEffect(() => {
     const body = document.body;
     if (menuOpen) {
@@ -136,7 +136,6 @@ const ProjectPost = ({ project }) => {
     });
   }, [shouldShowGallery, galleryIdx, midOfWindow]);
 
-  // Early return is FINE now (no hooks below this line)
   if (router.isFallback) return <p>Loading...</p>;
 
   // ---------- Non-hook helpers ----------
@@ -172,7 +171,6 @@ const ProjectPost = ({ project }) => {
       <MetaHead />
       <SvgHead />
 
-      {/* NAVBAR */}
       <div
         className="dialog-off-canvas-main-canvas"
         data-off-canvas-main-canvas=""
@@ -181,13 +179,16 @@ const ProjectPost = ({ project }) => {
           <div id="js-dfp-tag-top--2" />
         </div>
         <div id="js-dfp-tag-outofpage--2" />
+
         <div className="base d-flex">
+          {/* ✅ NAVBAR untouched */}
           <Navbar />
 
           <Head>
             <title>{project.title} – Portfolio</title>
             <meta name="description" content={project.excerpt || ""} />
           </Head>
+
           <Script
             src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
             strategy="afterInteractive"
@@ -206,135 +207,185 @@ const ProjectPost = ({ project }) => {
               </a>
             )}
 
-            {/* Banner */}
-            <img
-              ref={bannerRef}
-              className="banner"
-              src={bannerSrc}
-              alt="Banner"
-              style={{ width: "100%", height: "200px", objectFit: "cover" }}
-            />
-
-            {/* Title block */}
-            <h1 className="mb-title">{(project.title || "").toUpperCase()}</h1>
-            <h2>by {project.author}</h2>
-            <h3>
-              {project.volume || "Volume No. 1"}{" "}
-              <span className="date">
-                {project.date ? new Date(project.date).toDateString() : ""}
-              </span>
-            </h3>
-
-            {/* Intro */}
-            {contentBlocks[0]?.text && (
-              <p
-                className="intro-paragraph"
-                dangerouslySetInnerHTML={{ __html: contentBlocks[0].text }}
+            {/* ✅ NEW: Inner content wrapper (same as blog slug) */}
+            <div className="mb-article-inner">
+              {/* Banner */}
+              <img
+                ref={bannerRef}
+                className="banner mb-banner"
+                src={bannerSrc}
+                alt="Banner"
+                style={{ width: "100%", height: "200px", objectFit: "cover" }}
               />
-            )}
 
-            {/* Body with alternating float images (indexes 0..pairedCount-1) */}
-            {contentBlocks.slice(1, -1).map((block, i) => {
-              const imgIndex = i;
-              const side = alternatingAlign(i);
-              const floatStyle = {
-                float: side,
-                margin: side === "left" ? "0 1rem 1rem 0" : "0 0 1rem 1rem",
-              };
-              const imgSrc = allImages[imgIndex];
+              {/* Title block */}
+              <h1 className="mb-title">{(project.title || "").toUpperCase()}</h1>
+              <h2 className="mb-subtitle">by {project.author || "Unknown"}</h2>
+              <h3 className="mb-meta">
+                {project.volume || "Volume No. 1"}{" "}
+                <span className="date">
+                  {project.date ? new Date(project.date).toDateString() : ""}
+                </span>
+              </h3>
 
-              return (
-                <div
-                  key={imgIndex}
-                  style={{ overflow: "hidden", marginBottom: "2rem" }}
-                >
-                  {imgSrc && (
-                    <img
-                      id={`img-${imgIndex}`}
-                      src={imgSrc}
-                      alt={`Project Image ${imgIndex + 1}`}
-                      className={`card-image ${
-                        visibleImages[imgIndex] ? "slide-in" : ""
-                      }`}
-                      style={{
-                        ...floatStyle,
-                        width: "260px",
-                        height: "380px",
-                        objectFit: "cover",
-                      }}
-                      onClick={() => setModalImage(imgSrc)}
-                    />
-                  )}
+              {/* Intro */}
+              {contentBlocks[0]?.text && (
+                <p
+                  className="intro-paragraph"
+                  dangerouslySetInnerHTML={{ __html: contentBlocks[0].text }}
+                />
+              )}
+
+              {/* Body with alternating float images */}
+              {contentBlocks.slice(1, -1).map((block, i) => {
+                const imgIndex = i;
+                const side = alternatingAlign(i);
+                const floatStyle = {
+                  float: side,
+                  margin:
+                    side === "left" ? "0 1rem 1rem 0" : "0 0 1rem 1rem",
+                };
+                const imgSrc = allImages[imgIndex];
+
+                return (
                   <div
-                    className="text-block"
-                    dangerouslySetInnerHTML={{ __html: block?.text || "" }}
-                  />
-                </div>
-              );
-            })}
-
-            {/* Outro */}
-            {contentBlocks.at(-1)?.text && (
-              <p
-                className="outro-paragraph"
-                dangerouslySetInnerHTML={{ __html: contentBlocks.at(-1).text }}
-              />
-            )}
-
-            {/* Gallery */}
-            {shouldShowGallery && (
-              <div
-                className="gallery-wrapper"
-                style={{ maxWidth: "1400px", margin: "3rem auto" }}
-              >
-                <div className="gallery-header">
-                  <h4>Gallery Images</h4>
-                  {gallery.length > 4 && (
-                    <div className="gallery-arrows">
-                      {galleryIdx > 0 && (
-                        <button
-                          onClick={() => handleGalleryNav("prev")}
-                          aria-label="Previous images"
-                        >
-                          &lt;
-                        </button>
-                      )}
-                      {galleryIdx + 5 < gallery.length && (
-                        <button
-                          onClick={() => handleGalleryNav("next")}
-                          aria-label="Next images"
-                        >
-                          &gt;
-                        </button>
-                      )}
-                    </div>
-                  )}
-                </div>
-
-                <div className="box-container">
-                  {gallery.slice(galleryIdx, galleryIdx + 5).map((src, idx) => {
-                    const absoluteIdx = galleryIdx + idx;
-                    const isExpanded = expandedCarouselIndex === absoluteIdx;
-                    return (
-                      <div
-                        key={absoluteIdx}
-                        className={`box ${
-                          isExpanded ? "expanded" : expandedCarouselIndex === null ? "" : "closed"
+                    key={imgIndex}
+                    className="mb-block-row"
+                    style={{ overflow: "hidden", marginBottom: "2rem" }}
+                  >
+                    {imgSrc && (
+                      <img
+                        id={`img-${imgIndex}`}
+                        src={imgSrc}
+                        alt={`Project Image ${imgIndex + 1}`}
+                        className={`card-image mb-float-img ${
+                          visibleImages[imgIndex] ? "slide-in" : ""
                         }`}
-                        style={{ backgroundImage: `url("${src}")` }}
-                        onClick={() => toggleCarouselExpand(absoluteIdx)}
-                      >
-                        <div className="overlay" />
+                        style={{
+                          ...floatStyle,
+                          width: "260px",
+                          height: "380px",
+                          objectFit: "cover",
+                        }}
+                        onClick={() => setModalImage(imgSrc)}
+                      />
+                    )}
+                    <div
+                      className="text-block mb-text"
+                      dangerouslySetInnerHTML={{ __html: block?.text || "" }}
+                    />
+                  </div>
+                );
+              })}
+
+              {/* Outro */}
+              {contentBlocks.at(-1)?.text && (
+                <p
+                  className="outro-paragraph"
+                  dangerouslySetInnerHTML={{
+                    __html: contentBlocks.at(-1).text,
+                  }}
+                />
+              )}
+
+              {/* Gallery */}
+              {shouldShowGallery && (
+                <div
+                  className="gallery-wrapper"
+                  style={{ maxWidth: "1400px", margin: "3rem auto" }}
+                >
+                  <div className="gallery-header">
+                    <h4>Gallery Images</h4>
+                    {gallery.length > 4 && (
+                      <div className="gallery-arrows">
+                        {galleryIdx > 0 && (
+                          <button
+                            onClick={() => handleGalleryNav("prev")}
+                            aria-label="Previous images"
+                          >
+                            &lt;
+                          </button>
+                        )}
+                        {galleryIdx + 5 < gallery.length && (
+                          <button
+                            onClick={() => handleGalleryNav("next")}
+                            aria-label="Next images"
+                          >
+                            &gt;
+                          </button>
+                        )}
                       </div>
-                    );
-                  })}
+                    )}
+                  </div>
+
+                  <div className="box-container">
+                    {gallery
+                      .slice(galleryIdx, galleryIdx + 5)
+                      .map((src, idx) => {
+                        const absoluteIdx = galleryIdx + idx;
+                        const isExpanded =
+                          expandedCarouselIndex === absoluteIdx;
+                        return (
+                          <div
+                            key={absoluteIdx}
+                            className={`box ${
+                              isExpanded
+                                ? "expanded"
+                                : expandedCarouselIndex === null
+                                ? ""
+                                : "closed"
+                            }`}
+                            style={{ backgroundImage: `url("${src}")` }}
+                            onClick={() => toggleCarouselExpand(absoluteIdx)}
+                          >
+                            <div className="overlay" />
+                          </div>
+                        );
+                      })}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
 
-            <hr className="fancy-line" />
+              <hr className="fancy-line" />
 
-            {/* Image Modal */}
+              {/* Resources */}
+              {project.resources && (
+                <section className="resources" id="resources">
+                  <h4>Resources &amp; Links</h4>
+                  <div className="navs-wrapper">
+                    {Object.entries(project.resources).map(
+                      ([category, links]) => (
+                        <div key={category} className="resource-category">
+                          <h5 className="category-title">
+                            {category.replace(/([A-Z])/g, " $1").trim()}
+                          </h5>
+                          <ul className="sub-resource-list">
+                            {(links || []).map((link, i) => (
+                              <li key={i}>
+                                <a
+                                  className="sub-resource-link"
+                                  href={link.url}
+                                  target={link.external ? "_blank" : "_self"}
+                                  rel={
+                                    link.external
+                                      ? "noopener noreferrer"
+                                      : undefined
+                                  }
+                                >
+                                  <span>{link.label}</span>
+                                </a>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )
+                    )}
+                  </div>
+                </section>
+              )}
+            </div>
+
+            {/* ✅ Image Modal kept outside inner wrapper */}
             {modalImage && (
               <div
                 className="midnight-img-modal"
@@ -367,42 +418,6 @@ const ProjectPost = ({ project }) => {
                   }}
                 />
               </div>
-            )}
-
-            {/* Resources */}
-            {project.resources && (
-              <section className="resources" id="resources">
-                <h4>Resources &amp; Links</h4>
-                <div className="navs-wrapper">
-                  {Object.entries(project.resources).map(
-                    ([category, links]) => (
-                      <div key={category} className="resource-category">
-                        <h5 className="category-title">
-                          {category.replace(/([A-Z])/g, " $1").trim()}
-                        </h5>
-                        <ul className="sub-resource-list">
-                          {links.map((link, i) => (
-                            <li key={i}>
-                              <a
-                                className="sub-resource-link"
-                                href={link.url}
-                                target={link.external ? "_blank" : "_self"}
-                                rel={
-                                  link.external
-                                    ? "noopener noreferrer"
-                                    : undefined
-                                }
-                              >
-                                <span>{link.label}</span>
-                              </a>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )
-                  )}
-                </div>
-              </section>
             )}
           </div>
 

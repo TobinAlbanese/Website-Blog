@@ -13,18 +13,12 @@ import { faBookmark as regularBookmark } from "@fortawesome/free-regular-svg-ico
 import NavbarMB from "../../components/LandingPage/NavbarMB.jsx";
 import { listMB, getMB } from "../../lib/posts";
 
+
+
 // Only register GSAP plugin client-side
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
-
-// --- Helpers at module scope ---
-const allPosts = () => {
-  const arrays = Object.values(MidnightBureauData).filter(Array.isArray);
-  const flat = arrays.flat().filter((p) => p && p.slug);
-  const seen = new Set();
-  return flat.filter((p) => !seen.has(p.slug) && (seen.add(p.slug), true));
-};
 
 const formatDate = (d) => {
   const dt = d ? new Date(d) : null;
@@ -116,7 +110,7 @@ const BlogPost = ({ article }) => {
   const outroBlock = contentBlocks.at(-1)?.text || "";
 
   // Gallery images come after article content length in the images array
-  const galleryImages = article.images?.slice(contentBlocks.length) || []; // may be empty; handled below
+  const galleryImages = article.images?.slice(contentBlocks.length) || [];
 
   const handleGalleryNav = (dir) => {
     setGalleryIdx((prev) => {
@@ -183,155 +177,214 @@ const BlogPost = ({ article }) => {
               </a>
             )}
 
-            {/* Banner */}
-            <img
-              ref={bannerRef}
-              className="banner"
-              src={bannerSrc}
-              alt="Banner"
-              style={{ width: "100%", height: "200px", objectFit: "cover" }}
-            />
-
-            {/* Title block */}
-            <h1>{(article.title || "").toUpperCase()}</h1>
-            <h2>by {article.author || "Unknown"}</h2>
-            <h3>
-              {article.volume || "VOLUME"}{" "}
-              <span className="date">{formatDate(article.date)}</span>
-            </h3>
-
-            {/* Intro */}
-            {introBlock && (
-              <p
-                className="intro-paragraph"
-                dangerouslySetInnerHTML={{ __html: introBlock }}
+            {/* ✅ NEW: Inner content wrapper to prevent title/content bleed */}
+            <div className="mb-article-inner">
+              {/* Banner */}
+              <img
+                ref={bannerRef}
+                className="banner mb-banner"
+                src={bannerSrc}
+                alt="Banner"
+                style={{ width: "100%", height: "200px", objectFit: "cover" }}
               />
-            )}
 
-            {/* Body with alternating float images */}
-            {contentBlocks.slice(1, -1).map((block, i) => {
-              const imgIndex = i; // image aligned with this block index
-              const side = alternatingAlign(i); // "left" or "right"
-              const floatStyle = {
-                float: side,
-                margin: side === "left" ? "0 1rem 1rem 0" : "0 0 1rem 1rem",
-              };
-              const imgSrc =
-                article.images?.[imgIndex] ||
-                article.archiveImage ||
-                "/assets/images/space.jpg";
+              {/* Title block */}
+              <h1 className="mb-title">
+                {(article.title || "").toUpperCase()}
+              </h1>
+              <h2 className="mb-subtitle">by {article.author || "Unknown"}</h2>
+              <h3 className="mb-meta">
+                {article.volume || "VOLUME"}{" "}
+                <span className="date">{formatDate(article.date)}</span>
+              </h3>
 
-              return (
-                <div
-                  key={imgIndex}
-                  style={{ overflow: "hidden", marginBottom: "2rem" }}
-                >
-                  <img
-                    id={`img-${imgIndex}`}
-                    src={imgSrc}
-                    alt={`Article Image ${imgIndex + 1}`}
-                    className={`card-image ${visibleImages[imgIndex] ? "slide-in" : ""}`}
-                    style={{
-                      ...floatStyle,
-                      width: "260px",
-                      height: "380px",
-                      objectFit: "cover",
-                    }}
-                    onClick={() => setModalImage(imgSrc)}
-                  />
+              {/* Intro */}
+              {introBlock && (
+                <p
+                  className="intro-paragraph"
+                  dangerouslySetInnerHTML={{ __html: introBlock }}
+                />
+              )}
+
+              {/* Body with alternating float images */}
+              {contentBlocks.slice(1, -1).map((block, i) => {
+                const imgIndex = i; // image aligned with this block index
+                const side = alternatingAlign(i); // "left" or "right"
+                const floatStyle = {
+                  float: side,
+                  margin:
+                    side === "left"
+                      ? "0 1rem 1rem 0"
+                      : "0 0 1rem 1rem",
+                };
+                const imgSrc =
+                  article.images?.[imgIndex] ||
+                  article.archiveImage ||
+                  "/assets/images/space.jpg";
+
+                return (
                   <div
-                    className="text-block"
-                    dangerouslySetInnerHTML={{ __html: block?.text || "" }}
-                  />
+                    key={imgIndex}
+                    className="mb-block-row"
+                    style={{ overflow: "hidden", marginBottom: "2rem" }}
+                  >
+                    <img
+                      id={`img-${imgIndex}`}
+                      src={imgSrc}
+                      alt={`Article Image ${imgIndex + 1}`}
+                      className={`card-image mb-float-img ${
+                        visibleImages[imgIndex] ? "slide-in" : ""
+                      }`}
+                      style={{
+                        ...floatStyle,
+                        width: "260px",
+                        height: "380px",
+                        objectFit: "cover",
+                      }}
+                      onClick={() => setModalImage(imgSrc)}
+                    />
+                    <div
+                      className="text-block mb-text"
+                      dangerouslySetInnerHTML={{ __html: block?.text || "" }}
+                    />
+                  </div>
+                );
+              })}
+
+              {/* Outro */}
+              {outroBlock && (
+                <p
+                  className="outro-paragraph"
+                  dangerouslySetInnerHTML={{ __html: outroBlock }}
+                />
+              )}
+
+              {/* Gallery */}
+              {galleryImages.length > 0 && (
+                <div
+                  className="gallery-wrapper"
+                  style={{ maxWidth: "1400px", margin: "3rem auto" }}
+                >
+                  <div className="gallery-header">
+                    <h4>Gallery Images</h4>
+                    {galleryImages.length > 5 && (
+                      <div className="gallery-arrows">
+                        {galleryIdx > 0 && (
+                          <button
+                            onClick={() => handleGalleryNav("prev")}
+                            aria-label="Previous images"
+                          >
+                            &lt;
+                          </button>
+                        )}
+                        {galleryIdx + 5 < galleryImages.length && (
+                          <button
+                            onClick={() => handleGalleryNav("next")}
+                            aria-label="Next images"
+                          >
+                            &gt;
+                          </button>
+                        )}
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="box-container">
+                    {galleryImages
+                      .slice(galleryIdx, galleryIdx + 5)
+                      .map((src, idx) => {
+                        const absoluteIdx = galleryIdx + idx;
+                        const isExpanded =
+                          expandedCarouselIndex === absoluteIdx;
+                        return (
+                          <div
+                            key={absoluteIdx}
+                            className={`box ${
+                              isExpanded
+                                ? "expanded"
+                                : expandedCarouselIndex === null
+                                ? ""
+                                : "closed"
+                            }`}
+                            style={{ backgroundImage: `url(${src})` }}
+                            onClick={() => toggleCarouselExpand(absoluteIdx)}
+                          >
+                            <div className="overlay" />
+                          </div>
+                        );
+                      })}
+                  </div>
                 </div>
-              );
-            })}
+              )}
 
-            {/* Outro */}
-            {outroBlock && (
-              <p
-                className="outro-paragraph"
-                dangerouslySetInnerHTML={{ __html: outroBlock }}
-              />
-            )}
+              <hr className="fancy-line" />
 
-            {/* Gallery */}
-            {galleryImages.length > 0 && (
+              {/* Bookmark button */}
               <div
-                className="gallery-wrapper"
-                style={{ maxWidth: "1400px", margin: "3rem auto" }}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "1rem",
+                  position: "relative",
+                }}
               >
-                <div className="gallery-header">
-                  <h4>Gallery Images</h4>
-                  {galleryImages.length > 5 && (
-                    <div className="gallery-arrows">
-                      {galleryIdx > 0 && (
-                        <button
-                          onClick={() => handleGalleryNav("prev")}
-                          aria-label="Previous images"
-                        >
-                          &lt;
-                        </button>
-                      )}
-                      {galleryIdx + 5 < galleryImages.length && (
-                        <button
-                          onClick={() => handleGalleryNav("next")}
-                          aria-label="Next images"
-                        >
-                          &gt;
-                        </button>
+                <button
+                  className={`favorite-button ${
+                    isFavorite ? "is-favorite" : ""
+                  }`}
+                  onClick={() => setIsFavorite(!isFavorite)}
+                  aria-label="Bookmark"
+                >
+                  <span className="favorite__icon favorite--enable">
+                    <FontAwesomeIcon icon={solidBookmark} />
+                  </span>
+                  <span className="favorite__icon favorite--not">
+                    <FontAwesomeIcon icon={regularBookmark} />
+                  </span>
+                </button>
+              </div>
+
+              {/* Resources */}
+              {article.resources &&
+                Object.keys(article.resources).length > 0 && (
+                  <section className="resources" id="resources">
+                    <h4>Resources &amp; Archival References</h4>
+                    <div className="navs-wrapper">
+                      {Object.entries(article.resources).map(
+                        ([category, links]) => (
+                          <div key={category} className="resource-category">
+                            <h5 className="category-title">
+                              {category.replace(/([A-Z])/g, " $1").trim()}
+                            </h5>
+                            <ul className="sub-resource-list">
+                              {(links || []).map((link, i) => (
+                                <li key={i}>
+                                  <a
+                                    className="sub-resource-link"
+                                    href={link.url}
+                                    target={
+                                      link.external ? "_blank" : "_self"
+                                    }
+                                    rel={
+                                      link.external
+                                        ? "noopener noreferrer"
+                                        : undefined
+                                    }
+                                  >
+                                    <span>{link.label}</span>
+                                  </a>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )
                       )}
                     </div>
-                  )}
-                </div>
-
-                <div className="box-container">
-                  {galleryImages
-                    .slice(galleryIdx, galleryIdx + 5)
-                    .map((src, idx) => {
-                      const absoluteIdx = galleryIdx + idx;
-                      const isExpanded = expandedCarouselIndex === absoluteIdx;
-                      return (
-                        <div
-                          key={absoluteIdx}
-                          className={`box ${isExpanded ? "expanded" : expandedCarouselIndex === null ? "" : "closed"}`}
-                          style={{ backgroundImage: `url(${src})` }}
-                          onClick={() => toggleCarouselExpand(absoluteIdx)}
-                        >
-                          <div className="overlay" />
-                        </div>
-                      );
-                    })}
-                </div>
-              </div>
-            )}
-
-            <hr className="fancy-line" />
-
-            {/* Bookmark button */}
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "1rem",
-                position: "relative",
-              }}
-            >
-              <button
-                className={`favorite-button ${isFavorite ? "is-favorite" : ""}`}
-                onClick={() => setIsFavorite(!isFavorite)}
-                aria-label="Bookmark"
-              >
-                <span className="favorite__icon favorite--enable">
-                  <FontAwesomeIcon icon={solidBookmark} />
-                </span>
-                <span className="favorite__icon favorite--not">
-                  <FontAwesomeIcon icon={regularBookmark} />
-                </span>
-              </button>
+                  </section>
+                )}
             </div>
 
-            {/* Image modal */}
+            {/* Image modal (kept outside inner wrapper so it overlays entire viewport) */}
             {modalImage && (
               <div
                 className="midnight-img-modal"
@@ -365,42 +418,6 @@ const BlogPost = ({ article }) => {
                 />
               </div>
             )}
-
-            {/* Resources */}
-            {article.resources && Object.keys(article.resources).length > 0 && (
-              <section className="resources" id="resources">
-                <h4>Resources &amp; Archival References</h4>
-                <div className="navs-wrapper">
-                  {Object.entries(article.resources).map(
-                    ([category, links]) => (
-                      <div key={category} className="resource-category">
-                        <h5 className="category-title">
-                          {category.replace(/([A-Z])/g, " $1").trim()}
-                        </h5>
-                        <ul className="sub-resource-list">
-                          {(links || []).map((link, i) => (
-                            <li key={i}>
-                              <a
-                                className="sub-resource-link"
-                                href={link.url}
-                                target={link.external ? "_blank" : "_self"}
-                                rel={
-                                  link.external
-                                    ? "noopener noreferrer"
-                                    : undefined
-                                }
-                              >
-                                <span>{link.label}</span>
-                              </a>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )
-                  )}
-                </div>
-              </section>
-            )}
           </div>
 
           <Footer />
@@ -416,9 +433,11 @@ export async function getStaticPaths() {
     fallback: false,
   };
 }
+
 export async function getStaticProps({ params }) {
   const article = getMB(params.slug);
   if (!article) return { notFound: true };
-  return { props: { article }, revalidate: 60 }; // optional ISR
+  return { props: { article }, revalidate: 60 };
 }
+
 export default BlogPost;
