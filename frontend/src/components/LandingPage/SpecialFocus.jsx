@@ -37,8 +37,7 @@ export default function SpecialFocus() {
       }
     : {
         title: "Midnight Bureau Podcast",
-        excerpt:
-          "Conversations on strategy, tech, and influence (coming soon).",
+        excerpt: "Conversations on strategy, tech, and influence (coming soon).",
         slug: "podcast",
         _href: "/Podcast",
         _isPodcast: true,
@@ -46,6 +45,10 @@ export default function SpecialFocus() {
       };
 
   const cards = [...current, podcastCard];
+
+  // Desktop thumb sizing stays exactly like before
+  const IMG_MAX_W_DESKTOP = 220;
+  const ASPECT_RATIO = "16 / 10";
 
   return (
     <div
@@ -57,10 +60,7 @@ export default function SpecialFocus() {
         <h3 className="font-style-italic c-accent mt-15 fs-md-24 lh-lg">
           Special Focus
         </h3>
-        <h4
-          className="fs-18 mb-15 fs-md-16"
-          data-armstrong-id="module_subtitle"
-        >
+        <h4 className="fs-18 mb-15 fs-md-16" data-armstrong-id="module_subtitle">
           Specific topics I am working on currently.
         </h4>
       </div>
@@ -72,7 +72,7 @@ export default function SpecialFocus() {
           data-armstrong-id="row"
         >
           {/* Large image on the left */}
-          <div className="col-12 col-md-5 d-flex justify-center align-items-center">
+          <div className="col-12 col-md-5 d-flex justify-center align-items-center home-hide-narrow">
             <img
               src="/assets/images/stellarisWorkflow.jpg"
               alt="Special Focus Visual"
@@ -87,10 +87,7 @@ export default function SpecialFocus() {
           </div>
 
           {/* Cards on the right */}
-          <div
-            className="col-12 col-md-7 items-start"
-            data-armstrong-id="grid_2"
-          >
+          <div className="col-12 col-md-7 items-start" data-armstrong-id="grid_2">
             {cards.map((item, i) => {
               const isPodcast = !!item._isPodcast;
               const href = item._href || getHref(item);
@@ -128,16 +125,13 @@ export default function SpecialFocus() {
                     <h3 className="body-m" style={{ marginBottom: 6 }}>
                       <span>{title}</span>
                     </h3>
-                    <h4
-                      className="body-s c-text-secondary"
-                      style={{ marginBottom: 0 }}
-                    >
+
+                    <h4 className="body-s c-text-secondary" style={{ marginBottom: 0 }}>
                       <span>{excerpt}</span>
                     </h4>
 
-                    {/* pushes date to bottom; sits right above the bottom line */}
                     <p
-                      className="body-xs-smallcaps c-accent"
+                      className="body-xs-smallcaps c-accent home-hide-meta"
                       style={{
                         marginTop: "auto",
                         paddingTop: 6,
@@ -148,58 +142,34 @@ export default function SpecialFocus() {
                     </p>
                   </div>
 
-                  {/* RIGHT: image (spaced from the bottom line) + tiny podcast label under image */}
-                  <div
-                    className="col-3 col-md-4 d-flex flex-column items-end mr-0"
-                    style={{ position: "relative", paddingBottom: 10 }}
-                  >
-                    <figure className="d-none d-md-block" style={{ margin: 0 }}>
-                      <img
-                        src={imgSrc}
-                        alt={title}
-                        loading="lazy"
-                        style={{
-                          width: "100%",
-                          maxWidth: 220,
-                          aspectRatio: "16 / 10",
-                          objectFit: "cover",
-                          borderRadius: 6,
-                          display: "block",
-                        }}
-                      />
-                    </figure>
+{/* RIGHT: thumbnail + podcast icon aligned bottom-left of image (outside it) */}
+<div className="col-3 col-md-4 mr-0 home-card-thumb" style={{ paddingBottom: 10 }}>
+  {isPodcast && (
+    <div className="home-podcast-icon" aria-label="podcast">
+      <svg style={{ width: 14, height: 14, display: "block" }}>
+        <use href="#icon-podcast" />
+      </svg>
+    </div>
+  )}
 
-                    <figure className="d-block d-md-none" style={{ margin: 0 }}>
-                      <img
-                        src={imgSrc}
-                        alt={title}
-                        loading="lazy"
-                        style={{
-                          width: 105,
-                          height: 115,
-                          objectFit: "cover",
-                          borderRadius: 6,
-                          display: "block",
-                        }}
-                      />
-                    </figure>
+  <figure style={{ margin: 0 }}>
+    <img
+      src={imgSrc}
+      alt={title}
+      loading="lazy"
+      style={{
+        width: "100%",
+        maxWidth: IMG_MAX_W_DESKTOP,
+        aspectRatio: ASPECT_RATIO,
+        objectFit: "cover",
+        borderRadius: 6,
+        display: "block",
+      }}
+    />
+  </figure>
+</div>
 
-                    {isPodcast && (
-                      <div
-                        className="mt-5 d-flex items-center"
-                        style={{ gap: 6 }}
-                      >
-                        <svg
-                          style={{ width: 14, height: 14, display: "block" }}
-                        >
-                          <use href="#icon-podcast" />
-                        </svg>
-                        <span className="d-none d-md-block body-xs-smallcaps">
-                          podcast
-                        </span>
-                      </div>
-                    )}
-                  </div>
+
                 </div>
               );
             })}

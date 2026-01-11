@@ -105,7 +105,13 @@ export default function Feedback() {
                       src="/assets/images/Lucia2.jpg"
                       alt="Photo of Family wedding"
                       loading="lazy"
-                      style={{ width: "100%", height: "auto", maxHeight: 600, borderRadius: 8, objectFit: "cover" }}
+style={{
+  width: "100%",
+  maxHeight: 600,
+  borderRadius: 8,
+  objectFit: "cover",
+  objectPosition: "top center",
+}}
                     />
                   </figure>
                 </a>

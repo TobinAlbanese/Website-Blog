@@ -146,18 +146,7 @@ export default function BookReviews() {
                       </figure>
                     </Link>
 
-                    {/* mobile-only text */}
-                    <div className="d-lg-none body-s" style={{ marginTop: 8 }}>
-                      <h2 className="body-s" style={{ marginBottom: 4, textTransform: "none" }}>
-                        <Link href={getHref(b)}>{b.title}</Link>
-                      </h2>
-                      <p className="body-s c-text-secondary" style={{ marginBottom: 6 }}>
-                        {clamp(getDescription(b), 100)}
-                      </p>
-                      <div className="body-s">
-                        <span>{b.author}</span>
-                      </div>
-                    </div>
+              
                   </div>
                 ))}
               </div>

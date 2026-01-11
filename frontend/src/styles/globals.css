@@ -103,6 +103,8 @@ input {
   box-sizing: border-box;
 }
 
+
+
 body:not([class*="gin--edit-form"]) {
   font-size: 18px;
   color: var(--c-text);
@@ -3882,6 +3884,769 @@ html { overflow-x: hidden; }
 
 
 
+
+
+
+
+
+
+
+/* ==========================================
+   HOME PAGE (page-home) — Responsive Locking
+   ========================================== */
+
+/* ---------- 0) Baseline: always keep card layout sane on Home ---------- */
+.page-home #blog-highlights-section .card.row,
+.page-home #featured-papers-section .card.row,
+.page-home #special-focus .card.row,
+.page-home #featured-projects .card.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: flex-start; /* key: keeps thumbs at top */
+}
+
+/* Ensure the right columns never center vertically */
+.page-home #blog-highlights-section .card.row .col-3,
+.page-home #featured-papers-section .card.row .col-3,
+.page-home #special-focus .card.row .col-3,
+.page-home #featured-projects .card.row .col-3 {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+/* ---------- 1) Hide large feature images on anything smaller than wide desktop ---------- */
+@media (max-width: 1199px) {
+  .page-home .home-hide-narrow {
+    display: none !important;
+  }
+
+  /* Lock card internals so thumbnail NEVER drops below text */
+  .page-home #blog-highlights-section .card.row,
+  .page-home #featured-papers-section .card.row,
+  .page-home #special-focus .card.row,
+  .page-home #featured-projects .card.row,
+  .page-home [data-armstrong-id="grid_2"] .card.row {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
+
+  /* Text column expands */
+  .page-home #blog-highlights-section .card.row .col-9,
+  .page-home #featured-papers-section .card.row .col-9,
+  .page-home #special-focus .card.row .col-9,
+  .page-home #featured-projects .card.row .col-9,
+  .page-home [data-armstrong-id="grid_2"] .card.row .col-9 {
+    flex: 1 1 auto !important;
+    width: auto !important;
+    max-width: none !important;
+    min-width: 0 !important;
+  }
+
+  /* Thumb column stays fixed on the right */
+  .page-home #blog-highlights-section .card.row .col-3,
+  .page-home #featured-papers-section .card.row .col-3,
+  .page-home #special-focus .card.row .col-3,
+  .page-home #featured-projects .card.row .col-3,
+  .page-home [data-armstrong-id="grid_2"] .card.row .col-3 {
+    flex: 0 0 105px !important;
+    width: 105px !important;
+    max-width: 105px !important;
+    display: flex !important;
+    justify-content: flex-end !important;
+    align-items: flex-start !important;
+  }
+}
+
+/* ---------- 2) Phone-only behavior (<=768px) ---------- */
+@media (max-width: 768px) {
+  /* Optional swipe rows (only if you use these classes) */
+  .page-home .home-scroll-row {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 10px;
+  }
+  .page-home .home-scroll-row > * {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+  .page-home .home-scroll-card {
+    width: 300px;
+  }
+
+  /* Optional: hide anything marked home-hide-mobile */
+  .page-home .home-hide-mobile {
+    display: none !important;
+  }
+
+  /* Tighten row spacing on mobile */
+  .page-home #featured-papers-section [data-armstrong-id="row"],
+  .page-home #blog-highlights-section [data-armstrong-id="row"] {
+    gap: 0 !important;
+  }
+
+  /* Optional: hide meta line on phones (you add home-hide-meta on that line) */
+  .page-home .home-hide-meta {
+    display: none !important;
+  }
+
+  /* Mobile thumbnails uniform */
+  .page-home #blog-highlights-section .card.row .col-3 img,
+  .page-home #featured-papers-section .card.row .col-3 img,
+  .page-home #featured-projects .card.row .col-3 img,
+  .page-home #special-focus .card.row .col-3 img {
+    width: 105px !important;
+    height: 135px !important;
+    object-fit: cover !important;
+    border-radius: 6px;
+    display: block;
+  }
+}
+
+/* ---------- 3) Special Focus: podcast icon pinned bottom-left of right column ---------- */
+.page-home #special-focus .home-card-thumb {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  align-items: flex-start !important; /* icon sits left of image */
+}
+
+.page-home #special-focus .home-podcast-icon {
+  margin-top: auto !important; /* pin to bottom */
+  padding-top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* If you want the icon to move a bit left/up, adjust these (small nudges) */
+.page-home #special-focus .home-podcast-icon {
+  transform: translate(-2px, -2px);
+}
+
+/* Special Focus: icon sits LEFT of the image and aligned to the image bottom */
+.page-home #special-focus .home-card-thumb {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: flex-end !important; /* bottom align icon with image bottom */
+  justify-content: flex-end !important;
+  gap: 10px !important;
+}
+
+.page-home #special-focus .home-podcast-icon {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(-6px); /* nudge UP to sit flush with image bottom edge */
+  pointer-events: none; /* keep full-card link working */
+}
+
+
+/* HOME — Hero image mobile sizing */
+@media (max-width: 768px) {
+  .page-home .home-hero-media {
+    margin-top: 5px; /* creates breathing room after text */
+  }
+
+  .page-home .home-hero-img {
+    width: 100% !important;
+    max-width: 520px;           /* keeps it from becoming enormous */
+    max-height: 360px;          /* adjust: 300–420 based on taste */
+    object-fit: cover !important;
+    border-radius: 8px;
+    display: block;
+  }
+}
+@media (max-width: 1199px) {
+  .page-home .home-hero-img {
+    width: 100% !important;
+    max-width: 520px;     /* optional */
+    max-height: 420px;    /* optional: tune 360–520 */
+    object-fit: cover !important;
+    object-position: top center !important;
+    display: block;
+  }
+}
+
+/* ABOUT ME — control image height on smaller screens */
+@media (max-width: 1199px) {
+  .page-home .about-img {
+    height: 360px !important;           /* reduce height */
+    object-fit: cover !important;
+    object-position: top center !important; /* keep faces visible */
+  }
+}
+
+@media (max-width: 768px) {
+  .page-home .about-img {
+    height: 280px !important;           /* even tighter on phones */
+  }
+}
+
+/* HOME — PODCAST: on smaller screens, stop pushing the info block right */
+@media (max-width: 1199px) {
+  .page-home .home-podcast-info {
+    transform: none !important;        /* remove translateX */
+    margin-left: 0 !important;         /* flush */
+    margin-right: 0 !important;
+    padding-right: 0 !important;
+    text-align: left !important;       /* flush text for phones */
+    max-width: 100% !important;
+  }
+}
+
+/* Optional: on phones, center the logo/image while keeping text readable */
+@media (max-width: 768px) {
+  .page-home .home-podcast-info img {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  /* If you want the “Follow the Podcast” link centered on phones */
+  .page-home .home-podcast-info .arrow-link {
+    display: inline-block;
+  }
+}
+/* HOME — Podcast: center the logo image on smaller screens */
+@media (max-width: 1199px) {
+  .page-home .home-podcast-info figure {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    display: flex;
+    justify-content: center;
+  }
+
+  .page-home .home-podcast-info figure img {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
+/* HOME — Podcast: center content on tablets/small laptops,
+   keep CTA left-aligned */
+@media (min-width: 769px) and (max-width: 1199px) {
+  /* Center the whole info block */
+  .page-home .home-podcast-info {
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  /* Center inner blocks (logo, headings, player) */
+  .page-home .home-podcast-info figure,
+  .page-home .home-podcast-info h2,
+  .page-home .home-podcast-info h3,
+  .page-home .home-podcast-info .audio-player {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  /* BUT keep the CTA link left-aligned */
+  .page-home .home-podcast-info .arrow-link {
+    display: inline-block;
+    text-align: left !important;
+    margin-left: 0 !important;
+    margin-right: auto !important;
+  }
+}
+/* HOME — Podcast: center content on iPad / small laptop
+   (big image stays hidden) */
+@media (min-width: 769px) and (max-width: 1199px) {
+
+  .page-home .home-podcast-info {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    text-align: center !important;
+    max-width: 680px !important; /* keeps it readable */
+  }
+
+  /* Center inner blocks */
+  .page-home .home-podcast-info figure,
+  .page-home .home-podcast-info h2,
+  .page-home .home-podcast-info h3,
+  .page-home .home-podcast-info .audio-player {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  /* Keep CTA readable but not shoved left/right */
+  .page-home .home-podcast-info .arrow-link {
+    display: inline-block;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
+
+
+/* iPad / small laptop: when the big side image is hidden,
+   expand the cards column to full width so it doesn't float right */
+@media (min-width: 769px) and (max-width: 1199px) {
+
+  /* Featured Papers */
+  .page-home #featured-papers-section [data-armstrong-id="row"] {
+    justify-content: flex-start !important;
+  }
+  .page-home #featured-papers-section [data-armstrong-id="grid_2"] {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    margin-left: 0 !important;
+  }
+
+  /* Special Focus */
+  .page-home #special-focus [data-armstrong-id="row"] {
+    justify-content: flex-start !important;
+  }
+  .page-home #special-focus [data-armstrong-id="grid_2"] {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    margin-left: 0 !important;
+  }
+
+  /* Blog Highlights (if you have a side image / aside pattern there too) */
+  .page-home #blog-highlights-section [data-armstrong-id="row"] {
+    justify-content: flex-start !important;
+  }
+  .page-home #blog-highlights-section [data-armstrong-id="grid_2"] {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    margin-left: 0 !important;
+  }
+}
+
+
+
+/* =========================
+   HOME — Book Reviews responsive fix
+   Keep desktop layout unchanged; normalize right-side covers on smaller screens
+   ========================= */
+@media (max-width: 1199px) {
+  /* Stop the side covers from flying left/right on iPad/laptop sizes */
+  .page-home #home-section-book-review .br-card {
+    transform: none !important;
+  }
+
+  /* Ensure the 4 covers stay inside their column and look clean */
+  .page-home #home-section-book-review .col-lg-4 > div {
+    justify-items: center !important;
+  }
+
+  .page-home #home-section-book-review .col-lg-4 .br-thumb {
+    max-width: 180px !important; /* optional: tune (180–220) */
+    width: 100% !important;
+  }
+}
+/* HOME — Book Reviews: tablet/small laptop refinement
+   Center the large book image but keep text left-aligned */
+@media (min-width: 769px) and (max-width: 1199px) {
+
+  /* Center ONLY the primary book image */
+  .page-home #home-section-book-review .col-lg-8 figure {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* Ensure the image itself stays centered */
+  .page-home #home-section-book-review .col-lg-8 figure img {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  /* Force the text block to stay left-aligned */
+  .page-home #home-section-book-review .col-lg-8 h2,
+  .page-home #home-section-book-review .col-lg-8 h3,
+  .page-home #home-section-book-review .col-lg-8 p,
+  .page-home #home-section-book-review .col-lg-8 .arrow-link {
+    text-align: left !important;
+    margin-left: 0 !important;
+    margin-right: auto !important;
+  }
+}
+/* HOME — Book Reviews: reduce primary image height on phones */
+@media (max-width: 768px) {
+  .page-home #home-section-book-review .col-lg-8 figure img {
+    height: 320px !important;       /* tune: 260–360 depending on taste */
+    width: 100% !important;
+    max-width: 420px;               /* keeps it from feeling oversized */
+    object-fit: cover !important;
+    object-position: top center !important; /* keep top of cover visible */
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
+
+
+/* HOME — Feedback: reduce hero image height on phones */
+@media (max-width: 768px) {
+  .page-home #feedback-section [data-armstrong-id="profile-image"] img {
+    height: 320px !important;              /* tune: 260–360 */
+    width: 100% !important;
+    max-width: 420px !important;
+    object-fit: cover !important;
+    object-position: top center !important; /* keep top visible */
+  }
+}
+/* HOME — Feedback image: show the BOTTOM of the photo on small screens */
+@media (max-width: 991px) {
+  .page-home #feedback-section [data-armstrong-id="profile-image"] img {
+    height: 320px !important;                 /* tune 260–380 */
+    width: 100% !important;
+    max-width: 420px !important;
+    object-fit: cover !important;
+    object-position: bottom center !important; /* key change */
+  }
+}
+/* Feedback image: keep same sizing, but crop anchored to the bottom */
+.page-home #feedback-section [data-armstrong-id="profile-image"] img {
+  object-fit: cover !important;
+  object-position: center !important; /* key change */
+}
+
+
+
+/* HOME — Stay Connected: center CTA on tablet + phone */
+@media (max-width: 1199px) {
+  .page-home #stay-connected-cta {
+    display: flex !important;
+    justify-content: center !important;
+  }
+}
+/* Stay Connected: hide image on phones, show on iPad/laptop+ */
+@media (max-width: 768px) {
+  .page-home .stay-connected-media {
+    display: none !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .page-home .stay-connected-media {
+    display: block !important;
+  }
+}
+
+
+
+
+/* Footer fix */
+@media (max-width: 1199px) {
+  .footer .footer__inner > .col-12.col-lg-9 {
+    display: none !important;
+  }
+
+  .footer .footer__inner > .col-12.col-lg-3 {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 0 0 100% !important;
+  }
+}
+
+
+
+
+
+
+
+/* =========================
+   MENU OVERLAY — TRUE FULLSCREEN + OPAQUE + INTERNAL SCROLL
+   Keeps navbar visible for close/open
+   ========================= */
+
+.js--menu {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  /* Fallback */
+  height: 100vh;
+  min-height: 100vh;
+
+  /* Very important: make it opaque so you NEVER see the page behind */
+  background: var(--c-bg, #0b0b0c);
+
+  /* Make sure it sits above page content */
+  z-index: 9990;
+
+  /* Scroll happens INSIDE the menu */
+  overflow: hidden;
+}
+
+/* iOS / modern browsers viewport fix (prevents "cut off" on mobile/iPad) */
+@supports (height: 100dvh) {
+  .js--menu {
+    height: 100dvh;
+    min-height: 100dvh;
+  }
+}
+@supports (height: 100svh) {
+  .js--menu {
+    height: 100svh;
+    min-height: 100svh;
+  }
+}
+
+/* Internal scroller (content scrolls, overlay stays full screen) */
+.js--menu .menu__content {
+  height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+
+  /* Keep content from sitting under your always-visible navbar */
+  padding-top: 86px;  /* adjust if your navbar height differs */
+  padding-bottom: 80px;
+}
+/* Reduce the menu top gap on mobile only */
+@media (max-width: 767px) {
+  .js--menu .menu__content {
+    padding-top: 35px; /* try 48–60px depending on your nav height */
+  }
+}
+
+
+/* =========================
+   MENU TOP SECTION LAYOUT CONTROL
+   Only affects the TOP section (Browse by Section + Recent Posts + Browse by Topic)
+   ========================= */
+
+/* Tablet + small laptops: keep a true 2-column layout (left = Browse, right = Recent/Topics) */
+@media (min-width: 768px) {
+  .js--menu .menu__section--top {
+    flex-wrap: nowrap !important;
+    align-items: flex-start;
+  }
+
+  .js--menu .menu__section--top .menu__topics {
+    flex: 0 0 42%;
+    max-width: 42%;
+  }
+
+  .js--menu .menu__section--top .menu__issues {
+    flex: 0 0 58%;
+    max-width: 58%;
+  }
+}
+
+/* Mobile: show ONLY Recent Posts (hide Browse by Section),
+   and make the cards vertical */
+@media (max-width: 767px) {
+
+  .js--menu .menu__section--top .menu__issues {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+
+  /* Vertical stack instead of horizontal row */
+  .js--menu .menu__section--top .menu__issues-list {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 14px;
+  }
+
+  .js--menu .menu__section--top .menu__issues-list li {
+    width: 100%;
+  }
+
+  /* Make each "Recent Post" row look like a vertical card row */
+  .js--menu .menu__section--top .menu__post-link {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  /* Keep thumbs consistent on mobile */
+  .js--menu .menu__section--top .menu__post-link figure {
+    width: 92px !important;
+    height: 130px !important;
+    flex: 0 0 92px;
+  }
+
+  .js--menu .menu__section--top .menu__post-link img {
+    width: 92px !important;
+    height: 130px !important;
+    object-fit: cover !important;
+  }
+
+  /* Title block expands to the right of the thumbnail */
+  .js--menu .menu__section--top .menu__post-link span {
+    width: auto !important;
+    max-width: none !important;
+  }
+}
+/* =========================
+   MOBILE: Recent Posts cards
+   Image THEN title under it (smaller)
+   Only affects the cards list — does not touch Browse by Topic
+   ========================= */
+@media (max-width: 767px) {
+  /* Keep the 3 cards stacked vertically (you already want this) */
+  .js--menu .menu__section--top .menu__issues-list {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 18px;
+  }
+
+  /* Each card becomes a mini vertical block */
+  .js--menu .menu__section--top .menu__post-link {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  /* Make image a consistent "thumb" size */
+  .js--menu .menu__section--top .menu__post-link figure {
+    width: 120px !important;
+    height: 170px !important;
+    margin: 0 !important;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .js--menu .menu__section--top .menu__post-link img {
+    width: 120px !important;
+    height: 170px !important;
+    object-fit: cover !important;
+    display: block;
+  }
+
+  /* Title under the image, smaller */
+  .js--menu .menu__section--top .menu__post-link span {
+    width: auto !important;
+    font-size: 12px !important;
+    line-height: 1.2 !important;
+    padding-top: 0 !important;
+
+    /* Keep your 2-line clamp behavior */
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+  }
+}
+/* MOBILE PATCH: prevent Recent Post titles from forcing layout width */
+@media (max-width: 767px) {
+  /* Ensure the right column doesn't get widened by children */
+  .js--menu .menu__section--top .menu__issues {
+    min-width: 0 !important;
+  }
+
+  /* Each card link must be allowed to shrink */
+  .js--menu .menu__section--top .menu__post-link {
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  /* Title under image should wrap and never force width */
+  .js--menu .menu__section--top .menu__post-link span {
+    display: block !important;
+    width: 120px !important;         /* match your mobile figure width */
+    max-width: 120px !important;
+    min-width: 0 !important;
+
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+    word-break: break-word !important;
+
+    /* keep the 2-line clamp but allow wrapping */
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+}
+/* MOBILE: keep Browse by Section on the LEFT and Recent Posts on the RIGHT */
+@media (max-width: 767px) {
+  /* IMPORTANT: if you still have a rule that hides .menu__topics on mobile,
+     remove it OR override it like this */
+  .js--menu .menu__section--top .menu__topics {
+    display: block !important;
+  }
+
+  /* Force the top section into two columns (no wrapping) */
+  .js--menu .menu__section--top {
+    flex-wrap: nowrap !important;
+    align-items: flex-start !important;
+  }
+
+  /* Left column = Browse by Section */
+  .js--menu .menu__section--top .menu__topics {
+    flex: 0 0 42% !important;
+    max-width: 42% !important;
+    min-width: 0 !important;
+  }
+
+  /* Right column = Recent Posts + Browse by Topic (keeps Topic underneath) */
+  .js--menu .menu__section--top .menu__issues {
+    flex: 0 0 58% !important;
+    max-width: 58% !important;
+    min-width: 0 !important;
+  }
+
+  /* Keep Recent Posts cards vertical */
+  .js--menu .menu__section--top .menu__issues-list {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 14px !important;
+  }
+}
+
+/* MOBILE ONLY: move "Browse by Topic" back under Browse by Section */
+/* Show/Hide duplicate "Browse by Topic" blocks */
+.menu__topics-mobile-only { display: none; }
+.menu__topics-desktop-only { display: block; }
+
+@media (max-width: 767px) {
+  .menu__topics-mobile-only { display: block; }
+  .menu__topics-desktop-only { display: none; }
+}
+
+/* MOBILE ONLY: Browse by Topic as a compact horizontal grid */
+@media (max-width: 767px) {
+
+  /* Turn the topic list into a grid */
+  .menu__topics-mobile-only .menu__links {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 16px;
+    row-gap: 10px;
+    padding-top: 0 !important;
+  }
+
+  /* Each item behaves like inline text, not a block */
+  .menu__topics-mobile-only .menu__links--list-item {
+    margin-bottom: 0 !important;
+  }
+
+  /* Make links readable but compact */
+  .menu__topics-mobile-only .menu__links--list-item a {
+    display: inline-block;
+    line-height: 1.35;
+    white-space: normal;
+  }
+}
+
+/* MOBILE: visually center Browse / Recent / Topics block */
+@media (max-width: 767px) {
+  /* Center the whole top section */
+  .js--menu .menu__section--top {
+    max-width: 750px;        /* controls how "centered" it feels */
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Optional: add a little horizontal breathing room */
+  .js--menu .menu__section--top {
+    padding-left: 14px;
+    padding-right: 0px;
+  }
+}
 
 
 

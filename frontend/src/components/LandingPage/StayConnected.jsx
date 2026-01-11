@@ -108,7 +108,7 @@ export default function StayConnected() {
               </li>
             </ul>
 
-            <div className="mt-20">
+            <div className="mt-20" id="stay-connected-cta">
               <a
                 className="btn border-radius-small pt-10 pb-10 pl-20 pr-20 body-s btn-accent position-relative z-above-base d-inline-block lh-22 fs-15 text-align-center mt-20 mb-40 cursor-pointer"
                 href="/MidnightBureau/Newsletter"
@@ -124,7 +124,7 @@ export default function StayConnected() {
             </div>
           </div>
 
-          <div className="col-12 col-md-3 mb-30 position-relative z-above-base ">
+          <div className="col-12 col-md-3 mb-30 position-relative z-above-base stay-connected-media">
             <a className="current-issue__image" href="#">
               <figure>
                 <img

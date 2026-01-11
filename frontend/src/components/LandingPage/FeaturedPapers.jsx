@@ -6,15 +6,19 @@ import PortfolioData from "../../data/portfolioData";
 // ---- helpers ----
 const getSection = (name) =>
   Array.isArray(PortfolioData?.[name]) ? PortfolioData[name] : [];
+
 const uniqBySlug = (list) => {
   const seen = new Set();
   return (list || []).filter(
     (p) => p?.slug && !seen.has(p.slug) && seen.add(p.slug)
   );
 };
+
 const getHref = (p) => `/Portfolio/${p.slug}`;
+
 const getImg = (p) =>
   p?.images?.[0] || p?.archiveImage || "/assets/images/space.jpg";
+
 const getDescription = (p) => {
   if (p?.excerpt) return p.excerpt;
   const html = p?.content?.[0]?.text || "";
@@ -25,6 +29,7 @@ const getDescription = (p) => {
   const m = text.match(/.*?[.!?](\s|$)/);
   return (m ? m[0] : text) || "Read the full paper.";
 };
+
 const formatDate = (iso) => {
   if (!iso) return "";
   const d = new Date(iso);
@@ -58,10 +63,9 @@ export default function FeaturedPapers() {
   const b = takeN(research, 2, used);
   const posts = [...a, ...b];
 
-  // Image sizes (match your Highlights/Special Focus look)
-  const IMG_W_DESKTOP = 220;
-  const IMG_W_MOBILE = 105;
-  const IMG_H_MOBILE = 115;
+  // Desktop thumb sizing stays exactly like before
+  const IMG_MAX_W_DESKTOP = 220;
+  const ASPECT_RATIO = "16 / 10";
 
   return (
     <section
@@ -93,7 +97,7 @@ export default function FeaturedPapers() {
             data-armstrong-id="row"
           >
             {/* Left visual */}
-            <div className="col-12 col-md-5 d-flex justify-center align-items-center">
+            <div className="col-12 col-md-5 d-flex justify-center align-items-center home-hide-narrow">
               <img
                 src="/assets/images/Russia4.jpg"
                 alt="Featured papers artwork"
@@ -154,7 +158,7 @@ export default function FeaturedPapers() {
                       </p>
 
                       <p
-                        className="body-s c-accent"
+                        className="body-s c-accent home-hide-meta"
                         style={{
                           fontSize: "0.9rem",
                           marginTop: "auto",
@@ -179,55 +183,23 @@ export default function FeaturedPapers() {
                       </p>
                     </div>
 
-                    {/* RIGHT column: image */}
-                    <div
-                      className="col-3 col-md-4 d-flex flex-column mr-0"
-                      style={{ alignItems: "flex-start", paddingBottom: 10 }}
-                    >
-                      {/* Desktop */}
-                      <div
-                        className="d-none d-md-block"
-                        style={{ width: IMG_W_DESKTOP }}
-                      >
-                        <figure style={{ margin: 0 }}>
-                          <img
-                            src={img}
-                            alt={title}
-                            loading="lazy"
-                            style={{
-                              width: "100%",
-                              maxWidth: IMG_W_DESKTOP,
-                              aspectRatio: "16 / 10",
-                              objectFit: "cover",
-                              borderRadius: 6,
-                              display: "block",
-                            }}
-                          />
-                        </figure>
-                      </div>
-
-                      {/* Mobile */}
-                      <div
-                        className="d-block d-md-none"
-                        style={{ width: IMG_W_MOBILE }}
-                      >
-                        <figure style={{ margin: 0 }}>
-                          <img
-                            src={img}
-                            alt={title}
-                            loading="lazy"
-                            width={IMG_W_MOBILE}
-                            height={IMG_H_MOBILE}
-                            style={{
-                              width: IMG_W_MOBILE,
-                              height: IMG_H_MOBILE,
-                              objectFit: "cover",
-                              borderRadius: 6,
-                              display: "block",
-                            }}
-                          />
-                        </figure>
-                      </div>
+                    {/* RIGHT column: single thumbnail (CSS controls mobile sizing) */}
+                    <div className="col-3 col-md-4 mr-0 home-card-thumb">
+                      <figure style={{ margin: 0 }}>
+                        <img
+                          src={img}
+                          alt={title}
+                          loading="lazy"
+                          style={{
+                            width: "100%",
+                            maxWidth: IMG_MAX_W_DESKTOP,
+                            aspectRatio: ASPECT_RATIO,
+                            objectFit: "cover",
+                            borderRadius: 6,
+                            display: "block",
+                          }}
+                        />
+                      </figure>
                     </div>
                   </div>
                 );

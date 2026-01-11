@@ -143,13 +143,13 @@ export default function Home() {
             role="main"
             tabIndex={-1}
             // add the responsive wrapper class
-            className="base__content js--sticky-nav w-100 h-content-min d-flex justify-center flex-column rwd-v1"
+            className="base__content js--sticky-nav w-100 h-content-min d-flex justify-center flex-column rwd-v1 page-home"
             onKeyDown={handleKeyNav}
           >
             <h1 className="visually-hidden">Tobin Albanese</h1>
 
             {/* Container keeps content readable on all breakpoints */}
-            <div className="container">
+            <div className="base__main">
               {/* Each section gets a keyboard-focusable wrapper */}
               <section
                 id="hero"
@@ -167,7 +167,7 @@ export default function Home() {
                 ref={setSectionRef("about")}
                 tabIndex={0}
                 data-section-wrapper="true"
-                aria-label="About me"
+                aria-label="About me" 
               >
                 <h2 className="visually-hidden">About me</h2>
                 <AboutMe />

@@ -114,7 +114,7 @@ export default function BlogHighlights() {
 
                     {/* Author ✵ Date (no divider) */}
                     <p
-                      className="body-s c-accent"
+                      className="body-s c-accent home-hide-meta"
                       style={{
                         fontSize: "0.9rem",
                         marginTop: "auto",
@@ -200,7 +200,7 @@ export default function BlogHighlights() {
             </div>
 
             {/* Sidebar */}
-            <aside className="col-12 col-md-4">
+            <aside className="col-12 col-md-4 home-hide-narrow">
               <div className="sidebar">
                 <aside className="col-12 col-md-4 d-flex justify-center align-items-center">
                   <img

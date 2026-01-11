@@ -28,7 +28,7 @@ const collectMBPosts = () => {
     .sort((a, b) => b.dateObj - a.dateObj);
 };
 
-export default function Navbar() {
+export default function NavbarMB() {
   const [menuOpen, setMenuOpen] = useState(false);
   const router = useRouter();
 
@@ -58,34 +58,31 @@ export default function Navbar() {
   const scrollWithOffset = (id) => {
     const el = document.getElementById(id);
     if (!el) return;
-    const y =
-      el.getBoundingClientRect().top + window.pageYOffset - SCROLL_OFFSET;
+    const y = el.getBoundingClientRect().top + window.pageYOffset - SCROLL_OFFSET;
     window.scrollTo({ top: y, behavior: "smooth" });
   };
+
   const goToAnchor = (path, id) => async (e) => {
     e.preventDefault();
     setMenuOpen(false);
     sessionStorage.setItem("scrollTarget", id);
+
     if (router.pathname === path) {
       requestAnimationFrame(() => scrollWithOffset(id));
-      router.replace(`${path}#${encodeURIComponent(id)}`, undefined, {
-        shallow: true,
-      });
+      router.replace(`${path}#${encodeURIComponent(id)}`, undefined, { shallow: true });
       return;
     }
-    await router.push(`${path}#${encodeURIComponent(id)}`, undefined, {
-      shallow: true,
-    });
+
+    await router.push(`${path}#${encodeURIComponent(id)}`, undefined, { shallow: true });
   };
+
   useEffect(() => {
     const tryScroll = (id, attemptsLeft = 20) => {
       const el = document.getElementById(id);
-      if (el) {
-        scrollWithOffset(id);
-        return;
-      }
+      if (el) return scrollWithOffset(id);
       if (attemptsLeft > 0) setTimeout(() => tryScroll(id, attemptsLeft - 1), 50);
     };
+
     const applyStoredScroll = () => {
       const stored = sessionStorage.getItem("scrollTarget");
       if (stored) {
@@ -96,12 +93,12 @@ export default function Navbar() {
       const hash = hashRaw ? decodeURIComponent(hashRaw) : null;
       if (hash) tryScroll(hash);
     };
+
     applyStoredScroll();
     router.events.on("routeChangeComplete", applyStoredScroll);
     return () => router.events.off("routeChangeComplete", applyStoredScroll);
   }, [router.events]);
 
-  // Archive group helper
   const goToArchiveGroup = (group) => async (e) => {
     e.preventDefault();
     setMenuOpen(false);
@@ -119,7 +116,7 @@ export default function Navbar() {
       <SvgHead />
 
       <div className="base__nav">
-        {/* Primary nav (unchanged structure) */}
+        {/* Primary nav (keep your existing MB nav UI/links) */}
         <nav className="site-nav" aria-label="primary">
           <div
             className="site-nav__inner pt-20 pb-10 pt-md-40"
@@ -131,10 +128,7 @@ export default function Navbar() {
             }}
           >
             {/* LEFT */}
-            <ul
-              className="site-nav__list d-flex left"
-              style={{ justifySelf: "start" }}
-            >
+            <ul className="site-nav__list d-flex left" style={{ justifySelf: "start" }}>
               <li className="site-nav__list-item d-flex show-desktop">
                 <a className="site-nav__link body-s-smallcaps " href="/">
                   Home
@@ -146,18 +140,12 @@ export default function Navbar() {
                 </a>
               </li>
               <li className="site-nav__list-item d-flex show-desktop">
-                <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/MidnightBureau/Archive"
-                >
+                <a className="site-nav__link body-s-smallcaps " href="/MidnightBureau/Archive">
                   Archive
                 </a>
               </li>
               <li className="site-nav__list-item d-flex show-desktop">
-                <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/MidnightBureau/Contact"
-                >
+                <a className="site-nav__link body-s-smallcaps " href="/MidnightBureau/Contact">
                   Contact
                 </a>
               </li>
@@ -184,29 +172,19 @@ export default function Navbar() {
               </li>
 
               <li className="site-nav__list-item d-flex show-tablet">
-                <a
-                  className="site-nav__link body-s-smallcaps highlight"
-                  href="/MidnightBureau"
-                >
+                <a className="site-nav__link body-s-smallcaps highlight" href="/MidnightBureau">
                   Midnight Bureau
                 </a>
               </li>
               <li className="site-nav__list-item d-flex show-mobile">
-                <a
-                  className="site-nav__link body-s-smallcaps highlight"
-                  href="/MidnightBureau"
-                >
+                <a className="site-nav__link body-s-smallcaps highlight" href="/MidnightBureau">
                   Midnight Bureau
                 </a>
               </li>
             </ul>
 
             {/* CENTER */}
-            <a
-              href="/"
-              className="site-nav__center-logo-link"
-              style={{ justifySelf: "center" }}
-            >
+            <a href="/" className="site-nav__center-logo-link" style={{ justifySelf: "center" }}>
               <span className="site-nav__logo-text">
                 <span className="site-nav__logo-first">TOBIN</span>
                 <span className="site-nav__logo-last">ALBANESE</span>
@@ -214,48 +192,36 @@ export default function Navbar() {
             </a>
 
             {/* RIGHT */}
-            <ul
-              className="site-nav__list d-flex right"
-              style={{ justifySelf: "end" }}
-            >
+            <ul className="site-nav__list d-flex right" style={{ justifySelf: "end" }}>
               <li className="site-nav__list-item d-flex show-desktop">
-                <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/MidnightBureau/Newsletter"
-                >
+                <a className="site-nav__link body-s-smallcaps " href="/MidnightBureau/Newsletter">
                   Newsletters
                 </a>
               </li>
               <li className="site-nav__list-item d-flex show-desktop">
-                <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/user/login"
-                >
+                <a className="site-nav__link body-s-smallcaps " href="/user/login">
                   Log In
                 </a>
               </li>
               <li className="site-nav__list-item d-flex show-tablet">
-                <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/user/login"
-                >
+                <a className="site-nav__link body-s-smallcaps " href="/user/login">
                   Log In
                 </a>
               </li>
               <li className="site-nav__list-item d-flex show-desktop">
-                <a
-                  className="site-nav__link body-s-smallcaps highlight"
-                  href="/MidnightBureau"
-                >
+                <a className="site-nav__link body-s-smallcaps highlight" href="/MidnightBureau">
                   Midnight Bureau
                 </a>
               </li>
+
               <li className="site-nav__list-item">
                 <button
                   id="menu-toggle"
                   aria-expanded={menuOpen}
                   onClick={toggleMenu}
-                  className={`site-nav__menu-btn d-flex site-nav__link js--menu-toggle body-s-smallcaps ${menuOpen ? "is-open" : ""}`}
+                  className={`site-nav__menu-btn d-flex site-nav__link js--menu-toggle body-s-smallcaps ${
+                    menuOpen ? "is-open" : ""
+                  }`}
                 >
                   <span className="site-nav__menu-btn-label js--menu-toggle-label">
                     {menuOpen ? "Close" : "Menu"}
@@ -272,9 +238,11 @@ export default function Navbar() {
           </div>
         </nav>
 
-        {/* Sticky nav — RESTORED exactly as your version */}
+        {/* Sticky nav (keep your existing MB sticky nav UI/links) */}
         <nav
-          className={`site-nav--sticky c-bg-border w-100 position-fixed top-0 z-above-everything ${menuOpen ? "menu-open" : ""}`}
+          className={`site-nav--sticky c-bg-border w-100 position-fixed top-0 z-above-everything ${
+            menuOpen ? "menu-open" : ""
+          }`}
           aria-label="primary"
         >
           <div
@@ -287,10 +255,7 @@ export default function Navbar() {
             }}
           >
             {/* LEFT */}
-            <ul
-              className="site-nav__list d-flex left"
-              style={{ justifySelf: "start" }}
-            >
+            <ul className="site-nav__list d-flex left" style={{ justifySelf: "start" }}>
               <li className="site-nav__list-item d-flex show-desktop">
                 <a className="site-nav__link body-s-smallcaps " href="/">
                   Home
@@ -302,23 +267,16 @@ export default function Navbar() {
                 </a>
               </li>
               <li className="site-nav__list-item d-flex show-desktop">
-                <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/MidnightBureau/Archive"
-                >
+                <a className="site-nav__link body-s-smallcaps " href="/MidnightBureau/Archive">
                   Archive
                 </a>
               </li>
               <li className="site-nav__list-item d-flex show-desktop">
-                <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/MidnightBureau/Contact"
-                >
+                <a className="site-nav__link body-s-smallcaps " href="/MidnightBureau/Contact">
                   Contact
                 </a>
               </li>
 
-              {/* Explore dropdown replaces Portfolio here */}
               <li className="site-nav__list-item d-flex show-desktop site-nav__dropdown">
                 <a className="site-nav__link body-s-smallcaps" href="#">
                   Explore
@@ -340,29 +298,19 @@ export default function Navbar() {
               </li>
 
               <li className="site-nav__list-item d-flex show-tablet">
-                <a
-                  className="site-nav__link body-s-smallcaps highlight"
-                  href="/MidnightBureau"
-                >
+                <a className="site-nav__link body-s-smallcaps highlight" href="/MidnightBureau">
                   Midnight Bureau
                 </a>
               </li>
               <li className="site-nav__list-item d-flex show-mobile">
-                <a
-                  className="site-nav__link body-s-smallcaps highlight"
-                  href="/MidnightBureau"
-                >
+                <a className="site-nav__link body-s-smallcaps highlight" href="/MidnightBureau">
                   Midnight Bureau
                 </a>
               </li>
             </ul>
 
-            {/* CENTER — logo */}
-            <a
-              href="/"
-              className="site-nav__center-logo-linkMB"
-              style={{ justifySelf: "center" }}
-            >
+            {/* CENTER */}
+            <a href="/" className="site-nav__center-logo-linkMB" style={{ justifySelf: "center" }}>
               <span className="site-nav__logo-textMB">
                 <span className="site-nav__logo-firstMB">TOBIN</span>
                 <span className="site-nav__logo-lastMB">ALBANESE</span>
@@ -370,48 +318,36 @@ export default function Navbar() {
             </a>
 
             {/* RIGHT */}
-            <ul
-              className="site-nav__list d-flex right"
-              style={{ justifySelf: "end" }}
-            >
+            <ul className="site-nav__list d-flex right" style={{ justifySelf: "end" }}>
               <li className="site-nav__list-item d-flex show-desktop">
-                <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/MidnightBureau/Newsletter"
-                >
+                <a className="site-nav__link body-s-smallcaps " href="/MidnightBureau/Newsletter">
                   Newsletters
                 </a>
               </li>
               <li className="site-nav__list-item d-flex show-desktop">
-                <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/user/login"
-                >
+                <a className="site-nav__link body-s-smallcaps " href="/user/login">
                   Log In
                 </a>
               </li>
               <li className="site-nav__list-item d-flex show-tablet">
-                <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/user/login"
-                >
+                <a className="site-nav__link body-s-smallcaps " href="/user/login">
                   Log In
                 </a>
               </li>
               <li className="site-nav__list-item d-flex show-desktop">
-                <a
-                  className="site-nav__link body-s-smallcaps highlight"
-                  href="/MidnightBureau"
-                >
+                <a className="site-nav__link body-s-smallcaps highlight" href="/MidnightBureau">
                   Midnight Bureau
                 </a>
               </li>
+
               <li className="site-nav__list-item">
                 <button
                   id="menu-toggle"
                   aria-expanded={menuOpen}
                   onClick={toggleMenu}
-                  className={`site-nav__menu-btn d-flex site-nav__link js--menu-toggle body-s-smallcaps ${menuOpen ? "is-open" : ""}`}
+                  className={`site-nav__menu-btn d-flex site-nav__link js--menu-toggle body-s-smallcaps ${
+                    menuOpen ? "is-open" : ""
+                  }`}
                 >
                   <span className="site-nav__menu-btn-label js--menu-toggle-label">
                     {menuOpen ? "Close" : "Menu"}
@@ -428,78 +364,21 @@ export default function Navbar() {
           </div>
         </nav>
 
-        {/* Overlay menu with dynamic Recent Posts */}
-        <nav
-          className="js--menu theme-accent"
-          aria-hidden={!menuOpen}
-          aria-labelledby="menu-toggle"
-        >
+        {/* Overlay menu (UI updated to match home menu structure/classes) */}
+        <nav className="js--menu theme-accent" aria-hidden={!menuOpen} aria-labelledby="menu-toggle">
           <div className="menu__content col-12 col-xl-10">
-            {/* top links */}
-            <ul className="menu__nav-links mt-30 d-md-flex">
-              <li className="site-nav__list-item d-flex show-mobile menu__nav-links-list-item pt-5 pb-5">
-                <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/MidnightBureau#recent-posts"
-                  onClick={goToAnchor("/MidnightBureau", "recent-posts")}
-                >
-                  Current Issue
-                </a>
-              </li>
-              <li className="site-nav__list-item d-flex show-tablet menu__nav-links-list-item pt-5 pb-5">
-                <a className="site-nav__link body-s-smallcaps " href="/MidnightBureau/Archive">
-                  Archive
-                </a>
-              </li>
-              <li className="site-nav__list-item d-flex show-mobile menu__nav-links-list-item pt-5 pb-5">
-                <a className="site-nav__link body-s-smallcaps " href="/MidnightBureau/Archive">
-                  Archive
-                </a>
-              </li>
-              <li className="site-nav__list-item d-flex show-tablet menu__nav-links-list-item pt-5 pb-5">
-                <a className="site-nav__link body-s-smallcaps " href="/MidnightBureau/BookReviews">
-                  Books
-                </a>
-              </li>
-              <li className="site-nav__list-item d-flex show-mobile menu__nav-links-list-item pt-5 pb-5">
-                <a className="site-nav__link body-s-smallcaps " href="/MidnightBureau/BookReviews">
-                  Books
-                </a>
-              </li>
-              <li className="site-nav__list-item d-flex show-tablet menu__nav-links-list-item pt-5 pb-5">
-                <a className="site-nav__link body-s-smallcaps " href="/Portfolio">
-                  Portfolio
-                </a>
-              </li>
-              <li className="site-nav__list-item d-flex show-mobile menu__nav-links-list-item pt-5 pb-5">
-                <a className="site-nav__link body-s-smallcaps " href="/Portfolio">
-                  Portfolio
-                </a>
-              </li>
-              <li className="site-nav__list-item d-flex show-tablet menu__nav-links-list-item pt-5 pb-5">
-                <a className="site-nav__link body-s-smallcaps " href="/MidnightBureau/Newsletter">
-                  Newsletters
-                </a>
-              </li>
-              <li className="site-nav__list-item d-flex show-mobile menu__nav-links-list-item pt-5 pb-5">
-                <a className="site-nav__link body-s-smallcaps " href="/MidnightBureau/Newsletter">
-                  Newsletters
-                </a>
-              </li>
-              <li className="site-nav__list-item d-flex show-mobile menu__nav-links-list-item pt-5 pb-5">
-                <a className="site-nav__link body-s-smallcaps " href="/user/login">
-                  Log In
-                </a>
-              </li>
-            </ul>
+            {/* IMPORTANT: removed the old "top links strip" entirely to match home menu */}
 
-            {/* Browse + Recent + Topics */}
-            <div className="menu__section d-flex flex-wrap justify-between gap-y-30 -ml-10 -mr-10 mt-30 mb-80">
+            {/* TOP section — add menu__section--top so your shared CSS applies */}
+            <div className="menu__section menu__section--top d-flex flex-wrap justify-between gap-y-30 -ml-10 -mr-10 mt-30 mb-80">
+              {/* LEFT: Browse by Section */}
               <div className="menu__topics col-12 col-sm-6 col-lg-4-base-10">
                 <p className="menu__overline mb-20">Browse by Section</p>
                 <ul>
                   <li className="menu__topics-list-item mb-10">
-                    <a href="/MidnightBureau/Archive">Blog Archive</a>
+                    <a href="/MidnightBureau/Archive" onClick={() => setMenuOpen(false)}>
+                      Blog Archive
+                    </a>
                   </li>
                   <li className="menu__topics-list-item mb-10">
                     <a
@@ -510,25 +389,106 @@ export default function Navbar() {
                     </a>
                   </li>
                   <li className="menu__topics-list-item mb-10">
-                    <a href="/Portfolio">Portfolio</a>
-                  </li>
-                  <li className="menu__topics-list-item mb-10">
-                    <a
-                      href="/Portfolio#Current-&-In-Progress-Work"
-                      onClick={goToAnchor("/Portfolio", "Current-&-In-Progress-Work")}
-                    >
-                      Current Projects
+                    <a href="/MidnightBureau/BookReviews" onClick={() => setMenuOpen(false)}>
+                      Book Reviews
                     </a>
                   </li>
-                  <li className="menu__topics-list-item mb-10"><a href="/Notes">Notes</a></li>
-                  <li className="menu__topics-list-item mb-10"><a href="/MidnightBureau/Newsletter">Newsletter</a></li>
-                  <li className="menu__topics-list-item mb-10"><a href="/MidnightBureau/About">About Me</a></li>
-                  <li className="menu__topics-list-item mb-10"><a href="/MidnightBureau/Contact">Contact</a></li>
+                  <li className="menu__topics-list-item mb-10">
+                    <a href="/MidnightBureau/Newsletter" onClick={() => setMenuOpen(false)}>
+                      Newsletter
+                    </a>
+                  </li>
+                  <li className="menu__topics-list-item mb-10">
+                    <a href="/MidnightBureau/Podcasts" onClick={() => setMenuOpen(false)}>
+                      Podcasts
+                    </a>
+                  </li>
+                  <li className="menu__topics-list-item mb-10">
+                    <a href="/MidnightBureau/FAQ" onClick={() => setMenuOpen(false)}>
+                      FAQs
+                    </a>
+                  </li>
+                  <li className="menu__topics-list-item mb-10">
+                    <a href="/MidnightBureau/About" onClick={() => setMenuOpen(false)}>
+                      About Me
+                    </a>
+                  </li>
+                  <li className="menu__topics-list-item mb-10">
+                    <a href="/MidnightBureau/Contact" onClick={() => setMenuOpen(false)}>
+                      Contact
+                    </a>
+                  </li>
                 </ul>
+
+                {/* MOBILE ONLY: Browse by Topic lives under Browse by Section (design match to home menu) */}
+                <div className="menu__topics-mobile-only d-none d-md-block" />
+                <div className="menu__topics-mobile-only d-block d-md-none">
+                  <p className="menu__overline mb-20 mt-40">Browse by Topic</p>
+                  <ul className="menu__links pt-10">
+                    <li className="menu__links--list-item">
+                      <a
+                        href="/MidnightBureau/Archive?group=World%20%26%20Diplomacy"
+                        onClick={goToArchiveGroup("World & Diplomacy")}
+                      >
+                        World &amp; Diplomacy
+                      </a>
+                    </li>
+                    <li className="menu__links--list-item">
+                      <a
+                        href="/MidnightBureau/Archive?group=Security%20%26%20Military"
+                        onClick={goToArchiveGroup("Security & Military")}
+                      >
+                        Security &amp; Military
+                      </a>
+                    </li>
+                    <li className="menu__links--list-item">
+                      <a
+                        href="/MidnightBureau/Archive?group=Energy%20%26%20Environment"
+                        onClick={goToArchiveGroup("Energy & Environment")}
+                      >
+                        Energy &amp; Environment
+                      </a>
+                    </li>
+                    <li className="menu__links--list-item">
+                      <a
+                        href="/MidnightBureau/Archive?group=Economy"
+                        onClick={goToArchiveGroup("Economy")}
+                      >
+                        Economy
+                      </a>
+                    </li>
+                    <li className="menu__links--list-item">
+                      <a
+                        href="/MidnightBureau/Archive?group=Technology"
+                        onClick={goToArchiveGroup("Technology")}
+                      >
+                        Technology
+                      </a>
+                    </li>
+                    <li className="menu__links--list-item">
+                      <a
+                        href="/MidnightBureau/Archive?group=Culture"
+                        onClick={goToArchiveGroup("Culture")}
+                      >
+                        Culture
+                      </a>
+                    </li>
+                    <li className="menu__links--list-item">
+                      <a
+                        href="/MidnightBureau/Archive?group=Ideas"
+                        onClick={goToArchiveGroup("Ideas")}
+                      >
+                        Ideas
+                      </a>
+                    </li>
+                  </ul>
+                </div>
               </div>
 
+              {/* RIGHT: Recent Posts + (Desktop/Tablet) Browse by Topic stays here */}
               <div className="menu__issues col-12 col-sm-6 col-lg-4-base-10">
                 <p className="menu__overline mb-20">Recent Posts</p>
+
                 <ul className="menu__issues-list d-flex">
                   {recentPosts.map((p, i) => (
                     <li key={p.slug}>
@@ -561,6 +521,7 @@ export default function Navbar() {
                             sizes="(max-width: 767px) 26vw, (min-width: 1024px) 160px"
                           />
                         </figure>
+
                         <span
                           className="body-xs-smallcaps fs-15 d-inline-block pt-5"
                           style={{
@@ -580,7 +541,8 @@ export default function Navbar() {
                   ))}
                 </ul>
 
-                <div>
+                {/* Desktop/Tablet only Browse by Topic (mobile moved left via menu__topics-mobile-only) */}
+                <div className="d-none d-md-block">
                   <p className="menu__overline mb-20 mt-40">Browse by Topic</p>
                   <ul className="menu__links pt-30 pt-md-0">
                     <li className="menu__links--list-item mb-5">
@@ -646,7 +608,7 @@ export default function Navbar() {
 
             <hr className="menu__divider border-zero mb-20" />
 
-            {/* BELOW WHITE LINE — unchanged */}
+            {/* BELOW WHITE LINE — unchanged content */}
             <div className="menu__section d-flex flex-wrap justify-between gap-y-30 -ml-10 -mr-10">
               <div className="menu__about col-12 col-sm-6 col-lg-4-base-10">
                 <p>
@@ -654,15 +616,15 @@ export default function Navbar() {
                   <strong>
                     <em>Tobin Albanese.. </em>
                   </strong>
-                  A Computer Science student and writer passionate about
-                  strategic intelligence, global affairs, and current events.
-                  This blog shares my thoughts, analyses, and personal insights
-                  across a wide range of topics including politics, technology,
-                  and culture.
+                  A Computer Science student and writer passionate about strategic
+                  intelligence, global affairs, and current events. This blog shares my
+                  thoughts, analyses, and personal insights across a wide range of topics
+                  including politics, technology, and culture.
                 </p>
                 <a
                   className="mt-30 arrow-link border-bottom-thin border-bottom d-inline-block lh-22"
                   href="/MidnightBureau/About"
+                  onClick={() => setMenuOpen(false)}
                 >
                   More About Me
                   <svg className="arrow-link__icon ">
@@ -675,25 +637,32 @@ export default function Navbar() {
                 <p className="menu__overline mb-20">More Resources</p>
                 <ul className="menu__links pt-30 pt-md-0">
                   <li className="menu__links--list-item mb-5">
-                    <a href="/MidnightBureau/Newsletter">Newsletter</a>
+                    <a href="/MidnightBureau/Newsletter" onClick={() => setMenuOpen(false)}>
+                      Newsletter
+                    </a>
                   </li>
                   <li className="menu__links--list-item mb-5">
-                    <a href="/MidnightBureau/FAQ">FAQs</a>
+                    <a href="/MidnightBureau/FAQ" onClick={() => setMenuOpen(false)}>
+                      FAQs
+                    </a>
                   </li>
                   <li className="menu__links--list-item mb-5">
-                    <a href="/MidnightBureau/Podcasts">Podcasts</a>
+                    <a href="/MidnightBureau/Podcasts" onClick={() => setMenuOpen(false)}>
+                      Podcasts
+                    </a>
                   </li>
                   <li className="menu__links--list-item mb-5">
-                    <a href="/MidnightBureau/BookReviews">Book Reviews</a>
+                    <a href="/MidnightBureau/BookReviews" onClick={() => setMenuOpen(false)}>
+                      Book Reviews
+                    </a>
                   </li>
                   <li className="menu__links--list-item mb-5">
-                    <a href="/MidnightBureau/Music">Music Suggestions</a>
+                    <a href="/MidnightBureau/Music" onClick={() => setMenuOpen(false)}>
+                      Music Suggestions
+                    </a>
                   </li>
                   <li className="menu__links--list-item mb-5">
-                    <a
-                      href="/#feedback-section"
-                      onClick={goToAnchor("/", "feedback-section")}
-                    >
+                    <a href="/#feedback-section" onClick={goToAnchor("/", "feedback-section")}>
                       Feedback
                     </a>
                   </li>

@@ -12,13 +12,6 @@ export default function AboutMe() {
             <h3 className="font-style-italic c-accent mt-15 fs-md-24 lh-lg">
               About Me
             </h3>
-            <h3
-              className="fs-18 mb-15 mb-25 fs-md-16"
-              data-armstrong-id="module_subtitle"
-            >
-              I’m a seeker of stories, a believer in growth, and someone who
-              finds meaning in every question asked and every answer pursued
-            </h3>
 
             {/* Image centered above the text */}
             <div
@@ -31,6 +24,7 @@ export default function AboutMe() {
                     src="/assets/images/My-Bday.jpg"
                     alt="Photo of Family wedding"
                     loading="lazy"
+                    className="about-img"
                     style={{
                       width: "100%",
                       maxWidth: 1250,

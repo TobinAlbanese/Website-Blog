@@ -51,23 +51,22 @@ export default function LandingSection() {
             </div>
 
             {/* Right side: Your image */}
-            <div
-              className={`col-12 col-lg-6 d-flex justify-center ${
-                animate ? "slide-in-right" : ""
-              }`}
-              data-armstrong-id="profile-image"
-            >
-              <img
-                src="/assets/images/Tobin-Johnny.jpg"
-                alt="Photo of Tobin Albanese"
-                className="profile-image"
-                style={{
-                  maxWidth: "100%",
-                  height: "auto",
-                  borderRadius: "8px",
-                }}
-              />
-            </div>
+<div
+  className={`col-12 col-lg-6 d-flex justify-center ${animate ? "slide-in-right" : ""} home-hero-media`}
+  data-armstrong-id="profile-image"
+>
+  <img
+    src="/assets/images/Tobin-Johnny.jpg"
+    alt="Photo of Tobin Albanese"
+    className="profile-image home-hero-img"
+    style={{
+      maxWidth: "100%",
+      height: "auto",
+      borderRadius: "8px",
+    }}
+  />
+</div>
+
           </div>
         </div>
       </div>

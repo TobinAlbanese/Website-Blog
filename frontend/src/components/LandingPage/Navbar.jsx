@@ -1,13 +1,11 @@
-// components/LandingPage/Navbar.jsx (or your current path)
+// components/LandingPage/Navbar.jsx
 import React, { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/router";
 import MetaHead from "../../components/LandingPage/MetaHead.jsx";
 import SvgHead from "../../components/LandingPage/svgHead.jsx";
-// ⬇️ NEW: import your Midnight Bureau data (adjust path if needed)
 import MidnightBureauData from "../../data/MidnightBureau";
 
-// ⬇️ NEW: small helpers (safe, resilient)
-const arr = (x) => (Array.isArray(x) ? x : []);
+// helpers
 const toDate = (p) => {
   const d = new Date(p?.date || p?.published || p?.createdAt || 0);
   return Number.isNaN(d.getTime()) ? new Date(0) : d;
@@ -37,9 +35,7 @@ export default function Navbar() {
     };
   }, [menuOpen]);
 
-  const toggleMenu = () => {
-    setMenuOpen((prev) => !prev);
-  };
+  const toggleMenu = () => setMenuOpen((prev) => !prev);
   // ————————————————————————————————
 
   /* Anchor helpers */
@@ -47,39 +43,30 @@ export default function Navbar() {
   const scrollWithOffset = (id) => {
     const el = document.getElementById(id);
     if (!el) return;
-    const y =
-      el.getBoundingClientRect().top + window.pageYOffset - SCROLL_OFFSET;
+    const y = el.getBoundingClientRect().top + window.pageYOffset - SCROLL_OFFSET;
     window.scrollTo({ top: y, behavior: "smooth" });
   };
+
   const goToAnchor = (path, id) => async (e) => {
     e.preventDefault();
     setMenuOpen(false);
 
-    // Store target for reliability
     sessionStorage.setItem("scrollTarget", id);
 
     if (router.pathname === path) {
       requestAnimationFrame(() => scrollWithOffset(id));
-      router.replace(`${path}#${encodeURIComponent(id)}`, undefined, {
-        shallow: true,
-      });
+      router.replace(`${path}#${encodeURIComponent(id)}`, undefined, { shallow: true });
       return;
     }
-    await router.push(`${path}#${encodeURIComponent(id)}`, undefined, {
-      shallow: true,
-    });
+
+    await router.push(`${path}#${encodeURIComponent(id)}`, undefined, { shallow: true });
   };
 
   useEffect(() => {
     const tryScroll = (id, attemptsLeft = 20) => {
       const el = document.getElementById(id);
-      if (el) {
-        scrollWithOffset(id);
-        return;
-      }
-      if (attemptsLeft > 0) {
-        setTimeout(() => tryScroll(id, attemptsLeft - 1), 50);
-      }
+      if (el) return scrollWithOffset(id);
+      if (attemptsLeft > 0) setTimeout(() => tryScroll(id, attemptsLeft - 1), 50);
     };
 
     const applyStoredScroll = () => {
@@ -99,21 +86,18 @@ export default function Navbar() {
     return () => router.events.off("routeChangeComplete", applyStoredScroll);
   }, [router.events]);
 
-  // Archive group helper
   const goToArchiveGroup = (group) => async (e) => {
     e.preventDefault();
     setMenuOpen(false);
     sessionStorage.setItem("scrollTarget", "archive-content");
     await router.push(
-      `/MidnightBureau/Archive?group=${encodeURIComponent(
-        group
-      )}#archive-content`,
+      `/MidnightBureau/Archive?group=${encodeURIComponent(group)}#archive-content`,
       undefined,
       { shallow: true }
     );
   };
 
-  // ⬇️ NEW: compute truly recent posts (deduped across categories, sorted by date desc)
+  // recent posts (deduped + sorted newest)
   const recentPosts = useMemo(() => {
     const arrays = Object.values(MidnightBureauData).filter(Array.isArray);
     const flat = arrays.flat().filter((p) => p && p.slug);
@@ -135,7 +119,7 @@ export default function Navbar() {
       <SvgHead />
 
       <div className="base__nav">
-        {/* Primary nav (centered logo via CSS grid) */}
+        {/* Primary nav (unchanged) */}
         <nav className="site-nav" aria-label="primary">
           <div
             className="site-nav__inner pt-20 pb-10 pt-md-40"
@@ -147,10 +131,7 @@ export default function Navbar() {
             }}
           >
             {/* LEFT */}
-            <ul
-              className="site-nav__list d-flex left"
-              style={{ justifySelf: "start" }}
-            >
+            <ul className="site-nav__list d-flex left" style={{ justifySelf: "start" }}>
               <li className="site-nav__list-item d-flex show-desktop">
                 <a className="site-nav__link body-s-smallcaps " href="/">
                   Home
@@ -162,54 +143,35 @@ export default function Navbar() {
                 </a>
               </li>
               <li className="site-nav__list-item d-flex show-desktop">
-                <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/Personal/About"
-                >
+                <a className="site-nav__link body-s-smallcaps " href="/Personal/About">
                   About
                 </a>
               </li>
               <li className="site-nav__list-item d-flex show-desktop">
-                <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/Personal/Contact"
-                >
+                <a className="site-nav__link body-s-smallcaps " href="/Personal/Contact">
                   Contact
                 </a>
               </li>
               <li className="site-nav__list-item d-flex show-desktop">
-                <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/Portfolio"
-                >
+                <a className="site-nav__link body-s-smallcaps " href="/Portfolio">
                   Portfolio
                 </a>
               </li>
 
               <li className="site-nav__list-item d-flex show-tablet">
-                <a
-                  className="site-nav__link body-s-smallcaps highlight"
-                  href="/MidnightBureau"
-                >
+                <a className="site-nav__link body-s-smallcaps highlight" href="/MidnightBureau">
                   Midnight Bureau
                 </a>
               </li>
               <li className="site-nav__list-item d-flex show-mobile">
-                <a
-                  className="site-nav__link body-s-smallcaps highlight"
-                  href="/MidnightBureau"
-                >
+                <a className="site-nav__link body-s-smallcaps highlight" href="/MidnightBureau">
                   Midnight Bureau
                 </a>
               </li>
             </ul>
 
-            {/* CENTER — truly centered now */}
-            <a
-              href="/"
-              className="site-nav__center-logo-link"
-              style={{ justifySelf: "center" }}
-            >
+            {/* CENTER */}
+            <a href="/" className="site-nav__center-logo-link" style={{ justifySelf: "center" }}>
               <span className="site-nav__logo-text">
                 <span className="site-nav__logo-first">TOBIN</span>
                 <span className="site-nav__logo-last">ALBANESE</span>
@@ -217,15 +179,9 @@ export default function Navbar() {
             </a>
 
             {/* RIGHT */}
-            <ul
-              className="site-nav__list d-flex right"
-              style={{ justifySelf: "end" }}
-            >
+            <ul className="site-nav__list d-flex right" style={{ justifySelf: "end" }}>
               <li className="site-nav__list-item d-flex show-desktop">
-                <a
-                  className="site-nav__link body-s-smallcaps highlight"
-                  href="/MidnightBureau"
-                >
+                <a className="site-nav__link body-s-smallcaps highlight" href="/MidnightBureau">
                   Midnight Bureau
                 </a>
               </li>
@@ -234,7 +190,9 @@ export default function Navbar() {
                   id="menu-toggle"
                   aria-expanded={menuOpen}
                   onClick={toggleMenu}
-                  className={`site-nav__menu-btn d-flex site-nav__link js--menu-toggle body-s-smallcaps ${menuOpen ? "is-open" : ""}`}
+                  className={`site-nav__menu-btn d-flex site-nav__link js--menu-toggle body-s-smallcaps ${
+                    menuOpen ? "is-open" : ""
+                  }`}
                 >
                   <span className="site-nav__menu-btn-label js--menu-toggle-label">
                     {menuOpen ? "Close" : "Menu"}
@@ -251,9 +209,11 @@ export default function Navbar() {
           </div>
         </nav>
 
-        {/* Sticky nav — centered logo + Explore instead of Portfolio */}
+        {/* Sticky nav (unchanged) */}
         <nav
-          className={`site-nav--sticky c-bg-border w-100 position-fixed top-0 z-above-everything ${menuOpen ? "menu-open" : ""}`}
+          className={`site-nav--sticky c-bg-border w-100 position-fixed top-0 z-above-everything ${
+            menuOpen ? "menu-open" : ""
+          }`}
           aria-label="primary"
         >
           <div
@@ -266,10 +226,7 @@ export default function Navbar() {
             }}
           >
             {/* LEFT */}
-            <ul
-              className="site-nav__list d-flex left"
-              style={{ justifySelf: "start" }}
-            >
+            <ul className="site-nav__list d-flex left" style={{ justifySelf: "start" }}>
               <li className="site-nav__list-item d-flex show-desktop">
                 <a className="site-nav__link body-s-smallcaps " href="/">
                   Home
@@ -281,55 +238,35 @@ export default function Navbar() {
                 </a>
               </li>
               <li className="site-nav__list-item d-flex show-desktop">
-                <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/Personal/About"
-                >
+                <a className="site-nav__link body-s-smallcaps " href="/Personal/About">
                   About
                 </a>
               </li>
               <li className="site-nav__list-item d-flex show-desktop">
-                <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/MidnightBureau/Contact"
-                >
+                <a className="site-nav__link body-s-smallcaps " href="/MidnightBureau/Contact">
                   Contact
                 </a>
               </li>
               <li className="site-nav__list-item d-flex show-desktop">
-                <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/Portfolio"
-                >
+                <a className="site-nav__link body-s-smallcaps " href="/Portfolio">
                   Portfolio
                 </a>
               </li>
 
-              {/* right side of top nav while opened */}
               <li className="site-nav__list-item d-flex show-tablet">
-                <a
-                  className="site-nav__link body-s-smallcaps highlight"
-                  href="/MidnightBureau"
-                >
+                <a className="site-nav__link body-s-smallcaps highlight" href="/MidnightBureau">
                   Midnight Bureau
                 </a>
               </li>
               <li className="site-nav__list-item d-flex show-mobile">
-                <a
-                  className="site-nav__link body-s-smallcaps highlight"
-                  href="/MidnightBureau"
-                >
+                <a className="site-nav__link body-s-smallcaps highlight" href="/MidnightBureau">
                   Midnight Bureau
                 </a>
               </li>
             </ul>
 
-            {/* CENTER — truly centered now */}
-            <a
-              href="/"
-              className="site-nav__center-logo-linkMB"
-              style={{ justifySelf: "center" }}
-            >
+            {/* CENTER */}
+            <a href="/" className="site-nav__center-logo-linkMB" style={{ justifySelf: "center" }}>
               <span className="site-nav__logo-textMB">
                 <span className="site-nav__logo-firstMB">TOBIN</span>
                 <span className="site-nav__logo-lastMB">ALBANESE</span>
@@ -337,15 +274,9 @@ export default function Navbar() {
             </a>
 
             {/* RIGHT */}
-            <ul
-              className="site-nav__list d-flex right"
-              style={{ justifySelf: "end" }}
-            >
+            <ul className="site-nav__list d-flex right" style={{ justifySelf: "end" }}>
               <li className="site-nav__list-item d-flex show-desktop">
-                <a
-                  className="site-nav__link body-s-smallcaps highlight"
-                  href="/MidnightBureau"
-                >
+                <a className="site-nav__link body-s-smallcaps highlight" href="/MidnightBureau">
                   Midnight Bureau
                 </a>
               </li>
@@ -354,7 +285,9 @@ export default function Navbar() {
                   id="menu-toggle"
                   aria-expanded={menuOpen}
                   onClick={toggleMenu}
-                  className={`site-nav__menu-btn d-flex site-nav__link js--menu-toggle body-s-smallcaps ${menuOpen ? "is-open" : ""}`}
+                  className={`site-nav__menu-btn d-flex site-nav__link js--menu-toggle body-s-smallcaps ${
+                    menuOpen ? "is-open" : ""
+                  }`}
                 >
                   <span className="site-nav__menu-btn-label js--menu-toggle-label">
                     {menuOpen ? "Close" : "Menu"}
@@ -371,265 +304,250 @@ export default function Navbar() {
           </div>
         </nav>
 
-        {/* Overlay menu */}
+        {/* Overlay menu (UPDATED) */}
         <nav
           className="js--menu theme-accent"
           aria-hidden={!menuOpen}
           aria-labelledby="menu-toggle"
         >
           <div className="menu__content col-12 col-xl-10">
-            {/* top links kept */}
-            <ul className="menu__nav-links mt-30 d-md-flex">
-              <li className="site-nav__list-item d-flex show-mobile menu__nav-links-list-item pt-5 pb-5">
-                <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/MidnightBureau#recent-posts"
-                  onClick={goToAnchor("/MidnightBureau", "recent-posts")}
-                >
-                  Current Issue
-                </a>
-              </li>
-              <li className="site-nav__list-item d-flex show-tablet menu__nav-links-list-item pt-5 pb-5">
-                <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/MidnightBureau/Archive"
-                >
-                  Archive
-                </a>
-              </li>
-              <li className="site-nav__list-item d-flex show-mobile menu__nav-links-list-item pt-5 pb-5">
-                <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/MidnightBureau/Archive"
-                >
-                  Archive
-                </a>
-              </li>
-              <li className="site-nav__list-item d-flex show-tablet menu__nav-links-list-item pt-5 pb-5">
-                <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/MidnightBureau/BookReviews"
-                >
-                  Books
-                </a>
-              </li>
-              <li className="site-nav__list-item d-flex show-mobile menu__nav-links-list-item pt-5 pb-5">
-                <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/MidnightBureau/BookReviews"
-                >
-                  Books
-                </a>
-              </li>
-              <li className="site-nav__list-item d-flex show-tablet menu__nav-links-list-item pt-5 pb-5">
-                <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/Portfolio"
-                >
-                  Portfolio
-                </a>
-              </li>
-              <li className="site-nav__list-item d-flex show-mobile menu__nav-links-list-item pt-5 pb-5">
-                <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/Portfolio"
-                >
-                  Portfolio
-                </a>
-              </li>
-              <li className="site-nav__list-item d-flex show-tablet menu__nav-links-list-item pt-5 pb-5">
-                <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/MidnightBureau/Newsletter"
-                >
-                  Newsletters
-                </a>
-              </li>
-              <li className="site-nav__list-item d-flex show-mobile menu__nav-links-list-item pt-5 pb-5">
-                <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/MidnightBureau/Newsletter"
-                >
-                  Newsletters
-                </a>
-              </li>
-              <li className="site-nav__list-item d-flex show-mobile menu__nav-links-list-item pt-5 pb-5">
-                <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/user/login"
-                >
-                  Log In
-                </a>
-              </li>
-            </ul>
+            {/* REMOVED: the top strip links (Archive / Books / Portfolio / Newsletter) */}
 
-            {/* Browse + Recent + Browse by Topic */}
-            <div className="menu__section d-flex flex-wrap justify-between gap-y-30 -ml-10 -mr-10 mt-30 mb-80">
-              <div className="menu__topics col-12 col-sm-6 col-lg-4-base-10">
-                <p className="menu__overline mb-20">Browse by Section</p>
-                <ul>
-                  <li className="menu__topics-list-item mb-10">
-                    <a href="/MidnightBureau/Archive">Blog Archive</a>
-                  </li>
-                  <li className="menu__topics-list-item mb-10">
-                    <a
-                      href="/MidnightBureau#recent-posts"
-                      onClick={goToAnchor("/MidnightBureau", "recent-posts")}
-                    >
-                      Recent Posts
-                    </a>
-                  </li>
-                  <li className="menu__topics-list-item mb-10">
-                    <a href="/Portfolio">Portfolio</a>
-                  </li>
-                  <li className="menu__topics-list-item mb-10">
-                    <a
-                      href="/Portfolio#Current-&-In-Progress-Work"
-                      onClick={goToAnchor(
-                        "/Portfolio",
-                        "Current-&-In-Progress-Work"
-                      )}
-                    >
-                      Current Projects
-                    </a>
-                  </li>
-                  <li className="menu__topics-list-item mb-10">
-                    <a href="/Notes">Notes</a>
-                  </li>
-                  <li className="menu__topics-list-item mb-10">
-                    <a href="/MidnightBureau/Newsletter">Newsletter</a>
-                  </li>
-                  <li className="menu__topics-list-item mb-10">
-                    <a href="/Personal/About">About Me</a>
-                  </li>
-                  <li className="menu__topics-list-item mb-10">
-                    <a href="/Personal/Contact">Contact</a>
-                  </li>
-                </ul>
-              </div>
+            {/* TOP section: two columns */}
+<div className="menu__section menu__section--top d-flex flex-wrap justify-between gap-y-30 -ml-10 -mr-10 mt-30 mb-80">
 
-              <div className="menu__issues col-12 col-sm-6 col-lg-4-base-10">
-                <p className="menu__overline mb-20">Recent Posts</p>
+  {/* LEFT: Browse by Section */}
+  <div className="menu__topics col-12 col-sm-6 col-lg-4-base-10">
+    <p className="menu__overline mb-20">Browse by Section</p>
+    <ul>
+      <li className="menu__topics-list-item mb-10">
+        <a href="/MidnightBureau/Archive" onClick={() => setMenuOpen(false)}>
+          Blog Archive
+        </a>
+      </li>
+      <li className="menu__topics-list-item mb-10">
+        <a
+          href="/MidnightBureau#recent-posts"
+          onClick={goToAnchor("/MidnightBureau", "recent-posts")}
+        >
+          Recent Posts
+        </a>
+      </li>
+      <li className="menu__topics-list-item mb-10">
+        <a href="/Portfolio" onClick={() => setMenuOpen(false)}>
+          Portfolio
+        </a>
+      </li>
+      <li className="menu__topics-list-item mb-10">
+        <a href="/Photography" onClick={() => setMenuOpen(false)}>
+          Photography
+        </a>
+      </li>
+      <li className="menu__topics-list-item mb-10">
+        <a href="/MidnightBureau/Newsletter" onClick={() => setMenuOpen(false)}>
+          Newsletter
+        </a>
+      </li>
+      <li className="menu__topics-list-item mb-10">
+        <a href="/Personal/About" onClick={() => setMenuOpen(false)}>
+          About Me
+        </a>
+      </li>
+      <li className="menu__topics-list-item mb-10">
+        <a href="/Personal/Contact" onClick={() => setMenuOpen(false)}>
+          Contact
+        </a>
+      </li>
+    </ul>
 
-                <ul className="menu__issues-list d-flex">
-                  {recentPosts.slice(0, 3).map((p, i) => (
-                    <li key={p.slug}>
-                      <a
-                        className="menu__post-link"
-                        href={`/MidnightBureau/${p.slug}`}
-                        onClick={() => setMenuOpen(false)}
-                      >
-                        <figure
-                          style={{
-                            width: 160,
-                            height: 228,
-                            overflow: "hidden",
-                            borderRadius: 6,
-                            margin: 0,
-                          }}
-                        >
-                          <img
-                            src={pickArchiveImg(p)}
-                            alt={p.title || `Post ${i + 1}`}
-                            loading="lazy"
-                            width={160}
-                            height={228}
-                            style={{
-                              width: "160px",
-                              height: "228px",
-                              objectFit: "cover",
-                              display: "block",
-                            }}
-                            sizes="(max-width: 767px) 26vw, (min-width: 1024px) 160px"
-                          />
-                        </figure>
+    {/* ✅ MOBILE ONLY: Browse by Topic lives UNDER Browse by Section */}
+    <div className="menu__topics-mobile-only">
+      <p className="menu__overline mb-20 mt-40">Browse by Topic</p>
+      <ul className="menu__links pt-30 pt-md-0">
+        <li className="menu__links--list-item mb-5">
+          <a
+            href="/MidnightBureau/Archive?group=World%20%26%20Diplomacy"
+            onClick={goToArchiveGroup("World & Diplomacy")}
+          >
+            World &amp; Diplomacy
+          </a>
+        </li>
+        <li className="menu__links--list-item mb-5">
+          <a
+            href="/MidnightBureau/Archive?group=Security%20%26%20Military"
+            onClick={goToArchiveGroup("Security & Military")}
+          >
+            Security &amp; Military
+          </a>
+        </li>
+        <li className="menu__links--list-item mb-5">
+          <a
+            href="/MidnightBureau/Archive?group=Energy%20%26%20Environment"
+            onClick={goToArchiveGroup("Energy & Environment")}
+          >
+            Energy &amp; Environment
+          </a>
+        </li>
+        <li className="menu__links--list-item mb-5">
+          <a
+            href="/MidnightBureau/Archive?group=Economy"
+            onClick={goToArchiveGroup("Economy")}
+          >
+            Economy
+          </a>
+        </li>
+        <li className="menu__links--list-item mb-5">
+          <a
+            href="/MidnightBureau/Archive?group=Technology"
+            onClick={goToArchiveGroup("Technology")}
+          >
+            Technology
+          </a>
+        </li>
+        <li className="menu__links--list-item mb-5">
+          <a
+            href="/MidnightBureau/Archive?group=Culture"
+            onClick={goToArchiveGroup("Culture")}
+          >
+            Culture
+          </a>
+        </li>
+        <li className="menu__links--list-item mb-5">
+          <a
+            href="/MidnightBureau/Archive?group=Ideas"
+            onClick={goToArchiveGroup("Ideas")}
+          >
+            Ideas
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
 
-                        <span
-                          className="body-xs-smallcaps fs-15 pt-5"
-                          style={{
-                            width: 160,
-                            display: "-webkit-box",
-                            WebkitLineClamp: 2,
-                            WebkitBoxOrient: "vertical",
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                            lineHeight: 1.25,
-                          }}
-                        >
-                          {p.title?.trim() || `Post ${i + 1}`}
-                        </span>
-                      </a>
-                    </li>
-                  ))}
-                </ul>
+  {/* RIGHT: Recent Posts + (desktop/iPad) Browse by Topic */}
+  <div className="menu__issues col-12 col-sm-6 col-lg-4-base-10">
+    <p className="menu__overline mb-20">Recent Posts</p>
 
-                <div>
-                  <p className="menu__overline mb-20 mt-40">Browse by Topic</p>
-                  <ul className="menu__links pt-30 pt-md-0">
-                    <li className="menu__links--list-item mb-5">
-                      <a
-                        href="/MidnightBureau/Archive?group=World%20%26%20Diplomacy"
-                        onClick={goToArchiveGroup("World & Diplomacy")}
-                      >
-                        World &amp; Diplomacy
-                      </a>
-                    </li>
-                    <li className="menu__links--list-item mb-5">
-                      <a
-                        href="/MidnightBureau/Archive?group=Security%20%26%20Military"
-                        onClick={goToArchiveGroup("Security & Military")}
-                      >
-                        Security &amp; Military
-                      </a>
-                    </li>
-                    <li className="menu__links--list-item mb-5">
-                      <a
-                        href="/MidnightBureau/Archive?group=Energy%20%26%20Environment"
-                        onClick={goToArchiveGroup("Energy & Environment")}
-                      >
-                        Energy &amp; Environment
-                      </a>
-                    </li>
-                    <li className="menu__links--list-item mb-5">
-                      <a
-                        href="/MidnightBureau/Archive?group=Economy"
-                        onClick={goToArchiveGroup("Economy")}
-                      >
-                        Economy
-                      </a>
-                    </li>
-                    <li className="menu__links--list-item mb-5">
-                      <a
-                        href="/MidnightBureau/Archive?group=Technology"
-                        onClick={goToArchiveGroup("Technology")}
-                      >
-                        Technology
-                      </a>
-                    </li>
-                    <li className="menu__links--list-item mb-5">
-                      <a
-                        href="/MidnightBureau/Archive?group=Culture"
-                        onClick={goToArchiveGroup("Culture")}
-                      >
-                        Culture
-                      </a>
-                    </li>
-                    <li className="menu__links--list-item mb-5">
-                      <a
-                        href="/MidnightBureau/Archive?group=Ideas"
-                        onClick={goToArchiveGroup("Ideas")}
-                      >
-                        Ideas
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+    <ul className="menu__issues-list d-flex">
+      {recentPosts.slice(0, 3).map((p, i) => (
+        <li key={p.slug}>
+          <a
+            className="menu__post-link"
+            href={`/MidnightBureau/${p.slug}`}
+            onClick={() => setMenuOpen(false)}
+          >
+            <figure
+              style={{
+                width: 160,
+                height: 228,
+                overflow: "hidden",
+                borderRadius: 6,
+                margin: 0,
+              }}
+            >
+              <img
+                src={pickArchiveImg(p)}
+                alt={p.title || `Post ${i + 1}`}
+                loading="lazy"
+                width={160}
+                height={228}
+                style={{
+                  width: "160px",
+                  height: "228px",
+                  objectFit: "cover",
+                  display: "block",
+                }}
+              />
+            </figure>
+
+            <span
+              className="body-xs-smallcaps fs-15 pt-5"
+              style={{
+                width: 160,
+                display: "-webkit-box",
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: "vertical",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                lineHeight: 1.25,
+              }}
+            >
+              {p.title?.trim() || `Post ${i + 1}`}
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    {/* ✅ DESKTOP/iPAD ONLY: Browse by Topic stays on right */}
+    <div className="menu__topics-desktop-only">
+      <p className="menu__overline mb-20 mt-40">Browse by Topic</p>
+      <ul className="menu__links pt-30 pt-md-0">
+        <li className="menu__links--list-item mb-5">
+          <a
+            href="/MidnightBureau/Archive?group=World%20%26%20Diplomacy"
+            onClick={goToArchiveGroup("World & Diplomacy")}
+          >
+            World &amp; Diplomacy
+          </a>
+        </li>
+        <li className="menu__links--list-item mb-5">
+          <a
+            href="/MidnightBureau/Archive?group=Security%20%26%20Military"
+            onClick={goToArchiveGroup("Security & Military")}
+          >
+            Security &amp; Military
+          </a>
+        </li>
+        <li className="menu__links--list-item mb-5">
+          <a
+            href="/MidnightBureau/Archive?group=Energy%20%26%20Environment"
+            onClick={goToArchiveGroup("Energy & Environment")}
+          >
+            Energy &amp; Environment
+          </a>
+        </li>
+        <li className="menu__links--list-item mb-5">
+          <a
+            href="/MidnightBureau/Archive?group=Economy"
+            onClick={goToArchiveGroup("Economy")}
+          >
+            Economy
+          </a>
+        </li>
+        <li className="menu__links--list-item mb-5">
+          <a
+            href="/MidnightBureau/Archive?group=Technology"
+            onClick={goToArchiveGroup("Technology")}
+          >
+            Technology
+          </a>
+        </li>
+        <li className="menu__links--list-item mb-5">
+          <a
+            href="/MidnightBureau/Archive?group=Culture"
+            onClick={goToArchiveGroup("Culture")}
+          >
+            Culture
+          </a>
+        </li>
+        <li className="menu__links--list-item mb-5">
+          <a
+            href="/MidnightBureau/Archive?group=Ideas"
+            onClick={goToArchiveGroup("Ideas")}
+          >
+            Ideas
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
 
             <hr className="menu__divider border-zero mb-20" />
 
-            {/* BELOW THE WHITE LINE — updated More Resources */}
+            {/* BELOW THE WHITE LINE — untouched */}
             <div className="menu__section d-flex flex-wrap justify-between gap-y-30 -ml-10 -mr-10">
               <div className="menu__about col-12 col-sm-6 col-lg-4-base-10">
                 <p>
@@ -637,15 +555,15 @@ export default function Navbar() {
                   <strong>
                     <em>Tobin Albanese.. </em>
                   </strong>
-                  A Computer Science student and writer passionate about
-                  strategic intelligence, global affairs, and current events.
-                  This blog shares my thoughts, analyses, and personal insights
-                  across a wide range of topics including politics, technology,
-                  and culture.
+                  A Computer Science student and writer passionate about strategic intelligence,
+                  global affairs, and current events. This blog shares my thoughts, analyses,
+                  and personal insights across a wide range of topics including politics,
+                  technology, and culture.
                 </p>
                 <a
                   className="mt-30 arrow-link border-bottom-thin border-bottom d-inline-block lh-22"
                   href="/Personal/About"
+                  onClick={() => setMenuOpen(false)}
                 >
                   More About Me
                   <svg className="arrow-link__icon ">
@@ -658,25 +576,32 @@ export default function Navbar() {
                 <p className="menu__overline mb-20">More Resources</p>
                 <ul className="menu__links pt-30 pt-md-0">
                   <li className="menu__links--list-item mb-5">
-                    <a href="/MidnightBureau/Newsletter">Newsletter</a>
+                    <a href="/MidnightBureau/Newsletter" onClick={() => setMenuOpen(false)}>
+                      Newsletter
+                    </a>
                   </li>
                   <li className="menu__links--list-item mb-5">
-                    <a href="/MidnightBureau/FAQ">FAQs</a>
+                    <a href="/MidnightBureau/FAQ" onClick={() => setMenuOpen(false)}>
+                      FAQs
+                    </a>
                   </li>
                   <li className="menu__links--list-item mb-5">
-                    <a href="/MidnightBureau/Podcasts">Podcasts</a>
+                    <a href="/MidnightBureau/Podcasts" onClick={() => setMenuOpen(false)}>
+                      Podcasts
+                    </a>
                   </li>
                   <li className="menu__links--list-item mb-5">
-                    <a href="/MidnightBureau/BookReviews">Book Reviews</a>
+                    <a href="/MidnightBureau/BookReviews" onClick={() => setMenuOpen(false)}>
+                      Book Reviews
+                    </a>
                   </li>
                   <li className="menu__links--list-item mb-5">
-                    <a href="/MidnightBureau/Music">Music Suggestions</a>
+                    <a href="/MidnightBureau/Music" onClick={() => setMenuOpen(false)}>
+                      Music Suggestions
+                    </a>
                   </li>
                   <li className="menu__links--list-item mb-5">
-                    <a
-                      href="/#feedback-section"
-                      onClick={goToAnchor("/", "feedback-section")}
-                    >
+                    <a href="/#feedback-section" onClick={goToAnchor("/", "feedback-section")}>
                       Feedback
                     </a>
                   </li>

@@ -60,7 +60,7 @@ export default function Podcast() {
             {/* ORDER: image LEFT, info RIGHT */}
             <div className="row ml-0 mr-0" data-armstrong-id="grid_1">
               {/* LEFT: Episode artwork */}
-              <div className="col-lg-6 mb-20 mt-md-60 mb-md-60">
+              <div className="col-lg-6 mb-20 mt-md-60 mb-md-60 home-hide-narrow">
                 <Link href={epHref}>
                   <figure style={{ margin: 0 }}>
                     <img
@@ -84,7 +84,7 @@ export default function Podcast() {
 
               {/* RIGHT: Logo, title, blurb, faux player, follow link */}
               <div className="col-lg-6 d-flex" style={{ overflow: "visible" }}>
-                <div
+                <div className="home-podcast-info"
                   style={{
                     maxWidth: 560,
                     marginLeft: "auto",
