@@ -180,11 +180,7 @@ export default function Navbar() {
 
             {/* RIGHT */}
             <ul className="site-nav__list d-flex right" style={{ justifySelf: "end" }}>
-              <li className="site-nav__list-item d-flex show-desktop">
-                <a className="site-nav__link body-s-smallcaps " href="/Photography">
-                  Photography
-                </a>
-              </li>
+
               <li className="site-nav__list-item d-flex show-desktop">
                 <a className="site-nav__link body-s-smallcaps highlight" href="/MidnightBureau">
                   Midnight Bureau
@@ -341,11 +337,6 @@ export default function Navbar() {
       <li className="menu__topics-list-item mb-10">
         <a href="/Portfolio" onClick={() => setMenuOpen(false)}>
           Portfolio
-        </a>
-      </li>
-      <li className="menu__topics-list-item mb-10">
-        <a href="/Photography" onClick={() => setMenuOpen(false)}>
-          Photography
         </a>
       </li>
       <li className="menu__topics-list-item mb-10">
