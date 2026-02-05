@@ -3,37 +3,75 @@ import MetaHead from "../../components/LandingPage/MetaHead.jsx";
 import SvgHead from "../../components/LandingPage/svgHead.jsx";
 import Footer from "../../components/LandingPage/Footer.jsx";
 import NavbarMB from "../../components/LandingPage/NavbarMB.jsx";
+import { supabase } from "../../lib/supabase/client";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const validate = () => {
-    const emailRegex = /^[a-zA-Z0-9]+@example\.com$/;
-    const passwordRegex = /^[a-zA-Z0-9]+$/;
-
-    if (!emailRegex.test(email)) {
-      return "Email must be in the format you@example.com and use only letters/numbers.";
-    }
-    if (!passwordRegex.test(password)) {
-      return "Password can only contain letters and numbers.";
-    }
+    if (!email?.includes("@")) return "Please enter a valid email address.";
+    if (!password || password.length < 6)
+      return "Password must be at least 6 characters.";
     return "";
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrors("");
+
     const errorMsg = validate();
     if (errorMsg) {
       setErrors(errorMsg);
       return;
     }
 
-    alert("Login successful! (demo)");
-    setEmail("");
-    setPassword("");
-    setErrors("");
+    setLoading(true);
+
+    try {
+      // 1) Sign in
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      const user = data?.user;
+      if (!user) {
+        throw new Error("Login succeeded but no user returned.");
+      }
+
+      // 2) Fetch role from profiles (RLS allows user to read their own row)
+      const { data: profile, error: profileError } = await supabase
+        .from("profiles")
+        .select("role")
+        .eq("id", user.id)
+        .single();
+
+      if (profileError) {
+        // If for some reason profile is missing, default safely
+        console.error("Profile lookup failed:", profileError.message);
+      }
+
+      const role = profile?.role || "user";
+
+      setLoading(false);
+
+      // 3) Redirect based on role
+      if (role === "admin") {
+        window.location.assign("/admin");
+      } else {
+        window.location.assign("/MidnightBureau");
+      }
+    } catch (err) {
+      setLoading(false);
+      setErrors(err?.message || "Login failed.");
+    }
   };
 
   const isFormValid = email.length > 0 && password.length > 0 && !validate();
@@ -46,16 +84,16 @@ export default function Login() {
       <MetaHead />
       <SvgHead />
 
-      {/*NAVBAR*/}
       <div
         className="dialog-off-canvas-main-canvas"
         data-off-canvas-main-canvas=""
       >
         <div className="text-align-center pt-15 d-flex dfp-tag-wrapper justify-around">
-          <div id="js-dfp-tag-top--2"></div>
+          <div id="js-dfp-tag-top--2" />
         </div>
-        <div id="js-dfp-tag-outofpage--2"></div>
-        <div className="base ">
+        <div id="js-dfp-tag-outofpage--2" />
+
+        <div className="base">
           <NavbarMB />
 
           <section
@@ -64,7 +102,7 @@ export default function Login() {
               maxWidth: 900,
               margin: "60px auto",
               padding: "40px 20px",
-              border: "4px solid #b02621", // red border
+              border: "4px solid #b02621",
               borderRadius: 8,
               backgroundColor: "transparent",
               color: "var(--c-text)",
@@ -85,11 +123,7 @@ export default function Login() {
             </p>
 
             <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                alert("Login successful! (demo)");
-                e.target.reset();
-              }}
+              onSubmit={handleSubmit}
               style={{
                 display: "flex",
                 flexDirection: "column",
@@ -117,17 +151,9 @@ export default function Login() {
                 name="email"
                 required
                 placeholder="you@example.com"
-                style={{
-                  width: "100%",
-                  maxWidth: 400,
-                  padding: "12px 16px",
-                  fontSize: 16,
-                  borderRadius: 4,
-                  border: "1px solid #b02621",
-                  backgroundColor: "transparent",
-                  color: "var(--c-text)",
-                  fontFamily: "inherit",
-                }}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                style={inputStyle}
               />
 
               {/* Password */}
@@ -149,33 +175,33 @@ export default function Login() {
                 name="password"
                 required
                 placeholder="Enter your password"
-                style={{
-                  width: "100%",
-                  maxWidth: 400,
-                  padding: "12px 16px",
-                  fontSize: 16,
-                  borderRadius: 4,
-                  border: "1px solid #b02621",
-                  backgroundColor: "transparent",
-                  color: "var(--c-text)",
-                  fontFamily: "inherit",
-                }}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                style={inputStyle}
               />
 
-              {/* Submit */}
+              {errors && (
+                <div
+                  style={{
+                    color: "#b02621",
+                    fontSize: 14,
+                    maxWidth: 520,
+                    marginTop: 4,
+                  }}
+                >
+                  {errors}
+                </div>
+              )}
+
               <button
                 type="submit"
+                disabled={!isFormValid || loading}
                 style={{
+                  ...buttonStyle,
                   backgroundColor: "#d62827",
                   color: "var(--c-text)",
-                  border: "none",
-                  borderRadius: 4,
-                  padding: "12px 24px",
-                  fontWeight: 700,
-                  fontSize: 16,
-                  cursor: "pointer",
-                  transition: "background-color 0.3s ease",
-                  fontFamily: "inherit",
+                  cursor: !isFormValid || loading ? "not-allowed" : "pointer",
+                  opacity: !isFormValid || loading ? 0.7 : 1,
                 }}
                 onMouseEnter={(e) =>
                   (e.currentTarget.style.backgroundColor = "#b02621")
@@ -184,10 +210,16 @@ export default function Login() {
                   (e.currentTarget.style.backgroundColor = "#d62827")
                 }
               >
-                Log In
+                {loading ? "Logging in..." : "Log In"}
               </button>
 
-              <small style={{ marginTop: 10, fontSize: 14, color: "#555" }}>
+              <small
+                style={{
+                  marginTop: 10,
+                  fontSize: 14,
+                  color: "var(--c-text-secondary)",
+                }}
+              >
                 Don’t have an account?{" "}
                 <a
                   href="/user/SignUp"
@@ -214,12 +246,11 @@ const inputStyle = {
   borderRadius: 4,
   border: "1px solid #b02621",
   backgroundColor: "transparent",
-  color: "#000000",
+  color: "var(--c-text)",
   fontFamily: "inherit",
 };
 
 const buttonStyle = {
-  color: "#000000",
   border: "none",
   borderRadius: 4,
   padding: "12px 24px",

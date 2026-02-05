@@ -3,42 +3,86 @@ import MetaHead from "../../components/LandingPage/MetaHead.jsx";
 import SvgHead from "../../components/LandingPage/svgHead.jsx";
 import Footer from "../../components/LandingPage/Footer.jsx";
 import NavbarMB from "../../components/LandingPage/NavbarMB.jsx";
+import { supabase } from "../../lib/supabase/client";
 
 export default function SignupPage() {
   const [email, setEmail] = useState("");
   const [confirmEmail, setConfirmEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const validate = () => {
-    const emailRegex = /^[a-zA-Z0-9]+@example\.com$/;
-    const passwordRegex = /^[a-zA-Z0-9]+$/;
-
-    if (!emailRegex.test(email)) {
-      return "Email must be in the format you@example.com with only letters and numbers.";
-    }
-    if (email !== confirmEmail) {
-      return "Emails do not match.";
-    }
-    if (!passwordRegex.test(password)) {
-      return "Password can only contain letters and numbers.";
-    }
+    if (!email?.includes("@")) return "Please enter a valid email address.";
+    if (email !== confirmEmail) return "Emails do not match.";
+    if (!password || password.length < 6)
+      return "Password must be at least 6 characters.";
     return "";
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrors("");
+
     const errorMsg = validate();
     if (errorMsg) {
       setErrors(errorMsg);
       return;
     }
 
-    alert("Signup successful! (demo)");
-    setEmail("");
-    setConfirmEmail("");
-    setPassword("");
-    setErrors("");
+    setLoading(true);
+
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo:
+          typeof window !== "undefined"
+            ? `${window.location.origin}/MidnightBureau`
+            : undefined,
+      },
+    });
+
+    if (error) {
+      setLoading(false);
+      setErrors(error.message);
+      return;
+    }
+
+    const user = data?.user;
+
+    // Create profiles row for this user (role defaults to 'user')
+    if (user?.id) {
+      const base = email.split("@")[0] || "user";
+      const rawUsername = base.toLowerCase().replace(/[^a-z0-9_]/g, "");
+      const username = rawUsername.slice(0, 24) || "user";
+
+      const { error: profErr } = await supabase.from("profiles").insert([
+        {
+          id: user.id,
+          username,
+          display_name: base,
+          // role defaults to 'user' in DB; you only manually set yourself 'admin'
+        },
+      ]);
+
+      if (profErr && profErr.message?.toLowerCase().includes("duplicate")) {
+        const suffix = Math.random().toString(36).slice(2, 8);
+        await supabase.from("profiles").insert([
+          {
+            id: user.id,
+            username: `${username}_${suffix}`.slice(0, 30),
+            display_name: base,
+          },
+        ]);
+      }
+    }
+
+    setLoading(false);
+
+    // If email confirmation is ON, user might not be "logged in" yet,
+    // but they are created. For now, just send them to Midnight Bureau.
+    window.location.href = "/MidnightBureau";
   };
 
   const isFormValid =
@@ -55,15 +99,15 @@ export default function SignupPage() {
       <MetaHead />
       <SvgHead />
 
-      {/*NAVBAR*/}
       <div
         className="dialog-off-canvas-main-canvas"
         data-off-canvas-main-canvas=""
       >
         <div className="text-align-center pt-15 d-flex dfp-tag-wrapper justify-around">
-          <div id="js-dfp-tag-top--2"></div>
+          <div id="js-dfp-tag-top--2" />
         </div>
-        <div id="js-dfp-tag-outofpage--2"></div>
+        <div id="js-dfp-tag-outofpage--2" />
+
         <div className="base d-flex">
           <NavbarMB />
 
@@ -75,7 +119,7 @@ export default function SignupPage() {
               border: "4px solid #b02621",
               borderRadius: 8,
               backgroundColor: "transparent",
-              color: "#000000",
+              color: "var(--c-text)",
               textAlign: "center",
               fontWeight: 600,
               fontFamily: "inherit",
@@ -124,27 +168,42 @@ export default function SignupPage() {
               />
 
               {errors && (
-                <div style={{ color: "#b02621", fontSize: 14, marginTop: -10 }}>
+                <div
+                  style={{
+                    color: "#b02621",
+                    fontSize: 14,
+                    marginTop: -10,
+                    maxWidth: 520,
+                  }}
+                >
                   {errors}
                 </div>
               )}
 
               <button
                 type="submit"
-                disabled={!isFormValid}
+                disabled={!isFormValid || loading}
                 style={{
                   ...buttonStyle,
-                  backgroundColor: isFormValid ? "#d62827" : "#d62827",
-                  cursor: isFormValid ? "pointer" : "not-allowed",
+                  backgroundColor: "#d62827",
+                  color: "var(--c-text)",
+                  cursor: !isFormValid || loading ? "not-allowed" : "pointer",
+                  opacity: !isFormValid || loading ? 0.7 : 1,
                 }}
               >
-                Sign Up
+                {loading ? "Creating..." : "Sign Up"}
               </button>
 
-              <small style={{ marginTop: 10, fontSize: 14, color: "#000000" }}>
+              <small
+                style={{
+                  marginTop: 10,
+                  fontSize: 14,
+                  color: "var(--c-text-secondary)",
+                }}
+              >
                 Already have an account?{" "}
                 <a
-                  href="/login"
+                  href="/user/login"
                   style={{ color: "#b02621", textDecoration: "underline" }}
                 >
                   Log in
@@ -168,12 +227,11 @@ const inputStyle = {
   borderRadius: 4,
   border: "1px solid #b02621",
   backgroundColor: "transparent",
-  color: "#000000",
+  color: "var(--c-text)",
   fontFamily: "inherit",
 };
 
 const buttonStyle = {
-  color: "#000000",
   border: "none",
   borderRadius: 4,
   padding: "12px 24px",

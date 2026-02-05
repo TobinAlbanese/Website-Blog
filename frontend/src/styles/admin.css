@@ -1,0 +1,348 @@
+/* frontend/src/styles/admin.css */
+/* Admin-only styling — do NOT reuse MidnightBureau classes */
+
+.admin-root {
+  min-height: 100vh;
+  background: var(--c-bg);
+  color: var(--c-text);
+}
+
+.admin-shell {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 28px 24px;
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.admin-title {
+  font-size: 28px;
+  font-weight: 900;
+}
+
+.admin-subtitle {
+  opacity: 0.7;
+  margin-top: 4px;
+  font-weight: 800;
+}
+
+.admin-error {
+  color: #d62827;
+  font-weight: 900;
+  margin-top: 8px;
+}
+
+.admin-grid {
+  display: grid;
+  grid-template-columns: 0.95fr 1.15fr;
+  gap: 22px;
+  align-items: start;
+}
+
+.admin-card {
+  background: var(--c-bg-primary);
+  border: 1px solid var(--admin-border);
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+
+.admin-card-title {
+  font-size: 16px;
+  font-weight: 900;
+  margin-bottom: 12px;
+}
+
+.admin-field {
+  margin-bottom: 12px;
+}
+
+.admin-label {
+  font-weight: 900;
+  margin-bottom: 8px;
+  opacity: 0.85;
+}
+
+.admin-input,
+.admin-select,
+.admin-textarea {
+  width: 100%;
+  border-radius: 10px;
+  padding: 12px;
+  border: 1px solid rgba(214,40,39,0.45);
+  background: rgba(0,0,0,0.12);
+  color: var(--c-text);
+  outline: none;
+  font-family: inherit;
+}
+
+.admin-textarea { resize: vertical; }
+
+.admin-btn {
+  background: #d62827;
+  color: #fff;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-weight: 900;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.admin-btn-soft {
+  background: rgba(214,40,39,0.12);
+  color: #d62827;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-weight: 900;
+  border: 1px solid rgba(214,40,39,0.35);
+  cursor: pointer;
+}
+
+.admin-list-btn {
+  width: 100%;
+  text-align: left;
+  padding: 12px;
+  border-radius: 10px;
+border: 1px solid var(--admin-border);  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  color: var(--c-text);
+  background: rgba(0,0,0,0.12);
+}
+
+.admin-list-btn.is-active {
+  border-color: rgba(214,40,39,0.75);
+  background: rgba(214,40,39,0.10);
+}
+
+/* images */
+.admin-image-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.admin-image-tile {
+  position: relative;
+}
+
+.admin-image {
+  width: 100%;
+  height: 170px;
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
+}
+
+.admin-image-delete {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(214,40,39,0.92);
+  color: white;
+  border: none;
+  border-radius: 999px;
+  width: 34px;
+  height: 34px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+/* admin-tiptap base */
+.admin-tiptap {
+  min-height: 280px;
+  outline: none;
+  color: var(--c-text);
+  font-family: inherit;
+  line-height: 1.6;
+}
+
+/* toolbar */
+.tiptap-toolbar {
+  gap: 10px;
+  align-items: center;
+}
+
+/* image alignment classes applied to the <img> tag */
+img.img--center {
+  display: block;
+  margin: 1.5rem auto;
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
+img.img--left {
+  display: block;
+  margin: 0 1rem 1rem 0;
+  float: left;
+  width: clamp(180px, 28%, 320px);
+  height: auto;
+  border-radius: 8px;
+}
+
+img.img--right {
+  display: block;
+  margin: 0 0 1rem 1rem;
+  float: right;
+  width: clamp(180px, 28%, 320px);
+  height: auto;
+  border-radius: 8px;
+}
+
+/* floated variants that visually overlap text like your previous float behavior */
+img.img--float-left {
+  float: left;
+  margin: 0 1rem 1rem 0;
+  width: clamp(150px, 26%, 260px);
+  border-radius: 8px;
+}
+
+img.img--float-right {
+  float: right;
+  margin: 0 0 1rem 1rem;
+  width: clamp(150px, 26%, 260px);
+  border-radius: 8px;
+}
+.admin-tiptap { min-height: 280px; color: var(--c-text); font-family: inherit; }
+.tiptap-toolbar button.is-active { font-weight: 800; }
+figure.img--center { display:block; margin:1.5rem auto; max-width:100%; }
+figure.img--center img { width:100%; height:auto; border-radius:12px; display:block; }
+figure.img--float-left { float:left; margin:0 1rem 1rem 0; width: clamp(150px, 28%, 320px); }
+figure.img--float-left img { width:100%; height:auto; border-radius:8px; display:block; }
+figure.img--float-right { float:right; margin:0 0 1rem 1rem; width: clamp(150px, 28%, 320px); }
+figure.img--float-right img { width:100%; height:auto; border-radius:8px; display:block; }
+figure figcaption { font-size: .9rem; color: var(--c-text-secondary); margin-top: .4rem; }
+
+
+.admin-tiptap {
+  min-height: 280px;
+  outline: none;
+  color: var(--c-text);
+  font-family: inherit;
+  line-height: 1.6;
+
+  /* add these */
+  border: 1px solid rgba(214,40,39,0.45);
+  background: rgba(0,0,0,0.12);
+  border-radius: 12px;
+  padding: 14px;
+}
+
+/* TipTap output spacing */
+.admin-tiptap p { margin: 0 0 12px; }
+.admin-tiptap h1, .admin-tiptap h2, .admin-tiptap h3 { margin: 0 0 12px; }
+.admin-tiptap a { color: #d62827; text-decoration: underline; }
+
+
+/* resources list: border hugs content */
+.admin-resource-pill {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  max-width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--admin-border);
+  border-radius: 10px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.admin-resource-pill:hover {
+  color: #d62827;
+  border-color: #d62827;
+}
+
+.admin-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35); /* darker page behind */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.admin-modal {
+  width: min(560px, calc(100vw - 32px));
+  background: rgba(255,255,255,0.94); /* lighter modal itself */
+  color: #111;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 20px 70px rgba(0,0,0,0.35);
+}
+
+.admin-top-action {
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: #fff;               /* default white */
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.admin-top-action:hover {
+  color: #d62827;            /* hover red */
+}
+
+.tiptap-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* pushes upload right */
+  margin-bottom: 10px;
+}
+
+.tiptap-toolbar-left,
+.tiptap-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* white buttons, red hover */
+.tiptap-btn {
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: #fff;
+  font-weight: 900;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.92rem; /* slightly smaller */
+}
+
+.tiptap-btn:hover {
+  color: #d62827;
+}
+
+.tiptap-btn.is-active {
+  color: #d62827;
+}
+
+:root {
+  --admin-border: rgba(0,0,0,0.22); /* light mode */
+}
+
+/* If you use data-theme */
+[data-theme="dark"],
+body[data-theme="dark"] {
+  --admin-border: rgba(255,255,255,0.34); /* dark mode */
+}
+
+/* If you rely on prefers-color-scheme */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --admin-border: rgba(255,255,255,0.34);
+  }
+}

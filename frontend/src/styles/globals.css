@@ -3831,7 +3831,7 @@ html { overflow-x: hidden; }
   }
 
   /* make custom <banner> element responsive */
-  .midnight-bureau-article banner {
+  .midnight-bureau-article .banner {
     width: 100%;
     height: clamp(120px, 24vw, 200px);
     display: block;

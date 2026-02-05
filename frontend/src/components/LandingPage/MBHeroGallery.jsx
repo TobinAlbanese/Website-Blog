@@ -72,7 +72,7 @@ export default function MBHeroGallery({ images = [] }) {
       <p className="archive-description">
         Browse the archive below — a curated timeline of investigations,
         thoughts, and dispatches. Each entry opens a deeper look. Swipe
-        horizontally to scan through volumes. Scroll vertically to continue the
+        horizontally to scan through volumes. <br /> Scroll vertically to continue the
         journey.
       </p>
     </>
