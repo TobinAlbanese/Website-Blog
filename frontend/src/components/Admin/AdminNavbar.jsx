@@ -224,6 +224,9 @@ export default function AdminNavbar() {
             <li>
               <a href="/admin/posts?status=archived">Archived</a>
             </li>
+            <li>
+              <a href="/admin/posts?status=portfolio">Portfolio</a>
+            </li>
           </ul>
         </li>
 

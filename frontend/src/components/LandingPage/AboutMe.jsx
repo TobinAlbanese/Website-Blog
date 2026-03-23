@@ -1,74 +1,83 @@
 import React from "react";
+import { publicImageUrl } from "../../lib/supabase/client"; // adjust if needed
+
 export default function AboutMe() {
+  const aboutImg =
+    publicImageUrl("My-Bday.webp") || "/assets/images/My-Bday.webp"; 
+
   return (
-    <>
-      <section
-        className="theme-accent"
-        data-armstrong-id="wrapper"
-        id=".home-section-current-issue"
-      >
-        <div className="row base__main pt-60 pb-40" data-armstrong-id="primary">
-          <div className="col-12">
-            <h3 className="font-style-italic c-accent mt-15 fs-md-24 lh-lg">
-              About Me
-            </h3>
+    <section
+      className="theme-accent"
+      data-armstrong-id="wrapper"
+      id=".home-section-current-issue"
+    >
+      <div className="row base__main pt-60 pb-40" data-armstrong-id="primary">
+        <div className="col-12">
+          <h3 className="font-style-italic c-accent mt-15 fs-md-24 lh-lg">
+            About Me
+          </h3>
 
-            {/* Image centered above the text */}
-            <div
-              className="col-12 col-md-4 ml-auto mr-auto mb-30"
-              data-armstrong-id="profile-image"
-            >
-              <a href="/about">
-                <figure>
-                  <img
-                    src="/assets/images/My-Bday.jpg"
-                    alt="Photo of Family wedding"
-                    loading="lazy"
-                    className="about-img"
-                    style={{
-                      width: "100%",
-                      maxWidth: 1250,
-                      height: 500,
-                      borderRadius: 8,
-                    }}
-                  />
-                </figure>
-              </a>
-            </div>
+          {/* Image centered above the text */}
+          <div
+            className="col-12 col-md-4 ml-auto mr-auto mb-30"
+            data-armstrong-id="profile-image"
+          >
+            <a href="/about">
+              <figure>
+                <img
+                  src={aboutImg}
+                  alt="Photo of Family wedding"
+                  loading="lazy"
+                  className="about-img"
+                  style={{
+                    width: "100%",
+                    maxWidth: 1250,
+                    height: 500,
+                    borderRadius: 8,
+                    objectFit: "cover",
+                  }}
+                  onError={(e) => {
+                    // if Supabase URL fails for any reason, drop to local fallback
+                    e.currentTarget.src = "/assets/images/My-Bday.jpg";
+                  }}
+                />
+              </figure>
+            </a>
+          </div>
 
-            {/* Text below the image */}
-            <div
-              className="col-12 col-md-8 ml-auto mr-auto"
-              data-armstrong-id="profile-text"
+          {/* Text below the image */}
+          <div
+            className="col-12 col-md-8 ml-auto mr-auto"
+            data-armstrong-id="profile-text"
+          >
+            <p className="body-s mt-10">
+              My name is Tobin Albanese, a small-town kid driven by the desire
+              to make something meaningful of myself. Growing up was a bit of
+              a rollercoaster, but through it all, my curiosity about the
+              world never faded. As a child, I constantly wondered about
+              everything, devouring books and asking questions about how
+              things truly worked. This curiosity has been a constant
+              companion, guiding me toward a career in political science and
+              counterterrorism. Today, I’m focused on unraveling the
+              complexities of our world & exploring the intersections of
+              politics, culture, and human behavior. This journey is just
+              beginning, and I invite you to discover the story behind my
+              past, my goals, my passions, and what truly lies ahead not just
+              for myself but the world around us.
+            </p>
+
+            <a
+              className="arrow-link border-bottom-thin border-bottom d-inline-block lh-22 fs-15 mt-20 c-accent"
+              href="/Personal/About"
             >
-              <p className="body-s mt-10">
-                My name is Tobin Albanese, a small-town kid driven by the desire
-                to make something meaningful of myself. Growing up was a bit of
-                a rollercoaster, but through it all, my curiosity about the
-                world never faded. As a child, I constantly wondered about
-                everything, devouring books and asking questions about how
-                things truly worked. This curiosity has been a constant
-                companion, guiding me toward a career in political science and
-                counterterrorism. Today, I’m focused on unraveling the
-                complexities of our world & exploring the intersections of
-                politics, culture, and human behavior. This journey is just
-                beginning, and I invite you to discover the story behind my
-                past, my goals, my passions, and what truly lies ahead not just
-                for myself but the world around us.
-              </p>
-              <a
-                className="arrow-link border-bottom-thin border-bottom d-inline-block lh-22 fs-15 mt-20 c-accent"
-                href="/Personal/About"
-              >
-                More about me here
-                <svg className="arrow-link__icon ">
-                  <use href="#icon-right-arrow" />
-                </svg>
-              </a>
-            </div>
+              More about me here
+              <svg className="arrow-link__icon">
+                <use href="#icon-right-arrow" />
+              </svg>
+            </a>
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 }

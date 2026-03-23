@@ -10,8 +10,8 @@ const PortfolioData = {
       date: "2025-01-15",
       excerpt:
         "An advanced AI platform designed to detect and analyze micro-expressions — tiny, fleeting facial movements that often reveal hidden emotions like stress, deception, or confidence. Neural Analysis Of Micro-Intent in real-time micro-expressions → inferred intent.",
-      archiveImage: "/assets/images/naomiPortfolio.jpg",
-      banner: "/assets/images/naomiBanner.jpg",
+      archiveImage: "/assets/images/naomiPortfolio.webp",
+      banner: "/assets/images/naomiBanner.webp",
 
       content: [
         {
@@ -171,11 +171,11 @@ const PortfolioData = {
       ],
 
       images: [
-        "/assets/images/naomiWhy.jpg",
-        "/assets/images/naomiPillars.jpg",
-        "/assets/images/naomiArchitecture.jpg",
-        "/assets/images/naomiPipeline.jpg",
-        "/assets/images/naomiFeatures.jpg",
+        "/assets/images/naomiWhy.webp",
+        "/assets/images/naomiPillars.webp",
+        "/assets/images/naomiArchitecture.webp",
+        "/assets/images/naomiPipeline.webp",
+        "/assets/images/naomiFeatures.webp",
       ],
 
       resources: {
@@ -226,8 +226,8 @@ const PortfolioData = {
       date: "2024-10-01",
       excerpt:
         "From noisy text to interactive knowledge graphs with provenance-first extraction.",
-      archiveImage: "/assets/images/stellarisPortfolio.jpg",
-      banner: "/assets/images/stellarisBanner.jpg",
+      archiveImage: "/assets/images/stellarisPortfolio.webp",
+      banner: "/assets/images/stellarisBanner.webp",
       content: [
         {
           text: `
@@ -322,11 +322,11 @@ const PortfolioData = {
       ],
 
       images: [
-        "/assets/images/stellarisOverview.jpg",
-        "/assets/images/stellarisWorkflow.jpg",
-        "/assets/images/stellarisStack.jpg",
-        "/assets/images/stellarisQuality.jpg",
-        "/assets/images/stellarisScale.jpg",
+        "/assets/images/stellarisOverview.webp",
+        "/assets/images/stellarisWorkflow.webp",
+        "/assets/images/stellarisStack.webp",
+        "/assets/images/stellarisQuality.webp",
+        "/assets/images/stellarisScale.webp",
       ],
       resources: {
         Sightings: [
@@ -364,8 +364,8 @@ const PortfolioData = {
       date: "2025-03-01",
       excerpt:
         "Behavioral baselines, TTP clustering, and audit-ready incident workflows in one pane.",
-      archiveImage: "/assets/images/cosmosPortfolio.jpg",
-      banner: "/assets/images/cosmosEarth.jpg",
+      archiveImage: "/assets/images/cosmosPortfolio.webp",
+      banner: "/assets/images/cosmosEarth.webp",
       content: [
         {
           text: `
@@ -405,9 +405,9 @@ const PortfolioData = {
         },
       ],
       images: [
-        "/assets/images/cosmosBanner.jpg",
-        "/assets/images/cosmosHeatmap.jpg",
-        "/assets/images/cosmosFeatures.jpg",
+        "/assets/images/cosmosBanner.webp",
+        "/assets/images/cosmosHeatmap.webp",
+        "/assets/images/cosmosFeatures.webp",
       ],
 
       resources: {
@@ -462,8 +462,8 @@ const PortfolioData = {
       date: "2024-12-15",
       excerpt:
         "Client-side keys, ciphertext-only sync, and tamper-evident sharing with recovery that stays private.",
-      archiveImage: "/assets/images/vaultPortfolio.jpg",
-      banner: "/assets/images/vaultBanner.jpg",
+      archiveImage: "/assets/images/vaultPortfolio.webp",
+      banner: "/assets/images/vaultBanner.webp",
       content: [
         {
           text: `
@@ -497,11 +497,11 @@ const PortfolioData = {
         },
       ],
       images: [
-        "/assets/images/vaultOverview.jpg",
-        "/assets/images/vaultProvider.jpg",
-        "/assets/images/vaultArchitecture.jpg",
-        "/assets/images/vaultUse.jpg",
-        "/assets/images/vault5.jpg",
+        "/assets/images/vaultOverview.webp",
+        "/assets/images/vaultProvider.webp",
+        "/assets/images/vaultArchitecture.webp",
+        "/assets/images/vaultUse.webp",
+        "/assets/images/vault5.webp",
       ],
       resources: {
         "Platform Links": [
@@ -551,8 +551,8 @@ const PortfolioData = {
       date: "2024-11-20",
       excerpt:
         "Offline-first writing with CRDT/OT sync and on-device encryption by default.",
-      archiveImage: "/assets/images/notesPortfolio.jpg",
-      banner: "/assets/images/notesBanner.jpg",
+      archiveImage: "/assets/images/notesPortfolio.webp",
+      banner: "/assets/images/notesBanner.webp",
       content: [
         {
           text: `
@@ -591,11 +591,11 @@ const PortfolioData = {
         },
       ],
       images: [
-        "/assets/images/notesWhy.jpg",
-        "/assets/images/notesHow.jpg",
-        "/assets/images/notesEdit.jpg",
-        "/assets/images/notesEnigma.jpg",
-        "/assets/images/notesLibrary.jpg",
+        "/assets/images/notesWhy.webp",
+        "/assets/images/notesHow.webp",
+        "/assets/images/notesEdit.webp",
+        "/assets/images/notesEnigma.webp",
+        "/assets/images/notesLibrary.webp",
       ],
       resources: {
         "Platform Links": [
@@ -643,8 +643,8 @@ const PortfolioData = {
       date: "2024-03-05",
       excerpt:
         "An advanced AI platform designed to detect and analyze micro-expressions — tiny, fleeting facial movements that often reveal hidden emotions like stress, deception, or confidence. Neural Analysis Of Micro-Intent in real-time micro-expressions → inferred intent.",
-      archiveImage: "/assets/images/naomiPortfolio.jpg",
-      banner: "/assets/images/naomiBanner.jpg",
+      archiveImage: "/assets/images/naomiPortfolio.webp",
+      banner: "/assets/images/naomiBanner.webp",
 
       content: [
         {
@@ -804,11 +804,11 @@ const PortfolioData = {
       ],
 
       images: [
-        "/assets/images/naomiWhy.jpg",
-        "/assets/images/naomiPillars.jpg",
-        "/assets/images/naomiArchitecture.jpg",
-        "/assets/images/naomiPipeline.jpg",
-        "/assets/images/naomiFeatures.jpg",
+        "/assets/images/naomiWhy.webp",
+        "/assets/images/naomiPillars.webp",
+        "/assets/images/naomiArchitecture.webp",
+        "/assets/images/naomiPipeline.webp",
+        "/assets/images/naomiFeatures.webp",
       ],
 
       resources: {
@@ -859,8 +859,8 @@ const PortfolioData = {
       date: "2024-01-20",
       excerpt:
         "An AI-driven platform that ingests, processes, and analyzes large volumes of unstructured text and relational data from open sources such as news, social media, government releases, and intercepted communications. ",
-      archiveImage: "/assets/images/stellarisPortfolio.jpg",
-      banner: "/assets/images/stellarisBanner.jpg",
+      archiveImage: "/assets/images/stellarisPortfolio.webp",
+      banner: "/assets/images/stellarisBanner.webp",
       content: [
         {
           text: `
@@ -955,11 +955,11 @@ const PortfolioData = {
       ],
 
       images: [
-        "/assets/images/stellarisOverview.jpg",
-        "/assets/images/stellarisWorkflow.jpg",
-        "/assets/images/stellarisStack.jpg",
-        "/assets/images/stellarisQuality.jpg",
-        "/assets/images/stellarisScale.jpg",
+        "/assets/images/stellarisOverview.webp",
+        "/assets/images/stellarisWorkflow.webp",
+        "/assets/images/stellarisStack.webp",
+        "/assets/images/stellarisQuality.webp",
+        "/assets/images/stellarisScale.webp",
       ],
       resources: {
         Sightings: [
@@ -997,8 +997,8 @@ const PortfolioData = {
       date: "2024-05-12",
       excerpt:
         "A centralized cybersecurity platform designed to monitor, analyze, and respond to evolving cyber threats. It focuses on real-time malware detection, dark web intelligence, vulnerability tracking, and cyber attack pattern analysis—comprehensive situational awareness to protect critical information.",
-      archiveImage: "/assets/images/cosmosPortfolio.jpg",
-      banner: "/assets/images/cosmosEarth.jpg",
+      archiveImage: "/assets/images/cosmosPortfolio.webp",
+      banner: "/assets/images/cosmosEarth.webp",
       content: [
         {
           text: `
@@ -1038,9 +1038,9 @@ const PortfolioData = {
         },
       ],
       images: [
-        "/assets/images/cosmosBanner.jpg",
-        "/assets/images/cosmosHeatmap.jpg",
-        "/assets/images/cosmosFeatures.jpg",
+        "/assets/images/cosmosBanner.webp",
+        "/assets/images/cosmosHeatmap.webp",
+        "/assets/images/cosmosFeatures.webp",
       ],
 
       resources: {
@@ -1095,8 +1095,8 @@ const PortfolioData = {
       date: "2023-12-01",
       excerpt:
         "Provides users with a secure platform to encrypt, store, and manage files and folders locally and in the cloud. Utilizing strong encryption algorithms, VAULT ensures that sensitive documents remain private, enabling secure sharing and access control while maintaining user sovereignty over data.",
-      archiveImage: "/assets/images/vaultPortfolio.jpg",
-      banner: "/assets/images/vaultBanner.jpg",
+      archiveImage: "/assets/images/vaultPortfolio.webp",
+      banner: "/assets/images/vaultBanner.webp",
       content: [
         {
           text: `
@@ -1130,11 +1130,11 @@ const PortfolioData = {
         },
       ],
       images: [
-        "/assets/images/vaultOverview.jpg",
-        "/assets/images/vaultProvider.jpg",
-        "/assets/images/vaultArchitecture.jpg",
-        "/assets/images/vaultUse.jpg",
-        "/assets/images/vault5.jpg",
+        "/assets/images/vaultOverview.webp",
+        "/assets/images/vaultProvider.webp",
+        "/assets/images/vaultArchitecture.webp",
+        "/assets/images/vaultUse.webp",
+        "/assets/images/vault5.webp",
       ],
       resources: {
         "Platform Links": [
@@ -1184,8 +1184,8 @@ const PortfolioData = {
       date: "2024-02-15",
       excerpt:
         "Zero-knowledge notes with offline-first sync and rich editing. a privacy-first note-taking app that encrypts user data end-to-end, ensuring all notes are stored securely and accessible only by the user. Future linked towards Vault Project as 1:1",
-      archiveImage: "/assets/images/notesPortfolio.jpg",
-      banner: "/assets/images/notesBanner.jpg",
+      archiveImage: "/assets/images/notesPortfolio.webp",
+      banner: "/assets/images/notesBanner.webp",
       content: [
         {
           text: `
@@ -1224,11 +1224,11 @@ const PortfolioData = {
         },
       ],
       images: [
-        "/assets/images/notesWhy.jpg",
-        "/assets/images/notesHow.jpg",
-        "/assets/images/notesEdit.jpg",
-        "/assets/images/notesEnigma.jpg",
-        "/assets/images/notesLibrary.jpg",
+        "/assets/images/notesWhy.webp",
+        "/assets/images/notesHow.webp",
+        "/assets/images/notesEdit.webp",
+        "/assets/images/notesEnigma.webp",
+        "/assets/images/notesLibrary.webp",
       ],
       resources: {
         "Platform Links": [
@@ -1274,8 +1274,8 @@ const PortfolioData = {
       date: "2025-01-01",
       excerpt:
         "My personal website for exploring my portfolio, stories about me & my interests, along with the curation of my blog page; Midnight Bureau where I dive into topics I'm most interested in & real time Intelligence analysis!",
-      archiveImage: "/assets/images/portfolioHub.jpg",
-      banner: "/assets/images/portfolioBanner.jpg",
+      archiveImage: "/assets/images/portfolioHub.webp",
+      banner: "/assets/images/portfolioBanner.webp",
       content: [
         {
           text: `
@@ -1315,11 +1315,11 @@ const PortfolioData = {
         },
       ],
       images: [
-        "/assets/images/portfolio1.jpg",
-        "/assets/images/portfolioMap.jpg",
-        "/assets/images/portfolioUX.jpg",
-        "/assets/images/portfolioAccess.jpg",
-        "/assets/images/lincoln.jpg",
+        "/assets/images/portfolio1.webp",
+        "/assets/images/portfolioMap.webp",
+        "/assets/images/portfolioUX.webp",
+        "/assets/images/portfolioAccess.webp",
+        "/assets/images/lincoln.webp",
       ],
       resources: {
         "Live & Navigation": [
@@ -1360,7 +1360,7 @@ const PortfolioData = {
         "Probabilistic micro expression cues that support human risk assessment; carefully measured and calibrated, never presented as certainty.",
       archiveImage:
         "https://images.unsplash.com/photo-1571325004705-0f26f602e53f?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YmVoYXZpb3JhbCUyMGFuYWx5c2lzfGVufDB8fDB8fHww",
-      banner: "/assets/images/portfolio/behav-ai-banner.jpg",
+      banner: "/assets/images/portfolio/behav-ai-banner.webp",
       content: [
         {
           text: "Measure what helps a human decide, not what flatters a metric.",
@@ -1892,7 +1892,7 @@ const PortfolioData = {
       date: "2023-06-01",
       excerpt:
         "How behavioral sensing turns signals into power, what can go wrong, and the civil liberties guardrails that keep it honest.",
-      archiveImage: "/assets/images/stellarisStack.jpg",
+      archiveImage: "/assets/images/stellarisStack.webp",
       banner: "https://media.istockphoto.com/id/2097949780/photo/satellite-antenna-array-under-the-milky-way-sky.webp?a=1&b=1&s=612x612&w=0&k=20&c=hIyMxCEd9ANP5Ge1LRIyCJKTeQYCOZrZec9LoHwYHEE=",
       content: [
         {
@@ -2096,8 +2096,8 @@ privacy_reporting: { dp_epsilon_monthly: 2.0 }
     date: "2025-02-01",
     excerpt:
       "Smarter discovery, faster archives, and cleaner long reads. Adding topic and entity filters, cross search with the portfolio, and a print friendly mode for deep dives.",
-    archiveImage: "/assets/images/AFG4.jpg",
-    banner: "/assets/images/space.jpg",
+    archiveImage: "/assets/images/AFG4.webp",
+    banner: "/assets/images/space.webp",
     content: [
       {
         text: `<p><strong>Why expand now.</strong> Readers land on a single post from search, bounce, and never discover the rest. The expansion focuses on discovery: topic/entity filters, cross-search with portfolio entries, and clean printing so deep reads don’t feel like wrestling a billboard on letter paper.</p>`
@@ -2129,10 +2129,10 @@ privacy_reporting: { dp_epsilon_monthly: 2.0 }
     ],
     images: [
       "/assets/images/Container.png",
-      "/assets/images/space.jpg",
-      "/assets/images/space.jpg",
-      "/assets/images/space.jpg",
-      "/assets/images/space.jpg"
+      "/assets/images/space.webp",
+      "/assets/images/space.webp",
+      "/assets/images/space.webp",
+      "/assets/images/space.webp"
     ],
     resources: {
       LiveAndDemos: [
@@ -2163,7 +2163,7 @@ privacy_reporting: { dp_epsilon_monthly: 2.0 }
       "Low latency video with explicit policy gates, opt in testing, and hard limits. Focus on evaluation, latency budgets, consent flows, and repeatable audits before any pilot.",
     archiveImage:
       "https://images.unsplash.com/photo-1706025090711-377b00b51332?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGZhY2UlMjB1cGNsb3NlfGVufDB8fDB8fHww",
-    banner: "/assets/images/space.jpg",
+    banner: "/assets/images/space.webp",
     content: [
       {
         text: `<p><strong>Scope & gates.</strong> This is a governance-first prototype: closed dataset, small opt-in group, visible consent, and hard “no” on production deployment until evaluation clears explicit thresholds. The point is to stress the controls, not to chase accuracy at any cost.</p>`
@@ -2188,10 +2188,10 @@ privacy_reporting: { dp_epsilon_monthly: 2.0 }
       }
     ],
     images: [
-      "/assets/images/naomiPortfolio.jpg",
-      "/assets/images/space.jpg",
-      "/assets/images/space.jpg",
-      "/assets/images/space.jpg"
+      "/assets/images/naomiPortfolio.webp",
+      "/assets/images/space.webp",
+      "/assets/images/space.webp",
+      "/assets/images/space.webp"
     ],
     resources: {
       CodeAndRoadmap: [
@@ -2221,7 +2221,7 @@ privacy_reporting: { dp_epsilon_monthly: 2.0 }
       "High throughput intake with dedupe, provenance tracking, and PII safety. Next steps include source scoring, alert thresholds, and reproducible exports that analysts can defend.",
     archiveImage:
       "https://images.unsplash.com/photo-1679325134596-6cd425a05dc8?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGFnZ3JlZ2F0aW9uc3xlbnwwfHwwfHx8MA%3D%3D",
-    banner: "/assets/images/space.jpg",
+    banner: "/assets/images/space.webp",
     content: [
       {
         text: `<p><strong>Goal.</strong> Build an ingest→normalize→verify→export pipeline that scales with public data but keeps provenance and privacy intact. Analysts should be able to defend every record with a paper trail and reproduce the same view later.</p>`
@@ -2252,11 +2252,11 @@ privacy_reporting: { dp_epsilon_monthly: 2.0 }
       }
     ],
     images: [
-      "/assets/images/stellarisScale.jpg",
-      "/assets/images/space.jpg",
-      "/assets/images/space.jpg",
-      "/assets/images/space.jpg",
-      "/assets/images/space.jpg"
+      "/assets/images/stellarisScale.webp",
+      "/assets/images/space.webp",
+      "/assets/images/space.webp",
+      "/assets/images/space.webp",
+      "/assets/images/space.webp"
     ],
     resources: {
       CodeAndRoadmap: [
@@ -2489,8 +2489,8 @@ export default PortfolioData;
       date: "2024-06-17",
       excerpt:
         "ASR + keyword heatmaps + stress/tone in noisy or degraded audio.",
-      archiveImage: "/assets/images/space.jpg",
-      banner: "/assets/images/space.jpg",
+      archiveImage: "/assets/images/space.webp",
+      banner: "/assets/images/space.webp",
       content: [
         {
           text: `
@@ -2534,11 +2534,11 @@ export default PortfolioData;
       ],
 
       images: [
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
+        "/assets/images/space.webp",
+        "/assets/images/space.webp",
+        "/assets/images/space.webp",
+        "/assets/images/space.webp",
+        "/assets/images/space.webp",
       ],
       resources: {
         "Platform Links": [
@@ -2594,8 +2594,8 @@ export default PortfolioData;
       author: "Tobin M. Albanese",
       date: "2024-08-01",
       excerpt: "2D → 3D/4D via depth + temporal layering; VR/AR-ready exports.",
-      archiveImage: "/assets/images/space.jpg",
-      banner: "/assets/images/space.jpg",
+      archiveImage: "/assets/images/space.webp",
+      banner: "/assets/images/space.webp",
       content: [
         {
           text: "<p><strong>Concept.</strong> Rebuild volumetric scenes from images with monocular depth, neural rendering, and temporal interpolation.</p>",
@@ -2611,11 +2611,11 @@ export default PortfolioData;
         },
       ],
       images: [
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
-        "/assets/images/space.jpg",
+        "/assets/images/space.webp",
+        "/assets/images/space.webp",
+        "/assets/images/space.webp",
+        "/assets/images/space.webp",
+        "/assets/images/space.webp",
       ],
       resources: {
         Sightings: [

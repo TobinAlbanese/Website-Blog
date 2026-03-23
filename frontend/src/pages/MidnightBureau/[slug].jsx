@@ -2,6 +2,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import { createClient } from "@supabase/supabase-js";
 import MetaHead from "../../components/LandingPage/MetaHead.jsx";
 import SvgHead from "../../components/LandingPage/svgHead.jsx";
 import gsap from "gsap";
@@ -11,35 +12,129 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookmark as solidBookmark } from "@fortawesome/free-solid-svg-icons";
 import { faBookmark as regularBookmark } from "@fortawesome/free-regular-svg-icons";
 import NavbarMB from "../../components/LandingPage/NavbarMB.jsx";
-import { listMB, getMB } from "../../lib/posts";
 
-
-
-// Only register GSAP plugin client-side
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
+
+const FALLBACK_IMG = "/assets/images/space.webp";
 
 const formatDate = (d) => {
   const dt = d ? new Date(d) : null;
   return dt && !isNaN(dt) ? dt.toDateString() : "";
 };
 
-const BlogPost = ({ article }) => {
+const isHttpUrl = (v) => typeof v === "string" && /^https?:\/\//i.test(v);
+
+function splitHtmlIntoBlocks(html = "") {
+  if (!html) return [];
+
+  const matches =
+    html.match(
+      /<p[\s\S]*?<\/p>|<blockquote[\s\S]*?<\/blockquote>|<ul[\s\S]*?<\/ul>|<ol[\s\S]*?<\/ol>|<h[1-6][\s\S]*?<\/h[1-6]>/gi
+    ) || [];
+
+  const rawBlocks = matches.length ? matches : [html];
+
+  return rawBlocks.map((blockHtml) => {
+    const plain = blockHtml
+      .replace(/<br\s*\/?>/gi, " ")
+      .replace(/&nbsp;/gi, " ")
+      .replace(/<[^>]+>/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+
+    const isSpacer =
+      /^<p[\s\S]*?>\s*(<br\s*\/?>|\s|&nbsp;)*<\/p>$/i.test(blockHtml) ||
+      plain.length === 0;
+
+    const isHeading = /^<h[1-6][\s\S]*?>/i.test(blockHtml);
+    const acceptsInline =
+      /^<p[\s\S]*?>/i.test(blockHtml) ||
+      /^<blockquote[\s\S]*?>/i.test(blockHtml);
+
+    return {
+      html: blockHtml,
+      plain,
+      isSpacer,
+      isHeading,
+      acceptsInline,
+    };
+  });
+}
+
+function getServerSupabase() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  return createClient(url, anon, { auth: { persistSession: false } });
+}
+
+function resolveImageServer(supabase, bucket, value) {
+  if (!value) return "";
+  const v = String(value).trim();
+  if (!v) return "";
+  if (isHttpUrl(v) || v.startsWith("/")) return v;
+
+  const { data } = supabase.storage.from(bucket).getPublicUrl(v);
+  return data?.publicUrl || "";
+}
+
+export default function BlogPost({
+  article,
+  sections = [],
+  inlineResolvedBySection = {},
+  centerResolvedBySection = {},
+  galleryResolved = [],
+}) {
   const router = useRouter();
 
-  const [visibleImages, setVisibleImages] = useState([]);
+  const [visibleImages, setVisibleImages] = useState({});
   const [showTopLink, setShowTopLink] = useState(false);
   const [showBottomLink, setShowBottomLink] = useState(false);
   const [modalImage, setModalImage] = useState(null);
   const [galleryIdx, setGalleryIdx] = useState(0);
-  const [expandedCarouselIndex, setExpandedCarouselIndex] = useState(2);
+  const [expandedCarouselIndex, setExpandedCarouselIndex] = useState(null);
   const [isFavorite, setIsFavorite] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [validGalleryImages, setValidGalleryImages] = useState([]);
+  useEffect(() => {
+    let cancelled = false;
+
+    const rawGalleryImages = (galleryResolved || []).filter(
+      (src) => typeof src === "string" && src.trim().length > 0
+    );
+
+    if (!rawGalleryImages.length) {
+      setValidGalleryImages([]);
+      return;
+    }
+
+    (async () => {
+      const checks = await Promise.all(
+        rawGalleryImages.map(
+          (src) =>
+            new Promise((resolve) => {
+              const img = new window.Image();
+
+              img.onload = () => resolve(src);
+              img.onerror = () => resolve(null);
+              img.src = src;
+            })
+        )
+      );
+
+      if (!cancelled) {
+        setValidGalleryImages(checks.filter(Boolean));
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [galleryResolved]);
 
   const bannerRef = useRef(null);
 
-  // Smooth-scroll to banner (offset for navbar)
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (bannerRef.current) {
@@ -48,45 +143,54 @@ const BlogPost = ({ article }) => {
         window.scrollTo({ top: offsetTop - 50, behavior: "smooth" });
       }
     }, 0);
-    return () => clearTimeout(timeout);
-  }, []);
 
-  // Strip hash from URL (avoids auto-jump on load)
+    return () => clearTimeout(timeout);
+  }, [article?.id]);
+
   useEffect(() => {
     if (typeof window !== "undefined" && window.location.hash) {
       history.replaceState(null, "", window.location.pathname);
     }
   }, []);
 
-  // Reveal-on-scroll + vertical link visibility
   useEffect(() => {
     document.body.setAttribute("data-highlight", "underline");
 
     const handleScroll = () => {
-      const revealed =
-        article.images?.map((_, idx) => {
-          const el = document.getElementById(`img-${idx}`);
-          if (!el) return false;
-          const rect = el.getBoundingClientRect();
-          return rect.top < window.innerHeight * 0.8;
-        }) || [];
-      setVisibleImages(revealed);
+      const nextVisible = {};
+
+      const inlineEls = document.querySelectorAll("[data-inline-image='true']");
+
+      inlineEls.forEach((el) => {
+        const key = el.getAttribute("data-inline-key");
+        if (!key) return;
+
+        const rect = el.getBoundingClientRect();
+        const isVisible =
+          rect.top < window.innerHeight * 0.88 && rect.bottom > 0;
+
+        nextVisible[key] = isVisible;
+      });
+
+      setVisibleImages(nextVisible);
 
       const header = document.querySelector("h1");
       const headerBelowView =
         header && header.getBoundingClientRect().bottom < 0;
+
       setShowTopLink(!!headerBelowView);
       setShowBottomLink(!!headerBelowView);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [article.images]);
 
-  // Freeze body scroll when menu is open
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [article, sections, inlineResolvedBySection]);
+
   useEffect(() => {
     const body = document.body;
+
     if (menuOpen) {
       body.classList.add("js--menu-active");
       body.style.overflow = "hidden";
@@ -94,39 +198,40 @@ const BlogPost = ({ article }) => {
       body.classList.remove("js--menu-active");
       body.style.overflow = "";
     }
+
     return () => {
       body.classList.remove("js--menu-active");
       body.style.overflow = "";
     };
   }, [menuOpen]);
 
-  if (router.isFallback) return <p>Loading...</p>;
-
   const toggleMenu = () => setMenuOpen((prev) => !prev);
-  const alternatingAlign = (i) => (i % 2 === 0 ? "right" : "left");
 
-  const contentBlocks = Array.isArray(article.content) ? article.content : [];
-  const introBlock = contentBlocks[0]?.text || "";
-  const outroBlock = contentBlocks.at(-1)?.text || "";
+  if (router.isFallback) return <p style={{ padding: "2rem" }}>Loading...</p>;
+  if (!article) return <p style={{ padding: "2rem" }}>Post not found.</p>;
 
-  // Gallery images come after article content length in the images array
-  const galleryImages = article.images?.slice(contentBlocks.length) || [];
+  const bannerSrc = article.banner || FALLBACK_IMG;
+  const safeSections = Array.isArray(sections) ? sections : [];
+  const introSection = safeSections[0] || null;
+  const bodySections = safeSections.slice(1);
+  const galleryImages = validGalleryImages;
 
   const handleGalleryNav = (dir) => {
     setGalleryIdx((prev) => {
       const total = galleryImages.length;
       const maxStart = Math.max(0, total - 5);
       let next = prev;
+
       if (dir === "prev") next = Math.max(prev - 5, 0);
       if (dir === "next") next = Math.min(prev + 5, maxStart);
 
-      // Collapse expanded if it leaves the window
       if (
         expandedCarouselIndex !== null &&
         (expandedCarouselIndex < next || expandedCarouselIndex >= next + 5)
       ) {
         setExpandedCarouselIndex(null);
       }
+
       return next;
     });
   };
@@ -135,18 +240,11 @@ const BlogPost = ({ article }) => {
     setExpandedCarouselIndex((prev) => (prev === idx ? null : idx));
   };
 
-  const bannerSrc =
-    article.banner ||
-    article.images?.[0] ||
-    article.archiveImage ||
-    "/assets/images/space.jpg";
-
   return (
     <>
       <MetaHead />
       <SvgHead />
 
-      {/* NAVBAR + global wrappers */}
       <div
         className="dialog-off-canvas-main-canvas"
         data-off-canvas-main-canvas=""
@@ -160,106 +258,210 @@ const BlogPost = ({ article }) => {
           <NavbarMB toggleMenu={toggleMenu} menuOpen={menuOpen} />
 
           <Head>
-            <title>{article.title} – Midnight Bureau</title>
+            <title>{`${article.title || "Untitled"} – Midnight Bureau`}</title>
             <meta name="description" content={article.excerpt || ""} />
           </Head>
 
           <div className="midnight-bureau-article">
-            {/* Vertical helper links */}
             {showTopLink && (
               <a href="#" className="vertical-link top-link">
                 <span></span>Top of Article
               </a>
             )}
-            {showBottomLink && (
-              <a href="#resources" className="vertical-link bottom-link">
-                <span></span>More Resources
-              </a>
-            )}
 
-            {/* ✅ NEW: Inner content wrapper to prevent title/content bleed */}
+            {showBottomLink &&
+              article.resources &&
+              Object.keys(article.resources).length > 0 && (
+                <a href="#resources" className="vertical-link bottom-link">
+                  <span></span>More Resources
+                </a>
+              )}
+
             <div className="mb-article-inner">
-              {/* Banner */}
               <img
                 ref={bannerRef}
                 className="banner mb-banner"
                 src={bannerSrc}
-                alt="Banner"
+                alt={article.title || "Banner"}
                 style={{ width: "100%", height: "200px", objectFit: "cover" }}
               />
 
-              {/* Title block */}
               <h1 className="mb-title">
                 {(article.title || "").toUpperCase()}
               </h1>
+
               <h2 className="mb-subtitle">by {article.author || "Unknown"}</h2>
+
               <h3 className="mb-meta">
                 {article.volume || "VOLUME"}{" "}
                 <span className="date">{formatDate(article.date)}</span>
               </h3>
 
-              {/* Intro */}
-              {introBlock && (
-                <p
+              {introSection?.body ? (
+                <div
                   className="intro-paragraph"
-                  dangerouslySetInnerHTML={{ __html: introBlock }}
+                  dangerouslySetInnerHTML={{ __html: introSection.body }}
                 />
-              )}
+              ) : null}
 
-              {/* Body with alternating float images */}
-              {contentBlocks.slice(1, -1).map((block, i) => {
-                const imgIndex = i; // image aligned with this block index
-                const side = alternatingAlign(i); // "left" or "right"
-                const floatStyle = {
-                  float: side,
-                  margin:
-                    side === "left"
-                      ? "0 1rem 1rem 0"
-                      : "0 0 1rem 1rem",
-                };
-                const imgSrc =
-                  article.images?.[imgIndex] ||
-                  article.archiveImage ||
-                  "/assets/images/space.jpg";
+              {safeSections.length === 1 ? (
+                <div
+                  className="text-block mb-text"
+                  dangerouslySetInnerHTML={{
+                    __html: safeSections[0]?.body || "",
+                  }}
+                />
+              ) : null}
+
+              {bodySections.map((sec) => {
+                const inlineList = inlineResolvedBySection[sec.id] || [];
+                const centerList = centerResolvedBySection[sec.id] || [];
+                const blocks = splitHtmlIntoBlocks(sec?.body || "");
+
+                let inlineCursor = 0;
+                let centerCursor = 0;
+
+                const renderedBlocks = [];
+
+                if (sec.heading?.trim()) {
+                  renderedBlocks.push(
+                    <h3 key={`${sec.id}-heading`} style={{ marginTop: 0 }}>
+                      {sec.heading}
+                    </h3>
+                  );
+                }
+
+                blocks.forEach((block, blockIdx) => {
+                  if (block.isSpacer) {
+                    const centeredSrc = centerList[centerCursor] || null;
+
+                    if (centeredSrc) {
+                      renderedBlocks.push(
+                        <div
+                          key={`${sec.id}-center-marker-${blockIdx}`}
+                          style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            margin: "1.1rem 0",
+                            clear: "both",
+                          }}
+                        >
+                          <img
+                            src={centeredSrc}
+                            alt={`Centered Image ${centerCursor + 1}`}
+                            style={{
+                              width: "100%",
+                              maxWidth: "760px",
+                              height: "420px",
+                              objectFit: "cover",
+                              borderRadius: "16px",
+                              display: "block",
+                              cursor: "pointer",
+                            }}
+                            onClick={() => setModalImage(centeredSrc)}
+                          />
+                        </div>
+                      );
+                      centerCursor += 1;
+                    }
+
+                    return;
+                  }
+
+                  const inlineSrc =
+                    block.acceptsInline && inlineCursor < inlineList.length
+                      ? inlineList[inlineCursor]
+                      : null;
+
+                  const side = inlineCursor % 2 === 0 ? "right" : "left";
+
+                  const floatStyle = {
+                    float: side,
+                    margin:
+                      side === "left" ? "0 1rem 0.75rem 0" : "0 0 0.75rem 1rem",
+                  };
+
+                  renderedBlocks.push(
+                    <div
+                      key={`${sec.id}-block-${blockIdx}`}
+                      style={{
+                        overflow: "hidden",
+                        marginBottom: "0.9rem",
+                        clear: "both",
+                      }}
+                    >
+                      {inlineSrc ? (
+                        <img
+                          id={`img-inline-${sec.id}-${inlineCursor}`}
+                          data-inline-image="true"
+                          data-inline-key={`${sec.id}-${inlineCursor}`}
+                          src={inlineSrc}
+                          alt={`Inline Image ${inlineCursor + 1}`}
+                          className={`card-image mb-float-img ${
+                            visibleImages[`${sec.id}-${inlineCursor}`]
+                              ? "slide-in"
+                              : ""
+                          }`}
+                          style={{
+                            ...floatStyle,
+                            width: "260px",
+                            height: "380px",
+                            objectFit: "cover",
+                          }}
+                          onClick={() => setModalImage(inlineSrc)}
+                        />
+                      ) : null}
+
+                      <div
+                        className="text-block mb-text"
+                        dangerouslySetInnerHTML={{ __html: block.html }}
+                      />
+                    </div>
+                  );
+
+                  if (inlineSrc) inlineCursor += 1;
+                });
+
+                while (centerCursor < centerList.length) {
+                  const centeredSrc = centerList[centerCursor];
+
+                  renderedBlocks.push(
+                    <div
+                      key={`${sec.id}-center-bottom-${centerCursor}`}
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        margin: "1.1rem 0 0.5rem",
+                        clear: "both",
+                      }}
+                    >
+                      <img
+                        src={centeredSrc}
+                        alt={`Centered Bottom ${centerCursor + 1}`}
+                        style={{
+                          width: "100%",
+                          maxWidth: "760px",
+                          height: "420px",
+                          objectFit: "cover",
+                          borderRadius: "16px",
+                          display: "block",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => setModalImage(centeredSrc)}
+                      />
+                    </div>
+                  );
+
+                  centerCursor += 1;
+                }
 
                 return (
-                  <div
-                    key={imgIndex}
-                    className="mb-block-row"
-                    style={{ overflow: "hidden", marginBottom: "2rem" }}
-                  >
-                    <img
-                      id={`img-${imgIndex}`}
-                      src={imgSrc}
-                      alt={`Article Image ${imgIndex + 1}`}
-                      className={`card-image mb-float-img ${
-                        visibleImages[imgIndex] ? "slide-in" : ""
-                      }`}
-                      style={{
-                        ...floatStyle,
-                        width: "260px",
-                        height: "380px",
-                        objectFit: "cover",
-                      }}
-                      onClick={() => setModalImage(imgSrc)}
-                    />
-                    <div
-                      className="text-block mb-text"
-                      dangerouslySetInnerHTML={{ __html: block?.text || "" }}
-                    />
+                  <div key={sec.id} style={{ marginBottom: "2.75rem" }}>
+                    {renderedBlocks}
                   </div>
                 );
               })}
 
-              {/* Outro */}
-              {outroBlock && (
-                <p
-                  className="outro-paragraph"
-                  dangerouslySetInnerHTML={{ __html: outroBlock }}
-                />
-              )}
-
-              {/* Gallery */}
               {galleryImages.length > 0 && (
                 <div
                   className="gallery-wrapper"
@@ -267,6 +469,7 @@ const BlogPost = ({ article }) => {
                 >
                   <div className="gallery-header">
                     <h4>Gallery Images</h4>
+
                     {galleryImages.length > 5 && (
                       <div className="gallery-arrows">
                         {galleryIdx > 0 && (
@@ -277,6 +480,7 @@ const BlogPost = ({ article }) => {
                             &lt;
                           </button>
                         )}
+
                         {galleryIdx + 5 < galleryImages.length && (
                           <button
                             onClick={() => handleGalleryNav("next")}
@@ -296,19 +500,34 @@ const BlogPost = ({ article }) => {
                         const absoluteIdx = galleryIdx + idx;
                         const isExpanded =
                           expandedCarouselIndex === absoluteIdx;
+
                         return (
                           <div
-                            key={absoluteIdx}
+                            key={`${absoluteIdx}-${src}`}
                             className={`box ${
                               isExpanded
                                 ? "expanded"
                                 : expandedCarouselIndex === null
-                                ? ""
-                                : "closed"
+                                  ? ""
+                                  : "closed"
                             }`}
-                            style={{ backgroundImage: `url(${src})` }}
                             onClick={() => toggleCarouselExpand(absoluteIdx)}
+                            style={{
+                              position: "relative",
+                              overflow: "hidden",
+                              cursor: "pointer",
+                            }}
                           >
+                            <img
+                              src={src}
+                              alt={`Gallery Image ${absoluteIdx + 1}`}
+                              style={{
+                                width: "100%",
+                                height: "100%",
+                                objectFit: "cover",
+                                display: "block",
+                              }}
+                            />
                             <div className="overlay" />
                           </div>
                         );
@@ -319,7 +538,6 @@ const BlogPost = ({ article }) => {
 
               <hr className="fancy-line" />
 
-              {/* Bookmark button */}
               <div
                 style={{
                   display: "flex",
@@ -329,9 +547,7 @@ const BlogPost = ({ article }) => {
                 }}
               >
                 <button
-                  className={`favorite-button ${
-                    isFavorite ? "is-favorite" : ""
-                  }`}
+                  className={`favorite-button ${isFavorite ? "is-favorite" : ""}`}
                   onClick={() => setIsFavorite(!isFavorite)}
                   aria-label="Bookmark"
                 >
@@ -344,27 +560,23 @@ const BlogPost = ({ article }) => {
                 </button>
               </div>
 
-              {/* Resources */}
               {article.resources &&
                 Object.keys(article.resources).length > 0 && (
                   <section className="resources" id="resources">
                     <h4>Resources &amp; Archival References</h4>
+
                     <div className="navs-wrapper">
                       {Object.entries(article.resources).map(
                         ([category, links]) => (
                           <div key={category} className="resource-category">
-                            <h5 className="category-title">
-                              {category.replace(/([A-Z])/g, " $1").trim()}
-                            </h5>
+                            <h5 className="category-title">{category}</h5>
                             <ul className="sub-resource-list">
                               {(links || []).map((link, i) => (
                                 <li key={i}>
                                   <a
                                     className="sub-resource-link"
                                     href={link.url}
-                                    target={
-                                      link.external ? "_blank" : "_self"
-                                    }
+                                    target={link.external ? "_blank" : "_self"}
                                     rel={
                                       link.external
                                         ? "noopener noreferrer"
@@ -384,7 +596,6 @@ const BlogPost = ({ article }) => {
                 )}
             </div>
 
-            {/* Image modal (kept outside inner wrapper so it overlays entire viewport) */}
             {modalImage && (
               <div
                 className="midnight-img-modal"
@@ -425,19 +636,195 @@ const BlogPost = ({ article }) => {
       </div>
     </>
   );
-};
+}
 
-export async function getStaticPaths() {
+export async function getServerSideProps({ params }) {
+  const supabase = getServerSupabase();
+  const POSTS_BUCKET = "post-images";
+  const incomingSlug = String(params?.slug || "").trim();
+
+  if (!incomingSlug) {
+    return { notFound: true };
+  }
+
+  const { data: posts, error: postErr } = await supabase
+    .from("posts")
+    .select("*")
+    .eq("status", "published")
+    .eq("type", "mb");
+
+  if (postErr || !posts?.length) {
+    return { notFound: true };
+  }
+
+  const post =
+    posts.find(
+      (p) =>
+        String(p.slug || "")
+          .trim()
+          .toLowerCase() === incomingSlug.toLowerCase()
+    ) || null;
+
+  if (!post) {
+    return { notFound: true };
+  }
+
+  if (incomingSlug !== post.slug) {
+    return {
+      redirect: {
+        destination: `/MidnightBureau/${post.slug}`,
+        permanent: false,
+      },
+    };
+  }
+
+  const postId = post.id;
+
+  const [
+    { data: sectionsData, error: sectionsErr },
+    { data: imagesData, error: imagesErr },
+    { data: groupsData, error: groupsErr },
+  ] = await Promise.all([
+    supabase
+      .from("posts_sections")
+      .select("*")
+      .eq("post_id", postId)
+      .order("position", { ascending: true }),
+    supabase
+      .from("post_images")
+      .select("*")
+      .eq("post_id", postId)
+      .order("position", { ascending: true }),
+    supabase
+      .from("resource_groups")
+      .select("*")
+      .eq("post_id", postId)
+      .order("position", { ascending: true }),
+  ]);
+
+  if (sectionsErr) {
+    console.log("Public MB slug sections error:", sectionsErr);
+    return { notFound: true };
+  }
+
+  if (groupsErr) {
+    console.log("Public MB slug resource_groups error:", groupsErr);
+    return { notFound: true };
+  }
+
+  if (imagesErr) {
+    console.log("Public MB slug post_images error:", imagesErr);
+  }
+
+  const groupIds = (groupsData || []).map((g) => g.id);
+
+  let linksData = [];
+  if (groupIds.length > 0) {
+    const { data, error } = await supabase
+      .from("resource_links")
+      .select("*")
+      .in("group_id", groupIds)
+      .order("position", { ascending: true });
+
+    if (error) {
+      return { notFound: true };
+    }
+
+    linksData = data || [];
+  }
+
+  const resources = {};
+  (groupsData || []).forEach((g) => {
+    resources[g.name || "Resources"] = (linksData || [])
+      .filter((l) => l.group_id === g.id)
+      .map((l) => ({
+        label: l.label,
+        url: l.url,
+        external: true,
+      }));
+  });
+
+  const images = Array.isArray(imagesData) ? imagesData : [];
+  const inlineRows = images.filter((x) => x.kind === "inline");
+  const centerRows = images.filter((x) => x.kind === "center");
+  const galleryRows = images.filter((x) => x.kind === "gallery");
+
+  const buildSectionMap = (rows) => {
+    const sorted = [...rows].sort(
+      (a, b) => (a.position || 0) - (b.position || 0)
+    );
+
+    const map = {};
+
+    sorted.forEach((r) => {
+      const url = resolveImageServer(supabase, POSTS_BUCKET, r.storage_path);
+      if (!r.section_id || !url) return;
+
+      if (!map[r.section_id]) map[r.section_id] = [];
+      map[r.section_id].push(url);
+    });
+
+    return map;
+  };
+
+  const inlineResolvedBySection = buildSectionMap(inlineRows);
+  const centerResolvedBySection = buildSectionMap(centerRows);
+
+  const firstInlineResolved =
+    inlineRows
+      .map((r) => resolveImageServer(supabase, POSTS_BUCKET, r.storage_path))
+      .find(Boolean) || "";
+
+  const hasRealPath = (row) => !!String(row?.storage_path || "").trim();
+
+  const gallerySourceRows = [
+    ...galleryRows.filter(hasRealPath),
+    ...inlineRows.filter((r) => r.show_in_gallery && hasRealPath(r)),
+    ...centerRows.filter((r) => r.show_in_gallery && hasRealPath(r)),
+  ];
+
+  const seen = new Set();
+  const dedupedGalleryRows = gallerySourceRows.filter((r) => {
+    const path = String(r?.storage_path || "").trim();
+    const key = path || String(r?.id || "").trim();
+
+    if (!key) return false;
+    if (seen.has(key)) return false;
+
+    seen.add(key);
+    return true;
+  });
+
+  const galleryResolved = dedupedGalleryRows
+    .map((r) => resolveImageServer(supabase, POSTS_BUCKET, r.storage_path))
+    .filter((src) => !!String(src || "").trim());
+
+  const bannerResolved =
+    resolveImageServer(supabase, POSTS_BUCKET, post.banner_url) || "";
+
+  const archiveResolved =
+    resolveImageServer(supabase, POSTS_BUCKET, post.archive_image_url) || "";
+
+  const article = {
+    ...post,
+    author: post.author || "Tobin Albanese",
+    excerpt: post.excerpt || "",
+    volume: post.volume || post.category || "MIDNIGHT BUREAU",
+    date: post.published_at || post.date || post.created_at || null,
+    banner:
+      bannerResolved || firstInlineResolved || archiveResolved || FALLBACK_IMG,
+    archiveImage:
+      archiveResolved || firstInlineResolved || bannerResolved || FALLBACK_IMG,
+    resources,
+  };
+
   return {
-    paths: listMB().map((p) => ({ params: { slug: p.slug } })),
-    fallback: false,
+    props: {
+      article,
+      sections: sectionsData || [],
+      inlineResolvedBySection,
+      centerResolvedBySection,
+      galleryResolved,
+    },
   };
 }
-
-export async function getStaticProps({ params }) {
-  const article = getMB(params.slug);
-  if (!article) return { notFound: true };
-  return { props: { article }, revalidate: 60 };
-}
-
-export default BlogPost;

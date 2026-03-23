@@ -1,17 +1,6 @@
 // components/FeaturedProjects.jsx
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import PortfolioData from "../../data/portfolioData.js";
-
-const section = (name) =>
-  Array.isArray(PortfolioData?.[name]) ? PortfolioData[name] : [];
-
-const uniqBySlug = (list) => {
-  const seen = new Set();
-  return (list || []).filter(
-    (p) => p?.slug && !seen.has(p.slug) && seen.add(p.slug)
-  );
-};
 
 const hrefFor = (p) => `/Portfolio/${p.slug}`;
 
@@ -21,24 +10,18 @@ const firstTruthy = (...xs) => xs.find(Boolean);
 const pickPrimaryImg = (p) =>
   firstTruthy(
     p?.banner,
-    p?.cardImage,
-    p?.images?.[0],
+    p?.image_url,
     p?.archiveImage,
-    "/assets/images/space.jpg"
+    "/assets/images/space.webp"
   );
 
 const pickSideImg = (p, slotIndex, usedUrls) => {
-  const imgs = Array.isArray(p?.images) ? p.images.filter(Boolean) : [];
-
-  // Try a few stable, slot-specific candidates per post, then fallbacks
+  // With DB we don’t have an `images[]` array yet; keep slot logic anyway
   const candidates = [
-    p?.cardThumb,
-    imgs[slotIndex + 1], // prefer a different frame than primary
-    imgs[(slotIndex * 2 + 1) % (imgs.length || 1)],
-    imgs[0],
+    p?.image_url,
     p?.banner,
     p?.archiveImage,
-    "/assets/images/space.jpg",
+    "/assets/images/space.webp",
   ].filter(Boolean);
 
   let choice = candidates.find((u) => !usedUrls.has(u)) || candidates[0];
@@ -46,61 +29,83 @@ const pickSideImg = (p, slotIndex, usedUrls) => {
   return choice;
 };
 
+const uniqBySlug = (list) => {
+  const seen = new Set();
+  return (list || []).filter(
+    (p) => p?.slug && !seen.has(p.slug) && seen.add(p.slug)
+  );
+};
+
 export default function FeaturedProjects() {
-  const featured = uniqBySlug(section("Featured / Spotlight Projects"));
-  const cs = uniqBySlug(section("Computer Science Projects"));
+  const [featured, setFeatured] = useState([]);
+  const [cs, setCs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [failed, setFailed] = useState(false);
 
-  const primary = featured[0] || cs[0] || null;
-
-  const usedUrls = new Set();
-  const primaryImg = primary ? pickPrimaryImg(primary) : null;
-  if (primaryImg) usedUrls.add(primaryImg);
-
-  const side = [];
-  if (primary) {
-    const usedSlugs = new Set([primary.slug]);
-    for (let i = 1; i < featured.length && side.length < 4; i++) {
-      const p = featured[i];
-      if (!usedSlugs.has(p.slug)) {
-        side.push(p);
-        usedSlugs.add(p.slug);
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setFailed(false);
+        const res = await fetch("api/portfolio/featured-projects");
+        const data = await res.json();
+        setFeatured(uniqBySlug(Array.isArray(data?.featured) ? data.featured : []));
+        setCs(uniqBySlug(Array.isArray(data?.cs) ? data.cs : []));
+      } catch (e) {
+        console.error("FeaturedProjects fetch failed:", e);
+        setFailed(true);
+      } finally {
+        setLoading(false);
       }
     }
-    for (let i = 0; i < cs.length && side.length < 4; i++) {
-      const p = cs[i];
-      if (!usedSlugs.has(p.slug)) {
-        side.push(p);
-        usedSlugs.add(p.slug);
+    fetchData();
+  }, []);
+
+  const { primary, side, primaryImg } = useMemo(() => {
+    const primary = featured[0] || cs[0] || null;
+
+    const usedUrls = new Set();
+    const primaryImg = primary ? pickPrimaryImg(primary) : null;
+    if (primaryImg) usedUrls.add(primaryImg);
+
+    const side = [];
+    if (primary) {
+      const usedSlugs = new Set([primary.slug]);
+
+      for (let i = 1; i < featured.length && side.length < 4; i++) {
+        const p = featured[i];
+        if (!usedSlugs.has(p.slug)) {
+          side.push(p);
+          usedSlugs.add(p.slug);
+        }
+      }
+
+      for (let i = 0; i < cs.length && side.length < 4; i++) {
+        const p = cs[i];
+        if (!usedSlugs.has(p.slug)) {
+          side.push(p);
+          usedSlugs.add(p.slug);
+        }
       }
     }
-  }
+
+    return { primary, side, primaryImg };
+  }, [featured, cs]);
 
   return (
-    <section
-      className="theme-accent"
-      data-armstrong-id="wrapper"
-      id="featured-projects"
-    >
-      <div
-        className="row base__main pb-10 pb-md-25 pb-lg-40 pt-10 pt-md-25 pt-lg-40"
-        data-armstrong-id="primary"
-      >
+    <section className="theme-accent" data-armstrong-id="wrapper" id="featured-projects">
+      <div className="row base__main pb-10 pb-md-25 pb-lg-40 pt-10 pt-md-25 pt-lg-40" data-armstrong-id="primary">
         <div className="col-12">
-          <h3 className="font-style-italic c-accent mt-15 mb-15">
-            Featured Projects
-          </h3>
-          <h3
-            className="fs-18 mb-15 mb-25 fs-md-16"
-            data-armstrong-id="module_subtitle"
-          >
-            From idea to production: apps & UIs.
+          <h3 className="font-style-italic c-accent mt-15 mb-15">Featured Projects</h3>
+          <h3 className="fs-18 mb-15 mb-25 fs-md-16" data-armstrong-id="module_subtitle">
+            From idea to production: apps &amp; UIs.
           </h3>
 
-          {/* If no content yet, keep the anchor visible */}
-          {!primary ? (
-            <div className="body-s c-text-secondary">
-              No featured projects yet.
-            </div>
+          {loading ? (
+            <div className="body-s c-text-secondary">Loading featured projects…</div>
+          ) : failed ? (
+            <div className="body-s c-text-secondary">Couldn’t load featured projects from Supabase.</div>
+          ) : !primary ? (
+            <div className="body-s c-text-secondary">No featured projects yet.</div>
           ) : (
             <div className="row justify-between d-flex" data-armstrong-id="row">
               {/* Left: Primary feature */}
@@ -109,7 +114,7 @@ export default function FeaturedProjects() {
                   <Link href={hrefFor(primary)}>
                     <figure style={{ margin: 0 }}>
                       <img
-                        src={primaryImg}
+                        src={primaryImg || "/assets/images/space.webp"}
                         alt={primary.title}
                         loading="lazy"
                         sizes="(max-width: 767px) 100vw, (max-width: 1400px) 50vw, 620px"
@@ -118,11 +123,13 @@ export default function FeaturedProjects() {
                           height: "auto",
                           borderRadius: 8,
                           objectFit: "cover",
+                          display: "block",
                         }}
                       />
                     </figure>
                   </Link>
                 </div>
+
                 <div className="col-12 ml-0 mr-0">
                   <h2 className="heading-m mt-20">
                     <Link href={hrefFor(primary)}>{primary.title}</Link>
@@ -135,12 +142,12 @@ export default function FeaturedProjects() {
               </div>
 
               {/* Right: 4 compact cards */}
-              <div
-                className="col-12 col-md-5 mt-30 mt-md-0 items-start"
-                data-armstrong-id="grid_2"
-              >
+              <div className="col-12 col-md-5 mt-30 mt-md-0 items-start" data-armstrong-id="grid_2">
                 {side.slice(0, 4).map((p, i) => {
+                  // keep unique-per-slot image avoidance
+                  const usedUrls = new Set(primaryImg ? [primaryImg] : []);
                   const img = pickSideImg(p, i, usedUrls);
+
                   return (
                     <div
                       key={p.slug}
@@ -157,15 +164,12 @@ export default function FeaturedProjects() {
                           <Link href={hrefFor(p)}>{p.excerpt}</Link>
                         </h4>
                       </div>
+
                       <div className="col-3 d-flex items-start justify-end mr-0">
-                        <Link
-                          className="card__image mb-20"
-                          href={hrefFor(p)}
-                          aria-label={p.title}
-                        >
+                        <Link className="card__image mb-20" href={hrefFor(p)} aria-label={p.title}>
                           <figure style={{ margin: 0 }}>
                             <img
-                              src={img}
+                              src={img || "/assets/images/space.webp"}
                               alt={p.title}
                               loading="lazy"
                               width={90}

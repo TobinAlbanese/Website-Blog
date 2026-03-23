@@ -8,7 +8,7 @@ import Footer from "../../components/LandingPage/Footer.jsx";
 import AdminNavbar from "../../components/Admin/AdminNavbar.jsx";
 import { supabase } from "../../lib/supabase/client";
 
-const FALLBACK_IMG = "/assets/images/space.jpg";
+const FALLBACK_IMG = "/assets/images/space.webp";
 
 function SectionTitle({ children }) {
   return (
@@ -184,9 +184,7 @@ function SmallPostCard({ post, kind = "draft" }) {
     ? kind === "draft"
       ? "/admin/posts/new"
       : "/admin/posts"
-    : kind === "draft"
-      ? `/admin/posts/${post.id}`
-      : `/MidnightBureau/${post.slug}`;
+    : `/admin/posts/${post.id}`;
 
   const title = isEmpty
     ? kind === "draft"

@@ -109,7 +109,7 @@
 }
 
 .admin-list-btn {
-  width: 100%;
+  width: 100%; 
   text-align: left;
   padding: 12px;
   border-radius: 10px;
@@ -287,9 +287,14 @@ figure figcaption { font-size: .9rem; color: var(--c-text-secondary); margin-top
   background: transparent;
   border: none;
   padding: 0;
-  color: #fff;               /* default white */
+  color: var(--c-text-primary);   /* ← dynamic */
   font-weight: 900;
   cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.admin-top-action:hover {
+  color: #d62827;
 }
 
 .admin-top-action:hover {

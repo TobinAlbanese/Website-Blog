@@ -5,7 +5,22 @@ import SvgHead from "../../components/LandingPage/svgHead.jsx";
 import Footer from "../../components/LandingPage/Footer.jsx";
 import Navbar from "../../components/LandingPage/Navbar.jsx";
 
-const COLOR_IMG = "/assets/images/Dylan-Tobin.jpg";
+// --- Supabase Storage (public-images bucket) ---
+const SB_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
+const BUCKET = "public-images";
+const sbPublic = (path) =>
+  path
+    ? `${SB_URL}/storage/v1/object/public/${BUCKET}/${path.replace(/^\/+/, "")}`
+    : "";
+
+// ✅ Set these to the exact storage paths (object keys) in public-images.
+// (Case-sensitive. If your objects are inside folders, include them, e.g. "about/AboutMePhoto2.webp")
+const HERO_IMG_PATH = "Dylan-Tobin.webp";          // was /assets/images/Dylan-Tobin.jpg
+const FLOAT_RIGHT_1  = "AboutMePhoto2.webp";       // was /assets/images/AboutMePhoto2.jpg
+const FLOAT_LEFT_1   = "Cross.webp";               // was /assets/images/Cross.jpg
+const FLOAT_RIGHT_2  = "tk.webp";                  // was /assets/images/tk.jpg
+
+const COLOR_IMG = sbPublic(HERO_IMG_PATH);
 
 // --- Layout knobs (hero remains untouched) ---
 const DESKTOP_MIN = 900; // breakpoint for interactive mode
@@ -82,7 +97,7 @@ export default function About() {
             <article className="about-copy">
               {/* RIGHT (uniform size) */}
               <img
-                src="/assets/images/AboutMePhoto2.jpg"
+                src={sbPublic(FLOAT_RIGHT_1)}
                 alt="Notes and maps for research"
                 loading="lazy"
                 className="float-img right"
@@ -176,7 +191,7 @@ export default function About() {
 
               {/* LEFT (uniform size) */}
               <img
-                src="/assets/images/Cross.jpg"
+                src={sbPublic(FLOAT_LEFT_1)}
                 alt="Building software and writing clearly"
                 loading="lazy"
                 className="float-img left"
@@ -265,7 +280,7 @@ export default function About() {
 
               {/* RIGHT (uniform size) */}
               <img
-                src="/assets/images/tk.jpg"
+                src={sbPublic(FLOAT_RIGHT_2)}
                 alt="Curiosity for the world and its stories"
                 loading="lazy"
                 className="float-img right"
@@ -436,139 +451,4 @@ export default function About() {
       `}</style>
     </>
   );
-}
-
-/* (Archived heat-reveal notes remain below, unchanged) */
-
-{
-  /**
-   * ---------------------------------------------------------------------------
-   * HEAT REVEAL LOGIC (ARCHIVED) — moved to the bottom and fully commented out
-   * ---------------------------------------------------------------------------
-   * To restore this feature:
-   * 1) Uncomment the React hooks and gsap import lines below in your imports.
-   * 2) Reintroduce the state/effects and the interactive SVG hero.
-   * 3) Replace the <div className="hero-wrap"> block above with the interactive
-   *    conditional that renders the SVG when interactive, <img> otherwise.
-   *
-   * Imports to re-enable:
-   *   import React, { useEffect, useRef, useState } from "react";
-   *   import { gsap } from "gsap";
-   *
-   * ----------------------------- HOOKS & EFFECTS -----------------------------
-   *
-   *   const svgRef = useRef(null);
-   *   const [interactive, setInteractive] = useState(false);
-   *
-   *   // Decide interactive vs static (desktop + hover devices only)
-   *   useEffect(() => {
-   *     if (typeof window === "undefined") return;
-   *     const decide = () =>
-   *       setInteractive(
-   *         window.innerWidth >= DESKTOP_MIN &&
-   *         window.matchMedia("(hover: hover)").matches
-   *       );
-   *     decide();
-   *     window.addEventListener("resize", decide);
-   *     return () => window.removeEventListener("resize", decide);
-   *   }, []);
-   *
-   *   // GSAP mask only when interactive
-   *   useEffect(() => {
-   *     if (!interactive) return;
-   *     let cleanup = () => {};
-   *     (async () => {
-   *       const { DrawSVGPlugin } = await import("gsap/DrawSVGPlugin");
-   *       gsap.registerPlugin(DrawSVGPlugin);
-   *
-   *       const svg = svgRef.current;
-   *       if (!svg) return;
-   *
-   *       const pt = svg.createSVGPoint();
-   *       const tl = gsap.timeline();
-   *       gsap.set("#progressRing", { drawSVG: 0 });
-   *       tl.to("#masker", { duration: 2, attr: { r: 2400 }, ease: "power2.in" }).reversed(true);
-   *
-   *       function getPoint(evt) {
-   *         pt.x = evt.clientX; pt.y = evt.clientY;
-   *         return pt.matrixTransform(svg.getScreenCTM().inverse());
-   *       }
-   *       function onMove(evt) {
-   *         const p = getPoint(evt);
-   *         gsap.set("#dot", { attr: { cx: p.x, cy: p.y } });
-   *         gsap.to("#ring,#masker", { duration: 0.75, attr: { cx: p.x, cy: p.y }, ease: "power2.out" });
-   *       }
-   *       function toggle() { tl.reversed(!tl.reversed()); }
-   *
-   *       function sizeSvg() {
-   *         const wrapper = svg.parentElement;
-   *         const w = Math.min(wrapper.clientWidth, MAX_WIDTH);
-   *         const h = Math.min(w / ASPECT, MAX_HEIGHT);
-   *         svg.setAttribute("width", String(w));
-   *         svg.setAttribute("height", String(h));
-   *       }
-   *
-   *       window.addEventListener("mousemove", onMove);
-   *       window.addEventListener("mousedown", toggle);
-   *       window.addEventListener("mouseup", toggle);
-   *       window.addEventListener("resize", sizeSvg);
-   *       sizeSvg();
-   *
-   *       cleanup = () => {
-   *         window.removeEventListener("mousemove", onMove);
-   *         window.removeEventListener("mousedown", toggle);
-   *         window.removeEventListener("mouseup", toggle);
-   *         window.removeEventListener("resize", sizeSvg);
-   *         tl.kill();
-   *       };
-   *     })();
-   *     return () => cleanup();
-   *   }, [interactive]);
-   *
-   * --------------------------- INTERACTIVE SVG HERO ---------------------------
-   *
-   *   {interactive ? (
-   *     <svg
-   *       ref={svgRef}
-   *       id="demo"
-   *       xmlns="http://www.w3.org/2000/svg"
-   *       viewBox="0 0 1600 900"
-   *       preserveAspectRatio="xMidYMid slice"
-   *       style={{ width: "100%", height: "100%", display: "block" }}
-   *     >
-   *       <defs>
-   *         <radialGradient id="maskGradient">
-   *           <stop offset="50%" stopColor="#fff" />
-   *           <stop offset="100%" stopColor="#000" />
-   *         </radialGradient>
-   *         <mask id="theMask">
-   *           <circle id="masker" r="150" fill="url(#maskGradient)" cx="800" cy="450" />
-   *         </mask>
-   *       </defs>
-   *
-   *       {/* B/W layer
-   *       <image href={BW_IMG} x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid slice" />
-   *       {/* Color layer through mask *
-   *       <g mask="url(#theMask)">
-   *         <image href={COLOR_IMG} x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid slice" />
-   *       </g>
-   *
-   *       {/* helpers *
-   *       <circle id="progressRing" r="160" fill="none" stroke="#dc143c" strokeWidth="2" cx="800" cy="450" style={{ visibility: "hidden" }} />
-   *       <circle id="ring" r="20" fill="none" stroke="#dc143c" strokeWidth="2" cx="800" cy="450" />
-   *       <circle id="dot" r="4" fill="#dc143c" cx="800" cy="450" />
-   *     </svg>
-   *   ) : (
-   *     <img src={COLOR_IMG} alt="About Tobin" className="hero-img" />
-   *   )}
-   *
-   * ---------------------------------------------------------------------------
-   * LEGACY CONTAINER NOTE:
-   * If you prefer the tall hero version, you can also swap the wrapper with:
-   *
-   *   <div style={{ position: 'relative', width: '95vw', margin: '0 auto', height: '700px', overflow: 'hidden' }}>
-   *     {/* SVG goes here *
-   *   </div>
-   * ---------------------------------------------------------------------------
-   */
 }

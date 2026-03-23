@@ -102,17 +102,21 @@ export default function Feedback() {
                 <a href="/about">
                   <figure>
                     <img
-                      src="/assets/images/Lucia2.jpg"
-                      alt="Photo of Family wedding"
-                      loading="lazy"
-style={{
-  width: "100%",
-  maxHeight: 600,
-  borderRadius: 8,
-  objectFit: "cover",
-  objectPosition: "top center",
-}}
-                    />
+  src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/public-images/feedback/Lucia2.webp`}
+  alt="Photo of Family wedding"
+  loading="lazy"
+  onError={(e) => {
+    e.currentTarget.src = "/assets/images/Lucia2.webp"; // fallback (make sure it exists)
+  }}
+  style={{
+    width: "100%",
+    maxHeight: 600,
+    borderRadius: 8,
+    objectFit: "cover",
+    objectPosition: "top center",
+  }}
+/>
+
                   </figure>
                 </a>
               </div>

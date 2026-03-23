@@ -3,7 +3,11 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
 import AdminNavbar from "../../../../components/Admin/AdminNavbar.jsx";
 import TiptapEditor from "../../../../components/Admin/TiptapEditor.jsx";
-import { supabase } from "../../../../lib/supabase/client";
+import {
+  supabase,
+  BUCKET,
+  storagePathToPublicUrl,
+} from "../../../../lib/supabase/client";
 
 // ---------- utilities ----------
 const safeArr = (v) => (Array.isArray(v) ? v : []);
@@ -15,16 +19,29 @@ const debounce = (fn, ms = 700) => {
   };
 };
 
-const BUCKET = "post-images";
+const isHttpUrl = (v) => typeof v === "string" && /^https?:\/\//i.test(v);
 
 function publicUrl(storage_path) {
-  if (!storage_path) return "";
-  return supabase.storage.from(BUCKET).getPublicUrl(storage_path).data
-    .publicUrl;
+  return storagePathToPublicUrl(storage_path);
+}
+
+async function getRenderableImageUrl(storageOrUrl, expiresIn = 60 * 60) {
+  if (!storageOrUrl) return "";
+  if (isHttpUrl(storageOrUrl)) return storageOrUrl;
+
+  const { data, error } = await supabase.storage
+    .from(BUCKET)
+    .createSignedUrl(storageOrUrl, expiresIn);
+
+  if (error) {
+    console.error("Signed URL error:", error);
+    return "";
+  }
+
+  return data?.signedUrl || "";
 }
 
 async function uploadImageFile({ postId, kind, file }) {
-  // same upload helper as before — uses postId
   const ext = file.name.split(".").pop()?.toLowerCase() || "png";
   const name = `${Date.now()}-${Math.random().toString(16).slice(2)}.${ext}`;
   const storage_path = `posts/${postId}/${kind}/${name}`;
@@ -35,6 +52,15 @@ async function uploadImageFile({ postId, kind, file }) {
 
   if (error) throw error;
   return storage_path;
+}
+
+function slugify(text = "") {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/['"`]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
 }
 
 export default function AdminPostEditor() {
@@ -48,6 +74,14 @@ export default function AdminPostEditor() {
   // post meta
   const [post, setPost] = useState(null);
 
+  const resolvedImages = useMemo(() => {
+    if (!post) return [];
+    const rows = post.post_images || [];
+    return (rows || []).map(
+      (r) => storagePathToPublicUrl(r.storage_path) || r.storage_path
+    );
+  }, [post]);
+
   // sections
   const [sections, setSections] = useState([]);
   const [activeSectionId, setActiveSectionId] = useState(null);
@@ -56,6 +90,20 @@ export default function AdminPostEditor() {
   const [inlineImages, setInlineImages] = useState([]);
   const [galleryImages, setGalleryImages] = useState([]);
   const [centerImages, setCenterImages] = useState([]);
+
+  const [bannerResolvedUrl, setBannerResolvedUrl] = useState("");
+  const [inlineResolvedUrls, setInlineResolvedUrls] = useState({});
+  const [galleryResolvedUrls, setGalleryResolvedUrls] = useState({});
+  const [centerResolvedUrls, setCenterResolvedUrls] = useState({});
+
+  const [imagePickerOpen, setImagePickerOpen] = useState(false);
+  const [imagePickerKind, setImagePickerKind] = useState(null);
+  const [bannerPickerOpen, setBannerPickerOpen] = useState(false);
+
+  const inlineFileInputRef = React.useRef(null);
+  const galleryFileInputRef = React.useRef(null);
+  const centerFileInputRef = React.useRef(null);
+  const bannerFileInputRef = React.useRef(null);
 
   const [resourceGroups, setResourceGroups] = useState([]);
   const [activeGroupId, setActiveGroupId] = useState(null);
@@ -69,6 +117,182 @@ export default function AdminPostEditor() {
   const [confirmMessage, setConfirmMessage] = useState("");
   const [confirmDangerText, setConfirmDangerText] = useState("Delete");
   const [confirmAction, setConfirmAction] = useState(null);
+
+  const [bodyExpanded, setBodyExpanded] = useState(false);
+
+  const [bannerLocalPreview, setBannerLocalPreview] = useState("");
+  const activeSectionInlineImages = useMemo(() => {
+    return inlineImages
+      .filter((img) => img.section_id === activeSectionId)
+      .sort((a, b) => (a.position || 0) - (b.position || 0));
+  }, [inlineImages, activeSectionId]);
+
+  const activeSectionCenterImages = useMemo(() => {
+    return centerImages
+      .filter((img) => img.section_id === activeSectionId)
+      .sort((a, b) => (a.position || 0) - (b.position || 0));
+  }, [centerImages, activeSectionId]);
+
+  const activeSectionImageRefs = useMemo(() => {
+    return [...activeSectionInlineImages, ...activeSectionCenterImages].sort(
+      (a, b) => (a.position || 0) - (b.position || 0)
+    );
+  }, [activeSectionInlineImages, activeSectionCenterImages]);
+  const addSectionImage = async ({ kind, file, sectionId }) => {
+    if (!sectionId) {
+      setErr("Select a section first.");
+      return;
+    }
+
+    try {
+      setErr("");
+      setSaving(true);
+
+      const storage_path = await uploadImageFile({ postId, kind, file });
+
+      const sectionRows = [...inlineImages, ...centerImages].filter(
+        (img) => img.section_id === sectionId && img.kind === kind
+      );
+
+      const nextPos =
+        sectionRows.reduce((m, r) => Math.max(m, Number(r?.position || 0)), 0) +
+        1;
+
+      const { data, error } = await supabase
+        .from("post_images")
+        .insert({
+          post_id: postId,
+          section_id: sectionId,
+          kind,
+          position: nextPos,
+          storage_path,
+          alt_text: "",
+          caption: "",
+          show_in_gallery: true,
+        })
+        .select("*")
+        .single();
+
+      if (error) throw error;
+
+      if (kind === "inline") {
+        setInlineImages((prev) => [...prev, data]);
+      } else if (kind === "center") {
+        setCenterImages((prev) => [...prev, data]);
+      }
+    } catch (e) {
+      setErr(e?.message || "Image upload failed");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const hasStoragePath = (row) => !!String(row?.storage_path || "").trim();
+  const updateImageGalleryFlag = async (imageId, checked, kind) => {
+    try {
+      setErr("");
+      const { data, error } = await supabase
+        .from("post_images")
+        .update({ show_in_gallery: checked })
+        .eq("id", imageId)
+        .select("*")
+        .single();
+
+      if (error) throw error;
+
+      if (kind === "inline") {
+        setInlineImages((prev) =>
+          prev.map((img) => (img.id === imageId ? data : img))
+        );
+      } else if (kind === "center") {
+        setCenterImages((prev) =>
+          prev.map((img) => (img.id === imageId ? data : img))
+        );
+      } else if (kind === "gallery") {
+        setGalleryImages((prev) =>
+          prev.map((img) => (img.id === imageId ? data : img))
+        );
+      }
+    } catch (e) {
+      setErr(e?.message || "Failed to update gallery setting");
+    }
+  };
+
+  const moveSectionImage = async ({ imageRow, kind, direction }) => {
+    const list =
+      kind === "inline"
+        ? inlineImages
+        : kind === "center"
+          ? centerImages
+          : galleryImages;
+
+    const sectionList =
+      kind === "gallery"
+        ? [...list].sort((a, b) => (a.position || 0) - (b.position || 0))
+        : list
+            .filter((img) => img.section_id === imageRow.section_id)
+            .sort((a, b) => (a.position || 0) - (b.position || 0));
+
+    const idx = sectionList.findIndex((img) => img.id === imageRow.id);
+    if (idx === -1) return;
+
+    const swapIdx = direction === "up" ? idx - 1 : idx + 1;
+    if (swapIdx < 0 || swapIdx >= sectionList.length) return;
+
+    const current = sectionList[idx];
+    const target = sectionList[swapIdx];
+
+    try {
+      setErr("");
+      setSaving(true);
+
+      const currentPos = current.position || 0;
+      const targetPos = target.position || 0;
+
+      const { error: e1 } = await supabase
+        .from("post_images")
+        .update({ position: -999999 })
+        .eq("id", current.id);
+
+      if (e1) throw e1;
+
+      const { error: e2 } = await supabase
+        .from("post_images")
+        .update({ position: currentPos })
+        .eq("id", target.id);
+
+      if (e2) throw e2;
+
+      const { error: e3 } = await supabase
+        .from("post_images")
+        .update({ position: targetPos })
+        .eq("id", current.id);
+
+      if (e3) throw e3;
+
+      const swapLocal = (rows) =>
+        rows.map((img) => {
+          if (img.id === current.id) return { ...img, position: targetPos };
+          if (img.id === target.id) return { ...img, position: currentPos };
+          return img;
+        });
+
+      if (kind === "inline") setInlineImages((prev) => swapLocal(prev));
+      if (kind === "center") setCenterImages((prev) => swapLocal(prev));
+      if (kind === "gallery") setGalleryImages((prev) => swapLocal(prev));
+    } catch (e) {
+      setErr(e?.message || "Failed to reorder image");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const bannerPreviewUrl =
+    bannerLocalPreview || bannerResolvedUrl || "/assets/images/space.webp";
+
+  const inlineUrls = inlineImages.map((r) =>
+    storagePathToPublicUrl(r.storage_path)
+  );
 
   const openConfirm = ({
     title,
@@ -91,6 +315,16 @@ export default function AdminPostEditor() {
     setConfirmAction(null);
   };
 
+  const openImagePicker = (kind) => {
+    setImagePickerKind(kind);
+    setImagePickerOpen(true);
+  };
+
+  const closeImagePicker = () => {
+    setImagePickerOpen(false);
+    setImagePickerKind(null);
+  };
+
   useEffect(() => {
     if (!confirmOpen) return;
     const onKey = (e) => {
@@ -99,7 +333,7 @@ export default function AdminPostEditor() {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [confirmOpen]);
-  
+
   // ---------- auth gate ----------
   useEffect(() => {
     (async () => {
@@ -151,10 +385,15 @@ export default function AdminPostEditor() {
         .order("position", { ascending: true });
       if (gErr) return (setErr(gErr.message), setLoading(false));
 
-      // images by kind
-      const inl = (imgs || []).filter((x) => x.kind === "inline");
-      const cen = (imgs || []).filter((x) => x.kind === "center");
-      const gal = (imgs || []).filter((x) => x.kind === "gallery");
+      const inl = (imgs || []).filter(
+        (x) => x.kind === "inline" && hasStoragePath(x)
+      );
+      const cen = (imgs || []).filter(
+        (x) => x.kind === "center" && hasStoragePath(x)
+      );
+      const gal = (imgs || []).filter(
+        (x) => x.kind === "gallery" && hasStoragePath(x)
+      );
 
       setPost(p);
       setSections(Array.isArray(s) ? s : []);
@@ -170,6 +409,61 @@ export default function AdminPostEditor() {
       setLoading(false);
     })();
   }, [postId]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    (async () => {
+      if (!post?.banner_url) {
+        setBannerResolvedUrl("");
+        return;
+      }
+
+      const url = await getRenderableImageUrl(post.banner_url);
+      if (!cancelled) setBannerResolvedUrl(url);
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [post?.banner_url]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    (async () => {
+      const resolveRows = async (rows) => {
+        const validRows = (rows || []).filter(hasStoragePath);
+
+        const pairs = await Promise.all(
+          validRows.map(async (r) => {
+            const url = await getRenderableImageUrl(r.storage_path);
+            return [r.id, url];
+          })
+        );
+
+        return Object.fromEntries(
+          pairs.filter(([, url]) => !!String(url || "").trim())
+        );
+      };
+
+      const [inlineMap, centerMap, galleryMap] = await Promise.all([
+        resolveRows(inlineImages),
+        resolveRows(centerImages),
+        resolveRows(galleryImages),
+      ]);
+
+      if (cancelled) return;
+
+      setInlineResolvedUrls(inlineMap);
+      setCenterResolvedUrls(centerMap);
+      setGalleryResolvedUrls(galleryMap);
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [inlineImages, centerImages, galleryImages]);
 
   // ---------- load links for active resource group ----------
   useEffect(() => {
@@ -193,7 +487,6 @@ export default function AdminPostEditor() {
       const links = data || [];
       setActiveGroupLinks(links);
 
-      // Load drafts if we have them; otherwise build from DB
       const draft = groupDrafts[activeGroupId];
       if (draft) {
         setNewGroupName(draft.name ?? "");
@@ -204,10 +497,9 @@ export default function AdminPostEditor() {
         setLinkPaste(linksToPasteText(links));
       }
     })();
-  }, [activeGroupId, resourceGroups]); // groupDrafts intentionally NOT here (avoid loops)
+  }, [activeGroupId, resourceGroups]);
 
-  // ---------- async wrapper for Tiptap image uploads (fixed) ----------
-  // must be defined inside component so `postId` is in scope and can use await
+  // ---------- async wrapper for Tiptap image uploads ----------
   async function uploadImageFileWrapped(file) {
     if (!postId) throw new Error("postId missing");
     const storage_path = await uploadImageFile({
@@ -215,8 +507,30 @@ export default function AdminPostEditor() {
       kind: "inline",
       file,
     });
-    return publicUrl(storage_path);
+
+    const signed = await getRenderableImageUrl(storage_path);
+    return signed || publicUrl(storage_path);
   }
+  const PORTFOLIO_CATEGORIES = [
+    "Current & In-Progress Work",
+    "Research & Analysis Projects",
+    "Computer Science Projects",
+    "Employers & Work Experience",
+    "Education & Certifications",
+    "Featured / Spotlight Projects",
+    "Speaking & Media",
+    "Collaborations",
+  ];
+
+  const BLOG_LANDING_CATEGORIES = [
+    "All",
+    "Geopolitics",
+    "Cybersecurity",
+    "Economic Intelligence",
+    "Military & Defense",
+    "Technology & Innovation",
+    "Global Events",
+  ];
 
   // ---------- autosave meta ----------
   const saveMeta = async (patch) => {
@@ -236,16 +550,37 @@ export default function AdminPostEditor() {
   const publishPost = async () => {
     if (!postId) return;
     if (!confirm("Publish this post now?")) return;
+
+    const nextType =
+      post?.type ||
+      (BLOG_LANDING_CATEGORIES.includes(post?.category) ? "mb" : null) ||
+      (PORTFOLIO_CATEGORIES.includes(post?.category) ? "portfolio" : null);
+
+    if (!nextType) {
+      setErr("Select a valid category before publishing.");
+      return;
+    }
+
     setSaving(true);
     const published_at = new Date().toISOString();
+
     const { error } = await supabase
       .from("posts")
-      .update({ status: "published", is_published: true, published_at })
+      .update({
+        type: nextType,
+        status: "published",
+        is_published: true,
+        published_at,
+      })
       .eq("id", postId);
+
     setSaving(false);
+
     if (error) return setErr(error.message);
+
     setPost((p) => ({
       ...p,
+      type: nextType,
       status: "published",
       is_published: true,
       published_at,
@@ -275,7 +610,6 @@ export default function AdminPostEditor() {
       .eq("id", postId);
     setSaving(false);
     if (error) return setErr(error.message);
-    // redirect to admin posts list
     router.push("/admin/posts");
   };
 
@@ -308,7 +642,6 @@ export default function AdminPostEditor() {
     const after = sections.find((s) => s.id === afterId);
     const newPos = (after?.position || sections.length) + 1;
 
-    // shift positions after
     const tail = sections.filter((s) => s.position >= newPos);
     for (const t of tail) {
       await supabase
@@ -330,7 +663,6 @@ export default function AdminPostEditor() {
 
     if (error) return setErr(error.message);
 
-    // reload sections (simple + safe)
     const { data: s } = await supabase
       .from("posts_sections")
       .select("*")
@@ -390,18 +722,14 @@ export default function AdminPostEditor() {
   };
 
   const parseLinksPaste = (text) => {
-    // Format: first non-empty line = label; optional URL in same line or next line
     const lines = text
       .split("\n")
       .map((l) => l.trim())
       .filter(Boolean);
 
-    // If user pasted: header line + many items (no URLs)
     const items = [];
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
-
-      // if line looks like a URL by itself, attach to previous
       const isUrl = /^https?:\/\/\S+/i.test(line);
 
       if (isUrl && items.length) {
@@ -409,7 +737,6 @@ export default function AdminPostEditor() {
         continue;
       }
 
-      // try label + url in one line
       const m = line.match(/(https?:\/\/\S+)/i);
       if (m) {
         const url = m[1];
@@ -462,7 +789,6 @@ export default function AdminPostEditor() {
     setActiveGroupLinks((p) => [...(p || []), ...(data || [])]);
     setErr("");
 
-    // update the draft snapshot so switching groups won't revert
     setGroupDrafts((p) => ({
       ...p,
       [activeGroupId]: { name: newGroupName, paste: linkPaste },
@@ -475,13 +801,13 @@ export default function AdminPostEditor() {
       .join("\n\n")
       .trim();
   }
+
   const saveGroupAndLinks = async () => {
     setErr("");
 
     const name = (newGroupName || "").trim();
     if (!name) return setErr("Group header is required.");
 
-    // parse links from textarea
     const items = parseLinksPaste(linkPaste);
     const cleaned = items
       .map((x) => ({
@@ -494,7 +820,6 @@ export default function AdminPostEditor() {
 
     let groupId = activeGroupId;
 
-    // 1) If new group: create it
     if (!groupId) {
       const nextPos = ((resourceGroups || []).at(-1)?.position || 0) + 1;
 
@@ -513,7 +838,6 @@ export default function AdminPostEditor() {
       setResourceGroups((p) => [...(p || []), gData]);
       setActiveGroupId(groupId);
     } else {
-      // 2) Existing group: update header name
       const { error: upErr } = await supabase
         .from("resource_groups")
         .update({ name })
@@ -524,13 +848,11 @@ export default function AdminPostEditor() {
         return setErr(upErr.message);
       }
 
-      // update local list so left reflects renamed group immediately
       setResourceGroups((p) =>
         (p || []).map((g) => (g.id === groupId ? { ...g, name } : g))
       );
     }
 
-    // 3) Replace links (so edits/removals work)
     const { error: delErr } = await supabase
       .from("resource_links")
       .delete()
@@ -565,7 +887,6 @@ export default function AdminPostEditor() {
 
     setActiveGroupLinks(inserted);
 
-    // keep drafts synced too
     setGroupDrafts((p) => ({
       ...p,
       [groupId]: { name, paste: linkPaste },
@@ -638,9 +959,9 @@ export default function AdminPostEditor() {
 
       if (error) throw error;
 
-      // update local
       const patcher = (row) =>
         row.id === imageRow.id ? { ...row, storage_path } : row;
+
       if (kind === "inline") setInlineImages((p) => p.map(patcher));
       if (kind === "gallery") setGalleryImages((p) => p.map(patcher));
       if (kind === "center") setCenterImages((p) => p.map(patcher));
@@ -654,8 +975,12 @@ export default function AdminPostEditor() {
       setErr("");
       const storage_path = await uploadImageFile({ postId, kind, file });
 
-      const list = kind === "inline" ? inlineImages : galleryImages;
-      const nextPos = (list.at(-1)?.position || 0) + 1;
+      const all = [...inlineImages, ...galleryImages, ...centerImages];
+      const maxPos = all.reduce(
+        (m, r) => Math.max(m, Number(r?.position || 0)),
+        0
+      );
+      const nextPos = maxPos + 1;
 
       const { data, error } = await supabase
         .from("post_images")
@@ -720,8 +1045,7 @@ export default function AdminPostEditor() {
           Loading…
         </div>
       </div>
-  
-);
+    );
   }
 
   if (!post) {
@@ -814,8 +1138,30 @@ export default function AdminPostEditor() {
                   value={post.title || ""}
                   onChange={(e) => {
                     const title = e.target.value;
-                    setPost((p) => ({ ...p, title }));
-                    saveMetaDebounced({ title });
+
+                    setPost((prev) => {
+                      const prevTitle = prev.title || "";
+                      const prevSlug = prev.slug || "";
+
+                      const oldAutoSlug = slugify(prevTitle);
+                      const nextAutoSlug = slugify(title);
+
+                      const shouldAutoUpdateSlug =
+                        !prevSlug || prevSlug === oldAutoSlug;
+
+                      const next = {
+                        ...prev,
+                        title,
+                        slug: shouldAutoUpdateSlug ? nextAutoSlug : prevSlug,
+                      };
+
+                      saveMetaDebounced({
+                        title,
+                        ...(shouldAutoUpdateSlug ? { slug: nextAutoSlug } : {}),
+                      });
+
+                      return next;
+                    });
                   }}
                   style={inputStyle()}
                 />
@@ -825,7 +1171,7 @@ export default function AdminPostEditor() {
                 <input
                   value={post.slug || ""}
                   onChange={(e) => {
-                    const slug = e.target.value;
+                    const slug = slugify(e.target.value);
                     setPost((p) => ({ ...p, slug }));
                     saveMetaDebounced({ slug });
                   }}
@@ -853,21 +1199,106 @@ export default function AdminPostEditor() {
                   gap: 12,
                 }}
               >
+                <Field label="Category">
+                  <select
+                    value={
+                      post.category
+                        ? post.type === "portfolio"
+                          ? `portfolio:${post.category}`
+                          : post.type === "mb"
+                            ? `blog:${post.category}`
+                            : post.category
+                        : ""
+                    }
+                    onChange={(e) => {
+                      const raw = e.target.value;
+
+                      if (!raw) {
+                        setPost((p) => ({ ...p, category: "", type: null }));
+                        saveMetaDebounced({ category: "", type: null });
+                        return;
+                      }
+
+                      const [scope, ...rest] = raw.split(":");
+                      const category = rest.join(":").trim();
+
+                      const type =
+                        scope === "blog"
+                          ? "mb"
+                          : scope === "portfolio"
+                            ? "portfolio"
+                            : null;
+
+                      setPost((p) => ({
+                        ...p,
+                        category,
+                        type,
+                      }));
+
+                      saveMetaDebounced({
+                        category,
+                        type,
+                      });
+                    }}
+                    style={inputStyle()}
+                  >
+                    <option value="">Select a category</option>
+
+                    <optgroup label="Portfolio">
+                      {PORTFOLIO_CATEGORIES.map((category) => (
+                        <option
+                          key={`portfolio-${category}`}
+                          value={`portfolio:${category}`}
+                        >
+                          {category}
+                        </option>
+                      ))}
+                    </optgroup>
+
+                    <optgroup label="Blog">
+                      {BLOG_LANDING_CATEGORIES.map((category) => (
+                        <option
+                          key={`blog-${category}`}
+                          value={`blog:${category}`}
+                        >
+                          {category}
+                        </option>
+                      ))}
+                    </optgroup>
+                  </select>
+                </Field>
+
                 <Field label="Status">
                   <select
                     value={post.status || "draft"}
                     onChange={(e) => {
                       const status = e.target.value;
-                      setPost((p) => ({ ...p, status }));
-                      // ensure is_published synced
-                      saveMetaDebounced({
+
+                      const inferredType =
+                        post?.type ||
+                        (BLOG_LANDING_CATEGORIES.includes(post?.category)
+                          ? "mb"
+                          : null) ||
+                        (PORTFOLIO_CATEGORIES.includes(post?.category)
+                          ? "portfolio"
+                          : null);
+
+                      const patch = {
                         status,
                         is_published: status === "published",
                         published_at:
                           status === "published"
                             ? new Date().toISOString()
                             : null,
-                      });
+                        ...(inferredType ? { type: inferredType } : {}),
+                      };
+
+                      setPost((p) => ({
+                        ...p,
+                        ...patch,
+                      }));
+
+                      saveMetaDebounced(patch);
                     }}
                     style={inputStyle()}
                   >
@@ -929,10 +1360,10 @@ export default function AdminPostEditor() {
                 </Field>
               </div>
 
-              <Field label="Banner (click to replace)">
-                <label style={{ display: "block", cursor: "pointer" }}>
+              <Field label="Banner">
+                <div style={{ display: "grid", gap: 10 }}>
                   <img
-                    src={post.banner_url || "/assets/images/space.jpg"}
+                    src={bannerPreviewUrl}
                     alt="banner"
                     style={{
                       width: "100%",
@@ -941,24 +1372,15 @@ export default function AdminPostEditor() {
                       borderRadius: 12,
                     }}
                   />
-                  <input
-                    type="file"
-                    accept="image/*"
-                    style={{ display: "none" }}
-                    onChange={async (e) => {
-                      const file = e.target.files?.[0];
-                      if (!file) return;
-                      const storage_path = await uploadImageFile({
-                        postId,
-                        kind: "banner",
-                        file,
-                      });
-                      const url = publicUrl(storage_path);
-                      setPost((p) => ({ ...p, banner_url: url }));
-                      saveMetaDebounced({ banner_url: url });
-                    }}
-                  />
-                </label>
+
+                  <button
+                    type="button"
+                    style={btnRed()}
+                    onClick={() => setBannerPickerOpen(true)}
+                  >
+                    Change Banner
+                  </button>
+                </div>
               </Field>
             </Card>
 
@@ -1038,7 +1460,9 @@ export default function AdminPostEditor() {
                           block: "start",
                         });
                     }}
-                    className={`admin-list-btn ${g.id === activeGroupId ? "is-active" : ""}`}
+                    className={`admin-list-btn ${
+                      g.id === activeGroupId ? "is-active" : ""
+                    }`}
                   >
                     <span style={{ fontWeight: 900 }}>
                       {g.name || "Untitled Group"}
@@ -1053,7 +1477,6 @@ export default function AdminPostEditor() {
                     type="button"
                     style={btnRed()}
                     onClick={() => {
-                      // NEW: blank the right editor so you can create a new group
                       setActiveGroupId(null);
                       setActiveGroupLinks([]);
                       setNewGroupName("");
@@ -1103,21 +1526,115 @@ export default function AdminPostEditor() {
                   </Field>
 
                   <Field label="Body">
-                    <TiptapEditor
-                      key={activeSection.id}
-                      value={activeSection.body || ""}
-                      onChange={(html) => {
-                        updateSectionLocal(activeSection.id, { body: html });
-                        saveSectionDebounced(activeSection.id, {
-                          body: html,
-                        });
+                    <div
+                      style={{
+                        borderRadius: 12,
+                        border: "1px solid rgba(214,40,39,0.28)",
+                        overflow: "hidden",
+                        background: "rgba(0,0,0,0.06)",
                       }}
-                      onUploadImage={uploadImageFileWrapped}
-                    />
+                    >
+                      <div
+                        style={{
+                          maxHeight: bodyExpanded ? "none" : 520,
+                          overflowY: bodyExpanded ? "visible" : "auto",
+                          padding: 12,
+                        }}
+                      >
+                        <TiptapEditor
+                          key={activeSection.id}
+                          value={activeSection.body || ""}
+                          onChange={(html) => {
+                            updateSectionLocal(activeSection.id, {
+                              body: html,
+                            });
+                            saveSectionDebounced(activeSection.id, {
+                              body: html,
+                            });
+                          }}
+                          onUploadImage={uploadImageFileWrapped}
+                        />
+                      </div>
+                    </div>
                   </Field>
+
+                  <div style={{ marginTop: 14 }}>
+                    <div
+                      style={{
+                        fontWeight: 900,
+                        marginBottom: 8,
+                        opacity: 0.82,
+                      }}
+                    >
+                      Section image references
+                    </div>
+
+                    {!activeSectionId ? (
+                      <div style={{ opacity: 0.7 }}>
+                        Select a section first.
+                      </div>
+                    ) : activeSectionImageRefs.length === 0 ? (
+                      <div style={{ opacity: 0.7 }}>
+                        No images assigned to this section yet.
+                      </div>
+                    ) : (
+                      <div
+                        style={{
+                          display: "flex",
+                          gap: 10,
+                          overflowX: "auto",
+                          paddingBottom: 4,
+                        }}
+                      >
+                        {activeSectionImageRefs.map((img) => {
+                          const src =
+                            inlineResolvedUrls[img.id] ||
+                            centerResolvedUrls[img.id] ||
+                            "/assets/images/space.jpg";
+
+                          return (
+                            <div
+                              key={img.id}
+                              style={{
+                                minWidth: 110,
+                                width: 110,
+                                borderRadius: 10,
+                                overflow: "hidden",
+                                border: "1px solid rgba(214,40,39,0.25)",
+                                background: "rgba(0,0,0,0.06)",
+                              }}
+                            >
+                              <img
+                                src={src}
+                                alt=""
+                                style={{
+                                  width: "100%",
+                                  height: 78,
+                                  objectFit: "cover",
+                                  display: "block",
+                                }}
+                              />
+                              <div
+                                style={{
+                                  padding: "6px 8px",
+                                  fontSize: 11,
+                                  fontWeight: 800,
+                                  opacity: 0.75,
+                                  textTransform: "capitalize",
+                                }}
+                              >
+                                {img.kind}
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
                 </>
               )}
             </Card>
+
             <Card title="Resources & Links">
               <div style={{ display: "grid", gap: 12 }}>
                 <Field label="Group Header">
@@ -1189,39 +1706,48 @@ export default function AdminPostEditor() {
               </div>
             </Card>
 
-            <Card title="Inline Images (click to replace)">
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  gap: 12,
-                  alignItems: "center",
-                  marginBottom: 12,
-                }}
-              >
-                <div style={{ fontWeight: 900, opacity: 0.85 }}>
-                  Used for floating images in-body
-                </div>
-                <label style={btnRed(true)}>
-                  + Upload
-                  <input
-                    type="file"
-                    accept="image/*"
-                    style={{ display: "none" }}
-                    onChange={(e) => {
-                      const file = e.target.files?.[0];
-                      if (file) addImage({ kind: "inline", file });
+            <Card title="Section Inline Images">
+              {!activeSection ? (
+                <div style={{ opacity: 0.7 }}>Select a section first.</div>
+              ) : (
+                <>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      gap: 12,
+                      alignItems: "center",
+                      marginBottom: 12,
                     }}
-                  />
-                </label>
-              </div>
+                  >
+                    <div style={{ fontWeight: 900, opacity: 0.85 }}>
+                      Left / right floating images for this section
+                    </div>
+                    <button
+                      type="button"
+                      style={btnRed()}
+                      onClick={() => openImagePicker("inline")}
+                    >
+                      + Upload
+                    </button>
+                  </div>
 
-              <ImageGrid
-                rows={inlineImages}
-                kind="inline"
-                onReplace={replaceImage}
-                onDelete={deleteImage}
-              />
+                  {activeSectionInlineImages.length ? (
+                    <SectionImageGrid
+                      rows={activeSectionInlineImages}
+                      kind="inline"
+                      resolvedMap={inlineResolvedUrls}
+                      onDelete={deleteImage}
+                      onToggleGallery={updateImageGalleryFlag}
+                      onMove={moveSectionImage}
+                    />
+                  ) : (
+                    <div style={{ opacity: 0.7 }}>
+                      No inline images assigned to this section.
+                    </div>
+                  )}
+                </>
+              )}
             </Card>
 
             <Card title="Gallery Images (click to replace)">
@@ -1237,18 +1763,13 @@ export default function AdminPostEditor() {
                 <div style={{ fontWeight: 900, opacity: 0.85 }}>
                   Used for the carousel/gallery section
                 </div>
-                <label style={btnRed(true)}>
+                <button
+                  type="button"
+                  style={btnRed()}
+                  onClick={() => openImagePicker("gallery")}
+                >
                   + Upload
-                  <input
-                    type="file"
-                    accept="image/*"
-                    style={{ display: "none" }}
-                    onChange={(e) => {
-                      const file = e.target.files?.[0];
-                      if (file) addImage({ kind: "gallery", file });
-                    }}
-                  />
-                </label>
+                </button>
               </div>
 
               <ImageGrid
@@ -1256,106 +1777,367 @@ export default function AdminPostEditor() {
                 kind="gallery"
                 onReplace={replaceImage}
                 onDelete={deleteImage}
+                resolvedMap={galleryResolvedUrls}
               />
             </Card>
 
-            <Card title="Centered Images (click to replace)">
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  gap: 12,
-                  alignItems: "center",
-                  marginBottom: 12,
-                }}
-              >
-                <div style={{ fontWeight: 900, opacity: 0.85 }}>
-                  Used for large centered images in-body
-                </div>
-                <label style={btnRed(true)}>
-                  + Upload
-                  <input
-                    type="file"
-                    accept="image/*"
-                    style={{ display: "none" }}
-                    onChange={(e) => {
-                      const file = e.target.files?.[0];
-                      if (file) addImage({ kind: "center", file });
+            <Card title="Section Centered Images">
+              {!activeSection ? (
+                <div style={{ opacity: 0.7 }}>Select a section first.</div>
+              ) : (
+                <>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      gap: 12,
+                      alignItems: "center",
+                      marginBottom: 12,
                     }}
-                  />
-                </label>
-              </div>
+                  >
+                    <div style={{ fontWeight: 900, opacity: 0.85 }}>
+                      Large centered images for this section
+                    </div>
+                    <button
+                      type="button"
+                      style={btnRed()}
+                      onClick={() => openImagePicker("center")}
+                    >
+                      + Upload
+                    </button>
+                  </div>
 
-              <ImageGrid
-                rows={centerImages}
-                kind="center"
-                onReplace={replaceImage}
-                onDelete={deleteImage}
-              />
+                  {activeSectionCenterImages.length ? (
+                    <SectionImageGrid
+                      rows={activeSectionCenterImages}
+                      kind="center"
+                      resolvedMap={centerResolvedUrls}
+                      onDelete={deleteImage}
+                      onToggleGallery={updateImageGalleryFlag}
+                      onMove={moveSectionImage}
+                    />
+                  ) : (
+                    <div style={{ opacity: 0.7 }}>
+                      No centered images assigned to this section.
+                    </div>
+                  )}
+                </>
+              )}
             </Card>
           </div>
         </div>
       </div>
-    
-    {confirmOpen && (
-  <div
-    onClick={closeConfirm}
-    style={{
-      position: "fixed",
-      inset: 0,
-      background: "rgba(0,0,0,0.55)",
-      display: "grid",
-      placeItems: "center",
-      zIndex: 9999,
-      padding: 16,
-    }}
-  >
-    <div
-      onClick={(e) => e.stopPropagation()}
-      style={{
-        width: "min(520px, 94vw)",
-        background: "var(--c-bg-primary)",
-        borderRadius: 14,
-        padding: 18,
-        boxShadow: "0 18px 60px rgba(0,0,0,0.35)",
-        border: "1px solid rgba(214,40,39,0.25)",
-      }}
-    >
-      <div style={{ fontWeight: 900, fontSize: 18, marginBottom: 8 }}>
-        {confirmTitle}
-      </div>
 
-      <div style={{ opacity: 0.8, fontWeight: 700, lineHeight: 1.4 }}>
-        {confirmMessage}
-      </div>
-
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "flex-end",
-          gap: 10,
-          marginTop: 16,
+      {/* Hidden file inputs */}
+      <input
+        ref={inlineFileInputRef}
+        type="file"
+        accept="image/*"
+        style={{ display: "none" }}
+        onChange={(e) => {
+          const file = e.target.files?.[0];
+          e.target.value = "";
+          if (file) {
+            addSectionImage({
+              kind: "inline",
+              file,
+              sectionId: activeSectionId,
+            });
+          }
         }}
-      >
-        <button type="button" style={btnSoftRed()} onClick={closeConfirm}>
-          Cancel
-        </button>
+      />
 
-        <button
-          type="button"
-          style={btnRed()}
-          onClick={async () => {
-            if (typeof confirmAction === "function") await confirmAction();
+      <input
+        ref={galleryFileInputRef}
+        type="file"
+        accept="image/*"
+        style={{ display: "none" }}
+        onChange={(e) => {
+          const file = e.target.files?.[0];
+          e.target.value = "";
+          if (file) addImage({ kind: "gallery", file });
+        }}
+      />
+
+      <input
+        ref={centerFileInputRef}
+        type="file"
+        accept="image/*"
+        style={{ display: "none" }}
+        onChange={(e) => {
+          const file = e.target.files?.[0];
+          e.target.value = "";
+          if (file) {
+            addSectionImage({
+              kind: "center",
+              file,
+              sectionId: activeSectionId,
+            });
+          }
+        }}
+      />
+
+      <input
+        ref={bannerFileInputRef}
+        type="file"
+        accept="image/*"
+        style={{ display: "none" }}
+        onChange={async (e) => {
+          const file = e.target.files?.[0];
+          e.target.value = "";
+          if (!file) return;
+
+          const tmpUrl = URL.createObjectURL(file);
+          setBannerLocalPreview(tmpUrl);
+
+          try {
+            setErr("");
+            setSaving(true);
+
+            const storage_path = await uploadImageFile({
+              postId,
+              kind: "banner",
+              file,
+            });
+
+            const { error: upErr } = await supabase
+              .from("posts")
+              .update({ banner_url: storage_path })
+              .eq("id", postId);
+
+            if (upErr) throw upErr;
+
+            setPost((p) => ({ ...p, banner_url: storage_path }));
+
+            const signed = await getRenderableImageUrl(storage_path);
+            URL.revokeObjectURL(tmpUrl);
+            setBannerLocalPreview(signed || "");
+          } catch (err) {
+            setErr(err?.message || "Banner upload failed");
+          } finally {
+            setSaving(false);
+          }
+        }}
+      />
+
+      {/* Image picker modal */}
+      {imagePickerOpen && (
+        <div
+          onClick={closeImagePicker}
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(0,0,0,0.55)",
+            display: "grid",
+            placeItems: "center",
+            zIndex: 10000,
+            padding: 16,
           }}
         >
-          {confirmDangerText}
-        </button>
-      </div>
-    </div>
-  </div>
-)}
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              width: "min(460px, 94vw)",
+              background: "var(--c-bg)",
+              color: "var(--c-text)",
+              borderRadius: 14,
+              padding: 18,
+              boxShadow: "0 18px 60px rgba(0,0,0,0.35)",
+              border: "1px solid rgba(214,40,39,0.25)",
+            }}
+          >
+            <div style={{ fontWeight: 900, fontSize: 18, marginBottom: 8 }}>
+              Add image
+            </div>
 
-    
+            <div style={{ opacity: 0.8, fontWeight: 700, lineHeight: 1.4 }}>
+              Choose how you want to add this image to the{" "}
+              <span style={{ textTransform: "capitalize" }}>
+                {imagePickerKind}
+              </span>{" "}
+              bucket.
+            </div>
+
+            <div style={{ display: "grid", gap: 10, marginTop: 16 }}>
+              <button
+                type="button"
+                style={btnRed()}
+                onClick={() => {
+                  closeImagePicker();
+                  if (imagePickerKind === "inline")
+                    inlineFileInputRef.current?.click();
+                  if (imagePickerKind === "gallery")
+                    galleryFileInputRef.current?.click();
+                  if (imagePickerKind === "center")
+                    centerFileInputRef.current?.click();
+                }}
+              >
+                Upload from device
+              </button>
+
+              <button
+                type="button"
+                style={btnSoftRed()}
+                onClick={() => {
+                  closeImagePicker();
+                  setErr("Media library is not built yet.");
+                }}
+              >
+                Choose from library
+              </button>
+            </div>
+
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                marginTop: 16,
+              }}
+            >
+              <button
+                type="button"
+                style={btnSoftRed()}
+                onClick={closeImagePicker}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Banner picker modal */}
+      {bannerPickerOpen && (
+        <div
+          onClick={() => setBannerPickerOpen(false)}
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(0,0,0,0.55)",
+            display: "grid",
+            placeItems: "center",
+            zIndex: 10000,
+            padding: 16,
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            sstyle={{
+              width: "min(460px, 94vw)",
+              background: "var(--c-bg)",
+              color: "var(--c-text)",
+              borderRadius: 14,
+              padding: 18,
+              boxShadow: "0 18px 60px rgba(0,0,0,0.35)",
+              border: "1px solid rgba(214,40,39,0.25)",
+            }}
+          >
+            <div style={{ fontWeight: 900, fontSize: 18, marginBottom: 8 }}>
+              Change banner
+            </div>
+
+            <div style={{ display: "grid", gap: 10, marginTop: 16 }}>
+              <button
+                type="button"
+                style={btnRed()}
+                onClick={() => {
+                  setBannerPickerOpen(false);
+                  bannerFileInputRef.current?.click();
+                }}
+              >
+                Upload from device
+              </button>
+
+              <button
+                type="button"
+                style={btnSoftRed()}
+                onClick={() => {
+                  setBannerPickerOpen(false);
+                  setErr("Media library is not built yet.");
+                }}
+              >
+                Choose from library
+              </button>
+            </div>
+
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                marginTop: 16,
+              }}
+            >
+              <button
+                type="button"
+                style={btnSoftRed()}
+                onClick={() => setBannerPickerOpen(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {confirmOpen && (
+        <div
+          onClick={closeConfirm}
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(0,0,0,0.55)",
+            display: "grid",
+            placeItems: "center",
+            zIndex: 9999,
+            padding: 16,
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              width: "min(460px, 94vw)",
+              background: "var(--c-bg)",
+              color: "var(--c-text)",
+              borderRadius: 14,
+              padding: 18,
+              boxShadow: "0 18px 60px rgba(0,0,0,0.35)",
+              border: "1px solid rgba(214,40,39,0.25)",
+            }}
+          >
+            <div style={{ fontWeight: 900, fontSize: 18, marginBottom: 8 }}>
+              {confirmTitle}
+            </div>
+
+            <div style={{ opacity: 0.8, fontWeight: 700, lineHeight: 1.4 }}>
+              {confirmMessage}
+            </div>
+
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                gap: 10,
+                marginTop: 16,
+              }}
+            >
+              <button type="button" style={btnSoftRed()} onClick={closeConfirm}>
+                Cancel
+              </button>
+
+              <button
+                type="button"
+                style={btnRed()}
+                onClick={async () => {
+                  if (typeof confirmAction === "function")
+                    await confirmAction();
+                }}
+              >
+                {confirmDangerText}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -1390,8 +2172,127 @@ function Field({ label, children }) {
   );
 }
 
-function ImageGrid({ rows, kind, onReplace, onDelete }) {
-  if (!rows?.length) return <div style={{ opacity: 0.7 }}>No images.</div>;
+function SectionImageGrid({
+  rows,
+  kind,
+  resolvedMap = {},
+  onDelete,
+  onToggleGallery,
+  onMove,
+}) {
+  return (
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+        gap: 12,
+      }}
+    >
+      {rows.map((row, idx) => {
+        const url = resolvedMap[row.id] || "/assets/images/space.jpg";
+
+        return (
+          <div
+            key={row.id}
+            style={{
+              border: "1px solid rgba(214,40,39,0.25)",
+              borderRadius: 12,
+              overflow: "hidden",
+              background: "rgba(0,0,0,0.04)",
+            }}
+          >
+            <img
+              src={url}
+              alt={row.alt_text || ""}
+              style={{
+                width: "100%",
+                height: 220,
+                objectFit: "cover",
+                display: "block",
+              }}
+            />
+
+            <div
+              style={{
+                padding: 12,
+                display: "grid",
+                gap: 10,
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  gap: 10,
+                }}
+              >
+                <div style={{ fontWeight: 800, opacity: 0.8 }}>
+                  {kind} #{idx + 1}
+                </div>
+
+                <div style={{ display: "flex", gap: 8 }}>
+                  <button
+                    type="button"
+                    style={btnSoftRed()}
+                    onClick={() =>
+                      onMove({ imageRow: row, kind, direction: "up" })
+                    }
+                  >
+                    ↑
+                  </button>
+                  <button
+                    type="button"
+                    style={btnSoftRed()}
+                    onClick={() =>
+                      onMove({ imageRow: row, kind, direction: "down" })
+                    }
+                  >
+                    ↓
+                  </button>
+                </div>
+              </div>
+
+              <label
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 8,
+                  fontWeight: 800,
+                  cursor: "pointer",
+                }}
+              >
+                <input
+                  type="checkbox"
+                  checked={!!row.show_in_gallery}
+                  onChange={(e) =>
+                    onToggleGallery(row.id, e.target.checked, kind)
+                  }
+                />
+                Include in gallery
+              </label>
+
+              <button
+                type="button"
+                style={btnSoftRed()}
+                onClick={() => onDelete({ kind, id: row.id })}
+              >
+                Remove
+              </button>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function ImageGrid({ rows, kind, onReplace, onDelete, resolvedMap = {} }) {
+  const validRows = (rows || []).filter(
+    (r) => !!String(r?.storage_path || "").trim()
+  );
+
+  if (!validRows.length) return <div style={{ opacity: 0.7 }}>No images.</div>;
 
   return (
     <div
@@ -1401,8 +2302,8 @@ function ImageGrid({ rows, kind, onReplace, onDelete }) {
         gap: 12,
       }}
     >
-      {rows.map((r) => {
-        const url = publicUrl(r.storage_path) || "/assets/images/space.jpg";
+      {validRows.map((r) => {
+        const url = resolvedMap[r.id] || "/assets/images/space.jpg";
         return (
           <div key={r.id} style={{ position: "relative" }}>
             <label style={{ display: "block", cursor: "pointer" }}>
@@ -1447,16 +2348,12 @@ function ImageGrid({ rows, kind, onReplace, onDelete }) {
             >
               ×
             </button>
-            
           </div>
         );
       })}
-      
     </div>
-    
   );
 }
-
 
 // ---------- styles ----------
 function inputStyle() {

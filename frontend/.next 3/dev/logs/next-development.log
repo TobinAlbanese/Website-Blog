@@ -1,0 +1,7 @@
+[00:00:00.539] Server  LOG     ✓ Ready in 340ms
+[00:00:05.411] Browser WARN    GSAP target  not found. https://gsap.com
+[00:00:05.411] Browser WARN    GSAP target  not found. https://gsap.com
+[00:00:05.411] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:00:05.411] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/MidnightBureau","route":"/MidnightBureau"}
+[00:00:05.411] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/MidnightBureau color: rgb(120, 120, 120) color: inherit {"dp":"/MidnightBureau","o":"http://localhost:3000/MidnightBureau","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1770191999091}
+[00:00:05.411] Browser LOG     %c[Vercel Speed Insights]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit

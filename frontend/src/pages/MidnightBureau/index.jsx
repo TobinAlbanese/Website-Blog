@@ -1,18 +1,19 @@
 import React, { useState, useEffect, useMemo } from "react";
-import Link from "next/link";
 import { useRouter } from "next/router";
 
 import MetaHead from "../../components/LandingPage/MetaHead.jsx";
 import SvgHead from "../../components/LandingPage/svgHead.jsx";
 import Footer from "../../components/LandingPage/Footer.jsx";
-import MidnightBureauData from "../../data/MidnightBureau.js";
 import HeatRevealCanvas from "../../components/LandingPage/HeatRevealCanvas.jsx";
 import NavbarMB from "../../components/LandingPage/NavbarMB.jsx";
 
-// ---------- helpers for category -> data arrays (labels stay the same) ----------
+import { createClient } from "@supabase/supabase-js";
+
+// ---------- helpers ----------
 const arr = (xs) => (Array.isArray(xs) ? xs : []);
 const sortByDateDesc = (xs) =>
   [...xs].sort((a, b) => new Date(b.date) - new Date(a.date));
+
 const uniqBySlug = (xs = []) => {
   const seen = new Set();
   return xs.filter(
@@ -20,16 +21,89 @@ const uniqBySlug = (xs = []) => {
   );
 };
 
-function takeFromKeys(keys, total = 2, perSourceCap) {
-  const buckets = keys.map((k) => sortByDateDesc(arr(MidnightBureauData?.[k])));
+// --------------------
+// Supabase (SSR)
+// --------------------
+function getServerSupabase() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  return createClient(url, anon, { auth: { persistSession: false } });
+}
+
+const POSTS_BUCKET = "post-images";
+
+function isHttpUrl(src = "") {
+  return src.startsWith("http://") || src.startsWith("https://");
+}
+
+function resolveImageServer(supabase, bucket, src) {
+  const s = (src || "").trim();
+  if (!s) return "";
+  if (isHttpUrl(s) || s.startsWith("/")) return s;
+
+  const { data } = supabase.storage.from(bucket).getPublicUrl(s);
+  return data?.publicUrl || "";
+}
+
+// ✅ Public bucket helper (for Syria2.webp in public-images)
+function publicBucketUrl(path, bucket) {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  if (!url || !path) return "";
+  return `${url}/storage/v1/object/public/${bucket}/${path}`;
+}
+
+// ✅ Always use this hero fallback (Supabase public-images bucket)
+const HERO_FALLBACK = (() => {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  return url
+    ? `${url}/storage/v1/object/public/public-images/Syria2.webp`
+    : "/assets/images/space.webp";
+})();
+
+// ---------- DB category → “bucket” keys (keep your topic labels the same) ----------
+/**
+ * These keys replace MidnightBureauData's keys.
+ * You control mapping by posts.category in DB.
+ */
+const BUCKET_KEYS = [
+  "Geopolitics",
+  "Security",
+  "Technology",
+  "Economy",
+  "Intelligence",
+  "Defense",
+  "ForeignPolicy",
+  "Diplomacy",
+];
+
+function bucketKeyFromPostCategory(category) {
+  const c = (category || "").trim();
+  if (!c) return null;
+
+  if (BUCKET_KEYS.includes(c)) return c;
+
+  const lower = c.toLowerCase();
+  if (lower === "cybersecurity") return "Security";
+  if (lower === "military" || lower === "military & defense") return "Defense";
+  if (lower === "tech" || lower === "technology & innovation")
+    return "Technology";
+  if (lower === "global events") return "ForeignPolicy";
+
+  return null;
+}
+
+function takeFromKeys(postsByBucket, keys, total = 2, perSourceCap) {
+  const buckets = keys.map((k) => sortByDateDesc(arr(postsByBucket?.[k])));
   const out = [];
   const seen = new Set();
 
   if (perSourceCap != null) {
     const caps = new Array(buckets.length).fill(0);
     let progressed = true;
+
     while (out.length < total && progressed) {
       progressed = false;
+
       for (let i = 0; i < buckets.length && out.length < total; i++) {
         if (caps[i] >= perSourceCap) continue;
         const bucket = buckets[i];
@@ -37,6 +111,7 @@ function takeFromKeys(keys, total = 2, perSourceCap) {
         while (caps[i] < bucket.length) {
           const p = bucket[caps[i]];
           caps[i] += 1;
+
           if (p?.slug && !seen.has(p.slug)) {
             out.push(p);
             seen.add(p.slug);
@@ -63,26 +138,34 @@ function takeFromKeys(keys, total = 2, perSourceCap) {
   return out;
 }
 
-function getCategoryPosts(label) {
+function getCategoryPosts(postsByBucket, label) {
   switch (label) {
     case "Geopolitics":
-      return uniqBySlug(takeFromKeys(["Geopolitics"], 2));
+      return uniqBySlug(takeFromKeys(postsByBucket, ["Geopolitics"], 2));
     case "Cybersecurity":
-      return uniqBySlug(takeFromKeys(["Security", "Technology"], 2, 1));
+      return uniqBySlug(
+        takeFromKeys(postsByBucket, ["Security", "Technology"], 2, 1)
+      );
     case "Economic Intelligence":
-      return uniqBySlug(takeFromKeys(["Economy", "Intelligence"], 2, 1));
+      return uniqBySlug(
+        takeFromKeys(postsByBucket, ["Economy", "Intelligence"], 2, 1)
+      );
     case "Military & Defense":
-      return uniqBySlug(takeFromKeys(["Defense", "Security"], 2, 1));
+      return uniqBySlug(
+        takeFromKeys(postsByBucket, ["Defense", "Security"], 2, 1)
+      );
     case "Technology & Innovation":
-      return uniqBySlug(takeFromKeys(["Technology"], 2));
+      return uniqBySlug(takeFromKeys(postsByBucket, ["Technology"], 2));
     case "Global Events":
-      return uniqBySlug(takeFromKeys(["ForeignPolicy", "Diplomacy"], 2, 1));
+      return uniqBySlug(
+        takeFromKeys(postsByBucket, ["ForeignPolicy", "Diplomacy"], 2, 1)
+      );
     default:
       return [];
   }
 }
 
-// ---------- Per-character animator (kept for anywhere else you still use it) ----------
+// ---------- Per-character animator ----------
 export function useSpanizedText(
   text,
   baseDelay = 0.05,
@@ -102,7 +185,7 @@ export function useSpanizedText(
   }, [text, baseDelay, className]);
 }
 
-// ---------- Title animator (per-word wrapper with char stagger) ----------
+// ---------- Title animator ----------
 export function useWordAnimatedText(
   text,
   baseDelay = 0.08,
@@ -110,8 +193,8 @@ export function useWordAnimatedText(
   startDelay = 0
 ) {
   return React.useMemo(() => {
-    const tokens = text.split(/(\s+)/); // keep spaces as tokens
-    let i = 0; // running char index for stagger timing
+    const tokens = text.split(/(\s+)/);
+    let i = 0;
 
     return tokens.map((tok, idx) => {
       if (/^\s+$/.test(tok)) return <span key={`sp-${idx}`}>{tok}</span>;
@@ -136,7 +219,7 @@ export function useWordAnimatedText(
   }, [text, baseDelay, charClass, startDelay]);
 }
 
-// ---------- Paragraph animator (per-word so wrapping NEVER splits a word) ----------
+// ---------- Paragraph animator ----------
 export function useWordSpanizedText(
   text,
   baseDelay = 0.01,
@@ -144,8 +227,9 @@ export function useWordSpanizedText(
   startDelay = 0
 ) {
   return React.useMemo(() => {
-    const tokens = text.split(/(\s+)/); // keep spaces
+    const tokens = text.split(/(\s+)/);
     let t = 0;
+
     return tokens.map((tok, idx) => {
       if (/^\s+$/.test(tok)) return <span key={`sp-${idx}`}>{tok}</span>;
       const chars = tok.split("").map((ch, j) => {
@@ -211,6 +295,30 @@ function MetaRow({ author, date }) {
   );
 }
 
+function EmptyCard({ isMain }) {
+  return (
+    <div
+      style={{
+        backgroundColor: "var(--c-bg-primary)",
+        borderRadius: 12,
+        padding: isMain ? 24 : 16,
+        boxShadow: isMain
+          ? "0 10px 30px rgba(0,0,0,0.1)"
+          : "0 8px 24px rgba(0, 0, 0, 0.08)",
+        width: "100%",
+        minHeight: isMain ? 720 : 260,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        color: "var(--c-text-secondary)",
+        fontSize: isMain ? "1.1rem" : "1rem",
+      }}
+    >
+      No posts yet.
+    </div>
+  );
+}
+
 function AnimatedPostCard({ post, index, isMain }) {
   const [visible, setVisible] = useState(false);
   const [hover, setHover] = useState(false);
@@ -221,7 +329,12 @@ function AnimatedPostCard({ post, index, isMain }) {
     return () => clearTimeout(timeout);
   }, [index]);
 
+  if (!post) return <EmptyCard isMain={isMain} />;
+
   const handleNav = () => router.push(`/MidnightBureau/${post.slug}`);
+
+  // ✅ Always resolve fallback via public-images bucket Syria2.webp
+  const displayImg = post.banner || HERO_FALLBACK;
 
   return (
     <article
@@ -264,12 +377,12 @@ function AnimatedPostCard({ post, index, isMain }) {
       {isMain ? (
         <>
           <img
-            src={
-              post.images && post.images.length > 0
-                ? post.images[0]
-                : post.banner || "/default-image.jpg"
-            }
+            src={displayImg}
             alt={post.title}
+            onError={(e) => {
+              e.currentTarget.onerror = null;
+              e.currentTarget.src = HERO_FALLBACK;
+            }}
             style={{
               width: "100%",
               height: "600px",
@@ -322,8 +435,12 @@ function AnimatedPostCard({ post, index, isMain }) {
       ) : (
         <>
           <img
-            src={post.image}
+            src={displayImg}
             alt={post.title}
+            onError={(e) => {
+              e.currentTarget.onerror = null;
+              e.currentTarget.src = HERO_FALLBACK;
+            }}
             style={{
               width: "100%",
               maxHeight: 260,
@@ -334,6 +451,7 @@ function AnimatedPostCard({ post, index, isMain }) {
               flexShrink: 0,
             }}
           />
+
           <div
             style={{
               display: "flex",
@@ -384,22 +502,29 @@ function AnimatedPostCard({ post, index, isMain }) {
   );
 }
 
-export default function MidnightBureau() {
+export default function MidnightBureau({ posts = [] }) {
   const [animate, setAnimate] = useState(false);
 
   useEffect(() => {
     setAnimate(true);
   }, []);
 
-  const recentPosts = MidnightBureauData.Recent;
-  const sortedRecent = [...recentPosts].sort(
-    (a, b) => new Date(b.date) - new Date(a.date)
-  );
+  // Build “buckets” in-memory from DB posts
+  const postsByBucket = useMemo(() => {
+    const out = {};
+    for (const k of BUCKET_KEYS) out[k] = [];
+    for (const p of arr(posts)) {
+      const key = bucketKeyFromPostCategory(p.category);
+      if (!key) continue;
+      out[key].push(p);
+    }
+    return out;
+  }, [posts]);
 
-  const mainPost = sortedRecent[0];
+  const sortedRecent = useMemo(() => sortByDateDesc(arr(posts)), [posts]);
+  const mainPost = sortedRecent[0] || null;
   const otherPosts = sortedRecent.slice(1);
 
-  // Text split into parts with line breaks and emphasis
   const paragraphLines = [
     `At Midnight Bureau, you'll find a thoughtful space dedicated to deep dives, critical analyses, and fresh perspectives. From engaging book reviews and carefully curated resources to timely insights on culture and current events, every post is crafted with care by myself, `,
     "Tobin Albanese",
@@ -415,6 +540,10 @@ export default function MidnightBureau() {
     "type-char-title"
   );
 
+  // ✅ Syria2.webp from Supabase public-images bucket for the hero effect
+  const heroEffectImage =
+    publicBucketUrl("Syria2.webp", "public-images") || HERO_FALLBACK;
+
   return (
     <>
       <meta charSet="utf-8" />
@@ -423,7 +552,6 @@ export default function MidnightBureau() {
       <MetaHead />
       <SvgHead />
 
-      {/*NAVBAR*/}
       <div
         className="dialog-off-canvas-main-canvas"
         data-off-canvas-main-canvas=""
@@ -445,16 +573,17 @@ export default function MidnightBureau() {
                   className="row justify-between d-flex mb-hero-row"
                   data-armstrong-id="row"
                 >
-                  {/* Hero section left */}
                   <div
-                    className={`col-12 col-lg-6 mb-20 mb-lg-0 d-flex flex-column justify-center ${animate ? "slide-in-left" : ""}`}
+                    className={`col-12 col-lg-6 mb-20 mb-lg-0 d-flex flex-column justify-center ${
+                      animate ? "slide-in-left" : ""
+                    }`}
                     data-armstrong-id="personal-message"
                     style={{
                       position: "relative",
                       isolation: "isolate",
                       zIndex: 2,
-                      paddingRight: 16, // small buffer from the right image
-                      minWidth: 0, // lets text wrap instead of clipping
+                      paddingRight: 16,
+                      minWidth: 0,
                     }}
                   >
                     <h1
@@ -470,7 +599,6 @@ export default function MidnightBureau() {
                       <div>{titleLine2}</div>
                     </h1>
 
-                    {/* Paragraphs with staggered typewriter delays (word-safe) */}
                     <p
                       className="body-m"
                       style={{
@@ -553,15 +681,18 @@ export default function MidnightBureau() {
                     </p>
                   </div>
 
-                  {/* Hero section right image (untouched) */}
+                  {/* ✅ Hero image effect must be Syria2.webp from public-images bucket */}
                   <div className="heat-canvas-wrapper mb-hero-media">
-                    <HeatRevealCanvas width={800} height={800} />
+                    <HeatRevealCanvas
+                      width={800}
+                      height={800}
+                      imageSrc={heroEffectImage}
+                    />
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Red line separator */}
             <div
               style={{
                 maxWidth: 1000,
@@ -573,7 +704,6 @@ export default function MidnightBureau() {
             <main
               style={{ maxWidth: 1400, margin: "40px auto", padding: "0 24px" }}
             >
-              {/* Latest + Recent side-by-side */}
               <section
                 id="briefing-recent"
                 className="mb-briefing-recent"
@@ -584,7 +714,6 @@ export default function MidnightBureau() {
                   alignItems: "stretch",
                 }}
               >
-                {/* Latest Briefing */}
                 <div
                   style={{ flex: 1, display: "flex", flexDirection: "column" }}
                 >
@@ -607,7 +736,6 @@ export default function MidnightBureau() {
                   </div>
                 </div>
 
-                {/* Recent Posts */}
                 <div
                   id="recent-posts"
                   className="mb-recent-col"
@@ -633,14 +761,21 @@ export default function MidnightBureau() {
                   >
                     Recent Posts
                   </h2>
-                  {otherPosts.slice(0, 3).map((post, i) => (
-                    <AnimatedPostCard
-                      key={post.slug}
-                      post={post}
-                      index={i + 1}
-                      isMain={false}
-                    />
-                  ))}
+
+                  {otherPosts.length === 0 ? (
+                    <EmptyCard isMain={false} />
+                  ) : (
+                    otherPosts
+                      .slice(0, 3)
+                      .map((post, i) => (
+                        <AnimatedPostCard
+                          key={post.slug}
+                          post={post}
+                          index={i + 1}
+                          isMain={false}
+                        />
+                      ))
+                  )}
                 </div>
               </section>
 
@@ -652,7 +787,6 @@ export default function MidnightBureau() {
                 }}
               />
 
-              {/* Browse by Topics */}
               <h2
                 id="categories"
                 style={{
@@ -671,7 +805,6 @@ export default function MidnightBureau() {
                 Browse by Topics
               </h2>
 
-              {/* Categories Section */}
               <div
                 className="mb-topics-grid"
                 style={{
@@ -690,7 +823,8 @@ export default function MidnightBureau() {
                   "Technology & Innovation",
                   "Global Events",
                 ].map((cat) => {
-                  const posts = getCategoryPosts(cat);
+                  const postsForCat = getCategoryPosts(postsByBucket, cat);
+
                   return (
                     <div
                       key={cat}
@@ -711,18 +845,24 @@ export default function MidnightBureau() {
                       >
                         {cat}
                       </h3>
-                      {posts.map((post, i) => (
-                        <AnimatedPostCard
-                          key={post.slug}
-                          post={post}
-                          index={i}
-                          isMain={false}
-                        />
-                      ))}
+
+                      {postsForCat.length === 0 ? (
+                        <EmptyCard isMain={false} />
+                      ) : (
+                        postsForCat.map((post, i) => (
+                          <AnimatedPostCard
+                            key={post.slug}
+                            post={post}
+                            index={i}
+                            isMain={false}
+                          />
+                        ))
+                      )}
                     </div>
                   );
                 })}
               </div>
+
               <button
                 type="button"
                 style={{
@@ -761,4 +901,98 @@ export default function MidnightBureau() {
       </div>
     </>
   );
+}
+
+// -------------------------
+// SSR: fetch posts from DB
+// -------------------------
+export async function getServerSideProps() {
+  const supabase = getServerSupabase();
+  const POSTS_BUCKET = "post-images";
+
+  const { data, error } = await supabase
+    .from("posts")
+    .select(
+      "id, type, title, slug, excerpt, status, is_published, published_at, banner_url, archive_image_url, author, date, category, created_at"
+    )
+    .eq("type", "mb")
+    .eq("is_published", true)
+    .not("published_at", "is", null)
+    .order("published_at", { ascending: false });
+
+  if (error) {
+    console.log("MidnightBureau SSR posts error:", error);
+    return { props: { posts: [] } };
+  }
+
+  const safe = Array.isArray(data) ? data : [];
+  const postIds = safe.map((p) => p.id).filter(Boolean);
+
+  let inlineImageMap = {};
+
+  if (postIds.length > 0) {
+    const { data: imageRows, error: imageErr } = await supabase
+      .from("post_images")
+      .select("id, post_id, kind, storage_path, position")
+      .in("post_id", postIds)
+      .eq("kind", "inline")
+      .order("position", { ascending: true });
+
+    if (imageErr) {
+      console.log("MidnightBureau SSR post_images error:", imageErr);
+    } else {
+      for (const row of imageRows || []) {
+        if (!row?.post_id || !row?.storage_path) continue;
+        if (!inlineImageMap[row.post_id]) {
+          inlineImageMap[row.post_id] = row.storage_path;
+        }
+      }
+    }
+  }
+
+  const normalized = safe
+    .filter((p) => p?.slug)
+    .map((p) => {
+      const rawBanner = (p.banner_url || "").trim();
+      const rawArchive = (p.archive_image_url || "").trim();
+      const rawFirstInline = (inlineImageMap[p.id] || "").trim();
+
+      const resolvedBanner =
+        resolveImageServer(supabase, POSTS_BUCKET, rawBanner) || "";
+
+      const resolvedArchive =
+        resolveImageServer(supabase, POSTS_BUCKET, rawArchive) || "";
+
+      const resolvedFirstInline =
+        resolveImageServer(supabase, POSTS_BUCKET, rawFirstInline) || "";
+
+      const d =
+        p.published_at || p.date || p.created_at || new Date().toISOString();
+
+      const dateIso = new Date(d);
+      const dateStr = isNaN(dateIso.getTime())
+        ? ""
+        : dateIso.toISOString().slice(0, 10);
+
+      return {
+        id: p.id,
+        slug: p.slug,
+        title: p.title || "Untitled",
+        excerpt: p.excerpt || "",
+        author: p.author || "Tobin Albanese",
+        category: p.category || "",
+        date: dateStr || "",
+        banner: resolvedBanner || resolvedFirstInline || HERO_FALLBACK,
+        image:
+          resolvedArchive ||
+          resolvedFirstInline ||
+          resolvedBanner ||
+          HERO_FALLBACK,
+        images: [
+          resolvedFirstInline || resolvedArchive || resolvedBanner,
+        ].filter(Boolean),
+      };
+    });
+
+  return { props: { posts: normalized } };
 }

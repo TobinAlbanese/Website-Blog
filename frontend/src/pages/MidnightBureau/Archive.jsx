@@ -1,4 +1,4 @@
-// pages/MidnightBureau/Archive.jsx (or wherever this file lives)
+// pages/MidnightBureau/Archive.jsx
 import { useRouter } from "next/router";
 import { useState, useMemo, useRef, useEffect } from "react";
 import Link from "next/link";
@@ -42,38 +42,69 @@ const TOPIC_GROUPS = {
 
 const CATEGORIES = [...META_CATEGORIES, ...Object.keys(TOPIC_GROUPS)];
 
+/** ----------------------------------------------------------------
+ *  Supabase Storage helpers (public-images bucket)
+ *  - Assumes you uploaded the same filenames into Storage.
+ *  - Keeps your existing data file + layout unchanged.
+ * ---------------------------------------------------------------- */
+const SB_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
+const BUCKET = "public-images";
+const sbPublic = (path) =>
+  path
+    ? `${SB_URL}/storage/v1/object/public/${BUCKET}/${String(path).replace(/^\/+/, "")}`
+    : "";
+
+// Convert a local /assets/images/... path into a Supabase bucket URL.
+// If it's already an absolute URL, keep it.
+const toPublicImageUrl = (src) => {
+  if (!src) return "";
+  const s = String(src);
+
+  // already absolute (unsplash, etc.)
+  if (/^https?:\/\//i.test(s)) return s;
+
+  // your local pattern -> map to storage object key
+  // "/assets/images/Foo.webp" -> "Foo.webp"
+  const m = s.match(/^\/assets\/images\/(.+)$/i);
+  if (m?.[1]) return sbPublic(m[1]);
+
+  // if you pass just "Foo.webp" already
+  return sbPublic(s);
+};
+
+// ✅ your gallery list stays identical, but we map it to bucket URLs
 const galleryImages = [
-  "/assets/images/Alina.jpg",
-  "/assets/images/Cross.jpg",
-  "/assets/images/Nuns.jpg",
-  "/assets/images/Birds.jpg",
-  "/assets/images/Croatia.jpg",
-  "/assets/images/Iraq.jpg",
-  "/assets/images/Italy.jpg",
-  "/assets/images/Ocean.jpg",
-  "/assets/images/Ocean2.jpg",
-  "/assets/images/Pakistan.jpg",
-  "/assets/images/Lincoln.jpg",
-  "/assets/images/Russia2.jpg",
-  "/assets/images/Russia3.jpg",
-  "/assets/images/Russia5.jpg",
-  "/assets/images/Russia4.jpg",
-  "/assets/images/Russia6.jpg",
-  "/assets/images/Syria.jpg",
-  "/assets/images/Syria2.jpg",
-  "/assets/images/WhiteHouse.jpg",
-  "/assets/images/AFG2.jpg",
-  "/assets/images/Space2.jpg",
-  "/assets/images/AFG4.jpg",
-  "/assets/images/AFG5.jpg",
-  "/assets/images/Lucia2.jpg",
-  "/assets/images/Russia.jpg",
-  "/assets/images/Museum.jpg",
-  "/assets/images/AFG.jpg",
-  "/assets/images/Snowboard.jpg",
-  "/assets/images/Snowboard2.jpg",
-  "/assets/images/Snowboarding1.jpg",
-];
+  "/assets/images/Alina.webp",
+  "/assets/images/Cross.webp",
+  "/assets/images/Nuns.webp",
+  "/assets/images/Birds.webp",
+  "/assets/images/Croatia.webp",
+  "/assets/images/Iraq.webp",
+  "/assets/images/Italy.webp",
+  "/assets/images/Ocean.webp",
+  "/assets/images/Ocean2.webp",
+  "/assets/images/Pakistan.webp",
+  "/assets/images/Lincoln.webp",
+  "/assets/images/Russia2.webp",
+  "/assets/images/Russia3.webp",
+  "/assets/images/Russia5.webp",
+  "/assets/images/Russia4.webp",
+  "/assets/images/Russia6.webp",
+  "/assets/images/Syria.webp",
+  "/assets/images/Syria2.webp",
+  "/assets/images/WhiteHouse.webp",
+  "/assets/images/AFG2.webp",
+  "/assets/images/Space2.webp",
+  "/assets/images/AFG4.webp",
+  "/assets/images/AFG5.webp",
+  "/assets/images/Lucia2.webp",
+  "/assets/images/Russia.webp",
+  "/assets/images/Museum.webp",
+  "/assets/images/AFG.webp",
+  "/assets/images/Snowboard.webp",
+  "/assets/images/Snowboard2.webp",
+  "/assets/images/Snowboarding1.webp",
+].map(toPublicImageUrl);
 
 // ---------- small safety helpers ----------
 const arr = (x) => (Array.isArray(x) ? x : []);
@@ -81,12 +112,22 @@ const toDate = (p) => {
   const d = new Date(p?.date || p?.published || p?.createdAt || 0);
   return Number.isNaN(d.getTime()) ? new Date(0) : d;
 };
-const pickImg = (p) =>
-  p?.archiveImage ||
-  p?.image ||
-  p?.banner ||
-  (Array.isArray(p?.images) ? p.images[0] : "") ||
-  "/assets/images/space.jpg";
+
+// ✅ Card image picker now routes through Supabase bucket
+const pickImg = (p) => {
+  const raw =
+    p?.archiveImage ||
+    p?.archive_image_url ||
+    p?.archiveImageUrl ||
+    p?.imageUrl ||
+    p?.image ||
+    p?.banner ||
+    p?.banner_url ||
+    (Array.isArray(p?.images) ? p.images[0] : "") ||
+    "/assets/images/space.webp";
+
+  return toPublicImageUrl(raw);
+};
 
 // ---------- tiny media hook (layout-only response) ----------
 function useMediaQuery(query) {
@@ -340,32 +381,24 @@ export default function Archive() {
     padding: 0,
     lineHeight: 1,
   };
-const headerArrowFontSize = isMobile ? 40 : isTablet ? 60 : 28;
 
+  const headerArrowFontSize = isMobile ? 40 : isTablet ? 60 : 28;
 
   const headerScrollButtonStyle = {
-  cursor: "pointer",
-  border: "none",
-  background: "none",
-
-  // 🎯 breakpoint-controlled size
-  fontSize: headerArrowFontSize,
-
-  // generous tap target for touch devices
-  padding: "6px 10px",
-
-  fontWeight: 600,
-  color: "var(--c-accent)",
-  userSelect: "none",
-  lineHeight: 1,
-
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-
-  transition: "transform 0.15s ease, opacity 0.15s ease",
-};
-
+    cursor: "pointer",
+    border: "none",
+    background: "none",
+    fontSize: headerArrowFontSize,
+    padding: "6px 10px",
+    fontWeight: 600,
+    color: "var(--c-accent)",
+    userSelect: "none",
+    lineHeight: 1,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    transition: "transform 0.15s ease, opacity 0.15s ease",
+  };
 
   const router = useRouter();
   useEffect(() => {
@@ -391,11 +424,6 @@ const headerArrowFontSize = isMobile ? 40 : isTablet ? 60 : 28;
 
     return (
       <>
-        {/* Locked viewport wrapper:
-            - Desktop: left aligned (3 cards)
-            - Tablet: left aligned (2 cards)
-            - Mobile: centered (1 card)
-        */}
         <div
           style={{
             width: "100%",
@@ -411,7 +439,7 @@ const headerArrowFontSize = isMobile ? 40 : isTablet ? 60 : 28;
               scrollBehavior: "smooth",
               paddingBottom: 8,
               width: "100%",
-              flexWrap: "nowrap", // ✅ never drop to next line
+              flexWrap: "nowrap",
               scrollbarWidth: "none",
               msOverflowStyle: "none",
               WebkitOverflowScrolling: "touch",
@@ -435,6 +463,7 @@ const headerArrowFontSize = isMobile ? 40 : isTablet ? 60 : 28;
                       e.currentTarget.style.boxShadow = "0 6px 12px rgba(0,0,0,0.1)";
                     }}
                   >
+                    {/* ✅ now uses Supabase bucket URLs */}
                     <img src={pickImg(post)} alt={post.title} style={imgStyle} />
                     <div style={captionStyle}>
                       <div style={captionTitleStyle} title={post.title}>
@@ -449,16 +478,8 @@ const headerArrowFontSize = isMobile ? 40 : isTablet ? 60 : 28;
           </div>
         </div>
 
-        {/* Desktop only: keep arrows below row (your original behavior) */}
         {!isSmallScreen && showScrollButtons && (
-          <div
-            style={{
-              display: "flex",
-              gap: 12,
-              justifyContent: "flex-end",
-              marginTop: 8,
-            }}
-          >
+          <div style={{ display: "flex", gap: 12, justifyContent: "flex-end", marginTop: 8 }}>
             <button aria-label={`Scroll ${key} left`} onClick={() => scrollMonth(key, "left")} style={scrollButtonStyle}>
               ‹
             </button>
@@ -499,21 +520,12 @@ const headerArrowFontSize = isMobile ? 40 : isTablet ? 60 : 28;
           {monthLabel} {yearLabel}
         </h2>
 
-        {/* Tablet + Mobile: arrows to the right of date */}
         {showHeaderArrows && (
           <div style={{ display: "flex", gap: 10, alignItems: "center", flex: "0 0 auto" }}>
-            <button
-              aria-label={`Scroll ${key} left`}
-              onClick={() => scrollMonth(key, "left")}
-              style={headerScrollButtonStyle}
-            >
+            <button aria-label={`Scroll ${key} left`} onClick={() => scrollMonth(key, "left")} style={headerScrollButtonStyle}>
               ‹
             </button>
-            <button
-              aria-label={`Scroll ${key} right`}
-              onClick={() => scrollMonth(key, "right")}
-              style={headerScrollButtonStyle}
-            >
+            <button aria-label={`Scroll ${key} right`} onClick={() => scrollMonth(key, "right")} style={headerScrollButtonStyle}>
               ›
             </button>
           </div>
@@ -535,6 +547,7 @@ const headerArrowFontSize = isMobile ? 40 : isTablet ? 60 : 28;
 
         <div className="base d-flex">
           <NavbarMB />
+          {/* ✅ now receives bucket URLs */}
           <MBHeroGallery images={galleryImages} />
 
           <div id="archive-content" />
@@ -546,8 +559,6 @@ const headerArrowFontSize = isMobile ? 40 : isTablet ? 60 : 28;
               padding: "0 24px",
               display: "flex",
 
-              // ✅ Mobile: stack sidebar above posts
-              // ✅ Tablet+Desktop: keep sidebar left, posts right
               flexDirection: isMobile ? "column" : "row",
 
               gap: isMobile ? 24 : 48,
@@ -585,7 +596,6 @@ const headerArrowFontSize = isMobile ? 40 : isTablet ? 60 : 28;
                   alignItems: "center",
                   justifyContent: "space-between",
 
-                  // ✅ Mobile: button spans nicely
                   width: isMobile ? "100%" : undefined,
                 }}
               >
@@ -618,7 +628,6 @@ const headerArrowFontSize = isMobile ? 40 : isTablet ? 60 : 28;
                     paddingLeft: 0,
                     marginTop: 4,
 
-                    // ✅ Mobile: prevent gigantic dropdown; allow internal scroll
                     maxHeight: isMobile ? 320 : undefined,
                     overflowY: isMobile ? "auto" : undefined,
                     WebkitOverflowScrolling: isMobile ? "touch" : undefined,
@@ -670,7 +679,7 @@ const headerArrowFontSize = isMobile ? 40 : isTablet ? 60 : 28;
                 display: "flex",
                 flexDirection: "column",
                 gap: 48,
-                minWidth: 0, // ✅ prevent overflow/side scroll from long content
+                minWidth: 0, 
               }}
             >
               {monthsToShow.length === 0 ? (

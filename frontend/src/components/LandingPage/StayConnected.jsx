@@ -128,13 +128,17 @@ export default function StayConnected() {
             <a className="current-issue__image" href="#">
               <figure>
                 <img
-                  src="/assets/images/albanylitica.png"
+                  src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/public-images/stay-connected/albanylitica.png`}
                   alt="Midnight Bureau Blog Main Image"
                   className="drop-shadow w-30 w-auto-md m-auto"
                   loading="lazy"
                   width={767}
                   height={1096}
-                  srcSet="/assets/images/MB.png"
+                  srcSet={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/public-images/MB.png`}
+                  onError={(e) => {
+                    // fallback to local if bucket object doesn't exist yet
+                    e.currentTarget.src = "/assets/images/albanylitica.png";
+                  }}
                 />
               </figure>
             </a>

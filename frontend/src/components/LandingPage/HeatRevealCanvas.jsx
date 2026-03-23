@@ -8,11 +8,31 @@ gsap.registerPlugin(ScrambleTextPlugin, SplitText);
 export default function HeatRevealCanvas({
   width = 800,
   height = 800,
-  imgSrc = "/assets/images/Syria2.jpg",
+
+  // ✅ default to SAME-ORIGIN .webp (best for pixel-read canvas effects)
+  imgSrc = "/assets/images/Syria2.webp",
+
+  // ✅ optional: if you pass a storage path like "public-images/Syria2.webp"
+  // this lets the component build the public URL
+  storageBucket = process.env.NEXT_PUBLIC_SUPABASE_PUBLIC_IMAGES_BUCKET || "public-images",
 }) {
   const canvasRef = useRef(null);
   const containerRef = useRef(null);
   const textHeatRef = useRef(null);
+
+  // ---- minimal helper: resolve storage-path -> public URL ----
+  function resolveToUsableUrl(src) {
+    const s = (src || "").trim();
+    if (!s) return "/assets/images/Syria2.webp";
+
+    // already usable
+    if (s.startsWith("http://") || s.startsWith("https://") || s.startsWith("/")) return s;
+
+    // treat as Supabase storage path
+    const base = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    if (!base) return s; // fallback: return as-is
+    return `${base}/storage/v1/object/public/${storageBucket}/${s}`;
+  }
 
   class TextHeatReveal {
     constructor(canvas, imgSrc, options = {}) {
@@ -25,22 +45,22 @@ export default function HeatRevealCanvas({
       this.fontSize = options.fontSize || 10;
       this.fontFamily = options.fontFamily || "Zodiac";
       this.words = options.words || [
-         "TRUTH",
-  "IS",
-  "BURIED",
-  "BENEATH",
-  "LAYERS",
-  "OF",
-  "SILENT",
-  "POWER",
-  "HIDDEN",
-  "IN",
-  "SYSTEMS",
-  "DESIGNED",
-  "NOT",
-  "TO",
-  "BE",
-  "SEEN",
+        "TRUTH",
+        "IS",
+        "BURIED",
+        "BENEATH",
+        "LAYERS",
+        "OF",
+        "SILENT",
+        "POWER",
+        "HIDDEN",
+        "IN",
+        "SYSTEMS",
+        "DESIGNED",
+        "NOT",
+        "TO",
+        "BE",
+        "SEEN",
       ];
 
       this.heat = {
@@ -87,15 +107,6 @@ export default function HeatRevealCanvas({
       this.staticRendered = false;
 
       this.charGrid = [];
-      this.img = new Image();
-      this.img.crossOrigin = "anonymous";
-      this.img.onload = () => {
-        this._prepareCover();
-      };
-      this.img.onerror = () => {
-        this.img.src = "/assets/images/afroTob.jpg";
-      };
-      this.img.src = imgSrc;
 
       this.container = containerRef.current;
       this._raf = null;
@@ -113,22 +124,20 @@ export default function HeatRevealCanvas({
       this._onLeave = this._leave.bind(this);
       this._visibilityChange = this._onVisibilityChange.bind(this);
 
+      // ✅ NEW: prevent infinite fallback loops
+      this._fallbackTried = false;
+
       this._bindEvents();
+
+      // ✅ load image (first try passed imgSrc, then fallback if canvas is tainted)
+      this._loadImage(imgSrc);
     }
 
     _bindEvents() {
-      this.canvas.addEventListener("pointermove", this._onMove, {
-        passive: true,
-      });
-      this.canvas.addEventListener("pointerdown", this._onDown, {
-        passive: true,
-      });
-      this.canvas.addEventListener("pointerleave", this._onLeave, {
-        passive: true,
-      });
-      this.canvas.addEventListener("pointercancel", this._onLeave, {
-        passive: true,
-      });
+      this.canvas.addEventListener("pointermove", this._onMove, { passive: true });
+      this.canvas.addEventListener("pointerdown", this._onDown, { passive: true });
+      this.canvas.addEventListener("pointerleave", this._onLeave, { passive: true });
+      this.canvas.addEventListener("pointercancel", this._onLeave, { passive: true });
       document.addEventListener("visibilitychange", this._visibilityChange);
     }
 
@@ -136,9 +145,32 @@ export default function HeatRevealCanvas({
       this.scrambleActive = !document.hidden;
     }
 
+    // ✅ NEW: centralized image loading with safe fallback
+    _loadImage(src) {
+      const resolved = resolveToUsableUrl(src);
+
+      this.img = new Image();
+
+      // ✅ must be set BEFORE .src when loading cross-origin images
+      // harmless for same-origin; crucial for remote URLs IF CORS is configured
+      this.img.crossOrigin = "anonymous";
+
+      this.img.onload = () => {
+        this._prepareCover();
+      };
+
+      this.img.onerror = () => {
+        // last-resort fallback
+        this.img.src = "/assets/images/space.webp";
+      };
+
+      this.img.src = resolved;
+    }
+
     _prepareCover() {
       this.coverCtx.fillStyle = "black";
       this.coverCtx.fillRect(0, 0, this.W, this.H);
+
       const scale = Math.max(this.W / this.img.width, this.H / this.img.height);
       const sw = this.img.width * scale;
       const sh = this.img.height * scale;
@@ -149,7 +181,28 @@ export default function HeatRevealCanvas({
       this.coverCtx.drawImage(this.img, ox, oy, sw, sh);
       this.coverCtx.filter = "none";
 
-      this.coverData = this.coverCtx.getImageData(0, 0, this.W, this.H);
+      // ✅ CRITICAL FIX:
+      // If the image is cross-origin without proper CORS, this throws and your canvas stays blank.
+      try {
+        this.coverData = this.coverCtx.getImageData(0, 0, this.W, this.H);
+      } catch (err) {
+        // attempt one automatic fallback to a same-origin file
+        if (!this._fallbackTried) {
+          this._fallbackTried = true;
+
+          // swap to same-origin Syria2.webp (you can change this path if needed)
+          this._loadImage("/assets/images/Syria2.webp");
+          return;
+        }
+
+        // if even fallback fails, just bail safely (no crash loop)
+        console.warn(
+          "HeatRevealCanvas: getImageData() blocked (tainted canvas). " +
+            "Use a same-origin image (in /public) OR configure CORS for the image host.",
+          err
+        );
+        return;
+      }
 
       this._clearHeat();
       this._generateCharGrid();
@@ -185,6 +238,7 @@ export default function HeatRevealCanvas({
           const px = x * gridSize;
           const py = y * gridSize;
           const i = (Math.floor(py) * this.W + Math.floor(px)) * 4;
+
           let gray =
             (this.coverData.data[i] * 0.299 +
               this.coverData.data[i + 1] * 0.587 +
@@ -216,17 +270,13 @@ export default function HeatRevealCanvas({
       const cols = Math.floor(this.W / this.P.grid.size);
       const rows = Math.floor(this.H / this.P.grid.size);
 
-      // Reset any previous word chars
       this.charGrid.forEach((cell) => (cell.isWordChar = false));
 
       this.words.forEach((word) => {
         const placementCount = Math.max(1, Math.floor(Math.random() * 2) + 1);
         for (let placement = 0; placement < placementCount; placement++) {
           const direction = Math.floor(Math.random() * 3); // 0=horizontal,1=vertical,2=diagonal
-          let startX,
-            startY,
-            valid,
-            attempts = 0;
+          let startX, startY, valid, attempts = 0;
 
           while (!valid && attempts < 20) {
             attempts++;
@@ -235,8 +285,7 @@ export default function HeatRevealCanvas({
             valid = true;
 
             if (direction === 0 && startX + word.length > cols) valid = false;
-            else if (direction === 1 && startY + word.length > rows)
-              valid = false;
+            else if (direction === 1 && startY + word.length > rows) valid = false;
             else if (
               direction === 2 &&
               (startX + word.length > cols || startY + word.length > rows)
@@ -294,11 +343,12 @@ export default function HeatRevealCanvas({
       this.charGrid.forEach((cell) => {
         const { x, y, char, brightness, isWordChar } = cell;
 
-        // Calculate font size based on brightness and whether it's a word char
         const sizeFactor = isWordChar ? 0.8 : 0.5;
         const size = this.fontSize * (sizeFactor + brightness * 0.8);
 
-        ctx.font = `${isWordChar ? "bold" : ""} ${size}px ${isWordChar ? "Caslon" : this.fontFamily}`;
+        ctx.font = `${isWordChar ? "bold" : ""} ${size}px ${
+          isWordChar ? "Caslon" : this.fontFamily
+        }`;
 
         const colorFactor = isWordChar ? 1.3 : 1.1;
         const finalBrightness =
@@ -425,10 +475,7 @@ export default function HeatRevealCanvas({
             const intensity = amount * Math.pow(1 - d / rad, 1.5);
             this.heat.current[idx] += intensity;
             this.heat.current[idx] = Math.min(1, this.heat.current[idx]);
-            this.heat.maxValue = Math.max(
-              this.heat.maxValue,
-              this.heat.current[idx]
-            );
+            this.heat.maxValue = Math.max(this.heat.maxValue, this.heat.current[idx]);
           }
         }
       }
@@ -466,13 +513,10 @@ export default function HeatRevealCanvas({
 
     _coords(e) {
       const rect = this.canvas.getBoundingClientRect();
-
       const scaleX = this.canvas.width / rect.width;
       const scaleY = this.canvas.height / rect.height;
-
       const x = (e.clientX - rect.left) * scaleX;
       const y = (e.clientY - rect.top) * scaleY;
-
       return { x, y };
     }
 
@@ -500,14 +544,10 @@ export default function HeatRevealCanvas({
 
     _scrambleRandomChars() {
       this.needsRender = true;
-
       if (!this.scrambleActive) return;
-
       if (this.lowPerformanceMode && Math.random() > 0.5) return;
 
-      const scrambleCount = Math.floor(
-        this.charGrid.length * this.scrambleAmount
-      );
+      const scrambleCount = Math.floor(this.charGrid.length * this.scrambleAmount);
       for (let i = 0; i < scrambleCount; i++) {
         const randIndex = Math.floor(Math.random() * this.charGrid.length);
         const cell = this.charGrid[randIndex];
@@ -544,14 +584,12 @@ export default function HeatRevealCanvas({
         }
 
         this.lastFrameTime = now;
-
         this._raf = requestAnimationFrame(check);
       };
       check();
     }
 
     _createInitialAnimation() {
-      // Scramble non-word chars at start
       for (let i = 0; i < this.charGrid.length; i++) {
         const cell = this.charGrid[i];
         if (!cell.isWordChar) {
@@ -582,8 +620,7 @@ export default function HeatRevealCanvas({
     const heatReveal = new TextHeatReveal(canvasRef.current, imgSrc);
     textHeatRef.current = heatReveal;
 
-    // Animate the text lines on page load
-    document.fonts.ready.then(() => {
+    document.fonts?.ready?.then(() => {
       const split = new SplitText(".line", {
         type: "lines",
         linesClass: "line",

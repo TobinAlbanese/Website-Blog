@@ -1,47 +1,31 @@
 // components/Podcast.jsx
 import React from "react";
 import Link from "next/link";
-import PodcastData from "../../data/PodcastData";
 
-const getItems = () =>
-  Array.isArray(PodcastData?.items) ? PodcastData.items : [];
+const BUCKET = "public-images";
 
-const pickHeroImg = (ep) =>
-  ep?.images?.[0] || ep?.banner || ep?.coverImage || "/assets/images/Podcast.png";
+// Put your actual object paths here (inside the bucket)
+const HERO_OBJECT_PATH = "podcast/Lincoln.webp";
+const LOGO_OBJECT_PATH = "podcast/Podcast.png";
 
-const pickLogo = (ep) =>
-  ep?.logo || PodcastData?.logo || "/assets/images/Podcast.png";
-
-const hrefEpisode = (ep) => `/Podcast/${ep.slug || ""}`;
-const hrefIndex = "/Podcast";
-
-const formatDuration = (mins) => {
-  if (!mins && mins !== 0) return "";
-  const h = Math.floor(mins / 60);
-  const m = mins % 60;
-  return h ? `${h}h ${m}m` : `${m}m`;
-};
-
-const getDurationLabel = (ep) => {
-  if (ep?.duration) return String(ep.duration);
-  if (typeof ep?.durationMinutes === "number") return formatDuration(ep.durationMinutes);
-  return "";
-};
+function publicBucketUrl(objectPath) {
+  const base = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  if (!base) return "";
+  return `${base}/storage/v1/object/public/${BUCKET}/${objectPath}`;
+}
 
 export default function Podcast() {
-  const items = getItems();
-  if (!items.length) return null;
+  // These will resolve as soon as the files exist in the bucket
+  const heroSrc = publicBucketUrl(HERO_OBJECT_PATH);
+  const logoSrc = publicBucketUrl(LOGO_OBJECT_PATH);
 
-  const ep = items[0];
+  // Optional local fallback if the bucket images aren't uploaded yet
+  const heroFallback = "/assets/images/Lincoln.webp"; // keep your old one if it exists
+  const logoFallback = "/assets/images/Podcast.png";
 
-  const heroSrc = pickHeroImg(ep);
-  const logoSrc = pickLogo(ep);
-  const title = ep?.title || "Weekly Podcast";
+  const title = "Weekly Podcast";
   const excerpt =
-    ep?.excerpt ||
     "Conversations on strategy, technology, and influence—spanning real-world operations, tools of the trade, and the human factors that shape power.";
-  const durationLabel = getDurationLabel(ep);
-  const epHref = hrefEpisode(ep);
 
   return (
     <section
@@ -53,18 +37,19 @@ export default function Podcast() {
         className="row base__main position-relative z-above-base c-text-third"
         data-armstrong-id="primary"
       >
-        {/* add a touch of top padding so the block isn't glued to the top */}
         <div className="col-12" style={{ paddingTop: 18 }}>
-
           <div className="row justify-between justify-center" data-armstrong-id="row">
-            {/* ORDER: image LEFT, info RIGHT */}
             <div className="row ml-0 mr-0" data-armstrong-id="grid_1">
-              {/* LEFT: Episode artwork */}
+              {/* LEFT: Artwork (bucket) */}
               <div className="col-lg-6 mb-20 mt-md-60 mb-md-60 home-hide-narrow">
-                <Link href={epHref}>
+                <Link href="/Podcast">
                   <figure style={{ margin: 0 }}>
                     <img
-                      src={heroSrc}
+                      src={heroSrc || heroFallback}
+                      onError={(e) => {
+                        // If bucket object is missing, fall back to local
+                        e.currentTarget.src = heroFallback;
+                      }}
                       alt={`${title} — episode artwork`}
                       loading="lazy"
                       sizes="(max-width: 767px) 100vw, (max-width: 1400px) 50vw, 620px"
@@ -82,9 +67,10 @@ export default function Podcast() {
                 </Link>
               </div>
 
-              {/* RIGHT: Logo, title, blurb, faux player, follow link */}
+              {/* RIGHT: Logo (bucket) + existing static UI */}
               <div className="col-lg-6 d-flex" style={{ overflow: "visible" }}>
-                <div className="home-podcast-info"
+                <div
+                  className="home-podcast-info"
                   style={{
                     maxWidth: 560,
                     marginLeft: "auto",
@@ -95,7 +81,10 @@ export default function Podcast() {
                 >
                   <figure style={{ margin: 0 }}>
                     <img
-                      src={logoSrc}
+                      src={logoSrc || logoFallback}
+                      onError={(e) => {
+                        e.currentTarget.src = logoFallback;
+                      }}
                       alt="Podcast logo"
                       className="mx-auto mt-60 mb-60"
                       loading="lazy"
@@ -112,19 +101,20 @@ export default function Podcast() {
                   </figure>
 
                   <h2 className="heading-l c-text-primary" style={{ textTransform: "none" }}>
-                    <Link href={epHref}>{title}</Link>
+                    <Link href="/Podcast">{title}</Link>
                   </h2>
 
                   <h3 className="body-l c-text-2third mt-5" style={{ maxWidth: 680, margin: "6px auto 0" }}>
-                    <Link href={epHref}>{excerpt}</Link>
+                    <Link href="/Podcast">{excerpt}</Link>
                   </h3>
 
+                  {/* leave your faux player as-is */}
                   <div className="audio-player d-flex items-center c-border border-thin border-radius js--audio-player mt-60 mx-auto max-445">
                     <div className="audio-player__item pl-10 pr-10 d-flex audio-player__controls">
                       <Link
-                        href={epHref}
+                        href="/Podcast"
                         className="audio-player__play-button border-radius-full d-flex"
-                        aria-label={`Play ${title}`}
+                        aria-label="Open podcast"
                       >
                         <span className="audio-player__play-icon-label visually-hidden">Play</span>
                         <svg className="play-icon play-pause-icon">
@@ -143,18 +133,13 @@ export default function Podcast() {
                         }}
                       >
                         <span>Listen to the Episode</span>
-                        {durationLabel && (
-                          <span className="audio-player__duration-label" style={{ whiteSpace: "nowrap", opacity: 0.85 }}>
-                            {durationLabel}
-                          </span>
-                        )}
                       </div>
                     </div>
                   </div>
 
                   <Link
                     className="arrow-link border-bottom-thin border-bottom d-inline-block lh-22 fs-18 mt-40 mb-40 c-accent"
-                    href={hrefIndex}
+                    href="/Podcast"
                   >
                     Follow the Podcast
                     <svg className="arrow-link__icon">
@@ -163,7 +148,6 @@ export default function Podcast() {
                   </Link>
                 </div>
               </div>
-              {/* /RIGHT */}
             </div>
 
             <div className="row items-start" data-armstrong-id="grid_2" />

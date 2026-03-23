@@ -1,4 +1,7 @@
+// components/LandingPage/LandingSection.jsx (or Hero.jsx)
 import React, { useEffect, useState } from "react";
+import { publicImageUrl } from "../../lib/supabase/client"; 
+// 👆 adjust the relative path ("../../") if your folder structure is different
 
 export default function LandingSection() {
   const [animate, setAnimate] = useState(false);
@@ -6,6 +9,8 @@ export default function LandingSection() {
   useEffect(() => {
     setAnimate(true);
   }, []);
+
+const heroImageSrc = publicImageUrl("Tobin-Johnny.webp");
 
   return (
     <section className="c-bg" data-armstrong-id="wrapper">
@@ -23,14 +28,15 @@ export default function LandingSection() {
               data-armstrong-id="personal-message"
             >
               <h1 className="heading-l mb-15">
-                Welcome to <br></br>Tobin Albanese's space
+                Welcome to <br />
+                Tobin Albanese&apos;s space
               </h1>
               <p
                 className="body-m c-text-secondary"
                 style={{ fontSize: 18, lineHeight: 1.6 }}
               >
-                Hi, I'm Tobin Albanese — a student, writer, thinker, and creator
-                behind the blog <em>Midnight Bureau</em>.
+                Hi, I&apos;m Tobin Albanese — a student, writer, thinker, and
+                creator behind the blog <em>Midnight Bureau</em>.
                 <br />
                 This space is where I share my insights on politics, culture,
                 and the ideas that inspire me every day. Through thoughtful
@@ -50,23 +56,24 @@ export default function LandingSection() {
               </p>
             </div>
 
-            {/* Right side: Your image */}
-<div
-  className={`col-12 col-lg-6 d-flex justify-center ${animate ? "slide-in-right" : ""} home-hero-media`}
-  data-armstrong-id="profile-image"
->
-  <img
-    src="/assets/images/Tobin-Johnny.jpg"
-    alt="Photo of Tobin Albanese"
-    className="profile-image home-hero-img"
-    style={{
-      maxWidth: "100%",
-      height: "auto",
-      borderRadius: "8px",
-    }}
-  />
-</div>
-
+            {/* Right side: Your image from Supabase public-images */}
+            <div
+              className={`col-12 col-lg-6 d-flex justify-center ${
+                animate ? "slide-in-right" : ""
+              } home-hero-media`}
+              data-armstrong-id="profile-image"
+            >
+              <img
+                src={heroImageSrc}
+                alt="Photo of Tobin Albanese"
+                className="profile-image home-hero-img"
+                style={{
+                  maxWidth: "100%",
+                  height: "auto",
+                  borderRadius: "8px",
+                }}
+              />
+            </div>
           </div>
         </div>
       </div>

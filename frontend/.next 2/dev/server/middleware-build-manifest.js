@@ -1,0 +1,42 @@
+globalThis.__BUILD_MANIFEST = {
+  "pages": {
+    "/MidnightBureau": [
+      "static/chunks/[root-of-the-server]__fc900dbd._.js",
+      "static/chunks/9e883_next_dist_compiled_7638d890._.js",
+      "static/chunks/9e883_next_dist_shared_lib_c03978b2._.js",
+      "static/chunks/9e883_next_dist_client_1ddf93ff._.js",
+      "static/chunks/9e883_next_dist_ffd02251._.js",
+      "static/chunks/9e883_next_8b21726e._.js",
+      "static/chunks/9e883_react_4afec026._.js",
+      "static/chunks/9e883_react-dom_cjs_react-dom_development_2d164baf.js",
+      "static/chunks/9e883_react-dom_68830139._.js",
+      "static/chunks/9e883_gsap_d77ce6b8._.js",
+      "static/chunks/9e883_2a3b8b9f._.js",
+      "static/chunks/frontend_src_pages_MidnightBureau_index_jsx_2da965e7._.js",
+      "static/chunks/turbopack-frontend_src_pages_MidnightBureau_index_jsx_10b191e9._.js"
+    ],
+    "/_app": [
+      "static/chunks/9e883_next_dist_compiled_7638d890._.js",
+      "static/chunks/9e883_next_dist_shared_lib_ebd4231b._.js",
+      "static/chunks/9e883_next_dist_client_c77bbf53._.js",
+      "static/chunks/9e883_next_dist_2b7b01c5._.js",
+      "static/chunks/9e883_next_navigation_0e89adb8.js",
+      "static/chunks/9e883_react_4afec026._.js",
+      "static/chunks/9e883_react-dom_cjs_react-dom_development_2d164baf.js",
+      "static/chunks/9e883_react-dom_68830139._.js",
+      "static/chunks/9e883_b093d983._.js",
+      "static/chunks/[root-of-the-server]__bd8ca4ed._.js",
+      "static/chunks/frontend_src_styles_d4e19090._.css",
+      "static/chunks/frontend_src_pages__app_2da965e7._.js",
+      "static/chunks/turbopack-frontend_src_pages__app_d5ffddba._.js"
+    ]
+  },
+  "devFiles": [],
+  "polyfillFiles": [],
+  "lowPriorityFiles": [],
+  "rootMainFiles": []
+};
+globalThis.__BUILD_MANIFEST.lowPriorityFiles = [
+"/static/" + process.env.__NEXT_BUILD_ID + "/_buildManifest.js",
+"/static/" + process.env.__NEXT_BUILD_ID + "/_ssgManifest.js"
+];
