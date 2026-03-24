@@ -1,30 +1,25 @@
-// pages/api/portfolio/featured-papers.js
 import { supabaseServer } from "../../../lib/supabase/supabaseServer";
 
 const BUCKET = "public-images";
 
-const toWebp = (s) => (s ? s.replace(/\.(jpg|jpeg|png)$/i, ".webp") : s);
-
 function resolveImageUrl(supabase, maybePathOrUrl) {
   if (!maybePathOrUrl) return null;
 
-  // ✅ Local assets: enforce webp
-  if (maybePathOrUrl.startsWith("/")) {
-    return maybePathOrUrl.replace(/\.(jpg|jpeg|png)$/i, ".webp");
+  const value = String(maybePathOrUrl).trim();
+  if (!value) return null;
+
+  if (/^https?:\/\//i.test(value)) return value;
+
+  if (value.startsWith("/")) {
+    const key = value.replace(/^\/assets\/images\//i, "");
+    const { data } = supabase.storage.from(BUCKET).getPublicUrl(key);
+    return data?.publicUrl || null;
   }
 
-  // ✅ External: DO NOT rewrite extensions
-  if (/^https?:\/\//i.test(maybePathOrUrl)) {
-    return maybePathOrUrl;
-  }
-
-  // ✅ Storage object path: enforce webp
-  const value = maybePathOrUrl.replace(/\.(jpg|jpeg|png)$/i, ".webp");
-  const { data } = supabase.storage.from("public-images").getPublicUrl(value);
+  const cleaned = value.replace(/^public-images\//i, "");
+  const { data } = supabase.storage.from(BUCKET).getPublicUrl(cleaned);
   return data?.publicUrl || null;
 }
-
-
 
 async function getGroupIdByName(groupName) {
   const { data, error } = await supabaseServer
@@ -71,12 +66,10 @@ async function fetchPortfolioItemsForGroup(groupId, limit) {
     )
     .eq("group_id", groupId)
     .order("position", { ascending: true })
-    // fetch extra; we’ll filter items that can’t link to /Portfolio/[slug]
     .limit(limit * 8);
 
   if (error) throw error;
 
-  // Require a linked post slug so /Portfolio/[slug] works
   const usable = (data || []).filter((row) => row?.posts?.slug);
 
   return usable.slice(0, limit).map((row) => {
@@ -86,9 +79,7 @@ async function fetchPortfolioItemsForGroup(groupId, limit) {
       resolveImageUrl(supabaseServer, row.image_url) ||
       resolveImageUrl(supabaseServer, post?.archive_image_url) ||
       resolveImageUrl(supabaseServer, post?.banner_url) ||
-      // optional: a bucket fallback at `fallbacks/space.webp`
       resolveImageUrl(supabaseServer, "fallbacks/space.webp") ||
-      // local fallback
       "/assets/images/space.webp";
 
     return {
@@ -140,7 +131,6 @@ export default async function handler(req, res) {
       fetchPortfolioItemsForGroup(groupBId, perGroup),
     ]);
 
-    // Enforce uniqueness across both groups (no duplicate slugs)
     const used = new Set();
     const takeUnique = (arr) => {
       const out = [];
@@ -157,11 +147,17 @@ export default async function handler(req, res) {
     const a = takeUnique(aRaw);
     const b = takeUnique(bRaw);
 
+    const sidebarImage =
+      resolveImageUrl(supabaseServer, "Russia4.webp") ||
+      "/assets/images/Russia4.webp";
+
     return res.status(200).json({
       groups: { a: GROUP_A, b: GROUP_B },
       posts: [...a, ...b],
+      sidebarImage,
     });
   } catch (e) {
+    console.error("featured-papers API error:", e);
     return res.status(500).json({ error: e?.message || "Unknown error" });
   }
 }

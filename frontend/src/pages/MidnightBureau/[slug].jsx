@@ -79,6 +79,35 @@ function resolveImageServer(supabase, bucket, value) {
   return data?.publicUrl || "";
 }
 
+function useMediaQuery(query) {
+  const [matches, setMatches] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const media = window.matchMedia(query);
+    const listener = () => setMatches(media.matches);
+
+    listener();
+
+    if (media.addEventListener) {
+      media.addEventListener("change", listener);
+    } else {
+      media.addListener(listener);
+    }
+
+    return () => {
+      if (media.removeEventListener) {
+        media.removeEventListener("change", listener);
+      } else {
+        media.removeListener(listener);
+      }
+    };
+  }, [query]);
+
+  return matches;
+}
+
 export default function BlogPost({
   article,
   sections = [],
@@ -236,6 +265,8 @@ export default function BlogPost({
     });
   };
 
+  const isLargeScreen = useMediaQuery("(min-width: 1280px)");
+
   const toggleCarouselExpand = (idx) => {
     setExpandedCarouselIndex((prev) => (prev === idx ? null : idx));
   };
@@ -277,19 +308,62 @@ export default function BlogPost({
                 </a>
               )}
 
-            <div className="mb-article-inner">
+            <div
+              className="mb-banner-wrap"
+              style={{
+                width: "100%",
+                maxWidth: "1400px",
+                margin: "0 auto",
+              }}
+            >
               <img
                 ref={bannerRef}
                 className="banner mb-banner"
                 src={bannerSrc}
                 alt={article.title || "Banner"}
-                style={{ width: "100%", height: "200px", objectFit: "cover" }}
+                style={{
+                  width: "100%",
+                  height: "200px",
+                  objectFit: "cover",
+                  display: "block",
+                }}
               />
+            </div>
 
-              <h1 className="mb-title">
+            <div
+              className="mb-title-wrap"
+              style={{
+                width: "min(88vw, 1520px)",
+                margin: "0 auto",
+                transform: isLargeScreen ? "translateX(-6%)" : "translateX(0)",
+              }}
+            >
+              <h1
+                className="mb-title"
+                style={{
+                  margin: "1rem auto 0.75rem",
+                  padding: 0,
+                  width: "100%",
+                  maxWidth: "1520px",
+                  fontSize: "clamp(3rem, 5.6vw, 6.2rem)",
+                  lineHeight: 0.92,
+                  fontWeight: 400,
+                  letterSpacing: "-0.03em",
+                  textTransform: "uppercase",
+                  textIndent: 0,
+                  whiteSpace: "normal",
+                  wordBreak: "normal",
+                  overflowWrap: "break-word",
+                  hyphens: "none",
+                  textWrap: "balance",
+                  textAlign: "left",
+                }}
+              >
                 {(article.title || "").toUpperCase()}
               </h1>
+            </div>
 
+            <div className="mb-article-inner">
               <h2 className="mb-subtitle">by {article.author || "Unknown"}</h2>
 
               <h3 className="mb-meta">
@@ -462,7 +536,7 @@ export default function BlogPost({
                 );
               })}
 
-              {galleryImages.length > 0 && (
+              {galleryImages.length >= 5 && (
                 <div
                   className="gallery-wrapper"
                   style={{ maxWidth: "1400px", margin: "3rem auto" }}
@@ -595,6 +669,40 @@ export default function BlogPost({
                   </section>
                 )}
             </div>
+
+            {modalImage && (
+              <div
+                className="midnight-img-modal"
+                onClick={() => setModalImage(null)}
+                style={{
+                  position: "fixed",
+                  top: 0,
+                  left: 0,
+                  width: "100vw",
+                  height: "100vh",
+                  backgroundColor: "var(--c-bg)",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  cursor: "pointer",
+                  zIndex: 1000,
+                }}
+              >
+                <img
+                  src={modalImage}
+                  alt="Expanded view"
+                  style={{
+                    maxWidth: "95vw",
+                    maxHeight: "90vh",
+                    width: "auto",
+                    height: "auto",
+                    borderRadius: "16px",
+                    objectFit: "contain",
+                    boxShadow: "0 0 25px rgba(0,0,0,0.3)",
+                  }}
+                />
+              </div>
+            )}
 
             {modalImage && (
               <div

@@ -22,7 +22,7 @@ export default function AboutMe() {
             className="col-12 col-md-4 ml-auto mr-auto mb-30"
             data-armstrong-id="profile-image"
           >
-            <a href="/about">
+            <a href="/Personal/About">
               <figure>
                 <img
                   src={aboutImg}

@@ -1005,29 +1005,64 @@ export default function AdminPostEditor() {
     }
   };
 
-  const deleteImage = async ({ kind, id }) => {
-    openConfirm({
-      title: "Delete image?",
-      message: "This will permanently remove this image.",
-      dangerText: "Delete Image",
-      onConfirm: async () => {
-        closeConfirm();
+const deleteImage = async ({ kind, id }) => {
+  openConfirm({
+    title: "Delete image?",
+    message: "This will permanently remove this image.",
+    dangerText: "Delete Image",
+    onConfirm: async () => {
+      closeConfirm();
 
-        const { error } = await supabase
+      try {
+        setErr("");
+        setSaving(true);
+
+        const sourceList =
+          kind === "inline"
+            ? inlineImages
+            : kind === "center"
+              ? centerImages
+              : galleryImages;
+
+        const imageRow = sourceList.find((x) => x.id === id);
+        if (!imageRow) throw new Error("Image record not found.");
+
+        const storagePath = String(imageRow.storage_path || "").trim();
+
+        if (storagePath) {
+          const { error: storageErr } = await supabase.storage
+            .from(BUCKET)
+            .remove([storagePath]);
+
+          if (storageErr) throw storageErr;
+        }
+
+        const { error: dbErr } = await supabase
           .from("post_images")
           .delete()
           .eq("id", id);
-        if (error) return setErr(error.message);
 
-        if (kind === "inline")
+        if (dbErr) throw dbErr;
+
+        if (kind === "inline") {
           setInlineImages((p) => p.filter((x) => x.id !== id));
-        if (kind === "center")
+        }
+
+        if (kind === "center") {
           setCenterImages((p) => p.filter((x) => x.id !== id));
-        if (kind === "gallery")
+        }
+
+        if (kind === "gallery") {
           setGalleryImages((p) => p.filter((x) => x.id !== id));
-      },
-    });
-  };
+        }
+      } catch (e) {
+        setErr(e?.message || "Failed to delete image");
+      } finally {
+        setSaving(false);
+      }
+    },
+  });
+};
 
   // ---------- render ----------
   if (loading) {

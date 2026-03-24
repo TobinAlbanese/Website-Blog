@@ -1,30 +1,42 @@
 // pages/api/portfolio/special-focus.js
 import { supabaseServer } from "../../../lib/supabase/supabaseServer";
 
-const BUCKET = "public-images";
+const PUBLIC_BUCKET = "public-images";
+const POSTS_BUCKET = "post-images";
 
-const toWebp = (s) => (s ? s.replace(/\.(jpg|jpeg|png)$/i, ".webp") : s);
-
-function resolveImageUrl(supabase, maybePathOrUrl) {
-  if (!maybePathOrUrl) return null;
-
-  // ✅ Local assets: enforce webp
-  if (maybePathOrUrl.startsWith("/")) {
-    return maybePathOrUrl.replace(/\.(jpg|jpeg|png)$/i, ".webp");
-  }
-
-  // ✅ External: DO NOT rewrite extensions
-  if (/^https?:\/\//i.test(maybePathOrUrl)) {
-    return maybePathOrUrl;
-  }
-
-  // ✅ Storage object path: enforce webp
-  const value = maybePathOrUrl.replace(/\.(jpg|jpeg|png)$/i, ".webp");
-  const { data } = supabase.storage.from("public-images").getPublicUrl(value);
-  return data?.publicUrl || null;
+function publicBucketUrl(path) {
+  if (!path) return "";
+  const clean = String(path).replace(/^\/+/, "").replace(/^public-images\//i, "");
+  const { data } = supabaseServer.storage.from(PUBLIC_BUCKET).getPublicUrl(clean);
+  return data?.publicUrl || "";
 }
 
+function postsBucketUrl(path) {
+  if (!path) return "";
+  const clean = String(path).replace(/^\/+/, "").replace(/^post-images\//i, "");
+  const { data } = supabaseServer.storage.from(POSTS_BUCKET).getPublicUrl(clean);
+  return data?.publicUrl || "";
+}
 
+function toResolvedImageUrl(src) {
+  if (!src) return "";
+
+  const value = String(src).trim();
+  if (!value) return "";
+
+  if (/^https?:\/\//i.test(value)) return value;
+
+  const assetsMatch = value.match(/^\/assets\/images\/(.+)$/i);
+  if (assetsMatch?.[1]) {
+    return publicBucketUrl(assetsMatch[1]);
+  }
+
+  if (value.startsWith("posts/")) {
+    return postsBucketUrl(value);
+  }
+
+  return publicBucketUrl(value);
+}
 
 async function fetchGroupItemsByName(groupName, limit) {
   const { data: group, error: groupErr } = await supabaseServer
@@ -33,12 +45,11 @@ async function fetchGroupItemsByName(groupName, limit) {
     .eq("name", groupName)
     .single();
 
-  if (groupErr) return [];
+  if (groupErr || !group?.id) return [];
 
   const { data, error } = await supabaseServer
     .from("portfolio_items")
-    .select(
-      `
+    .select(`
       id,
       title,
       excerpt,
@@ -59,8 +70,7 @@ async function fetchGroupItemsByName(groupName, limit) {
         created_at,
         published_at
       )
-    `
-    )
+    `)
     .eq("group_id", group.id)
     .order("position", { ascending: true })
     .limit(limit * 6);
@@ -73,10 +83,10 @@ async function fetchGroupItemsByName(groupName, limit) {
     const post = row.posts;
 
     const imageUrl =
-      resolveImageUrl(supabaseServer, row.image_url) ||
-      resolveImageUrl(supabaseServer, post?.archive_image_url) ||
-      resolveImageUrl(supabaseServer, post?.banner_url) ||
-      resolveImageUrl(supabaseServer, "fallbacks/space.webp") ||
+      toResolvedImageUrl(row.image_url) ||
+      toResolvedImageUrl(post?.archive_image_url) ||
+      toResolvedImageUrl(post?.banner_url) ||
+      toResolvedImageUrl("fallbacks/space.webp") ||
       "/assets/images/space.webp";
 
     return {
@@ -84,7 +94,13 @@ async function fetchGroupItemsByName(groupName, limit) {
       slug: post.slug,
       title: row.title || post.title || "Untitled",
       excerpt: row.excerpt || post.excerpt || "",
-      date: post.date || post.published_at || post.created_at || row.updated_at || row.created_at,
+      author: post.author || "Tobin M. Albanese",
+      date:
+        post.date ||
+        post.published_at ||
+        post.created_at ||
+        row.updated_at ||
+        row.created_at,
       imageUrl,
       imageAlt: row.title || post.title || "Portfolio image",
     };
@@ -99,13 +115,27 @@ export default async function handler(req, res) {
     }
 
     const limitRaw = parseInt(req.query.limit || "3", 10);
-    const limit = Number.isFinite(limitRaw) ? Math.min(Math.max(limitRaw, 1), 6) : 3;
+    const limit = Number.isFinite(limitRaw)
+      ? Math.min(Math.max(limitRaw, 1), 6)
+      : 3;
 
     const GROUP = "Current & In-Progress Work";
     const items = await fetchGroupItemsByName(GROUP, limit);
 
-    return res.status(200).json({ group: GROUP, items });
+    const { data: sidebarData } = supabaseServer
+      .storage
+      .from(PUBLIC_BUCKET)
+      .getPublicUrl("stellarisWorkflow.webp");
+
+    const sidebarImage = sidebarData?.publicUrl || "";
+
+    return res.status(200).json({
+      group: GROUP,
+      items,
+      sidebarImage,
+    });
   } catch (e) {
+    console.error("special-focus API error:", e);
     return res.status(500).json({ error: e?.message || "Unknown error" });
   }
 }

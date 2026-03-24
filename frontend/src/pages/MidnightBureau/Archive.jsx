@@ -2,14 +2,15 @@
 import { useRouter } from "next/router";
 import { useState, useMemo, useRef, useEffect } from "react";
 import Link from "next/link";
-import MidnightBureauData from "../../data/MidnightBureau";
+import { createClient } from "@supabase/supabase-js";
+
 import MetaHead from "../../components/LandingPage/MetaHead";
 import SvgHead from "../../components/LandingPage/svgHead";
 import Footer from "../../components/LandingPage/Footer";
 import MBHeroGallery from "../../components/LandingPage/MBHeroGallery";
 import NavbarMB from "../../components/LandingPage/NavbarMB";
 
-const START_YEAR = 2025;
+const START_YEAR = 2026;
 const END_YEAR = 2014;
 const YEARS_PER_PAGE = 6;
 
@@ -28,7 +29,12 @@ const MONTHS_DESC = [
   "January",
 ];
 
-const META_CATEGORIES = ["All", "Recent", "Popular", "Favorites", "Book Reviews"];
+const META_CATEGORIES = [
+  "All",
+  "Recent",
+  "Popular",
+  "Book Reviews",
+];
 
 const TOPIC_GROUPS = {
   "World & Diplomacy": ["Foreign Policy", "Geopolitics", "Diplomacy"],
@@ -40,39 +46,59 @@ const TOPIC_GROUPS = {
   Ideas: ["Philosophy", "Religion"],
 };
 
-const CATEGORIES = [...META_CATEGORIES, ...Object.keys(TOPIC_GROUPS)];
+const BASE_CATEGORIES = [...META_CATEGORIES, ...Object.keys(TOPIC_GROUPS)];
 
-/** ----------------------------------------------------------------
- *  Supabase Storage helpers (public-images bucket)
- *  - Assumes you uploaded the same filenames into Storage.
- *  - Keeps your existing data file + layout unchanged.
- * ---------------------------------------------------------------- */
-const SB_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
-const BUCKET = "public-images";
+const POSTS_BUCKET = "post-images";
+const PUBLIC_BUCKET = "public-images";
+
+// --------------------
+// Supabase (SSR)
+// --------------------
+function getServerSupabase() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  return createClient(url, anon, { auth: { persistSession: false } });
+}
+
+// --------------------
+// Storage helpers
+// --------------------
+function isHttpUrl(src = "") {
+  return src.startsWith("http://") || src.startsWith("https://");
+}
+
+function resolveImageServer(supabase, bucket, src) {
+  const s = (src || "").trim();
+  if (!s) return "";
+  if (isHttpUrl(s) || s.startsWith("/")) return s;
+
+  const { data } = supabase.storage.from(bucket).getPublicUrl(s);
+  return data?.publicUrl || "";
+}
+
+function publicBucketUrl(path, bucket = PUBLIC_BUCKET) {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  if (!url || !path) return "";
+  return `${url}/storage/v1/object/public/${bucket}/${String(path).replace(/^\/+/, "")}`;
+}
+
 const sbPublic = (path) =>
-  path
-    ? `${SB_URL}/storage/v1/object/public/${BUCKET}/${String(path).replace(/^\/+/, "")}`
-    : "";
+  path ? publicBucketUrl(String(path).replace(/^\/+/, ""), PUBLIC_BUCKET) : "";
 
-// Convert a local /assets/images/... path into a Supabase bucket URL.
-// If it's already an absolute URL, keep it.
 const toPublicImageUrl = (src) => {
   if (!src) return "";
   const s = String(src);
 
-  // already absolute (unsplash, etc.)
   if (/^https?:\/\//i.test(s)) return s;
 
-  // your local pattern -> map to storage object key
-  // "/assets/images/Foo.webp" -> "Foo.webp"
   const m = s.match(/^\/assets\/images\/(.+)$/i);
   if (m?.[1]) return sbPublic(m[1]);
 
-  // if you pass just "Foo.webp" already
+  if (s.startsWith("/")) return s;
+
   return sbPublic(s);
 };
 
-// ✅ your gallery list stays identical, but we map it to bucket URLs
 const galleryImages = [
   "/assets/images/Alina.webp",
   "/assets/images/Cross.webp",
@@ -106,14 +132,47 @@ const galleryImages = [
   "/assets/images/Snowboarding1.webp",
 ].map(toPublicImageUrl);
 
-// ---------- small safety helpers ----------
+// --------------------
+// Helpers
+// --------------------
 const arr = (x) => (Array.isArray(x) ? x : []);
+
 const toDate = (p) => {
-  const d = new Date(p?.date || p?.published || p?.createdAt || 0);
+  const d = new Date(
+    p?.date ||
+      p?.published ||
+      p?.createdAt ||
+      p?.published_at ||
+      p?.created_at ||
+      0
+  );
   return Number.isNaN(d.getTime()) ? new Date(0) : d;
 };
 
-// ✅ Card image picker now routes through Supabase bucket
+const normalizeLabel = (value) => {
+  if (!value) return "";
+  return String(value).trim();
+};
+
+const normalizeCategoryArray = (post) => {
+  const raw = [post?.category].filter(Boolean).map(normalizeLabel);
+  return [...new Set(raw)];
+};
+
+const isFavoritePost = (post) =>
+  normalizeCategoryArray(post).some((x) => x.toLowerCase() === "favorite");
+
+const isBookReviewPost = (post) =>
+  normalizeCategoryArray(post).some((x) => x.toLowerCase() === "book reviews");
+
+const isPopularPost = (post) =>
+  normalizeCategoryArray(post).some((x) => x.toLowerCase() === "popular");
+
+const isRecentPost = (post, sortedPosts) => {
+  const recentSlugs = new Set(sortedPosts.slice(0, 8).map((p) => p.slug));
+  return recentSlugs.has(post.slug);
+};
+
 const pickImg = (p) => {
   const raw =
     p?.archiveImage ||
@@ -129,7 +188,6 @@ const pickImg = (p) => {
   return toPublicImageUrl(raw);
 };
 
-// ---------- tiny media hook (layout-only response) ----------
 function useMediaQuery(query) {
   const [matches, setMatches] = useState(false);
 
@@ -151,25 +209,17 @@ function useMediaQuery(query) {
   return matches;
 }
 
-export default function Archive() {
-  const totalYears = START_YEAR - END_YEAR + 1;
-  const totalPages = Math.ceil(totalYears / YEARS_PER_PAGE);
+export default function Archive({ posts = [] }) {
+  const router = useRouter();
 
   const [yearPage, setYearPage] = useState(0);
   const [selectedYear, setSelectedYear] = useState(START_YEAR);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [categoriesOpen, setCategoriesOpen] = useState(false);
 
-  // Breakpoints:
-  // - Mobile: <= 767
-  // - Tablet: 768 - 1024
-  // Desktop: >= 1025
   const isMobile = useMediaQuery("(max-width: 767px)");
   const isTablet = useMediaQuery("(min-width: 768px) and (max-width: 1024px)");
   const isSmallScreen = isMobile || isTablet;
-
-  // Viewport cards per row (locked)
-  // Desktop: 3, Tablet: 2, Mobile: 1
   const viewCount = isMobile ? 1 : isTablet ? 2 : 3;
 
   const yearsForPage = useMemo(() => {
@@ -183,72 +233,109 @@ export default function Archive() {
     return years;
   }, [yearPage]);
 
-  // ---------- build safely + dedupe ----------
-  const allPosts = useMemo(() => {
-    const spec = [
-      ["Recent", "Recent"],
-      ["Popular", "Popular"],
-      ["BookReviews", "Book Reviews"],
-      ["Culture", "Culture"],
-      ["Defense", "Defense"],
-      ["Diplomacy", "Diplomacy"],
-      ["Economy", "Economy"],
-      ["Energy", "Energy"],
-      ["Environment", "Environment"],
-      ["ForeignPolicy", "Foreign Policy"],
-      ["Geopolitics", "Geopolitics"],
-      ["Intelligence", "Intelligence"],
-      ["MilitaryDefense", "Military"],
-      ["Philosophy", "Philosophy"],
-      ["Religion", "Religion"],
-      ["Security", "Security"],
-      ["Technology", "Technology"],
-    ];
-
-    const combined = spec.flatMap(([key, label]) =>
-      arr(MidnightBureauData?.[key]).map((p) => ({ ...p, category: label }))
-    );
-
+  const dbPosts = useMemo(() => {
     const seen = new Set();
-    const deduped = combined.filter((p) => {
-      if (!p?.slug) return false;
-      if (seen.has(p.slug)) return false;
-      seen.add(p.slug);
-      return true;
+
+    return arr(posts)
+      .filter((p) => p?.slug && p?.title)
+      .filter((p) => {
+        if (seen.has(p.slug)) return false;
+        seen.add(p.slug);
+        return true;
+      })
+      .map((p) => ({
+        ...p,
+        categoriesNormalized: normalizeCategoryArray(p),
+        dateObj: toDate(p),
+      }))
+      .sort((a, b) => b.dateObj - a.dateObj);
+  }, [posts]);
+
+  const dynamicDbCategories = useMemo(() => {
+    const set = new Set();
+
+    dbPosts.forEach((post) => {
+      (post.categoriesNormalized || []).forEach((cat) => {
+        if (!cat) return;
+        if (
+          !BASE_CATEGORIES.includes(cat) &&
+          !Object.keys(TOPIC_GROUPS).includes(cat)
+        ) {
+          set.add(cat);
+        }
+      });
     });
 
-    return deduped
-      .map((p) => ({ ...p, dateObj: toDate(p) }))
-      .sort((a, b) => b.dateObj - a.dateObj);
-  }, []);
+    return [...set].sort((a, b) => a.localeCompare(b));
+  }, [dbPosts]);
 
-  // ---------- safe filters ----------
+  const allCategories = useMemo(() => {
+    return [
+      ...BASE_CATEGORIES,
+      ...dynamicDbCategories.filter((c) => !BASE_CATEGORIES.includes(c)),
+    ];
+  }, [dynamicDbCategories]);
+
+  const SCROLL_OFFSET = 250;
+
+  const scrollWithOffset = (id) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const y =
+      el.getBoundingClientRect().top + window.pageYOffset - SCROLL_OFFSET;
+    window.scrollTo({ top: y, behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    const g =
+      typeof router.query.group === "string"
+        ? decodeURIComponent(router.query.group)
+        : null;
+    if (g && allCategories.includes(g)) {
+      setSelectedCategory(g);
+      setCategoriesOpen(true);
+      setTimeout(() => scrollWithOffset("archive-content"), 50);
+    }
+  }, [router.query.group, allCategories]);
+
   const filteredPosts = useMemo(() => {
+    const allPosts = dbPosts;
+
     if (selectedCategory === "All") return allPosts;
 
-    if (selectedCategory === "Book Reviews") {
-      const pool = new Set(arr(MidnightBureauData?.BookReviews).map((q) => q.slug));
-      return allPosts.filter((p) => pool.has(p.slug));
-    }
-    if (selectedCategory === "Popular") {
-      const pool = new Set(arr(MidnightBureauData?.Popular).map((q) => q.slug));
-      return allPosts.filter((p) => pool.has(p.slug));
-    }
-    if (selectedCategory === "Favorites") {
-      return allPosts.filter((p) => Array.isArray(p.tags) && p.tags.includes("Favorite"));
-    }
     if (selectedCategory === "Recent") {
-      const pool = new Set(arr(MidnightBureauData?.Recent).map((q) => q.slug));
-      return allPosts.filter((p) => pool.has(p.slug));
+      return allPosts.filter((post) => isRecentPost(post, allPosts));
+    }
+
+    if (selectedCategory === "Popular") {
+      return allPosts.filter((post) => isPopularPost(post));
+    }
+
+    if (selectedCategory === "Favorites") {
+      return allPosts.filter((post) => isFavoritePost(post));
+    }
+
+    if (selectedCategory === "Book Reviews") {
+      return allPosts.filter((post) => isBookReviewPost(post));
     }
 
     if (selectedCategory in TOPIC_GROUPS) {
-      const members = new Set(TOPIC_GROUPS[selectedCategory]);
-      return allPosts.filter((p) => members.has(p.category));
+      const members = new Set(
+        TOPIC_GROUPS[selectedCategory].map((x) => x.toLowerCase())
+      );
+      return allPosts.filter((post) =>
+        (post.categoriesNormalized || []).some((cat) =>
+          members.has(cat.toLowerCase())
+        )
+      );
     }
 
-    return allPosts;
-  }, [selectedCategory, allPosts]);
+    return allPosts.filter((post) =>
+      (post.categoriesNormalized || []).some(
+        (cat) => cat.toLowerCase() === selectedCategory.toLowerCase()
+      )
+    );
+  }, [selectedCategory, dbPosts]);
 
   const postsByYearMonth = useMemo(() => {
     const obj = {};
@@ -262,11 +349,15 @@ export default function Archive() {
     return obj;
   }, [filteredPosts]);
 
-  const monthsAvailable = postsByYearMonth[selectedYear] ? Object.keys(postsByYearMonth[selectedYear]) : [];
+  const monthsAvailable = postsByYearMonth[selectedYear]
+    ? Object.keys(postsByYearMonth[selectedYear])
+    : [];
+
   const monthsToShow = MONTHS_DESC.filter((m) => monthsAvailable.includes(m));
 
   const [loadedYears, setLoadedYears] = useState([START_YEAR - 1]);
   const sentinelRef = useRef();
+  const scrollRefs = useRef({});
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -280,21 +371,17 @@ export default function Archive() {
       },
       { rootMargin: "200px" }
     );
+
     const sentinel = sentinelRef.current;
     if (sentinel) observer.observe(sentinel);
+
     return () => {
       if (sentinel) observer.unobserve(sentinel);
     };
   }, [loadedYears]);
 
-  const scrollRefs = useRef({});
-
-  // IMPORTANT: keep your visual sizing the same; just make scroll math consistent and rows responsive
   const CARD_W = 280;
   const CARD_GAP = 24;
-
-  // Locked viewport width by breakpoint:
-  // Desktop: 3 cards, Tablet: 2 cards, Mobile: 1 card
   const VIEWPORT_W = viewCount * CARD_W + (viewCount - 1) * CARD_GAP;
 
   const scrollMonth = (key, direction) => {
@@ -302,10 +389,7 @@ export default function Archive() {
     if (!container) return;
 
     const cardWidth = CARD_W + CARD_GAP;
-
-    // Scroll exactly one “viewport page”
     const scrollAmount = cardWidth * viewCount;
-
     const maxScrollLeft = container.scrollWidth - container.clientWidth;
 
     const newScrollLeft =
@@ -316,7 +400,6 @@ export default function Archive() {
     container.scrollTo({ left: newScrollLeft, behavior: "smooth" });
   };
 
-  // --- CARD + IMAGE + CAPTION (kept same look) ---
   const cardStyle = {
     backgroundColor: "var(--c-bg)",
     boxShadow: "0 6px 12px rgba(0,0,0,0.1)",
@@ -400,25 +483,6 @@ export default function Archive() {
     transition: "transform 0.15s ease, opacity 0.15s ease",
   };
 
-  const router = useRouter();
-  useEffect(() => {
-    const g = typeof router.query.group === "string" ? decodeURIComponent(router.query.group) : null;
-    if (g && CATEGORIES.includes(g)) {
-      setSelectedCategory(g);
-      setCategoriesOpen(true);
-      setTimeout(() => scrollWithOffset("archive-content"), 50);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router.query.group]);
-
-  const SCROLL_OFFSET = 250;
-  const scrollWithOffset = (id) => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    const y = el.getBoundingClientRect().top + window.pageYOffset - SCROLL_OFFSET;
-    window.scrollTo({ top: y, behavior: "smooth" });
-  };
-
   const renderMonthRow = (key, postsForMonth) => {
     const showScrollButtons = postsForMonth.length > viewCount;
 
@@ -450,21 +514,30 @@ export default function Archive() {
             {postsForMonth.map((post) => {
               const author = post.author || "Tobin Albanese";
               return (
-                <Link href={`/MidnightBureau/${post.slug}`} key={post.slug} legacyBehavior>
+                <Link
+                  href={`/MidnightBureau/${post.slug}`}
+                  key={post.slug}
+                  legacyBehavior
+                >
                   <a
                     className="archive-card"
                     style={cardStyle}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.transform = "translateY(-4px)";
-                      e.currentTarget.style.boxShadow = "0 12px 20px rgba(0,0,0,0.15)";
+                      e.currentTarget.style.boxShadow =
+                        "0 12px 20px rgba(0,0,0,0.15)";
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.transform = "translateY(0)";
-                      e.currentTarget.style.boxShadow = "0 6px 12px rgba(0,0,0,0.1)";
+                      e.currentTarget.style.boxShadow =
+                        "0 6px 12px rgba(0,0,0,0.1)";
                     }}
                   >
-                    {/* ✅ now uses Supabase bucket URLs */}
-                    <img src={pickImg(post)} alt={post.title} style={imgStyle} />
+                    <img
+                      src={pickImg(post)}
+                      alt={post.title}
+                      style={imgStyle}
+                    />
                     <div style={captionStyle}>
                       <div style={captionTitleStyle} title={post.title}>
                         {post.title}
@@ -479,11 +552,26 @@ export default function Archive() {
         </div>
 
         {!isSmallScreen && showScrollButtons && (
-          <div style={{ display: "flex", gap: 12, justifyContent: "flex-end", marginTop: 8 }}>
-            <button aria-label={`Scroll ${key} left`} onClick={() => scrollMonth(key, "left")} style={scrollButtonStyle}>
+          <div
+            style={{
+              display: "flex",
+              gap: 12,
+              justifyContent: "flex-end",
+              marginTop: 8,
+            }}
+          >
+            <button
+              aria-label={`Scroll ${key} left`}
+              onClick={() => scrollMonth(key, "left")}
+              style={scrollButtonStyle}
+            >
               ‹
             </button>
-            <button aria-label={`Scroll ${key} right`} onClick={() => scrollMonth(key, "right")} style={scrollButtonStyle}>
+            <button
+              aria-label={`Scroll ${key} right`}
+              onClick={() => scrollMonth(key, "right")}
+              style={scrollButtonStyle}
+            >
               ›
             </button>
           </div>
@@ -521,11 +609,26 @@ export default function Archive() {
         </h2>
 
         {showHeaderArrows && (
-          <div style={{ display: "flex", gap: 10, alignItems: "center", flex: "0 0 auto" }}>
-            <button aria-label={`Scroll ${key} left`} onClick={() => scrollMonth(key, "left")} style={headerScrollButtonStyle}>
+          <div
+            style={{
+              display: "flex",
+              gap: 10,
+              alignItems: "center",
+              flex: "0 0 auto",
+            }}
+          >
+            <button
+              aria-label={`Scroll ${key} left`}
+              onClick={() => scrollMonth(key, "left")}
+              style={headerScrollButtonStyle}
+            >
               ‹
             </button>
-            <button aria-label={`Scroll ${key} right`} onClick={() => scrollMonth(key, "right")} style={headerScrollButtonStyle}>
+            <button
+              aria-label={`Scroll ${key} right`}
+              onClick={() => scrollMonth(key, "right")}
+              style={headerScrollButtonStyle}
+            >
               ›
             </button>
           </div>
@@ -539,7 +642,10 @@ export default function Archive() {
       <MetaHead />
       <SvgHead />
 
-      <div className="dialog-off-canvas-main-canvas" data-off-canvas-main-canvas="">
+      <div
+        className="dialog-off-canvas-main-canvas"
+        data-off-canvas-main-canvas=""
+      >
         <div className="text-align-center pt-15 d-flex dfp-tag-wrapper justify-around">
           <div id="js-dfp-tag-top--2"></div>
         </div>
@@ -547,7 +653,6 @@ export default function Archive() {
 
         <div className="base d-flex">
           <NavbarMB />
-          {/* ✅ now receives bucket URLs */}
           <MBHeroGallery images={galleryImages} />
 
           <div id="archive-content" />
@@ -558,14 +663,11 @@ export default function Archive() {
               margin: "24px auto 60px",
               padding: "0 24px",
               display: "flex",
-
               flexDirection: isMobile ? "column" : "row",
-
               gap: isMobile ? 24 : 48,
               userSelect: "none",
             }}
           >
-            {/* SIDEBAR */}
             <aside
               style={{
                 flex: isMobile ? "0 0 auto" : "0 0 200px",
@@ -577,7 +679,6 @@ export default function Archive() {
                 paddingTop: 0,
               }}
             >
-              {/* Categories Button */}
               <div
                 onClick={() => setCategoriesOpen(!categoriesOpen)}
                 style={{
@@ -588,14 +689,17 @@ export default function Archive() {
                   cursor: "pointer",
                   border: "2px solid var(--c-accent)",
                   borderRadius: 4,
-                  backgroundColor: categoriesOpen ? "var(--c-bg-secondary)" : "transparent",
-                  color: categoriesOpen ? "var(--c-text-third)" : "var(--c-text)",
+                  backgroundColor: categoriesOpen
+                    ? "var(--c-bg-secondary)"
+                    : "transparent",
+                  color: categoriesOpen
+                    ? "var(--c-text-third)"
+                    : "var(--c-text)",
                   userSelect: "none",
                   transition: "transform 0.3s",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-between",
-
                   width: isMobile ? "100%" : undefined,
                 }}
               >
@@ -627,25 +731,39 @@ export default function Archive() {
                   style={{
                     paddingLeft: 0,
                     marginTop: 4,
-
                     maxHeight: isMobile ? 320 : undefined,
                     overflowY: isMobile ? "auto" : undefined,
                     WebkitOverflowScrolling: isMobile ? "touch" : undefined,
                   }}
                 >
-                  {CATEGORIES.map((cat) => (
-                    <li key={cat} style={{ listStyle: "none", marginBottom: 8 }}>
+                  {allCategories.map((cat) => (
+                    <li
+                      key={cat}
+                      style={{ listStyle: "none", marginBottom: 8 }}
+                    >
                       <button
                         onClick={() => setSelectedCategory(cat)}
                         style={{
                           fontWeight: selectedCategory === cat ? "600" : "400",
-                          color: selectedCategory === cat ? "var(--c-text-third)" : "var(--c-text-secondary)",
-                          backgroundColor: selectedCategory === cat ? "var(--c-bg-secondary)" : "transparent",
-                          borderLeft: selectedCategory === cat ? "4px solid #d62827" : "4px solid transparent",
+                          color:
+                            selectedCategory === cat
+                              ? "var(--c-text-third)"
+                              : "var(--c-text-secondary)",
+                          backgroundColor:
+                            selectedCategory === cat
+                              ? "var(--c-bg-secondary)"
+                              : "transparent",
+                          borderLeft:
+                            selectedCategory === cat
+                              ? "4px solid #d62827"
+                              : "4px solid transparent",
                           padding: "8px 16px",
                           margin: 0,
                           cursor: "pointer",
-                          boxShadow: selectedCategory === cat ? "inset 4px 0 0 0 #d62827" : "none",
+                          boxShadow:
+                            selectedCategory === cat
+                              ? "inset 4px 0 0 0 #d62827"
+                              : "none",
                           borderRadius: 4,
                           textAlign: "left",
                           width: "100%",
@@ -661,7 +779,9 @@ export default function Archive() {
                           lineHeight: 1.2,
                           minHeight: 40,
                         }}
-                        aria-current={selectedCategory === cat ? "true" : undefined}
+                        aria-current={
+                          selectedCategory === cat ? "true" : undefined
+                        }
                         title={cat}
                       >
                         {cat}
@@ -672,14 +792,13 @@ export default function Archive() {
               )}
             </aside>
 
-            {/* Posts */}
             <section
               style={{
                 flex: "1",
                 display: "flex",
                 flexDirection: "column",
                 gap: 48,
-                minWidth: 0, 
+                minWidth: 0,
               }}
             >
               {monthsToShow.length === 0 ? (
@@ -692,17 +811,24 @@ export default function Archive() {
                     userSelect: "text",
                   }}
                 >
-                  No posts found for {selectedYear} in "{selectedCategory}" category.
+                  No posts found for {selectedYear} in "{selectedCategory}"
+                  category.
                 </p>
               ) : (
                 monthsToShow.map((month) => {
                   const key = `${selectedYear}-${month}`;
                   if (!scrollRefs.current[key]) scrollRefs.current[key] = null;
-                  const postsForMonth = postsByYearMonth[selectedYear][month] || [];
+                  const postsForMonth =
+                    postsByYearMonth[selectedYear][month] || [];
 
                   return (
                     <article key={key}>
-                      {renderMonthHeader(key, month, selectedYear, postsForMonth)}
+                      {renderMonthHeader(
+                        key,
+                        month,
+                        selectedYear,
+                        postsForMonth
+                      )}
 
                       <div
                         style={{
@@ -720,10 +846,13 @@ export default function Archive() {
                 })
               )}
 
-              {/* Loaded years (same rendering) */}
               {loadedYears.map((year) => {
-                const monthsAvail = postsByYearMonth[year] ? Object.keys(postsByYearMonth[year]) : [];
-                const monthsToShowYear = MONTHS_DESC.filter((m) => monthsAvail.includes(m));
+                const monthsAvail = postsByYearMonth[year]
+                  ? Object.keys(postsByYearMonth[year])
+                  : [];
+                const monthsToShowYear = MONTHS_DESC.filter((m) =>
+                  monthsAvail.includes(m)
+                );
 
                 return monthsToShowYear.map((month) => {
                   const key = `${year}-${month}`;
@@ -750,7 +879,6 @@ export default function Archive() {
                 });
               })}
 
-              {/* sentinel (kept) */}
               <div ref={sentinelRef} style={{ height: 1 }} />
             </section>
           </main>
@@ -760,4 +888,96 @@ export default function Archive() {
       </div>
     </>
   );
+}
+
+export async function getServerSideProps() {
+  const supabase = getServerSupabase();
+
+  const { data, error } = await supabase
+    .from("posts")
+    .select(
+      "id, type, title, slug, excerpt, status, is_published, published_at, created_at, banner_url, archive_image_url, author, date, category"
+    )
+    .eq("type", "mb")
+    .eq("is_published", true)
+    .order("published_at", { ascending: false, nullsFirst: false })
+    .order("created_at", { ascending: false, nullsFirst: false });
+
+  if (error) {
+    console.log("Archive SSR posts error:", error);
+    return { props: { posts: [] } };
+  }
+
+  const safe = Array.isArray(data) ? data : [];
+  const postIds = safe.map((p) => p.id).filter(Boolean);
+
+  let inlineImageMap = {};
+
+  if (postIds.length > 0) {
+    const { data: imageRows, error: imageErr } = await supabase
+      .from("post_images")
+      .select("id, post_id, kind, storage_path, position")
+      .in("post_id", postIds)
+      .eq("kind", "inline")
+      .order("position", { ascending: true });
+
+    if (imageErr) {
+      console.log("Archive SSR post_images error:", imageErr);
+    } else {
+      for (const row of imageRows || []) {
+        if (!row?.post_id || !row?.storage_path) continue;
+        if (!inlineImageMap[row.post_id]) {
+          inlineImageMap[row.post_id] = row.storage_path;
+        }
+      }
+    }
+  }
+
+  const normalized = safe
+    .filter((p) => p?.slug)
+    .map((p) => {
+      const rawBanner = (p.banner_url || "").trim();
+      const rawArchive = (p.archive_image_url || "").trim();
+      const rawFirstInline = (inlineImageMap[p.id] || "").trim();
+
+      const resolvedBanner =
+        resolveImageServer(supabase, POSTS_BUCKET, rawBanner) || "";
+      const resolvedArchive =
+        resolveImageServer(supabase, POSTS_BUCKET, rawArchive) || "";
+      const resolvedFirstInline =
+        resolveImageServer(supabase, POSTS_BUCKET, rawFirstInline) || "";
+
+      const d =
+        p.published_at || p.date || p.created_at || new Date().toISOString();
+      const dateIso = new Date(d);
+      const dateStr = isNaN(dateIso.getTime())
+        ? ""
+        : dateIso.toISOString().slice(0, 10);
+
+      return {
+        id: p.id,
+        slug: p.slug,
+        title: p.title || "Untitled",
+        excerpt: p.excerpt || "",
+        author: p.author || "Tobin Albanese",
+        category: p.category || "",
+        date: dateStr || "",
+        published_at: p.published_at || null,
+        created_at: p.created_at || null,
+        banner: resolvedBanner || resolvedFirstInline || "",
+        image:
+          resolvedArchive ||
+          resolvedFirstInline ||
+          resolvedBanner ||
+          publicBucketUrl("space.webp", PUBLIC_BUCKET) ||
+          "/assets/images/space.webp",
+        archive_image_url: resolvedArchive || "",
+        banner_url: resolvedBanner || "",
+        images: [
+          resolvedArchive || resolvedFirstInline || resolvedBanner,
+        ].filter(Boolean),
+      };
+    });
+
+  return { props: { posts: normalized } };
 }

@@ -20,17 +20,62 @@ const formatDate = (d) => {
 };
 
 const toPublic = (supabaseUrl, bucket, storagePathOrUrl) => {
-  if (!storagePathOrUrl) return "";
-  if (typeof storagePathOrUrl !== "string") return "";
-  // already absolute URL
-  if (/^https?:\/\//i.test(storagePathOrUrl)) return storagePathOrUrl;
-  // if someone stored /assets/... keep it
-  if (storagePathOrUrl.startsWith("/assets/")) return storagePathOrUrl;
-  // treat as storage path
-  return `${supabaseUrl}/storage/v1/object/public/${bucket}/${storagePathOrUrl}`;
+  if (!storagePathOrUrl || typeof storagePathOrUrl !== "string") return "";
+
+  const value = storagePathOrUrl.trim();
+  if (!value) return "";
+
+  // Already absolute URL
+  if (/^https?:\/\//i.test(value)) return value;
+
+  // Local image path -> map into public-images bucket
+  // Example: /assets/images/portfolioBanner.webp -> public-images/portfolioBanner.webp
+  // Example: /assets/images/portfolio/behav-ai-banner.webp -> public-images/portfolio/behav-ai-banner.webp
+  if (value.startsWith("/assets/images/")) {
+    const key = value.replace(/^\/assets\/images\//, "");
+    return `${supabaseUrl}/storage/v1/object/public/public-images/${key}`;
+  }
+
+  // Other local assets can stay local if you still want them available
+  if (value.startsWith("/assets/")) return value;
+
+  // Otherwise treat it as a storage path in the provided bucket
+  return `${supabaseUrl}/storage/v1/object/public/${bucket}/${value}`;
 };
 
+function useMediaQuery(query) {
+  const [matches, setMatches] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const media = window.matchMedia(query);
+    const listener = () => setMatches(media.matches);
+
+    listener();
+
+    if (media.addEventListener) {
+      media.addEventListener("change", listener);
+    } else {
+      media.addListener(listener);
+    }
+
+    return () => {
+      if (media.removeEventListener) {
+        media.removeEventListener("change", listener);
+      } else {
+        media.removeListener(listener);
+      }
+    };
+  }, [query]);
+
+  return matches;
+}
+
 const ProjectPost = ({ project, __supabaseUrl, __bucket }) => {
+  const isDesktop = useMediaQuery("(min-width: 1280px)");
+  const isLargeMonitor = useMediaQuery("(min-width: 1600px)");
+  const isLargeScreen = useMediaQuery("(min-width: 1280px)");
   const router = useRouter();
 
   // ---------- State ----------
@@ -49,7 +94,9 @@ const ProjectPost = ({ project, __supabaseUrl, __bucket }) => {
   const pairedCount = Math.max(0, contentBlocks.length - 2);
 
   const allImages = Array.isArray(project?.images)
-    ? project.images.map((p) => toPublic(__supabaseUrl, __bucket, p)).filter(Boolean)
+    ? project.images
+        .map((p) => toPublic(__supabaseUrl, __bucket, p))
+        .filter(Boolean)
     : [];
 
   const primaryGallery =
@@ -63,8 +110,8 @@ const ProjectPost = ({ project, __supabaseUrl, __bucket }) => {
   const gallery = primaryGallery.length
     ? primaryGallery
     : allImages.length
-    ? allImages
-    : fallbackGallery;
+      ? allImages
+      : fallbackGallery;
 
   const shouldShowGallery = Array.isArray(gallery) && gallery.length >= 4;
 
@@ -179,7 +226,10 @@ const ProjectPost = ({ project, __supabaseUrl, __bucket }) => {
       <MetaHead />
       <SvgHead />
 
-      <div className="dialog-off-canvas-main-canvas" data-off-canvas-main-canvas="">
+      <div
+        className="dialog-off-canvas-main-canvas"
+        data-off-canvas-main-canvas=""
+      >
         <div className="text-align-center pt-15 d-flex dfp-tag-wrapper justify-around">
           <div id="js-dfp-tag-top--2" />
         </div>
@@ -211,15 +261,67 @@ const ProjectPost = ({ project, __supabaseUrl, __bucket }) => {
             )}
 
             <div className="mb-article-inner">
-              <img
-                ref={bannerRef}
-                className="banner mb-banner"
-                src={bannerSrc}
-                alt="Banner"
-                style={{ width: "100%", height: "200px", objectFit: "cover" }}
-              />
+              <div
+                className="mb-banner-wrap"
+                style={{
+                  width: "100%",
+                  maxWidth: "1400px",
+                  margin: "0 auto",
+                }}
+              >
+                <img
+                  ref={bannerRef}
+                  className="banner mb-banner"
+                  src={bannerSrc}
+                  alt="Banner"
+                  style={{
+                    width: "100%",
+                    height: "200px",
+                    objectFit: "cover",
+                    display: "block",
+                  }}
+                />
+              </div>
 
-              <h1 className="mb-title">{(project.title || "").toUpperCase()}</h1>
+              <div
+                className="mb-title-wrap"
+                style={{
+                  width: isLargeMonitor
+                    ? "min(88vw, 1520px)"
+                    : "min(82vw, 1320px)",
+                  margin: "0 auto",
+                  transform: isLargeMonitor
+                    ? "translateX(-6%)"
+                    : "translateX(0)",
+                }}
+              >
+                <h1
+                  className="mb-title"
+                  style={{
+                    margin: "1rem auto 0.75rem",
+                    padding: 0,
+                    width: "100%",
+                    maxWidth: "1520px",
+                    fontSize: isLargeMonitor
+                      ? "clamp(2.8rem, 4.8vw, 5.4rem)"
+                      : "clamp(2.4rem, 4.1vw, 4.6rem)",
+                    lineHeight: 0.92,
+                    fontWeight: 400,
+                    letterSpacing: "-0.03em",
+                    textTransform: "uppercase",
+                    textIndent: 0,
+                    whiteSpace: "normal",
+                    wordBreak: "normal",
+                    overflowWrap: "break-word",
+                    hyphens: "none",
+                    textWrap: "balance",
+                    textAlign: "left",
+                  }}
+                >
+                  {(project.title || "").toUpperCase()}
+                </h1>
+              </div>
+
               <h2 className="mb-subtitle">by {project.author || "Unknown"}</h2>
               <h3 className="mb-meta">
                 {project.volume || "Volume"}{" "}
@@ -283,18 +385,27 @@ const ProjectPost = ({ project, __supabaseUrl, __bucket }) => {
               )}
 
               {shouldShowGallery && (
-                <div className="gallery-wrapper" style={{ maxWidth: "1400px", margin: "3rem auto" }}>
+                <div
+                  className="gallery-wrapper"
+                  style={{ maxWidth: "1400px", margin: "3rem auto" }}
+                >
                   <div className="gallery-header">
                     <h4>Gallery Images</h4>
                     {gallery.length > 4 && (
                       <div className="gallery-arrows">
                         {galleryIdx > 0 && (
-                          <button onClick={() => handleGalleryNav("prev")} aria-label="Previous images">
+                          <button
+                            onClick={() => handleGalleryNav("prev")}
+                            aria-label="Previous images"
+                          >
                             &lt;
                           </button>
                         )}
                         {galleryIdx + 5 < gallery.length && (
-                          <button onClick={() => handleGalleryNav("next")} aria-label="Next images">
+                          <button
+                            onClick={() => handleGalleryNav("next")}
+                            aria-label="Next images"
+                          >
                             &gt;
                           </button>
                         )}
@@ -303,22 +414,29 @@ const ProjectPost = ({ project, __supabaseUrl, __bucket }) => {
                   </div>
 
                   <div className="box-container">
-                    {gallery.slice(galleryIdx, galleryIdx + 5).map((src, idx) => {
-                      const absoluteIdx = galleryIdx + idx;
-                      const isExpanded = expandedCarouselIndex === absoluteIdx;
-                      return (
-                        <div
-                          key={absoluteIdx}
-                          className={`box ${
-                            isExpanded ? "expanded" : expandedCarouselIndex === null ? "" : "closed"
-                          }`}
-                          style={{ backgroundImage: `url("${src}")` }}
-                          onClick={() => toggleCarouselExpand(absoluteIdx)}
-                        >
-                          <div className="overlay" />
-                        </div>
-                      );
-                    })}
+                    {gallery
+                      .slice(galleryIdx, galleryIdx + 5)
+                      .map((src, idx) => {
+                        const absoluteIdx = galleryIdx + idx;
+                        const isExpanded =
+                          expandedCarouselIndex === absoluteIdx;
+                        return (
+                          <div
+                            key={absoluteIdx}
+                            className={`box ${
+                              isExpanded
+                                ? "expanded"
+                                : expandedCarouselIndex === null
+                                  ? ""
+                                  : "closed"
+                            }`}
+                            style={{ backgroundImage: `url("${src}")` }}
+                            onClick={() => toggleCarouselExpand(absoluteIdx)}
+                          >
+                            <div className="overlay" />
+                          </div>
+                        );
+                      })}
                   </div>
                 </div>
               )}
@@ -329,25 +447,31 @@ const ProjectPost = ({ project, __supabaseUrl, __bucket }) => {
                 <section className="resources" id="resources">
                   <h4>Resources &amp; Links</h4>
                   <div className="navs-wrapper">
-                    {Object.entries(project.resources).map(([category, links]) => (
-                      <div key={category} className="resource-category">
-                        <h5 className="category-title">{category}</h5>
-                        <ul className="sub-resource-list">
-                          {(links || []).map((link, i) => (
-                            <li key={i}>
-                              <a
-                                className="sub-resource-link"
-                                href={link.url}
-                                target={link.external ? "_blank" : "_self"}
-                                rel={link.external ? "noopener noreferrer" : undefined}
-                              >
-                                <span>{link.label}</span>
-                              </a>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
+                    {Object.entries(project.resources).map(
+                      ([category, links]) => (
+                        <div key={category} className="resource-category">
+                          <h5 className="category-title">{category}</h5>
+                          <ul className="sub-resource-list">
+                            {(links || []).map((link, i) => (
+                              <li key={i}>
+                                <a
+                                  className="sub-resource-link"
+                                  href={link.url}
+                                  target={link.external ? "_blank" : "_self"}
+                                  rel={
+                                    link.external
+                                      ? "noopener noreferrer"
+                                      : undefined
+                                  }
+                                >
+                                  <span>{link.label}</span>
+                                </a>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )
+                    )}
                   </div>
                 </section>
               )}
@@ -413,7 +537,9 @@ export async function getServerSideProps({ params }) {
   // 1) core post
   const { data: post, error: pErr } = await supabase
     .from("posts")
-    .select("id, title, slug, excerpt, banner_url, archive_image_url, volume, author, date, status, type")
+    .select(
+      "id, title, slug, excerpt, banner_url, archive_image_url, volume, author, date, status, type"
+    )
     .eq("type", "portfolio")
     .eq("slug", slug)
     .maybeSingle();
