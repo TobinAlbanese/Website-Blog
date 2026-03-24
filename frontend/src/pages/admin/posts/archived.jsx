@@ -95,7 +95,7 @@ function getPostImage(post) {
 
 function isAllowedStatus(post) {
   const status = String(post?.status || "").trim().toLowerCase();
-  return ["draft", "published", "archived"].includes(status);
+  return status === "archived";
 }
 
 export default function AdminPostsIndex({ posts = [] }) {
@@ -127,7 +127,9 @@ export default function AdminPostsIndex({ posts = [] }) {
       (entries) => {
         const entry = entries[0];
         if (!entry?.isIntersecting) return;
-        setVisibleCount((prev) => Math.min(prev + PAGE_SIZE, sortedPosts.length));
+        setVisibleCount((prev) =>
+          Math.min(prev + PAGE_SIZE, sortedPosts.length)
+        );
       },
       { rootMargin: "280px 0px" }
     );
@@ -147,9 +149,9 @@ export default function AdminPostsIndex({ posts = [] }) {
             margin: "0 auto 18px",
           }}
         >
-          <div className="admin-title">All Posts</div>
+          <div className="admin-title">Archived Posts</div>
           <div className="admin-subtitle">
-            Draft, published, and archived posts in one continuous collection.
+            All archived posts in one continuous collection.
           </div>
         </div>
 
@@ -235,8 +237,8 @@ export default function AdminPostsIndex({ posts = [] }) {
                         {post.type === "portfolio"
                           ? "Portfolio"
                           : post.type === "mb"
-                          ? "Blog"
-                          : "Post"}
+                            ? "Blog"
+                            : "Post"}
                       </span>
                     </p>
                   </div>
@@ -297,7 +299,8 @@ export async function getServerSideProps() {
 
   const { data, error } = await supabase
     .from("posts")
-    .select(`
+    .select(
+      `
       id,
       type,
       title,
@@ -312,8 +315,9 @@ export async function getServerSideProps() {
       archive_image_url,
       author,
       date
-    `)
-    .in("status", ["draft", "published", "archived"])
+    `
+    )
+    .eq("status", "archived")
     .order("published_at", { ascending: false, nullsFirst: false })
     .order("updated_at", { ascending: false, nullsFirst: false })
     .order("created_at", { ascending: false, nullsFirst: false });
@@ -377,10 +381,8 @@ export async function getServerSideProps() {
       banner_url: resolvedBanner || "",
       archive_image_url: resolvedArchive || "",
       banner: resolvedBanner || resolvedArchive || resolvedInline || fallback,
-      image:
-        resolvedBanner || resolvedArchive || resolvedInline || fallback,
-      imageUrl:
-        resolvedBanner || resolvedArchive || resolvedInline || fallback,
+      image: resolvedBanner || resolvedArchive || resolvedInline || fallback,
+      imageUrl: resolvedBanner || resolvedArchive || resolvedInline || fallback,
     };
   });
 

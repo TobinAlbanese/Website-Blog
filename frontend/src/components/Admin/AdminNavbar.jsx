@@ -208,24 +208,16 @@ export default function AdminNavbar() {
               <a href="/admin/posts">All Posts</a>
             </li>
             <li>
-            <a
-              href="/admin/posts/new"
-              className="site-nav__link "
-            >
-              New Post
-            </a>
+              <a href="/admin/posts/drafts">Drafts</a>
             </li>
             <li>
-              <a href="/admin/posts?status=draft">Drafts</a>
+              <a href="/admin/posts/published">Published</a>
             </li>
             <li>
-              <a href="/admin/posts?status=published">Published</a>
+              <a href="/admin/posts/archived">Archived</a>
             </li>
             <li>
-              <a href="/admin/posts?status=archived">Archived</a>
-            </li>
-            <li>
-              <a href="/admin/posts?status=portfolio">Portfolio</a>
+              <a href="/admin/posts/portfolio">Portfolio</a>
             </li>
           </ul>
         </li>
@@ -238,9 +230,6 @@ export default function AdminNavbar() {
           <ul className="site-nav__dropdown-menu">
             <li>
               <a href="/admin/media">Library</a>
-            </li>
-            <li>
-              <a href="/admin/media/upload">Upload</a>
             </li>
           </ul>
         </li>
