@@ -11,7 +11,21 @@ const safeDate = (v) => {
   return Number.isNaN(d.getTime()) ? new Date(0) : d;
 };
 
+const isHttpUrl = (v) => typeof v === "string" && /^https?:\/\//i.test(v);
+
+const resolveStorageUrl = (path, bucket = "post-images") => {
+  const v = String(path || "").trim();
+  if (!v) return "";
+  if (isHttpUrl(v) || v.startsWith("/")) return v;
+
+  const { data } = supabase.storage.from(bucket).getPublicUrl(v);
+  return data?.publicUrl || "";
+};
+
 const pickPostImg = (p) =>
+  p?.banner ||
+  p?.cover ||
+  p?.image ||
   p?.banner_url ||
   p?.cover_url ||
   p?.image_url ||
@@ -21,7 +35,7 @@ const pickPostImg = (p) =>
 export default function AdminNavbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [recentPosts, setRecentPosts] = useState([]); // overlay “Recent Posts”
+  const [recentPosts, setRecentPosts] = useState([]);
   const router = useRouter();
 
   // --- auth state ---
@@ -54,25 +68,36 @@ export default function AdminNavbar() {
 
     const loadRecent = async () => {
       try {
-        // Pull the newest posts (any status) for menu preview tiles.
-        // Adjust select() columns to match your schema.
         const { data, error } = await supabase
           .from("posts")
-          .select("id,title,slug,status,updated_at,banner_url")
+          .select(
+            "id, title, slug, status, updated_at, created_at, published_at, banner_url, archive_image_url, cover_url, image_url"
+          )
           .order("updated_at", { ascending: false })
           .limit(3);
 
         if (error) throw error;
         if (cancelled) return;
 
-        const normalized = (data || []).map((p) => ({
-          ...p,
-          dateObj: safeDate(p.updated_at),
-        }));
+        const normalized = (data || []).map((p) => {
+          const banner = resolveStorageUrl(p.banner_url);
+          const archiveImage = resolveStorageUrl(p.archive_image_url);
+          const cover = resolveStorageUrl(p.cover_url);
+          const image = resolveStorageUrl(p.image_url);
+
+          return {
+            ...p,
+            banner,
+            archiveImage,
+            cover,
+            image,
+            images: [archiveImage || banner || cover || image].filter(Boolean),
+            dateObj: safeDate(p.updated_at || p.published_at || p.created_at),
+          };
+        });
 
         setRecentPosts(normalized);
       } catch (e) {
-        // don’t hard-fail navbar if table not ready yet
         if (!cancelled) setRecentPosts([]);
         console.warn(
           "AdminNavbar: could not load recent posts:",
@@ -169,7 +194,6 @@ export default function AdminNavbar() {
     return () => router.events.off("routeChangeComplete", applyStoredScroll);
   }, [router.events]);
 
-  // if you keep these, it’s fine. If not used, it does nothing.
   const goToArchiveGroup = (group) => async (e) => {
     e.preventDefault();
     setMenuOpen(false);
@@ -182,11 +206,9 @@ export default function AdminNavbar() {
   };
 
   // TOP NAV ITEMS (admin IA)
-  // We’re using the existing dropdown CSS pattern: site-nav__dropdown + site-nav__dropdown-menu
   const AdminLeft = useMemo(
     () => (
       <>
-        {/* Admin */}
         <li className="site-nav__list-item d-flex show-desktop">
           <a className="site-nav__link body-s-smallcaps" href="/admin">
             Admin
@@ -198,7 +220,6 @@ export default function AdminNavbar() {
           </a>
         </li>
 
-        {/* POSTS dropdown */}
         <li className="site-nav__list-item d-flex show-desktop site-nav__dropdown">
           <a className="site-nav__link body-s-smallcaps" href="#">
             Posts
@@ -222,7 +243,6 @@ export default function AdminNavbar() {
           </ul>
         </li>
 
-        {/* MEDIA dropdown */}
         <li className="site-nav__list-item d-flex show-desktop site-nav__dropdown">
           <a className="site-nav__link body-s-smallcaps" href="#">
             Media
@@ -234,7 +254,6 @@ export default function AdminNavbar() {
           </ul>
         </li>
 
-        {/* Notes */}
         <li className="site-nav__list-item d-flex show-desktop">
           <a className="site-nav__link body-s-smallcaps" href="/admin/notes">
             Notes
@@ -248,7 +267,6 @@ export default function AdminNavbar() {
   const AdminRight = useMemo(
     () => (
       <>
-        {/* Log Out ALWAYS visible when logged in (no breakpoint classes) */}
         {isLoggedIn ? (
           <li className="site-nav__list-item d-flex">
             <button
@@ -280,7 +298,6 @@ export default function AdminNavbar() {
           </>
         )}
 
-        {/* Midnight Bureau button (like your MB navbar) */}
         <li className="site-nav__list-item d-flex show-desktop">
           <a
             className="site-nav__link body-s-smallcaps highlight"
@@ -298,7 +315,6 @@ export default function AdminNavbar() {
           </a>
         </li>
 
-        {/* Menu button (unchanged) */}
         <li className="site-nav__list-item">
           <button
             id="menu-toggle"
@@ -341,7 +357,6 @@ export default function AdminNavbar() {
               gap: "12px",
             }}
           >
-            {/* LEFT */}
             <ul
               className="site-nav__list d-flex left"
               style={{ justifySelf: "start" }}
@@ -349,7 +364,6 @@ export default function AdminNavbar() {
               {AdminLeft}
             </ul>
 
-            {/* CENTER (unchanged) */}
             <a
               href="/"
               className="site-nav__center-logo-link"
@@ -361,7 +375,6 @@ export default function AdminNavbar() {
               </span>
             </a>
 
-            {/* RIGHT */}
             <ul
               className="site-nav__list d-flex right"
               style={{ justifySelf: "end" }}
@@ -387,7 +400,6 @@ export default function AdminNavbar() {
               gap: "12px",
             }}
           >
-            {/* LEFT */}
             <ul
               className="site-nav__list d-flex left"
               style={{ justifySelf: "start" }}
@@ -395,7 +407,6 @@ export default function AdminNavbar() {
               {AdminLeft}
             </ul>
 
-            {/* CENTER (unchanged) */}
             <a
               href="/"
               className="site-nav__center-logo-linkMB"
@@ -407,7 +418,6 @@ export default function AdminNavbar() {
               </span>
             </a>
 
-            {/* RIGHT */}
             <ul
               className="site-nav__list d-flex right"
               style={{ justifySelf: "end" }}
@@ -417,7 +427,7 @@ export default function AdminNavbar() {
           </div>
         </nav>
 
-        {/* Overlay menu — left structurally UNCHANGED; only data feeding recentPosts changed */}
+        {/* Overlay menu */}
         <nav
           className="js--menu theme-accent"
           aria-hidden={!menuOpen}
@@ -425,7 +435,6 @@ export default function AdminNavbar() {
         >
           <div className="menu__content col-12 col-xl-10">
             <div className="menu__section menu__section--top d-flex flex-wrap justify-between gap-y-30 -ml-10 -mr-10 mt-30 mb-80">
-              {/* LEFT: Browse by Section (unchanged markup) */}
               <div className="menu__topics col-12 col-sm-6 col-lg-4-base-10">
                 <p className="menu__overline mb-20">Browse by Section</p>
                 <ul>
@@ -504,7 +513,6 @@ export default function AdminNavbar() {
                   </li>
                 </ul>
 
-                {/* MOBILE ONLY: Browse by Topic */}
                 <div className="menu__topics-mobile-only d-block d-md-none">
                   <p className="menu__overline mb-20 mt-40">Browse by Topic</p>
                   <ul className="menu__links pt-10">
@@ -568,7 +576,6 @@ export default function AdminNavbar() {
                 </div>
               </div>
 
-              {/* RIGHT: Recent Posts + topics (same markup; data now Supabase) */}
               <div className="menu__issues col-12 col-sm-6 col-lg-4-base-10">
                 <p className="menu__overline mb-20">Recent Posts</p>
 
@@ -624,7 +631,6 @@ export default function AdminNavbar() {
                   ))}
                 </ul>
 
-                {/* keep the rest unchanged */}
                 <div className="d-none d-md-block">
                   <p className="menu__overline mb-20 mt-40">Browse by Topic</p>
                   <ul className="menu__links pt-30 pt-md-0">
@@ -691,7 +697,6 @@ export default function AdminNavbar() {
 
             <hr className="menu__divider border-zero mb-20" />
 
-            {/* BELOW WHITE LINE (unchanged) */}
             <div className="menu__section d-flex flex-wrap justify-between gap-y-30 -ml-10 -mr-10">
               <div className="menu__about col-12 col-sm-6 col-lg-4-base-10">
                 <p>

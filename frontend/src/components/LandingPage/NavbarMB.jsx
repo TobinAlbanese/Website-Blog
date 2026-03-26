@@ -3,40 +3,91 @@ import React, { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/router";
 import MetaHead from "../../components/LandingPage/MetaHead.jsx";
 import SvgHead from "../../components/LandingPage/svgHead.jsx";
-import MidnightBureauData from "../../data/MidnightBureau";
-import { supabase } from "../../lib/supabase/client"; 
+import { supabase } from "../../lib/supabase/client";
 
 // helpers
 const arr = (x) => (Array.isArray(x) ? x : []);
 const toDate = (p) => {
-  const d = new Date(p?.date || p?.published || p?.createdAt || 0);
+  const d = new Date(p?.date || p?.published_at || p?.created_at || 0);
   return Number.isNaN(d.getTime()) ? new Date(0) : d;
 };
+
+const isHttpUrl = (v) => typeof v === "string" && /^https?:\/\//i.test(v);
+
+const resolveStorageUrl = (path, bucket = "post-images") => {
+  const v = String(path || "").trim();
+  if (!v) return "";
+  if (isHttpUrl(v) || v.startsWith("/")) return v;
+  const { data } = supabase.storage.from(bucket).getPublicUrl(v);
+  return data?.publicUrl || "";
+};
+
 const pickArchiveImg = (p) =>
   p?.archiveImage ||
+  p?.banner ||
   p?.image ||
   (Array.isArray(p?.images) ? p.images[0] : "") ||
   "/assets/images/space.jpg";
 
-const collectMBPosts = () => {
-  const flat = Object.values(MidnightBureauData)
-    .flatMap(arr)
-    .filter((p) => p && p.slug);
-  const seen = new Set();
-  const dedup = flat.filter(
-    (p) => !seen.has(p.slug) && (seen.add(p.slug), true)
-  );
-  return dedup
-    .map((p) => ({ ...p, dateObj: toDate(p) }))
-    .sort((a, b) => b.dateObj - a.dateObj);
-};
-
 export default function NavbarMB() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // ✅ NEW
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [recentPosts, setRecentPosts] = useState([]);
   const router = useRouter();
 
-  const recentPosts = useMemo(() => collectMBPosts().slice(0, 3), []);
+  // ✅ Pull latest MB posts from Supabase for menu cards only
+  useEffect(() => {
+    let isMounted = true;
+
+    const loadRecentPosts = async () => {
+      try {
+        const { data: posts, error } = await supabase
+          .from("posts")
+          .select(
+            "id, slug, title, archive_image_url, banner_url, published_at, created_at, date, is_published, status, type"
+          )
+          .eq("type", "mb")
+          .eq("status", "published")
+          .eq("is_published", true)
+          .order("published_at", { ascending: false })
+          .limit(3);
+
+        if (error) {
+          console.error("NavbarMB recent posts error:", error);
+          return;
+        }
+
+        const normalized = arr(posts)
+          .filter((p) => p?.slug)
+          .map((p) => {
+            const archiveImage = resolveStorageUrl(p.archive_image_url);
+            const banner = resolveStorageUrl(p.banner_url);
+
+            return {
+              ...p,
+              archiveImage,
+              banner,
+              image: archiveImage || banner || "/assets/images/space.jpg",
+              images: [archiveImage || banner].filter(Boolean),
+              dateObj: toDate(p),
+            };
+          })
+          .sort((a, b) => b.dateObj - a.dateObj);
+
+        if (isMounted) {
+          setRecentPosts(normalized.slice(0, 3));
+        }
+      } catch (err) {
+        console.error("NavbarMB loadRecentPosts failed:", err);
+      }
+    };
+
+    loadRecentPosts();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   // ✅ Auth state: check on mount + subscribe to changes
   useEffect(() => {
@@ -60,7 +111,7 @@ export default function NavbarMB() {
       isMounted = false;
       subscription.unsubscribe();
     };
-  }, [supabase]);
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -271,7 +322,6 @@ export default function NavbarMB() {
                 </a>
               </li>
 
-              {/* ✅ Log In / Log Out (primary nav) */}
               {isLoggedIn ? (
                 <li className="site-nav__list-item d-flex show-desktop show-tablet">
                   <button
@@ -454,7 +504,6 @@ export default function NavbarMB() {
                 </a>
               </li>
 
-              {/* ✅ Log In / Log Out (sticky nav) */}
               {isLoggedIn ? (
                 <li className="site-nav__list-item d-flex show-desktop show-tablet">
                   <button
@@ -554,7 +603,6 @@ export default function NavbarMB() {
                     </a>
                   </li>
 
-                  {/* ✅ Overlay Login / Logout */}
                   <li className="menu__topics-list-item mb-10">
                     {isLoggedIn ? (
                       <button
@@ -616,7 +664,6 @@ export default function NavbarMB() {
                   </li>
                 </ul>
 
-                {/* MOBILE ONLY: Browse by Topic */}
                 <div className="menu__topics-mobile-only d-block d-md-none">
                   <p className="menu__overline mb-20 mt-40">Browse by Topic</p>
                   <ul className="menu__links pt-10">

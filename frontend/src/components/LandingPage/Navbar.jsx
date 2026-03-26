@@ -3,20 +3,95 @@ import React, { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/router";
 import MetaHead from "../../components/LandingPage/MetaHead.jsx";
 import SvgHead from "../../components/LandingPage/svgHead.jsx";
-import MidnightBureauData from "../../data/MidnightBureau";
+import { supabase } from "../../lib/supabase/client";
+
+const DEFAULT_TOPIC_GROUPS = [
+  "World & Diplomacy",
+  "Security & Military",
+  "Energy & Environment",
+  "Economy",
+  "Technology",
+  "Culture",
+  "Ideas",
+];
 
 // helpers
 const toDate = (p) => {
-  const d = new Date(p?.date || p?.published || p?.createdAt || 0);
+  const d = new Date(
+    p?.uploaded_at ||
+      p?.updated_at ||
+      p?.created_at ||
+      p?.published_at ||
+      p?.date ||
+      0
+  );
   return Number.isNaN(d.getTime()) ? new Date(0) : d;
 };
-const pickArchiveImg = (p) =>
-  p?.archiveImage ||
-  p?.banner ||
-  (Array.isArray(p?.images) ? p.images[0] : "/assets/images/space.jpg");
+
+const tryBucketUrl = (bucket, path) => {
+  try {
+    const { data } = supabase.storage.from(bucket).getPublicUrl(path);
+    return data?.publicUrl || null;
+  } catch {
+    return null;
+  }
+};
+
+const resolveAnyImageUrl = (value) => {
+  if (!value) return null;
+
+  const v = String(value).trim();
+  if (!v) return null;
+
+  // already a full URL
+  if (/^https?:\/\//i.test(v)) return v;
+
+  // local public path
+  if (v.startsWith("/")) return v;
+
+  // try both buckets used in your project
+  return (
+    tryBucketUrl("post-images", v) ||
+    tryBucketUrl("public-images", v) ||
+    null
+  );
+};
+
+const pickArchiveImg = (p) => {
+  const archiveImg = resolveAnyImageUrl(p?.archive_image_url);
+  if (archiveImg) return archiveImg;
+
+  const bannerImg = resolveAnyImageUrl(p?.banner_url);
+  if (bannerImg) return bannerImg;
+
+  const firstInline =
+    (p?.post_images || [])
+      .filter((img) => img?.kind === "inline" && img?.storage_path)
+      .sort((a, b) => (a.position || 0) - (b.position || 0))[0] || null;
+
+  const inlineImg = resolveAnyImageUrl(firstInline?.storage_path);
+  if (inlineImg) return inlineImg;
+
+  return "/assets/images/space.jpg";
+};
+
+const resolveStorageUrl = (path) => {
+  if (!path) return null;
+
+  const value = String(path).trim();
+  if (!value) return null;
+
+  if (/^https?:\/\//i.test(value)) return value;
+  if (value.startsWith("/")) return value;
+
+  const { data } = supabase.storage.from("post-images").getPublicUrl(value);
+  return data?.publicUrl || null;
+};
+
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [recentPosts, setRecentPosts] = useState([]);
   const router = useRouter();
 
   // ——— DO NOT CHANGE (kept exactly) ———
@@ -43,7 +118,8 @@ export default function Navbar() {
   const scrollWithOffset = (id) => {
     const el = document.getElementById(id);
     if (!el) return;
-    const y = el.getBoundingClientRect().top + window.pageYOffset - SCROLL_OFFSET;
+    const y =
+      el.getBoundingClientRect().top + window.pageYOffset - SCROLL_OFFSET;
     window.scrollTo({ top: y, behavior: "smooth" });
   };
 
@@ -55,18 +131,23 @@ export default function Navbar() {
 
     if (router.pathname === path) {
       requestAnimationFrame(() => scrollWithOffset(id));
-      router.replace(`${path}#${encodeURIComponent(id)}`, undefined, { shallow: true });
+      router.replace(`${path}#${encodeURIComponent(id)}`, undefined, {
+        shallow: true,
+      });
       return;
     }
 
-    await router.push(`${path}#${encodeURIComponent(id)}`, undefined, { shallow: true });
+    await router.push(`${path}#${encodeURIComponent(id)}`, undefined, {
+      shallow: true,
+    });
   };
 
   useEffect(() => {
     const tryScroll = (id, attemptsLeft = 20) => {
       const el = document.getElementById(id);
       if (el) return scrollWithOffset(id);
-      if (attemptsLeft > 0) setTimeout(() => tryScroll(id, attemptsLeft - 1), 50);
+      if (attemptsLeft > 0)
+        setTimeout(() => tryScroll(id, attemptsLeft - 1), 50);
     };
 
     const applyStoredScroll = () => {
@@ -97,20 +178,76 @@ export default function Navbar() {
     );
   };
 
-  // recent posts (deduped + sorted newest)
-  const recentPosts = useMemo(() => {
-    const arrays = Object.values(MidnightBureauData).filter(Array.isArray);
-    const flat = arrays.flat().filter((p) => p && p.slug);
-    const seen = new Set();
-    const deduped = flat.filter((p) => {
-      if (seen.has(p.slug)) return false;
-      seen.add(p.slug);
-      return true;
-    });
-    return deduped
-      .map((p) => ({ ...p, __date: toDate(p) }))
-      .sort((a, b) => b.__date - a.__date)
-      .slice(0, 3);
+  useEffect(() => {
+    let isMounted = true;
+
+    const loadRecentPosts = async () => {
+      const { data, error } = await supabase
+        .from("posts")
+        .select(
+          `
+        id,
+        type,
+        title,
+        slug,
+        status,
+        published_at,
+        banner_url,
+        archive_image_url,
+        created_at,
+        uploaded_at,
+        is_published,
+        updated_at,
+        date,
+        category,
+        post_images (
+          id,
+          storage_path,
+          kind,
+          position,
+          created_at
+        )
+      `
+        )
+        .eq("status", "published")
+        .not("slug", "is", null)
+        .not("title", "is", null);
+
+      if (error) {
+        console.error("Navbar DB load error:", error);
+        return;
+      }
+
+      if (!isMounted) return;
+
+      const deduped = [];
+      const seen = new Set();
+
+      for (const post of data || []) {
+        if (!post?.slug || seen.has(post.slug)) continue;
+        seen.add(post.slug);
+        deduped.push(post);
+      }
+
+      const sorted = deduped
+        .map((p) => ({ ...p, __date: toDate(p) }))
+        .sort((a, b) => b.__date - a.__date);
+
+      setRecentPosts(sorted.slice(0, 3));
+    };
+
+    loadRecentPosts();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const topicLinks = useMemo(() => {
+    return DEFAULT_TOPIC_GROUPS.map((group) => ({
+      label: group,
+      href: `/MidnightBureau/Archive?group=${encodeURIComponent(group)}`,
+    }));
   }, []);
 
   return (
@@ -131,7 +268,10 @@ export default function Navbar() {
             }}
           >
             {/* LEFT */}
-            <ul className="site-nav__list d-flex left" style={{ justifySelf: "start" }}>
+            <ul
+              className="site-nav__list d-flex left"
+              style={{ justifySelf: "start" }}
+            >
               <li className="site-nav__list-item d-flex show-desktop">
                 <a className="site-nav__link body-s-smallcaps " href="/">
                   Home
@@ -143,35 +283,54 @@ export default function Navbar() {
                 </a>
               </li>
               <li className="site-nav__list-item d-flex show-desktop">
-                <a className="site-nav__link body-s-smallcaps " href="/Personal/About">
+                <a
+                  className="site-nav__link body-s-smallcaps "
+                  href="/Personal/About"
+                >
                   About
                 </a>
               </li>
               <li className="site-nav__list-item d-flex show-desktop">
-                <a className="site-nav__link body-s-smallcaps " href="/Personal/Contact">
+                <a
+                  className="site-nav__link body-s-smallcaps "
+                  href="/Personal/Contact"
+                >
                   Contact
                 </a>
               </li>
               <li className="site-nav__list-item d-flex show-desktop">
-                <a className="site-nav__link body-s-smallcaps " href="/Portfolio">
+                <a
+                  className="site-nav__link body-s-smallcaps "
+                  href="/Portfolio"
+                >
                   Portfolio
                 </a>
               </li>
 
               <li className="site-nav__list-item d-flex show-tablet">
-                <a className="site-nav__link body-s-smallcaps highlight" href="/MidnightBureau">
+                <a
+                  className="site-nav__link body-s-smallcaps highlight"
+                  href="/MidnightBureau"
+                >
                   Midnight Bureau
                 </a>
               </li>
               <li className="site-nav__list-item d-flex show-mobile">
-                <a className="site-nav__link body-s-smallcaps highlight" href="/MidnightBureau">
+                <a
+                  className="site-nav__link body-s-smallcaps highlight"
+                  href="/MidnightBureau"
+                >
                   Midnight Bureau
                 </a>
               </li>
             </ul>
 
             {/* CENTER */}
-            <a href="/" className="site-nav__center-logo-link" style={{ justifySelf: "center" }}>
+            <a
+              href="/"
+              className="site-nav__center-logo-link"
+              style={{ justifySelf: "center" }}
+            >
               <span className="site-nav__logo-text">
                 <span className="site-nav__logo-first">TOBIN</span>
                 <span className="site-nav__logo-last">ALBANESE</span>
@@ -179,10 +338,15 @@ export default function Navbar() {
             </a>
 
             {/* RIGHT */}
-            <ul className="site-nav__list d-flex right" style={{ justifySelf: "end" }}>
-
+            <ul
+              className="site-nav__list d-flex right"
+              style={{ justifySelf: "end" }}
+            >
               <li className="site-nav__list-item d-flex show-desktop">
-                <a className="site-nav__link body-s-smallcaps highlight" href="/MidnightBureau">
+                <a
+                  className="site-nav__link body-s-smallcaps highlight"
+                  href="/MidnightBureau"
+                >
                   Midnight Bureau
                 </a>
               </li>
@@ -227,7 +391,10 @@ export default function Navbar() {
             }}
           >
             {/* LEFT */}
-            <ul className="site-nav__list d-flex left" style={{ justifySelf: "start" }}>
+            <ul
+              className="site-nav__list d-flex left"
+              style={{ justifySelf: "start" }}
+            >
               <li className="site-nav__list-item d-flex show-desktop">
                 <a className="site-nav__link body-s-smallcaps " href="/">
                   Home
@@ -239,35 +406,54 @@ export default function Navbar() {
                 </a>
               </li>
               <li className="site-nav__list-item d-flex show-desktop">
-                <a className="site-nav__link body-s-smallcaps " href="/Personal/About">
+                <a
+                  className="site-nav__link body-s-smallcaps "
+                  href="/Personal/About"
+                >
                   About
                 </a>
               </li>
               <li className="site-nav__list-item d-flex show-desktop">
-                <a className="site-nav__link body-s-smallcaps " href="/MidnightBureau/Contact">
+                <a
+                  className="site-nav__link body-s-smallcaps "
+                  href="/MidnightBureau/Contact"
+                >
                   Contact
                 </a>
               </li>
               <li className="site-nav__list-item d-flex show-desktop">
-                <a className="site-nav__link body-s-smallcaps " href="/Portfolio">
+                <a
+                  className="site-nav__link body-s-smallcaps "
+                  href="/Portfolio"
+                >
                   Portfolio
                 </a>
               </li>
 
               <li className="site-nav__list-item d-flex show-tablet">
-                <a className="site-nav__link body-s-smallcaps highlight" href="/MidnightBureau">
+                <a
+                  className="site-nav__link body-s-smallcaps highlight"
+                  href="/MidnightBureau"
+                >
                   Midnight Bureau
                 </a>
               </li>
               <li className="site-nav__list-item d-flex show-mobile">
-                <a className="site-nav__link body-s-smallcaps highlight" href="/MidnightBureau">
+                <a
+                  className="site-nav__link body-s-smallcaps highlight"
+                  href="/MidnightBureau"
+                >
                   Midnight Bureau
                 </a>
               </li>
             </ul>
 
             {/* CENTER */}
-            <a href="/" className="site-nav__center-logo-linkMB" style={{ justifySelf: "center" }}>
+            <a
+              href="/"
+              className="site-nav__center-logo-linkMB"
+              style={{ justifySelf: "center" }}
+            >
               <span className="site-nav__logo-textMB">
                 <span className="site-nav__logo-firstMB">TOBIN</span>
                 <span className="site-nav__logo-lastMB">ALBANESE</span>
@@ -275,9 +461,15 @@ export default function Navbar() {
             </a>
 
             {/* RIGHT */}
-            <ul className="site-nav__list d-flex right" style={{ justifySelf: "end" }}>
+            <ul
+              className="site-nav__list d-flex right"
+              style={{ justifySelf: "end" }}
+            >
               <li className="site-nav__list-item d-flex show-desktop">
-                <a className="site-nav__link body-s-smallcaps highlight" href="/MidnightBureau">
+                <a
+                  className="site-nav__link body-s-smallcaps highlight"
+                  href="/MidnightBureau"
+                >
                   Midnight Bureau
                 </a>
               </li>
@@ -305,245 +497,165 @@ export default function Navbar() {
           </div>
         </nav>
 
-        {/* Overlay menu (UPDATED) */}
+        {/* Overlay menu */}
         <nav
           className="js--menu theme-accent"
           aria-hidden={!menuOpen}
           aria-labelledby="menu-toggle"
         >
           <div className="menu__content col-12 col-xl-10">
-            {/* REMOVED: the top strip links (Archive / Books / Portfolio / Newsletter) */}
+            <div className="menu__section menu__section--top d-flex flex-wrap justify-between gap-y-30 -ml-10 -mr-10 mt-30 mb-80">
+              {/* LEFT: Browse by Section */}
+              <div className="menu__topics col-12 col-sm-6 col-lg-4-base-10">
+                <p className="menu__overline mb-20">Browse by Section</p>
+                <ul>
+                  <li className="menu__topics-list-item mb-10">
+                    <a
+                      href="/MidnightBureau/Archive"
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      Blog Archive
+                    </a>
+                  </li>
+                  <li className="menu__topics-list-item mb-10">
+                    <a
+                      href="/MidnightBureau#recent-posts"
+                      onClick={goToAnchor("/MidnightBureau", "recent-posts")}
+                    >
+                      Recent Posts
+                    </a>
+                  </li>
+                  <li className="menu__topics-list-item mb-10">
+                    <a href="/Portfolio" onClick={() => setMenuOpen(false)}>
+                      Portfolio
+                    </a>
+                  </li>
+                  <li className="menu__topics-list-item mb-10">
+                    <a
+                      href="/MidnightBureau/Newsletter"
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      Newsletter
+                    </a>
+                  </li>
+                  <li className="menu__topics-list-item mb-10">
+                    <a
+                      href="/Personal/About"
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      About Me
+                    </a>
+                  </li>
+                  <li className="menu__topics-list-item mb-10">
+                    <a
+                      href="/Personal/Contact"
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      Contact
+                    </a>
+                  </li>
+                </ul>
 
-            {/* TOP section: two columns */}
-<div className="menu__section menu__section--top d-flex flex-wrap justify-between gap-y-30 -ml-10 -mr-10 mt-30 mb-80">
+                {/* MOBILE ONLY: Browse by Topic */}
+                <div className="menu__topics-mobile-only">
+                  <p className="menu__overline mb-20 mt-40">Browse by Topic</p>
+                  <ul className="menu__links pt-30 pt-md-0">
+                    {topicLinks.map((topic) => (
+                      <li
+                        key={topic.label}
+                        className="menu__links--list-item mb-5"
+                      >
+                        <a
+                          href={topic.href}
+                          onClick={goToArchiveGroup(topic.label)}
+                        >
+                          {topic.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
 
-  {/* LEFT: Browse by Section */}
-  <div className="menu__topics col-12 col-sm-6 col-lg-4-base-10">
-    <p className="menu__overline mb-20">Browse by Section</p>
-    <ul>
-      <li className="menu__topics-list-item mb-10">
-        <a href="/MidnightBureau/Archive" onClick={() => setMenuOpen(false)}>
-          Blog Archive
-        </a>
-      </li>
-      <li className="menu__topics-list-item mb-10">
-        <a
-          href="/MidnightBureau#recent-posts"
-          onClick={goToAnchor("/MidnightBureau", "recent-posts")}
-        >
-          Recent Posts
-        </a>
-      </li>
-      <li className="menu__topics-list-item mb-10">
-        <a href="/Portfolio" onClick={() => setMenuOpen(false)}>
-          Portfolio
-        </a>
-      </li>
-      <li className="menu__topics-list-item mb-10">
-        <a href="/MidnightBureau/Newsletter" onClick={() => setMenuOpen(false)}>
-          Newsletter
-        </a>
-      </li>
-      <li className="menu__topics-list-item mb-10">
-        <a href="/Personal/About" onClick={() => setMenuOpen(false)}>
-          About Me
-        </a>
-      </li>
-      <li className="menu__topics-list-item mb-10">
-        <a href="/Personal/Contact" onClick={() => setMenuOpen(false)}>
-          Contact
-        </a>
-      </li>
-    </ul>
+              {/* RIGHT: Recent Posts + desktop/iPad Browse by Topic */}
+              <div className="menu__issues col-12 col-sm-6 col-lg-4-base-10">
+                <p className="menu__overline mb-20">Recent Posts</p>
 
-    {/* ✅ MOBILE ONLY: Browse by Topic lives UNDER Browse by Section */}
-    <div className="menu__topics-mobile-only">
-      <p className="menu__overline mb-20 mt-40">Browse by Topic</p>
-      <ul className="menu__links pt-30 pt-md-0">
-        <li className="menu__links--list-item mb-5">
-          <a
-            href="/MidnightBureau/Archive?group=World%20%26%20Diplomacy"
-            onClick={goToArchiveGroup("World & Diplomacy")}
-          >
-            World &amp; Diplomacy
-          </a>
-        </li>
-        <li className="menu__links--list-item mb-5">
-          <a
-            href="/MidnightBureau/Archive?group=Security%20%26%20Military"
-            onClick={goToArchiveGroup("Security & Military")}
-          >
-            Security &amp; Military
-          </a>
-        </li>
-        <li className="menu__links--list-item mb-5">
-          <a
-            href="/MidnightBureau/Archive?group=Energy%20%26%20Environment"
-            onClick={goToArchiveGroup("Energy & Environment")}
-          >
-            Energy &amp; Environment
-          </a>
-        </li>
-        <li className="menu__links--list-item mb-5">
-          <a
-            href="/MidnightBureau/Archive?group=Economy"
-            onClick={goToArchiveGroup("Economy")}
-          >
-            Economy
-          </a>
-        </li>
-        <li className="menu__links--list-item mb-5">
-          <a
-            href="/MidnightBureau/Archive?group=Technology"
-            onClick={goToArchiveGroup("Technology")}
-          >
-            Technology
-          </a>
-        </li>
-        <li className="menu__links--list-item mb-5">
-          <a
-            href="/MidnightBureau/Archive?group=Culture"
-            onClick={goToArchiveGroup("Culture")}
-          >
-            Culture
-          </a>
-        </li>
-        <li className="menu__links--list-item mb-5">
-          <a
-            href="/MidnightBureau/Archive?group=Ideas"
-            onClick={goToArchiveGroup("Ideas")}
-          >
-            Ideas
-          </a>
-        </li>
-      </ul>
-    </div>
-  </div>
+                <ul className="menu__issues-list d-flex">
+                  {recentPosts.map((p, i) => (
+                    <li key={p.slug || p.id || i}>
+                      <a
+                        className="menu__post-link"
+                        href={`/MidnightBureau/${p.slug}`}
+                        onClick={() => setMenuOpen(false)}
+                      >
+                        <figure
+                          style={{
+                            width: 160,
+                            height: 228,
+                            overflow: "hidden",
+                            borderRadius: 6,
+                            margin: 0,
+                          }}
+                        >
+                          <img
+                            src={pickArchiveImg(p)}
+                            alt={p.title || `Post ${i + 1}`}
+                            loading="lazy"
+                            width={160}
+                            height={228}
+                            style={{
+                              width: "160px",
+                              height: "228px",
+                              objectFit: "cover",
+                              display: "block",
+                            }}
+                          />
+                        </figure>
 
-  {/* RIGHT: Recent Posts + (desktop/iPad) Browse by Topic */}
-  <div className="menu__issues col-12 col-sm-6 col-lg-4-base-10">
-    <p className="menu__overline mb-20">Recent Posts</p>
+                        <span
+                          className="body-xs-smallcaps fs-15 pt-5"
+                          style={{
+                            width: 160,
+                            display: "-webkit-box",
+                            WebkitLineClamp: 2,
+                            WebkitBoxOrient: "vertical",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            lineHeight: 1.25,
+                          }}
+                        >
+                          {p.title?.trim() || `Post ${i + 1}`}
+                        </span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
 
-    <ul className="menu__issues-list d-flex">
-      {recentPosts.slice(0, 3).map((p, i) => (
-        <li key={p.slug}>
-          <a
-            className="menu__post-link"
-            href={`/MidnightBureau/${p.slug}`}
-            onClick={() => setMenuOpen(false)}
-          >
-            <figure
-              style={{
-                width: 160,
-                height: 228,
-                overflow: "hidden",
-                borderRadius: 6,
-                margin: 0,
-              }}
-            >
-              <img
-                src={pickArchiveImg(p)}
-                alt={p.title || `Post ${i + 1}`}
-                loading="lazy"
-                width={160}
-                height={228}
-                style={{
-                  width: "160px",
-                  height: "228px",
-                  objectFit: "cover",
-                  display: "block",
-                }}
-              />
-            </figure>
-
-            <span
-              className="body-xs-smallcaps fs-15 pt-5"
-              style={{
-                width: 160,
-                display: "-webkit-box",
-                WebkitLineClamp: 2,
-                WebkitBoxOrient: "vertical",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                lineHeight: 1.25,
-              }}
-            >
-              {p.title?.trim() || `Post ${i + 1}`}
-            </span>
-          </a>
-        </li>
-      ))}
-    </ul>
-
-    {/* ✅ DESKTOP/iPAD ONLY: Browse by Topic stays on right */}
-    <div className="menu__topics-desktop-only">
-      <p className="menu__overline mb-20 mt-40">Browse by Topic</p>
-      <ul className="menu__links pt-30 pt-md-0">
-        <li className="menu__links--list-item mb-5">
-          <a
-            href="/MidnightBureau/Archive?group=World%20%26%20Diplomacy"
-            onClick={goToArchiveGroup("World & Diplomacy")}
-          >
-            World &amp; Diplomacy
-          </a>
-        </li>
-        <li className="menu__links--list-item mb-5">
-          <a
-            href="/MidnightBureau/Archive?group=Security%20%26%20Military"
-            onClick={goToArchiveGroup("Security & Military")}
-          >
-            Security &amp; Military
-          </a>
-        </li>
-        <li className="menu__links--list-item mb-5">
-          <a
-            href="/MidnightBureau/Archive?group=Energy%20%26%20Environment"
-            onClick={goToArchiveGroup("Energy & Environment")}
-          >
-            Energy &amp; Environment
-          </a>
-        </li>
-        <li className="menu__links--list-item mb-5">
-          <a
-            href="/MidnightBureau/Archive?group=Economy"
-            onClick={goToArchiveGroup("Economy")}
-          >
-            Economy
-          </a>
-        </li>
-        <li className="menu__links--list-item mb-5">
-          <a
-            href="/MidnightBureau/Archive?group=Technology"
-            onClick={goToArchiveGroup("Technology")}
-          >
-            Technology
-          </a>
-        </li>
-        <li className="menu__links--list-item mb-5">
-          <a
-            href="/MidnightBureau/Archive?group=Culture"
-            onClick={goToArchiveGroup("Culture")}
-          >
-            Culture
-          </a>
-        </li>
-        <li className="menu__links--list-item mb-5">
-          <a
-            href="/MidnightBureau/Archive?group=Ideas"
-            onClick={goToArchiveGroup("Ideas")}
-          >
-            Ideas
-          </a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</div>
-
+                <div className="menu__topics-desktop-only">
+                  <p className="menu__overline mb-20 mt-40">Browse by Topic</p>
+                  <ul className="menu__links pt-30 pt-md-0">
+                    {topicLinks.map((topic) => (
+                      <li
+                        key={topic.label}
+                        className="menu__links--list-item mb-5"
+                      >
+                        <a
+                          href={topic.href}
+                          onClick={goToArchiveGroup(topic.label)}
+                        >
+                          {topic.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
 
             <hr className="menu__divider border-zero mb-20" />
 
-            {/* BELOW THE WHITE LINE — untouched */}
+            {/* BELOW THE WHITE LINE */}
             <div className="menu__section d-flex flex-wrap justify-between gap-y-30 -ml-10 -mr-10">
               <div className="menu__about col-12 col-sm-6 col-lg-4-base-10">
                 <p>
@@ -551,10 +663,11 @@ export default function Navbar() {
                   <strong>
                     <em>Tobin Albanese.. </em>
                   </strong>
-                  A Computer Science student and writer passionate about strategic intelligence,
-                  global affairs, and current events. This blog shares my thoughts, analyses,
-                  and personal insights across a wide range of topics including politics,
-                  technology, and culture.
+                  A Computer Science student and writer passionate about
+                  strategic intelligence, global affairs, and current events.
+                  This blog shares my thoughts, analyses, and personal insights
+                  across a wide range of topics including politics, technology,
+                  and culture.
                 </p>
                 <a
                   className="mt-30 arrow-link border-bottom-thin border-bottom d-inline-block lh-22"
@@ -572,32 +685,50 @@ export default function Navbar() {
                 <p className="menu__overline mb-20">More Resources</p>
                 <ul className="menu__links pt-30 pt-md-0">
                   <li className="menu__links--list-item mb-5">
-                    <a href="/MidnightBureau/Newsletter" onClick={() => setMenuOpen(false)}>
+                    <a
+                      href="/MidnightBureau/Newsletter"
+                      onClick={() => setMenuOpen(false)}
+                    >
                       Newsletter
                     </a>
                   </li>
                   <li className="menu__links--list-item mb-5">
-                    <a href="/MidnightBureau/FAQ" onClick={() => setMenuOpen(false)}>
+                    <a
+                      href="/MidnightBureau/FAQ"
+                      onClick={() => setMenuOpen(false)}
+                    >
                       FAQs
                     </a>
                   </li>
                   <li className="menu__links--list-item mb-5">
-                    <a href="/MidnightBureau/Podcasts" onClick={() => setMenuOpen(false)}>
+                    <a
+                      href="/MidnightBureau/Podcasts"
+                      onClick={() => setMenuOpen(false)}
+                    >
                       Podcasts
                     </a>
                   </li>
                   <li className="menu__links--list-item mb-5">
-                    <a href="/MidnightBureau/BookReviews" onClick={() => setMenuOpen(false)}>
+                    <a
+                      href="/MidnightBureau/BookReviews"
+                      onClick={() => setMenuOpen(false)}
+                    >
                       Book Reviews
                     </a>
                   </li>
                   <li className="menu__links--list-item mb-5">
-                    <a href="/MidnightBureau/Music" onClick={() => setMenuOpen(false)}>
+                    <a
+                      href="/MidnightBureau/Music"
+                      onClick={() => setMenuOpen(false)}
+                    >
                       Music Suggestions
                     </a>
                   </li>
                   <li className="menu__links--list-item mb-5">
-                    <a href="/#feedback-section" onClick={goToAnchor("/", "feedback-section")}>
+                    <a
+                      href="/#feedback-section"
+                      onClick={goToAnchor("/", "feedback-section")}
+                    >
                       Feedback
                     </a>
                   </li>
