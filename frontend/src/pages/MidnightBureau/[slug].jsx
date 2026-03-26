@@ -335,7 +335,7 @@ export default function BlogPost({
               style={{
                 width: "min(88vw, 1520px)",
                 margin: "0 auto",
-                transform: isLargeScreen ? "translateX(-6%)" : "translateX(0)",
+                transform: isLargeScreen ? "translateX(-2%)" : "translateX(0)",
               }}
             >
               <h1
@@ -344,10 +344,10 @@ export default function BlogPost({
                   margin: "1rem auto 0.75rem",
                   padding: 0,
                   width: "100%",
-                  maxWidth: "1520px",
+                  maxWidth: "1600px",
                   fontSize: "clamp(3rem, 5.6vw, 6.2rem)",
                   lineHeight: 0.92,
-                  fontWeight: 400,
+                  fontWeight: 380,
                   letterSpacing: "-0.03em",
                   textTransform: "uppercase",
                   textIndent: 0,

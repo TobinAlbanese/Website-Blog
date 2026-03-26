@@ -71,6 +71,7 @@ const BUCKET_KEYS = [
   "Technology",
   "Economy",
   "Intelligence",
+  "Economic Intelligence",
   "Defense",
   "ForeignPolicy",
   "Diplomacy",
@@ -147,9 +148,9 @@ function getCategoryPosts(postsByBucket, label) {
         takeFromKeys(postsByBucket, ["Security", "Technology"], 2, 1)
       );
     case "Economic Intelligence":
-      return uniqBySlug(
-        takeFromKeys(postsByBucket, ["Economy", "Intelligence"], 2, 1)
-      );
+  return uniqBySlug(
+    takeFromKeys(postsByBucket, ["Economic Intelligence", "Economy", "Intelligence"], 2, 1)
+  );
     case "Military & Defense":
       return uniqBySlug(
         takeFromKeys(postsByBucket, ["Defense", "Security"], 2, 1)
