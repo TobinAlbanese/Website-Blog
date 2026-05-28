@@ -20,6 +20,7 @@ const debounce = (fn, ms = 700) => {
 };
 
 const isHttpUrl = (v) => typeof v === "string" && /^https?:\/\//i.test(v);
+const SUBTITLE_MAX_LENGTH = 180;
 
 function publicUrl(storage_path) {
   return storagePathToPublicUrl(storage_path);
@@ -512,14 +513,17 @@ export default function AdminPostEditor() {
     return signed || publicUrl(storage_path);
   }
   const PORTFOLIO_CATEGORIES = [
-    "Current & In-Progress Work",
-    "Research & Analysis Projects",
-    "Computer Science Projects",
-    "Employers & Work Experience",
-    "Education & Certifications",
-    "Featured / Spotlight Projects",
-    "Speaking & Media",
-    "Collaborations",
+  "Current & In-Progress Work",
+  "Research & Analysis Projects",
+  "Computer Science Projects",
+  "Intelligence & Computer Systems",
+  "Analytical Writing & Publications",
+  "Skills & Technologies",
+  "Employers & Work Experience",
+  "Education & Certifications",
+  "Featured / Spotlight Projects",
+  "Speaking & Media",
+  "Collaborations",
   ];
 
   const BLOG_LANDING_CATEGORIES = [
@@ -545,6 +549,35 @@ export default function AdminPostEditor() {
     else setErr("");
   };
   const saveMetaDebounced = useMemo(() => debounce(saveMeta, 600), [postId]);
+
+  const saveSubtitle = async (subtitle) => {
+    if (!postId) return;
+
+    const value = subtitle.trim() ? subtitle : null;
+    setSaving(true);
+
+    let { error } = await supabase
+      .from("posts")
+      .update({ Subtitle: value })
+      .eq("id", postId);
+
+    if (error) {
+      const fallback = await supabase
+        .from("posts")
+        .update({ subtitle: value })
+        .eq("id", postId);
+
+      error = fallback.error;
+    }
+
+    setSaving(false);
+    if (error) setErr(error.message);
+    else setErr("");
+  };
+  const saveSubtitleDebounced = useMemo(
+    () => debounce(saveSubtitle, 600),
+    [postId]
+  );
 
   // ---------- publish / unpublish / archive ----------
   const publishPost = async () => {
@@ -1200,6 +1233,44 @@ const deleteImage = async ({ kind, id }) => {
                   }}
                   style={inputStyle()}
                 />
+              </Field>
+
+              <Field label="Subtitle">
+                <textarea
+                  value={post.subtitle ?? post.Subtitle ?? ""}
+                  onChange={(e) => {
+                    const subtitle = e.target.value;
+                    setPost((p) => ({ ...p, subtitle, Subtitle: subtitle }));
+
+                    if (subtitle.length > SUBTITLE_MAX_LENGTH) {
+                      setErr(
+                        `Subtitle must be ${SUBTITLE_MAX_LENGTH} characters or fewer.`
+                      );
+                      return;
+                    }
+
+                    setErr("");
+                    saveSubtitleDebounced(subtitle);
+                  }}
+                  rows={2}
+                  style={textareaStyle()}
+                />
+                <div
+                  style={{
+                    marginTop: 6,
+                    fontSize: 12,
+                    fontWeight: 800,
+                    opacity: 0.72,
+                    color:
+                      (post.subtitle ?? post.Subtitle ?? "").length >
+                      SUBTITLE_MAX_LENGTH
+                        ? "#d62827"
+                        : "inherit",
+                  }}
+                >
+                  {(post.subtitle ?? post.Subtitle ?? "").length}/
+                  {SUBTITLE_MAX_LENGTH}
+                </div>
               </Field>
 
               <Field label="Slug">

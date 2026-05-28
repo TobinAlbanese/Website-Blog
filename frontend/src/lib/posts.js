@@ -11,6 +11,7 @@ export const slugify = (s = "") =>
 export const normalize = (p = {}) => ({
   volume: p.volume ?? "VOLUME",
   title: p.title ?? "Untitled",
+  subtitle: p.subtitle ?? p.Subtitle ?? "",
   slug: p.slug ?? slugify(p.title ?? "untitled"),
   author: p.author ?? "Unknown",
   date: p.date ?? null,

@@ -11,6 +11,7 @@ import Footer from "../../components/LandingPage/Footer.jsx";
 import Navbar from "../../components/LandingPage/Navbar.jsx";
 import Script from "next/script";
 import { createClient } from "@supabase/supabase-js";
+import AutoFitText from "../../components/AutoFitText.jsx";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -74,7 +75,6 @@ function useMediaQuery(query) {
 
 const ProjectPost = ({ project, __supabaseUrl, __bucket }) => {
   const isDesktop = useMediaQuery("(min-width: 1280px)");
-  const isLargeMonitor = useMediaQuery("(min-width: 1600px)");
   const isLargeScreen = useMediaQuery("(min-width: 1280px)");
   const router = useRouter();
 
@@ -91,6 +91,7 @@ const ProjectPost = ({ project, __supabaseUrl, __bucket }) => {
 
   // ---------- Derived content/image data ----------
   const contentBlocks = Array.isArray(project?.content) ? project.content : [];
+  const subtitle = (project?.subtitle || project?.Subtitle || "").trim();
   const pairedCount = Math.max(0, contentBlocks.length - 2);
 
   const allImages = Array.isArray(project?.images)
@@ -286,40 +287,67 @@ const ProjectPost = ({ project, __supabaseUrl, __bucket }) => {
               <div
                 className="mb-title-wrap"
                 style={{
-                  width: isLargeMonitor
-                    ? "min(88vw, 1520px)"
-                    : "min(82vw, 1320px)",
+                  position: "relative",
+                  left: "50%",
+                  width: "min(92vw, 1450px)",
+                  maxWidth: "calc(100vw - 2rem)",
                   margin: "0 auto",
-                  transform: isLargeMonitor
-                    ? "translateX(-6%)"
-                    : "translateX(0)",
+                  padding: 0,
+                  boxSizing: "border-box",
+                  transform: "translateX(-50%)",
+                  textAlign: "center",
                 }}
               >
-                <h1
+                <AutoFitText
+                  as="h1"
+                  text={(project.title || "").toUpperCase()}
                   className="mb-title"
+                  minSize={44}
+                  maxSize={150}
+                  maxLines={2}
+                  mobileMaxLines={6}
                   style={{
                     margin: "1rem auto 0.75rem",
                     padding: 0,
-                    width: "100%",
-                    maxWidth: "1520px",
-                    fontSize: isLargeMonitor
-                      ? "clamp(2.8rem, 4.8vw, 5.4rem)"
-                      : "clamp(2.4rem, 4.1vw, 4.6rem)",
-                    lineHeight: 0.92,
+                    width: "fit-content",
+                    maxWidth: "100%",
+                    lineHeight: 0.9,
                     fontWeight: 400,
-                    letterSpacing: "-0.03em",
+                    letterSpacing: "-0.04em",
                     textTransform: "uppercase",
                     textIndent: 0,
                     whiteSpace: "normal",
                     wordBreak: "normal",
-                    overflowWrap: "break-word",
+                    overflowWrap: "anywhere",
                     hyphens: "none",
                     textWrap: "balance",
                     textAlign: "left",
                   }}
-                >
-                  {(project.title || "").toUpperCase()}
-                </h1>
+                />
+
+                {subtitle ? (
+                  <AutoFitText
+                    as="p"
+                    text={subtitle}
+                    className="mb-article-subtitle"
+                    minSize={20}
+                    maxSize={54}
+                    maxLines={2}
+                    mobileMaxLines={3}
+                    style={{
+                      width: "fit-content",
+                      maxWidth: "min(88vw, 1200px)",
+                      margin: "0 auto 1.1rem",
+                      lineHeight: 1.1,
+                      letterSpacing: "-0.015em",
+                      textAlign: "center",
+                      whiteSpace: "normal",
+                      wordBreak: "normal",
+                      hyphens: "none",
+                      color: "var(--text-color)",
+                    }}
+                  />
+                ) : null}
               </div>
 
               <h2 className="mb-subtitle">by {project.author || "Unknown"}</h2>
@@ -522,7 +550,7 @@ const ProjectPost = ({ project, __supabaseUrl, __bucket }) => {
 export async function getServerSideProps({ params }) {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const serviceRole = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  const bucket = process.env.NEXT_PUBLIC_SUPABASE_BUCKET || "YOUR_BUCKET_NAME";
+  const bucket = process.env.NEXT_PUBLIC_SUPABASE_BUCKET || "post-images";
 
   if (!supabaseUrl || !serviceRole) {
     return { notFound: true };
@@ -535,14 +563,28 @@ export async function getServerSideProps({ params }) {
   const slug = params?.slug;
 
   // 1) core post
-  const { data: post, error: pErr } = await supabase
+  let { data: post, error: pErr } = await supabase
     .from("posts")
     .select(
-      "id, title, slug, excerpt, banner_url, archive_image_url, volume, author, date, status, type"
+      "id, title, Subtitle, slug, excerpt, banner_url, archive_image_url, volume, author, date, status, type"
     )
     .eq("type", "portfolio")
     .eq("slug", slug)
     .maybeSingle();
+
+  if (pErr) {
+    const fallback = await supabase
+      .from("posts")
+      .select(
+        "id, title, slug, excerpt, banner_url, archive_image_url, volume, author, date, status, type"
+      )
+      .eq("type", "portfolio")
+      .eq("slug", slug)
+      .maybeSingle();
+
+    post = fallback.data;
+    pErr = fallback.error;
+  }
 
   if (pErr || !post) return { notFound: true };
 
@@ -591,6 +633,7 @@ export async function getServerSideProps({ params }) {
 
   const project = {
     title: post.title || "",
+    subtitle: post.subtitle || post.Subtitle || "",
     slug: post.slug,
     excerpt: post.excerpt || "",
     banner: post.banner_url || null,

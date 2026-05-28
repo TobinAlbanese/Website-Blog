@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookmark as solidBookmark } from "@fortawesome/free-solid-svg-icons";
 import { faBookmark as regularBookmark } from "@fortawesome/free-regular-svg-icons";
 import NavbarMB from "../../components/LandingPage/NavbarMB.jsx";
+import AutoFitText from "../../components/AutoFitText.jsx";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -77,35 +78,6 @@ function resolveImageServer(supabase, bucket, value) {
 
   const { data } = supabase.storage.from(bucket).getPublicUrl(v);
   return data?.publicUrl || "";
-}
-
-function useMediaQuery(query) {
-  const [matches, setMatches] = useState(false);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const media = window.matchMedia(query);
-    const listener = () => setMatches(media.matches);
-
-    listener();
-
-    if (media.addEventListener) {
-      media.addEventListener("change", listener);
-    } else {
-      media.addListener(listener);
-    }
-
-    return () => {
-      if (media.removeEventListener) {
-        media.removeEventListener("change", listener);
-      } else {
-        media.removeListener(listener);
-      }
-    };
-  }, [query]);
-
-  return matches;
 }
 
 export default function BlogPost({
@@ -265,7 +237,7 @@ export default function BlogPost({
     });
   };
 
-  const isLargeScreen = useMediaQuery("(min-width: 1280px)");
+  const subtitle = (article?.subtitle || article?.Subtitle || "").trim();
 
   const toggleCarouselExpand = (idx) => {
     setExpandedCarouselIndex((prev) => (prev === idx ? null : idx));
@@ -333,34 +305,67 @@ export default function BlogPost({
             <div
               className="mb-title-wrap"
               style={{
-                width: "min(88vw, 1520px)",
+                position: "relative",
+                left: "50%",
+                width: "min(92vw, 1450px)",
+                maxWidth: "calc(100vw - 2rem)",
                 margin: "0 auto",
-                transform: isLargeScreen ? "translateX(-2%)" : "translateX(0)",
+                padding: 0,
+                boxSizing: "border-box",
+                transform: "translateX(-50%)",
+                textAlign: "center",
               }}
             >
-              <h1
+              <AutoFitText
+                as="h1"
+                text={(article.title || "").toUpperCase()}
                 className="mb-title"
+                minSize={44}
+                maxSize={150}
+                maxLines={2}
+                mobileMaxLines={6}
                 style={{
                   margin: "1rem auto 0.75rem",
                   padding: 0,
-                  width: "100%",
-                  maxWidth: "1600px",
-                  fontSize: "clamp(3rem, 5.6vw, 6.2rem)",
-                  lineHeight: 0.92,
+                  width: "fit-content",
+                  maxWidth: "100%",
+                  lineHeight: 0.9,
                   fontWeight: 380,
-                  letterSpacing: "-0.03em",
+                  letterSpacing: "-0.04em",
                   textTransform: "uppercase",
                   textIndent: 0,
                   whiteSpace: "normal",
                   wordBreak: "normal",
-                  overflowWrap: "break-word",
+                  overflowWrap: "anywhere",
                   hyphens: "none",
                   textWrap: "balance",
                   textAlign: "left",
                 }}
-              >
-                {(article.title || "").toUpperCase()}
-              </h1>
+              />
+
+              {subtitle ? (
+                <AutoFitText
+                  as="p"
+                  text={subtitle}
+                  className="mb-article-subtitle"
+                  minSize={20}
+                  maxSize={54}
+                  maxLines={2}
+                  mobileMaxLines={3}
+                  style={{
+                    width: "fit-content",
+                    maxWidth: "min(88vw, 1200px)",
+                    margin: "0 auto 1.1rem",
+                    lineHeight: 1.1,
+                    letterSpacing: "-0.015em",
+                    textAlign: "center",
+                    whiteSpace: "normal",
+                    wordBreak: "normal",
+                    hyphens: "none",
+                    color: "var(--text-color)",
+                  }}
+                />
+              ) : null}
             </div>
 
             <div className="mb-article-inner">

@@ -96,6 +96,7 @@ const normalizeArticle = ({ post, sections, images, resourceGroups, resourceLink
   return {
     // match your current article props
     title: post.title || "",
+    subtitle: post.subtitle || post.Subtitle || "",
     slug: post.slug,
     author: post.author || "Unknown",
     volume: post.volume || "VOLUME",
@@ -160,4 +161,3 @@ export async function getAdminPostById(id) {
 
   return { article, error: null };
 }
-

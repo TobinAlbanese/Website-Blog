@@ -12,3 +12,5 @@ node_modules/
 # System files (macOS)
 .DS_Store
 **/.DS_Store
+.vercel
+.env*

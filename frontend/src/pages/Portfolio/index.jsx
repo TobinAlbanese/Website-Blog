@@ -6,11 +6,15 @@ import Navbar from "../../components/LandingPage/Navbar.jsx";
 import Footer from "../../components/LandingPage/Footer.jsx";
 import { createClient } from "@supabase/supabase-js";
 
-// ---- categories (keep your mapping) ----
+// ---- categories ----
+// Keep your existing mapping, but add the newer portfolio sections too.
 const categoryToId = {
   "Current & In-Progress Work": "Current-&-In-Progress-Work",
   "Research & Analysis Projects": "research-&-analysis-projects",
   "Computer Science Projects": "computer-science-projects",
+  "Intelligence & Computer Systems": "intelligence-computer-systems",
+  "Analytical Writing & Publications": "analytical-writing-publications",
+  "Skills & Technologies": "skills-technologies",
   "Employers & Work Experience": "employers-&-work-experience",
   "Education & Certifications": "education-&-certifications",
   "Featured / Spotlight Projects": "featured-spotlight-projects",
@@ -30,51 +34,68 @@ const stripHtml = (html) =>
 function getServerSupabase() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  return createClient(url, anon, { auth: { persistSession: false } });
+
+  return createClient(url, anon, {
+    auth: { persistSession: false },
+  });
 }
 
 function resolveImageServer(supabase, bucket, src) {
-  const s = (src || "").trim();
+  let s = (src || "").trim();
   if (!s) return "";
-  // already usable
-  if (s.startsWith("http://")) return s.replace("http://", "https://");
-  return s;
 
-  // assume storage path
+  if (s.startsWith("http://")) return s.replace("http://", "https://");
+  if (s.startsWith("https://")) return s;
+  if (s.startsWith("/")) return s;
+
+  // If DB accidentally stored "post-images/posts/...",
+  // strip the bucket name so the final URL does not duplicate it.
+  if (bucket && s.startsWith(`${bucket}/`)) {
+    s = s.slice(bucket.length + 1);
+  }
+
   const { data } = supabase.storage.from(bucket).getPublicUrl(s);
-  return data?.publicUrl || "";
+  return data?.publicUrl || s;
 }
 
 // --------------------
 // Client-side helpers
 // --------------------
 function resolveImageClient(src) {
-  const s = (src || "").trim();
+  let s = (src || "").trim();
   if (!s) return "/assets/images/space.webp";
 
-  // already usable
-  if (s.startsWith("http://") || s.startsWith("https://") || s.startsWith("/"))
+  if (
+    s.startsWith("http://") ||
+    s.startsWith("https://") ||
+    s.startsWith("/")
+  ) {
     return s;
+  }
 
-  // storage path -> public URL
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const bucket = process.env.NEXT_PUBLIC_SUPABASE_BUCKET || "media"; // <-- set this env or change to your bucket name
+  const bucket = process.env.NEXT_PUBLIC_SUPABASE_BUCKET || "post-images";
 
-  // standard public storage URL form
+  if (bucket && s.startsWith(`${bucket}/`)) {
+    s = s.slice(bucket.length + 1);
+  }
+
   return `${url}/storage/v1/object/public/${bucket}/${s}`;
 }
 
 function getProjectExcerpt(p) {
   if (p?.excerpt) return p.excerpt;
+
   const firstBlockHtml = Array.isArray(p?.content) ? p.content[0]?.text : "";
   const stripped = stripHtml(firstBlockHtml);
+
   if (!stripped) return "";
   return stripped.length > 220 ? stripped.slice(0, 220) + "…" : stripped;
 }
 
 function getProjectImage(p) {
-  // choose best available image field (already resolved server-side, but safe anyway)
   return (
+    p?.cardImage ||
     p?.archiveImage ||
     p?.banner ||
     (Array.isArray(p?.images) && p.images[0]) ||
@@ -94,15 +115,22 @@ function ProjectCard({ project, index }) {
 
   const imgSrc = resolveImageClient(getProjectImage(project));
   const desc = getProjectExcerpt(project);
+  const subtitle = (project?.subtitle || "").trim();
 
   const THUMB_W = 256;
   const THUMB_H = 256;
 
-  const isClickable = project.clickable !== false && !!project.slug;
+  const hasExternalLink = project.external && !!project.external_url;
+  const hasInternalPostLink = !project.external && !!project.slug;
+
+  const isClickable =
+    project.clickable !== false && (hasExternalLink || hasInternalPostLink);
 
   const cardBody = (
     <div
-      className={`project-card ${visible ? "visible" : ""} ${hover ? "hovered" : ""}`}
+      className={`project-card ${visible ? "visible" : ""} ${
+        hover ? "hovered" : ""
+      }`}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       data-clickable={isClickable ? "true" : "false"}
@@ -127,6 +155,21 @@ function ProjectCard({ project, index }) {
       >
         <div className="project-text" style={{ flex: 1, minWidth: 0 }}>
           <h3 style={{ margin: "0 0 .35rem 0" }}>{project.title}</h3>
+
+          {subtitle && (
+            <p
+              className="project-card-subtitle"
+              style={{
+                margin: "0 0 .45rem 0",
+                opacity: 0.78,
+                fontSize: "0.95rem",
+                lineHeight: 1.35,
+              }}
+            >
+              {subtitle}
+            </p>
+          )}
+
           {desc && <p style={{ margin: 0 }}>{desc}</p>}
         </div>
 
@@ -162,33 +205,38 @@ function ProjectCard({ project, index }) {
   );
 
   // Only wrap if clickable
-  if (!isClickable) return cardBody;
+// Only wrap if clickable
+if (!isClickable) return cardBody;
 
-  // External card
-  if (project.external && project.external_url) {
-    return (
-      <a
-        href={project.external_url}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label={`Open ${project.title}`}
-        style={{ textDecoration: "none", color: "inherit" }}
-      >
-        {cardBody}
-      </a>
-    );
-  }
-
-  // Internal post card
+// External card or manually linked internal route
+if (hasExternalLink) {
   return (
-    <Link
-      href={`/Portfolio/${project.slug}`}
+    <a
+      href={project.external_url}
+      target={project.external_url.startsWith("/") ? "_self" : "_blank"}
+      rel={
+        project.external_url.startsWith("/")
+          ? undefined
+          : "noopener noreferrer"
+      }
       aria-label={`Open ${project.title}`}
       style={{ textDecoration: "none", color: "inherit" }}
     >
       {cardBody}
-    </Link>
+    </a>
   );
+}
+
+// Internal portfolio post card
+return (
+  <Link
+    href={`/Portfolio/${project.slug}`}
+    aria-label={`Open ${project.title}`}
+    style={{ textDecoration: "none", color: "inherit" }}
+  >
+    {cardBody}
+  </Link>
+);
 }
 
 // ---------- Page ----------
@@ -225,7 +273,9 @@ export default function Portfolio({
         <div className="text-align-center pt-15 d-flex dfp-tag-wrapper justify-around">
           <div id="js-dfp-tag-top--2"></div>
         </div>
+
         <div id="js-dfp-tag-outofpage--2"></div>
+
         <div className="base d-flex">
           <Navbar />
 
@@ -241,6 +291,7 @@ export default function Portfolio({
                   const projects = Array.isArray(grouped?.[category])
                     ? grouped[category]
                     : [];
+
                   return (
                     <section
                       key={category}
@@ -250,6 +301,7 @@ export default function Portfolio({
                     >
                       <div className="carousel-header">
                         <h2>{category}</h2>
+
                         {projects.length > 2 && (
                           <div className="carousel-controls">
                             <button onClick={() => scroll(category, "left")}>
@@ -272,7 +324,12 @@ export default function Portfolio({
                           {projects.map((project, idx) => (
                             <div
                               className="project-wrapper"
-                              key={project.slug || project.title || idx}
+                              key={
+                                project.slug ||
+                                project.id ||
+                                project.title ||
+                                idx
+                              }
                               style={{ height: "100%" }}
                             >
                               <ProjectCard project={project} index={idx} />
@@ -295,13 +352,14 @@ export default function Portfolio({
 }
 
 // -------------------------
-// SSR: fetch + RESOLVE URLs
+// SSR: fetch + resolve URLs
 // -------------------------
 export async function getServerSideProps() {
   const supabase = getServerSupabase();
-  const BUCKET = process.env.NEXT_PUBLIC_SUPABASE_BUCKET || "media";
+  const BUCKET = process.env.NEXT_PUBLIC_SUPABASE_BUCKET || "post-images";
 
-  // 1) Groups (drives the section order + guarantees headers exist)
+  // 1) Groups:
+  // portfolio_groups controls section order and guarantees headers exist.
   const { data: groups, error: gErr } = await supabase
     .from("portfolio_groups")
     .select("id, name, slug, position")
@@ -315,7 +373,7 @@ export async function getServerSideProps() {
   const safeGroups = Array.isArray(groups) ? groups : [];
   const orderedCategories = safeGroups.map((g) => g.name);
 
-  // meta about groups (non-clickable sections etc.)
+  // Meta about groups, including optional non-clickable sections.
   const groupMeta = {};
   for (const g of safeGroups) {
     const nonClickable =
@@ -331,12 +389,12 @@ export async function getServerSideProps() {
     };
   }
 
-  // init grouped so empty sections still render
+  // Initialize grouped object so empty sections still render.
   const grouped = {};
   for (const name of orderedCategories) grouped[name] = [];
 
-  // 2) Items (drives card order within each group)
-  // Join posts by post_id (left join behavior via select nesting)
+  // 2) Curated portfolio items:
+  // portfolio_items controls manual cards, external links, custom ordering, etc.
   const { data: items, error: iErr } = await supabase
     .from("portfolio_items")
     .select(
@@ -355,6 +413,7 @@ export async function getServerSideProps() {
       posts:post_id (
         id,
         title,
+        Subtitle,
         slug,
         excerpt,
         banner_url,
@@ -376,39 +435,99 @@ export async function getServerSideProps() {
 
   const safeItems = Array.isArray(items) ? items : [];
 
-  // map group_id -> group name
+  // 3) Standalone published portfolio posts:
+  // These are real posts created through admin/editor.
+  // They appear automatically even if no portfolio_items row links to them.
+  const { data: standalonePosts, error: pErr } = await supabase
+    .from("posts")
+    .select(
+      `
+      id,
+      title,
+      Subtitle,
+      slug,
+      excerpt,
+      banner_url,
+      archive_image_url,
+      status,
+      is_published,
+      published_at,
+      type,
+      volume,
+      author,
+      date,
+      category
+    `
+    )
+    .eq("type", "portfolio")
+    .eq("status", "published")
+    .eq("is_published", true)
+    .order("published_at", { ascending: false });
+
+  if (pErr) {
+    console.log("Portfolio SSR standalone posts error:", pErr);
+  }
+
+  // Map group_id -> group name.
   const groupIdToName = {};
   for (const g of safeGroups) groupIdToName[g.id] = g.name;
 
-  // normalize cards for UI
+  // Track which post IDs are already represented by portfolio_items.
+  // This prevents duplicates when a post has both:
+  // - a posts row
+  // - a curated portfolio_items card pointing to that same post_id
+  const representedPostIds = new Set(
+    safeItems.map((it) => it.post_id).filter(Boolean)
+  );
+
+  // Normalize portfolio_items into the card shape used by ProjectCard.
   const normalizeCard = (it) => {
     const post = it.posts || null;
 
-    // image priority: item.image_url -> post.banner -> post.archive -> fallback
-    const rawImage =
-      (it.image_url || "").trim() ||
-      (post?.banner_url || "").trim() ||
-      (post?.archive_image_url || "").trim() ||
-      "";
+    // Image priority:
+    // item.image_url -> post.banner_url -> post.archive_image_url -> fallback
+    const rawCardImage = (it.image_url || "").trim();
+
+    const rawArchiveImage = (post?.archive_image_url || "").trim();
+    const rawBannerImage = (post?.banner_url || "").trim();
+
+    const resolvedCardImage =
+      resolveImageServer(supabase, BUCKET, rawCardImage) ||
+      rawCardImage ||
+      null;
+
+    const resolvedArchiveImage =
+      resolveImageServer(supabase, BUCKET, rawArchiveImage) ||
+      rawArchiveImage ||
+      null;
+
+    const resolvedBannerImage =
+      resolveImageServer(supabase, BUCKET, rawBannerImage) ||
+      rawBannerImage ||
+      null;
 
     const resolvedImage =
-      resolveImageServer(supabase, BUCKET, rawImage) || rawImage || null;
+      resolvedCardImage || resolvedArchiveImage || resolvedBannerImage || null;
 
-    // excerpt priority: item.excerpt -> post.excerpt
+    // Excerpt priority:
+    // item.excerpt -> post.excerpt
     const cardExcerpt =
       (it.excerpt || "").trim() || (post?.excerpt || "").trim() || "";
 
-    // title priority: item.title -> post.title
+    // Title priority:
+    // item.title -> post.title
     const cardTitle = (it.title || "").trim() || (post?.title || "").trim();
 
-    // slug: only if linked post exists
+    // Subtitle priority:
+    // item.subtitle -> post.Subtitle
+    const cardSubtitle =
+      (it.subtitle || "").trim() ||
+      (post?.subtitle || post?.Subtitle || "").trim() ||
+      "";
+
+    // Slug exists only if linked post exists.
     const slug = post?.slug || "";
 
-    // clickable:
-    // - explicit item.clickable false means never clickable
-    // - group non-clickable means never clickable
-    // - external items are clickable if they have external_url
-    // - internal items clickable if they have post slug
     const groupName = groupIdToName[it.group_id] || orderedCategories[0] || "";
     const groupNonClickable = !!groupMeta?.[groupName]?.nonClickable;
 
@@ -420,32 +539,116 @@ export async function getServerSideProps() {
     return {
       id: it.id,
       title: cardTitle || "Untitled",
+      subtitle: cardSubtitle,
       excerpt: cardExcerpt,
-      banner: resolvedImage,
-      archiveImage: resolvedImage,
+      cardImage: resolvedCardImage,
+      banner: resolvedBannerImage,
+      archiveImage: resolvedArchiveImage,
       images: [],
 
-      // used by ProjectCard logic
+      // Used by ProjectCard link logic.
       slug,
       clickable: isClickable,
 
-      // if external, UI can choose to open external link (optional)
+      // External cards.
       external: !!it.external,
       external_url: it.external_url || "",
 
-      // keep these for display if you want
+      // Optional display metadata.
       volume: post?.volume || null,
       author: post?.author || null,
       date: post?.date || null,
+
+      // Helpful for debugging / future filtering.
+      source: "portfolio_items",
+      postId: post?.id || null,
     };
   };
 
-  // place each item into the correct group bucket
+  // Normalize standalone posts into the same card shape.
+  const normalizeStandalonePost = (post) => {
+    const rawArchiveImage = (post?.archive_image_url || "").trim();
+    const rawBannerImage = (post?.banner_url || "").trim();
+
+    const resolvedArchiveImage =
+      resolveImageServer(supabase, BUCKET, rawArchiveImage) ||
+      rawArchiveImage ||
+      null;
+
+    const resolvedBannerImage =
+      resolveImageServer(supabase, BUCKET, rawBannerImage) ||
+      rawBannerImage ||
+      null;
+
+    return {
+      id: post.id,
+      title: post.title || "Untitled",
+      subtitle: post.subtitle || post.Subtitle || "",
+      excerpt: post.excerpt || "",
+      cardImage: null,
+      banner: resolvedBannerImage,
+      archiveImage: resolvedArchiveImage,
+      images: [],
+      slug: post.slug || "",
+      clickable: !!post.slug,
+      external: false,
+      external_url: "",
+      volume: post.volume || null,
+      author: post.author || null,
+      date: post.date || null,
+
+      // Helpful for debugging / future filtering.
+      source: "posts",
+      postId: post.id,
+    };
+  };
+
+  // 4) Place curated portfolio_items into the correct group bucket.
   for (const it of safeItems) {
     const groupName = groupIdToName[it.group_id];
-    if (!groupName) continue; // unknown group id
+    if (!groupName) continue;
+
     grouped[groupName].push(normalizeCard(it));
   }
 
-  return { props: { grouped, orderedCategories, groupMeta } };
+  // 5) Add standalone published portfolio posts that are not already represented.
+  if (Array.isArray(standalonePosts)) {
+    for (const post of standalonePosts) {
+      if (!post?.id) continue;
+
+      // Prevent duplicate display if portfolio_items already has this post_id.
+      if (representedPostIds.has(post.id)) continue;
+
+      const category =
+        post.category && typeof post.category === "string"
+          ? post.category
+          : "Featured / Spotlight Projects";
+
+      // If the category does not exist in portfolio_groups,
+      // create a dynamic section at the bottom.
+      if (!grouped[category]) {
+        grouped[category] = [];
+        orderedCategories.push(category);
+
+        groupMeta[category] = {
+          id: null,
+          name: category,
+          slug: toId(category),
+          position: orderedCategories.length,
+          nonClickable: false,
+          dynamic: true,
+        };
+      }
+
+      grouped[category].push(normalizeStandalonePost(post));
+    }
+  }
+
+  return {
+    props: {
+      grouped,
+      orderedCategories,
+      groupMeta,
+    },
+  };
 }

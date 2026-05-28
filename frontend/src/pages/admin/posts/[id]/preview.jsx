@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookmark as solidBookmark } from "@fortawesome/free-solid-svg-icons";
 import { faBookmark as regularBookmark } from "@fortawesome/free-regular-svg-icons";
 import AdminNavbar from "../../../../components/Admin/AdminNavbar.jsx";
+import AutoFitText from "../../../../components/AutoFitText.jsx";
 
 import {
   supabase,
@@ -113,6 +114,8 @@ export default function AdminPostid() {
   const [inlineResolvedBySection, setInlineResolvedBySection] = useState({});
   const [centerResolvedBySection, setCenterResolvedBySection] = useState({});
   const [galleryResolved, setGalleryResolved] = useState([]);
+
+  const subtitle = (article?.subtitle || article?.Subtitle || "").trim();
 
   useEffect(() => {
     if (!id) return;
@@ -441,9 +444,70 @@ export default function AdminPostid() {
                 </span>
               </div>
 
-              <h1 className="mb-title">
-                {(article.title || "").toUpperCase()}
-              </h1>
+              <div
+                className="mb-title-wrap"
+                style={{
+                  position: "relative",
+                  left: "50%",
+                  width: "min(92vw, 1450px)",
+                  maxWidth: "calc(100vw - 2rem)",
+                  margin: "0 auto",
+                  padding: 0,
+                  boxSizing: "border-box",
+                  transform: "translateX(-50%)",
+                  textAlign: "center",
+                }}
+              >
+                <AutoFitText
+                  as="h1"
+                  text={(article.title || "").toUpperCase()}
+                  className="mb-title"
+                  minSize={44}
+                  maxSize={150}
+                  maxLines={2}
+                  mobileMaxLines={6}
+                  style={{
+                    margin: "1rem auto 0.75rem",
+                    padding: 0,
+                    width: "fit-content",
+                    maxWidth: "100%",
+                    lineHeight: 0.9,
+                    letterSpacing: "-0.04em",
+                    textTransform: "uppercase",
+                    textIndent: 0,
+                    whiteSpace: "normal",
+                    wordBreak: "normal",
+                    overflowWrap: "anywhere",
+                    hyphens: "none",
+                    textWrap: "balance",
+                    textAlign: "left",
+                  }}
+                />
+
+                {subtitle ? (
+                  <AutoFitText
+                    as="p"
+                    text={subtitle}
+                    className="mb-article-subtitle"
+                    minSize={20}
+                    maxSize={54}
+                    maxLines={2}
+                    mobileMaxLines={3}
+                    style={{
+                      width: "fit-content",
+                      maxWidth: "min(88vw, 1200px)",
+                      margin: "0 auto 1.1rem",
+                      lineHeight: 1.1,
+                      letterSpacing: "-0.015em",
+                      textAlign: "center",
+                      whiteSpace: "normal",
+                      wordBreak: "normal",
+                      hyphens: "none",
+                      color: "var(--text-color)",
+                    }}
+                  />
+                ) : null}
+              </div>
               <h2 className="mb-subtitle">by {article.author || "Unknown"}</h2>
               <h3 className="mb-meta">
                 {article.volume || "VOLUME"}{" "}
@@ -789,5 +853,3 @@ export default function AdminPostid() {
     </>
   );
 }
-
-

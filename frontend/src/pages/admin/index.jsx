@@ -6,9 +6,59 @@ import MetaHead from "../../components/LandingPage/MetaHead.jsx";
 import SvgHead from "../../components/LandingPage/svgHead.jsx";
 import Footer from "../../components/LandingPage/Footer.jsx";
 import AdminNavbar from "../../components/Admin/AdminNavbar.jsx";
-import { supabase } from "../../lib/supabase/client";
+import {
+  supabase,
+  storagePathToPublicUrl,
+} from "../../lib/supabase/client";
 
 const FALLBACK_IMG = "/assets/images/space.webp";
+
+const isHttpUrl = (value = "") => /^https?:\/\//i.test(value);
+
+const resolvePostImage = (value) => {
+  const src = String(value || "").trim();
+  if (!src) return "";
+  if (isHttpUrl(src) || src.startsWith("/")) return src;
+  return storagePathToPublicUrl(src) || "";
+};
+
+const uniqueImages = (values) => {
+  const seen = new Set();
+  return values
+    .map(resolvePostImage)
+    .filter(Boolean)
+    .filter((src) => {
+      if (seen.has(src)) return false;
+      seen.add(src);
+      return true;
+    });
+};
+
+function CardImage({ post, alt, style }) {
+  const candidates = uniqueImages([
+    post?.archive_image_url,
+    post?.banner_url,
+    FALLBACK_IMG,
+  ]);
+  const [imageIndex, setImageIndex] = useState(0);
+
+  useEffect(() => {
+    setImageIndex(0);
+  }, [post?.id, post?.archive_image_url, post?.banner_url]);
+
+  return (
+    <img
+      src={candidates[imageIndex] || FALLBACK_IMG}
+      alt={alt}
+      onError={() => {
+        setImageIndex((current) =>
+          current + 1 < candidates.length ? current + 1 : current
+        );
+      }}
+      style={style}
+    />
+  );
+}
 
 function SectionTitle({ children }) {
   return (
@@ -120,8 +170,8 @@ function DraftBigCard({ post }) {
         e.currentTarget.style.boxShadow = "0 10px 30px rgba(0,0,0,0.1)";
       }}
     >
-      <img
-        src={post?.banner_url || FALLBACK_IMG}
+      <CardImage
+        post={post}
         alt={post?.title || "Draft"}
         style={{
           width: "100%",
@@ -232,8 +282,8 @@ function SmallPostCard({ post, kind = "draft" }) {
         e.currentTarget.style.boxShadow = "0 8px 24px rgba(0, 0, 0, 0.08)";
       }}
     >
-      <img
-        src={post?.banner_url || FALLBACK_IMG}
+      <CardImage
+        post={post}
         alt={title}
         style={{
           width: "100%",
@@ -485,14 +535,16 @@ export default function AdminIndex() {
       const [{ data: d }, { data: p }, { data: n }] = await Promise.all([
         supabase
           .from("posts")
-          .select("id,title,slug,excerpt,status,updated_at,banner_url")
+          .select(
+            "id,title,slug,excerpt,status,updated_at,banner_url,archive_image_url"
+          )
           .eq("status", "draft")
           .order("updated_at", { ascending: false })
           .limit(6),
         supabase
           .from("posts")
           .select(
-            "id,title,slug,excerpt,status,published_at,updated_at,banner_url"
+            "id,title,slug,excerpt,status,published_at,updated_at,banner_url,archive_image_url"
           )
           .eq("status", "published")
           .order("published_at", { ascending: false })

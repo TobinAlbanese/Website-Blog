@@ -174,18 +174,48 @@ const isRecentPost = (post, sortedPosts) => {
 };
 
 const pickImg = (p) => {
-  const raw =
+  return pickImgCandidates(p)[0] || "/assets/images/space.webp";
+};
+
+const pickImgCandidates = (p) => {
+  const raw = [
     p?.archiveImage ||
     p?.archive_image_url ||
     p?.archiveImageUrl ||
     p?.imageUrl ||
-    p?.image ||
-    p?.banner ||
-    p?.banner_url ||
-    (Array.isArray(p?.images) ? p.images[0] : "") ||
-    "/assets/images/space.webp";
+    p?.image,
+    p?.banner || p?.banner_url,
+    Array.isArray(p?.images) ? p.images[0] : "",
+    "/assets/images/space.webp",
+  ];
 
-  return toPublicImageUrl(raw);
+  const seen = new Set();
+  return raw
+    .map(toPublicImageUrl)
+    .filter(Boolean)
+    .filter((src) => {
+      if (seen.has(src)) return false;
+      seen.add(src);
+      return true;
+    });
+};
+
+const handleArchiveImageError = (event) => {
+  const img = event.currentTarget;
+  const candidates = String(img.dataset.imageCandidates || "")
+    .split("\n")
+    .filter(Boolean);
+  const currentIndex = Number(img.dataset.imageIndex || 0);
+  const nextIndex = currentIndex + 1;
+
+  if (nextIndex < candidates.length) {
+    img.dataset.imageIndex = String(nextIndex);
+    img.src = candidates[nextIndex];
+    return;
+  }
+
+  img.onerror = null;
+  img.src = "/assets/images/space.webp";
 };
 
 function useMediaQuery(query) {
@@ -219,8 +249,6 @@ export default function Archive({ posts = [] }) {
 
   const isMobile = useMediaQuery("(max-width: 767px)");
   const isTablet = useMediaQuery("(min-width: 768px) and (max-width: 1024px)");
-  const isSmallScreen = isMobile || isTablet;
-  const viewCount = isMobile ? 1 : isTablet ? 2 : 3;
 
   const yearsForPage = useMemo(() => {
     const years = [];
@@ -357,7 +385,6 @@ export default function Archive({ posts = [] }) {
 
   const [loadedYears, setLoadedYears] = useState([START_YEAR - 1]);
   const sentinelRef = useRef();
-  const scrollRefs = useRef({});
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -382,23 +409,6 @@ export default function Archive({ posts = [] }) {
 
   const CARD_W = 280;
   const CARD_GAP = 24;
-  const VIEWPORT_W = viewCount * CARD_W + (viewCount - 1) * CARD_GAP;
-
-  const scrollMonth = (key, direction) => {
-    const container = scrollRefs.current[key];
-    if (!container) return;
-
-    const cardWidth = CARD_W + CARD_GAP;
-    const scrollAmount = cardWidth * viewCount;
-    const maxScrollLeft = container.scrollWidth - container.clientWidth;
-
-    const newScrollLeft =
-      direction === "right"
-        ? Math.min(container.scrollLeft + scrollAmount, maxScrollLeft)
-        : Math.max(container.scrollLeft - scrollAmount, 0);
-
-    container.scrollTo({ left: newScrollLeft, behavior: "smooth" });
-  };
 
   const cardStyle = {
     backgroundColor: "var(--c-bg)",
@@ -453,136 +463,73 @@ export default function Archive({ posts = [] }) {
     marginTop: "auto",
   };
 
-  const scrollButtonStyle = {
-    cursor: "pointer",
-    border: "none",
-    background: "none",
-    fontSize: 36,
-    fontWeight: 600,
-    color: "var(--c-accent)",
-    userSelect: "none",
-    padding: 0,
-    lineHeight: 1,
-  };
-
-  const headerArrowFontSize = isMobile ? 40 : isTablet ? 60 : 28;
-
-  const headerScrollButtonStyle = {
-    cursor: "pointer",
-    border: "none",
-    background: "none",
-    fontSize: headerArrowFontSize,
-    padding: "6px 10px",
-    fontWeight: 600,
-    color: "var(--c-accent)",
-    userSelect: "none",
-    lineHeight: 1,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    transition: "transform 0.15s ease, opacity 0.15s ease",
-  };
-
   const renderMonthRow = (key, postsForMonth) => {
-    const showScrollButtons = postsForMonth.length > viewCount;
+    const gridTemplateColumns = isMobile
+      ? "minmax(0, 1fr)"
+      : isTablet
+        ? `repeat(2, ${CARD_W}px)`
+        : `repeat(3, ${CARD_W}px)`;
 
     return (
-      <>
-        <div
-          style={{
-            width: "100%",
-            maxWidth: VIEWPORT_W,
-            margin: isMobile ? "0 auto" : 0,
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              gap: CARD_GAP,
-              overflowX: "auto",
-              scrollBehavior: "smooth",
-              paddingBottom: 8,
-              width: "100%",
-              flexWrap: "nowrap",
-              scrollbarWidth: "none",
-              msOverflowStyle: "none",
-              WebkitOverflowScrolling: "touch",
-            }}
-            ref={(el) => (scrollRefs.current[key] = el)}
-            className="hide-scrollbar"
-          >
-            {postsForMonth.map((post) => {
-              const author = post.author || "Tobin Albanese";
-              return (
-                <Link
-                  href={`/MidnightBureau/${post.slug}`}
-                  key={post.slug}
-                  legacyBehavior
-                >
-                  <a
-                    className="archive-card"
-                    style={cardStyle}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = "translateY(-4px)";
-                      e.currentTarget.style.boxShadow =
-                        "0 12px 20px rgba(0,0,0,0.15)";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = "translateY(0)";
-                      e.currentTarget.style.boxShadow =
-                        "0 6px 12px rgba(0,0,0,0.1)";
-                    }}
-                  >
-                    <img
-                      src={pickImg(post)}
-                      alt={post.title}
-                      style={imgStyle}
-                    />
-                    <div style={captionStyle}>
-                      <div style={captionTitleStyle} title={post.title}>
-                        {post.title}
-                      </div>
-                      <div style={captionAuthorStyle}>{author}</div>
-                    </div>
-                  </a>
-                </Link>
-              );
-            })}
-          </div>
-        </div>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns,
+          gap: CARD_GAP,
+          width: "100%",
+          justifyContent: isMobile ? "stretch" : "start",
+        }}
+      >
+        {postsForMonth.map((post) => {
+          const author = post.author || "Tobin Albanese";
+          const imageCandidates = pickImgCandidates(post);
 
-        {!isSmallScreen && showScrollButtons && (
-          <div
-            style={{
-              display: "flex",
-              gap: 12,
-              justifyContent: "flex-end",
-              marginTop: 8,
-            }}
-          >
-            <button
-              aria-label={`Scroll ${key} left`}
-              onClick={() => scrollMonth(key, "left")}
-              style={scrollButtonStyle}
+          return (
+            <Link
+              href={`/MidnightBureau/${post.slug}`}
+              key={post.slug}
+              legacyBehavior
             >
-              ‹
-            </button>
-            <button
-              aria-label={`Scroll ${key} right`}
-              onClick={() => scrollMonth(key, "right")}
-              style={scrollButtonStyle}
-            >
-              ›
-            </button>
-          </div>
-        )}
-      </>
+              <a
+                className="archive-card"
+                style={{
+                  ...cardStyle,
+                  width: isMobile ? "100%" : CARD_W,
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "translateY(-4px)";
+                  e.currentTarget.style.boxShadow =
+                    "0 12px 20px rgba(0,0,0,0.15)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "translateY(0)";
+                  e.currentTarget.style.boxShadow =
+                    "0 6px 12px rgba(0,0,0,0.1)";
+                }}
+              >
+                <img
+                  src={imageCandidates[0] || pickImg(post)}
+                  data-image-candidates={imageCandidates.join("\n")}
+                  data-image-index="0"
+                  alt={post.title}
+                  onError={handleArchiveImageError}
+                  style={imgStyle}
+                />
+                <div style={captionStyle}>
+                  <div style={captionTitleStyle} title={post.title}>
+                    {post.title}
+                  </div>
+                  <div style={captionAuthorStyle}>{author}</div>
+                </div>
+              </a>
+            </Link>
+          );
+        })}
+      </div>
     );
   };
 
-  const renderMonthHeader = (key, monthLabel, yearLabel, postsForMonth) => {
-    const showHeaderArrows = isSmallScreen && postsForMonth.length > viewCount;
-
+  const renderMonthHeader = (_key, monthLabel, yearLabel) => {
     return (
       <div
         style={{
@@ -607,32 +554,6 @@ export default function Archive({ posts = [] }) {
         >
           {monthLabel} {yearLabel}
         </h2>
-
-        {showHeaderArrows && (
-          <div
-            style={{
-              display: "flex",
-              gap: 10,
-              alignItems: "center",
-              flex: "0 0 auto",
-            }}
-          >
-            <button
-              aria-label={`Scroll ${key} left`}
-              onClick={() => scrollMonth(key, "left")}
-              style={headerScrollButtonStyle}
-            >
-              ‹
-            </button>
-            <button
-              aria-label={`Scroll ${key} right`}
-              onClick={() => scrollMonth(key, "right")}
-              style={headerScrollButtonStyle}
-            >
-              ›
-            </button>
-          </div>
-        )}
       </div>
     );
   };
@@ -817,7 +738,6 @@ export default function Archive({ posts = [] }) {
               ) : (
                 monthsToShow.map((month) => {
                   const key = `${selectedYear}-${month}`;
-                  if (!scrollRefs.current[key]) scrollRefs.current[key] = null;
                   const postsForMonth =
                     postsByYearMonth[selectedYear][month] || [];
 
@@ -856,7 +776,6 @@ export default function Archive({ posts = [] }) {
 
                 return monthsToShowYear.map((month) => {
                   const key = `${year}-${month}`;
-                  if (!scrollRefs.current[key]) scrollRefs.current[key] = null;
                   const postsForMonth = postsByYearMonth[year][month] || [];
 
                   return (
