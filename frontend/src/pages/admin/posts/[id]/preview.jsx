@@ -117,6 +117,8 @@ export default function AdminPostid() {
 
   const subtitle = (article?.subtitle || article?.Subtitle || "").trim();
 
+
+  
   useEffect(() => {
     if (!id) return;
     let cancelled = false;
@@ -347,11 +349,12 @@ export default function AdminPostid() {
   if (loadErr) return <p style={{ padding: "2rem" }}>Error: {loadErr}</p>;
   if (!article) return <p style={{ padding: "2rem" }}>Loading post…</p>;
 
-  const bannerSrc = bannerResolved || "/assets/images/space.webp";
+ const bannerSrc = bannerResolved || "/assets/images/space.webp";
 
-  const safeSections = Array.isArray(sections) ? sections : [];
-  const introSection = safeSections[0] || null;
-  const bodySections = safeSections.slice(1);
+const safeSections = Array.isArray(sections) ? sections : [];
+const hasMultipleSections = safeSections.length > 1;
+const introSection = hasMultipleSections ? safeSections[0] : null;
+const bodySections = hasMultipleSections ? safeSections.slice(1) : safeSections;
 
   const galleryImages = galleryResolved;
 
@@ -521,15 +524,6 @@ export default function AdminPostid() {
                 />
               ) : null}
 
-              {safeSections.length === 1 && (
-                <div
-                  className="text-block mb-text"
-                  dangerouslySetInnerHTML={{
-                    __html: safeSections[0]?.body || "",
-                  }}
-                />
-              )}
-
               {bodySections.map((sec, sectionIdx) => {
                 const inlineList = inlineResolvedBySection[sec.id] || [];
                 const centerList = centerResolvedBySection[sec.id] || [];
@@ -611,24 +605,26 @@ export default function AdminPostid() {
                       }}
                     >
                       {inlineSrc ? (
-  <img
-    id={`img-inline-${sec.id}-${inlineCursor}`}
-    data-inline-image="true"
-    data-inline-key={`${sec.id}-${inlineCursor}`}
-    src={inlineSrc}
-    alt={`Inline Image ${inlineCursor + 1}`}
-    className={`card-image mb-float-img ${
-      visibleImages[`${sec.id}-${inlineCursor}`] ? "slide-in" : ""
-    }`}
-    style={{
-      ...floatStyle,
-      width: "260px",
-      height: "380px",
-      objectFit: "cover",
-    }}
-    onClick={() => setModalImage(inlineSrc)}
-  />
-) : null}
+                        <img
+                          id={`img-inline-${sec.id}-${inlineCursor}`}
+                          data-inline-image="true"
+                          data-inline-key={`${sec.id}-${inlineCursor}`}
+                          src={inlineSrc}
+                          alt={`Inline Image ${inlineCursor + 1}`}
+                          className={`card-image mb-float-img ${
+                            visibleImages[`${sec.id}-${inlineCursor}`]
+                              ? "slide-in"
+                              : ""
+                          }`}
+                          style={{
+                            ...floatStyle,
+                            width: "260px",
+                            height: "380px",
+                            objectFit: "cover",
+                          }}
+                          onClick={() => setModalImage(inlineSrc)}
+                        />
+                      ) : null}
 
                       <div
                         className="text-block mb-text"

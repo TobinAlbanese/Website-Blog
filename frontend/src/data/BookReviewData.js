@@ -39,111 +39,67 @@ const BookReviewData = {
 
     {
       volume: "BOOK REVIEW",
-      title: "The Folly of Fools: The Logic of Deceit and Self-Deception in Human Life",
-      slug: "the-folly-of-fools",
-      author: "Robert Trivers",
-      date: "2014-01-07",
-      excerpt:
-        "An evolutionary lens on why humans (and other organisms) deceive others—and themselves—and how that shapes conflict, mating, memory, and institutions.",
-      archiveImage: "https://covers.openlibrary.org/b/isbn/9780465085972-L.jpg",
-      banner: "https://covers.openlibrary.org/b/isbn/9780465085972-L.jpg",
+      title: "How Russia Really Works: The Informal Practices That Shaped Post-Soviet Politics And Business (Culture and Society After Socialism)",
+      slug: "How Russia Really Works",
+      author: "Alena V. Ledeneva",
+      date: "2023-12-19",
+      excerpt: "",
+      archiveImage: "https://covers.openlibrary.org/b/id/1507981-L.jpg",
+      banner: "https://covers.openlibrary.org/b/id/1507981-L.jpg",
       content: [
-        {
-          text: "<p><strong>Core idea:</strong> Self-deception can be adaptive because it hides tells that betray our intentions. Trivers threads biology, psychology, and social behavior to show how miscalibrated confidence, selective memory, and moral licensing persist.</p>",
-        },
-        {
-          text: "<p><strong>Why read it:</strong> It’s a durable mental model for analysis work. If you’re mapping influence ops, organizational blind spots, or decision-making under uncertainty, this book explains <em>why</em> sincere but false beliefs are so resilient—and how awareness can mitigate them.</p>",
-        },
+
       ],
       images: [
-        "https://covers.openlibrary.org/b/isbn/9780465085972-L.jpg",
+        "https://covers.openlibrary.org/b/id/1507981-L.jpg",
       ],
       resources: {
         References: [
-          {
-            label: "Open Library (edition)",
-            url: "https://openlibrary.org/books/OL27549810M/The_Folly_of_Fools",
-            external: true,
-          },
-          {
-            label: "Publisher page",
-            url: "https://www.amazon.com/Folly-Fools-Logic-Deceit-Self-Deception/dp/0465085970",
-            external: true,
-          },
+
         ],
       },
     },
 
     {
       volume: "BOOK REVIEW",
-      title: "CHENEY: The Untold Story of America's Most Powerful and Controversial Vice President",
-      slug: "cheney-stephen-hayes",
-      author: "Stephen F. Hayes",
-      date: "2007-07-24",
+      title: "The convenient terrorist two whistleblowers' stories of torture, terror, secret wars, and CIA lies",
+      slug: "John-Kirakou-Convenient-Terrorist",
+      author: "John Kirakous",
+      date: "2025-10-02",
       excerpt:
-        "A reported biography built from deep access and hundreds of interviews, tracing Dick Cheney’s arc from Wyoming to DOD to the vice presidency after 9/11.",
-      archiveImage: "https://covers.openlibrary.org/b/isbn/9780060723460-L.jpg",
-      banner: "https://covers.openlibrary.org/b/isbn/9780060723460-L.jpg",
+        "The Convenient Terrorist is the definitive inside account of the capture, torture, and detention of Abu Zubaydah, the first high-value target captured by the CIA after 9/11. But was Abu Zubaydah, who is still being indefinitely held by the United States under shadowy circumstances, the blue-ribbon capture that the Bush White House claimed he was? Authors John Kiriakou, who led the capture of Zubaydah, and Joseph Hickman, who took custody of him at Guantanamo, draw a far more complex and intriguing portrait of the al-Qaeda mastermind who became a symbol of torture and the dark side of US security. From a one-time American collaborator to a poster boy for waterboarding, Abu Zubaydah became a convenient terrorist --A way for US authorities to sell their War on Terror to the American people.",
+      archiveImage: "https://covers.openlibrary.org/b/id/14428455-L.jpg",
+      banner: "https://covers.openlibrary.org/b/id/14428455-L.jpg",
       content: [
-        {
-          text: "<p><strong>Strengths:</strong> Process detail—how the office worked, how options were framed, and how risk was understood in the post-9/11 context. Useful for students of executive power, interagency friction, and the trade-offs inherent in speed vs. deliberation.</p>",
-        },
-        {
-          text: "<p><strong>Read it as:</strong> A sympathetic but informative view that adds texture to public caricatures. Pair with critics to triangulate. Good for mapping how biography, ideology, and institutional incentives shape national security decisions.</p>",
-        },
       ],
       images: [
-        "https://covers.openlibrary.org/b/isbn/9780060723460-L.jpg",
+        "https://covers.openlibrary.org/b/id/14428455-L.jpg",
       ],
       resources: {
         References: [
-          {
-            label: "Open Road Media (book info)",
-            url: "https://openroadmedia.com/ebook/cheney/9780061740602",
-            external: true,
-          },
-          {
-            label: "ISBN listing",
-            url: "https://freshfiction.com/book.php?id=19515",
-            external: true,
-          },
+
         ],
       },
     },
 
     {
       volume: "BOOK REVIEW",
-      title: "The Very Best Men: The Early Years of the CIA",
-      slug: "the-very-best-men",
-      author: "Evan Thomas",
-      date: "1995-01-01",
+      title: "Tradecraft, Tactics, and Dirty Tricks: Russian Intelligence and Putin's Secret War",
+      slug: "Tradecraft",
+      author: "Sean M. Wiswesser",
+      date: "2025-25-12",
       excerpt:
-        "A narrative of CIA’s formative period through four operators—Wisner, Bissell, Barnes, FitzGerald—capturing ambition, improvisation, and overreach.",
-      archiveImage: "https://covers.openlibrary.org/b/isbn/9780684810256-L.jpg",
-      banner: "https://covers.openlibrary.org/b/isbn/9780684810256-L.jpg",
+        "Step into the covert world of Russian espionage with this revealing insider's account of how the Russian Intelligence Services (RIS) operate across the globe. Drawing on years of CIA field experience, Sean M. Wiswesser exposes the tactics, tradecraft, and mindset of the RIS--making this a must-read for anyone fascinated by spies, sabotage, and the high-stakes intelligence war between Russia and the West.",
+      archiveImage: "https://i.thriftbooks.com/api/imagehandler/m/B2A1F77F8B4D37926BC6B68B8B19609F81D726F2.jpeg",
+      banner: "https://i.thriftbooks.com/api/imagehandler/m/B2A1F77F8B4D37926BC6B68B8B19609F81D726F2.jpeg",
       content: [
-        {
-          text: "<p><strong>What stands out:</strong> The human factor: ego, rivalry, and idealism steering covert action from post-WWII through the Bay of Pigs. It shows how brilliant people can still misjudge environments when feedback loops are weak and optimism is high.</p>",
-        },
-        {
-          text: "<p><strong>Use it for:</strong> Context on early tradecraft culture and how institutional myths are born. It pairs well with critical histories to see where lessons were learned—or ignored—by later generations.</p>",
-        },
+
       ],
       images: [
-        "https://m.media-amazon.com/images/I/51lcllCXlCL._SY445_SX342_.jpg",
+        "https://i.thriftbooks.com/api/imagehandler/m/B2A1F77F8B4D37926BC6B68B8B19609F81D726F2.jpeg",
       ],
       resources: {
         References: [
-          {
-            label: "Simon & Schuster (publisher)",
-            url: "https://www.simonandschuster.com/books/The-Very-Best-Men/Evan-Thomas/9781416537977",
-            external: true,
-          },
-          {
-            label: "Open Library (record)",
-            url: "https://openlibrary.org/books/OL788929M/The_very_best_men",
-            external: true,
-          },
+
         ],
       },
     },
