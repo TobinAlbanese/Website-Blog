@@ -9,7 +9,6 @@ const FALLBACK_THUMB = "/assets/images/space.webp";
 const SPECIAL_FOCUS_ORDER = [
   "midnight-bureau-expansion",
   "european-terrorist-group-intel-report",
-  "global-intel-hub-launch-finalization",
   "russian-affairs-project",
 ];
 
