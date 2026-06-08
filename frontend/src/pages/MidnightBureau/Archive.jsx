@@ -120,7 +120,7 @@ const galleryImages = [
   "/assets/images/Syria2.webp",
   "/assets/images/WhiteHouse.webp",
   "/assets/images/AFG2.webp",
-  "/assets/images/Space2.webp",
+  "/assets/images/Snowboarding1.webp",
   "/assets/images/AFG4.webp",
   "/assets/images/AFG5.webp",
   "/assets/images/Lucia2.webp",
@@ -129,7 +129,6 @@ const galleryImages = [
   "/assets/images/AFG.webp",
   "/assets/images/Snowboard.webp",
   "/assets/images/Snowboard2.webp",
-  "/assets/images/Snowboarding1.webp",
 ].map(toPublicImageUrl);
 
 // --------------------

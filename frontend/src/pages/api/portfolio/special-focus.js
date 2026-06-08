@@ -4,17 +4,38 @@ import { supabaseServer } from "../../../lib/supabase/supabaseServer";
 const PUBLIC_BUCKET = "public-images";
 const POSTS_BUCKET = "post-images";
 
+const FALLBACK_THUMB = "/assets/images/space.webp";
+
+const SPECIAL_FOCUS_ORDER = [
+  "midnight-bureau-expansion",
+  "european-terrorist-group-intel-report",
+  "global-intel-hub-launch-finalization",
+  "russian-affairs-project",
+];
+
+const RUSSIA_SIDEBAR_PUBLIC_PATH = "russia9.webp";
+
 function publicBucketUrl(path) {
   if (!path) return "";
-  const clean = String(path).replace(/^\/+/, "").replace(/^public-images\//i, "");
+
+  const clean = String(path)
+    .replace(/^\/+/, "")
+    .replace(/^public-images\//i, "");
+
   const { data } = supabaseServer.storage.from(PUBLIC_BUCKET).getPublicUrl(clean);
+
   return data?.publicUrl || "";
 }
 
 function postsBucketUrl(path) {
   if (!path) return "";
-  const clean = String(path).replace(/^\/+/, "").replace(/^post-images\//i, "");
+
+  const clean = String(path)
+    .replace(/^\/+/, "")
+    .replace(/^post-images\//i, "");
+
   const { data } = supabaseServer.storage.from(POSTS_BUCKET).getPublicUrl(clean);
+
   return data?.publicUrl || "";
 }
 
@@ -22,11 +43,15 @@ function toResolvedImageUrl(src) {
   if (!src) return "";
 
   const value = String(src).trim();
+
   if (!value) return "";
 
-  if (/^https?:\/\//i.test(value)) return value;
+  if (/^https?:\/\//i.test(value)) {
+    return value;
+  }
 
   const assetsMatch = value.match(/^\/assets\/images\/(.+)$/i);
+
   if (assetsMatch?.[1]) {
     return publicBucketUrl(assetsMatch[1]);
   }
@@ -38,73 +63,37 @@ function toResolvedImageUrl(src) {
   return publicBucketUrl(value);
 }
 
-async function fetchGroupItemsByName(groupName, limit) {
-  const { data: group, error: groupErr } = await supabaseServer
-    .from("portfolio_groups")
-    .select("id, name")
-    .eq("name", groupName)
-    .single();
+function normalizePost(post) {
+  const bannerImage = toResolvedImageUrl(post.banner_url);
+  const archiveImage = toResolvedImageUrl(post.archive_image_url);
 
-  if (groupErr || !group?.id) return [];
+  const imageUrl =
+    bannerImage ||
+    archiveImage ||
+    toResolvedImageUrl("fallbacks/space.webp") ||
+    FALLBACK_THUMB;
 
-  const { data, error } = await supabaseServer
-    .from("portfolio_items")
-    .select(`
-      id,
-      title,
-      excerpt,
-      image_url,
-      position,
-      created_at,
-      updated_at,
-      post_id,
-      posts:post_id (
-        id,
-        slug,
-        title,
-        excerpt,
-        author,
-        date,
-        banner_url,
-        archive_image_url,
-        created_at,
-        published_at
-      )
-    `)
-    .eq("group_id", group.id)
-    .order("position", { ascending: true })
-    .limit(limit * 6);
+  return {
+    id: post.id,
+    slug: post.slug,
+    title: post.title || "Untitled",
+    excerpt: post.excerpt || "",
+    author: post.author || "Tobin M. Albanese",
+    date: post.date || post.published_at || post.created_at || null,
 
-  if (error) throw error;
+    banner_url: bannerImage,
+    archive_image_url: archiveImage,
 
-  const usable = (data || []).filter((row) => row?.posts?.slug);
+    banner: bannerImage,
+    archiveImage,
+    imageUrl,
+    displayImage: imageUrl,
 
-  return usable.slice(0, limit).map((row) => {
-    const post = row.posts;
+    imageAlt: post.title || "Portfolio image",
 
-    const imageUrl =
-      toResolvedImageUrl(row.image_url) ||
-      toResolvedImageUrl(post?.archive_image_url) ||
-      toResolvedImageUrl(post?.banner_url) ||
-      toResolvedImageUrl("fallbacks/space.webp") ||
-      "/assets/images/space.webp";
-
-    return {
-      id: row.id,
-      slug: post.slug,
-      title: row.title || post.title || "Untitled",
-      excerpt: row.excerpt || post.excerpt || "",
-      author: post.author || "Tobin M. Albanese",
-      date:
-        post.date ||
-        post.published_at ||
-        post.created_at ||
-        row.updated_at ||
-        row.created_at,
-      imageUrl,
-      imageAlt: row.title || post.title || "Portfolio image",
-    };
-  });
+    // Kept for clarity. Your frontend will still decide whether it is clickable.
+    clickable: false,
+  };
 }
 
 export default async function handler(req, res) {
@@ -114,28 +103,59 @@ export default async function handler(req, res) {
       return res.status(405).json({ error: "Method not allowed" });
     }
 
-    const limitRaw = parseInt(req.query.limit || "3", 10);
-    const limit = Number.isFinite(limitRaw)
-      ? Math.min(Math.max(limitRaw, 1), 6)
-      : 3;
+    const { data, error } = await supabaseServer
+      .from("posts")
+      .select(
+        `
+        id,
+        slug,
+        type,
+        title,
+        excerpt,
+        author,
+        date,
+        status,
+        is_published,
+        clickable,
+        banner_url,
+        archive_image_url,
+        created_at,
+        published_at
+      `
+      )
+      .eq("type", "portfolio")
+      .eq("status", "published")
+      .eq("is_published", true)
+      .in("slug", SPECIAL_FOCUS_ORDER);
 
-    const GROUP = "Current & In-Progress Work";
-    const items = await fetchGroupItemsByName(GROUP, limit);
+    if (error) {
+      throw error;
+    }
 
-    const { data: sidebarData } = supabaseServer
-      .storage
-      .from(PUBLIC_BUCKET)
-      .getPublicUrl("stellarisWorkflow.webp");
+    const bySlug = new Map((data || []).map((post) => [post.slug, post]));
 
-    const sidebarImage = sidebarData?.publicUrl || "";
+    const items = SPECIAL_FOCUS_ORDER.map((slug) => bySlug.get(slug))
+      .filter(Boolean)
+      .map(normalizePost);
+
+    const sidebarImage =
+      publicBucketUrl(RUSSIA_SIDEBAR_PUBLIC_PATH) ||
+      "https://aekjhiphxycnybowwgud.supabase.co/storage/v1/object/public/public-images/russia9.webp";
 
     return res.status(200).json({
-      group: GROUP,
+      group: "Current & In-Progress Work",
       items,
       sidebarImage,
     });
   } catch (e) {
     console.error("special-focus API error:", e);
-    return res.status(500).json({ error: e?.message || "Unknown error" });
+
+    return res.status(500).json({
+      group: "Current & In-Progress Work",
+      items: [],
+      sidebarImage:
+        "https://aekjhiphxycnybowwgud.supabase.co/storage/v1/object/public/public-images/russia9.webp",
+      error: e?.message || "Unknown error",
+    });
   }
 }

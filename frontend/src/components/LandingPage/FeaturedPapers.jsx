@@ -2,12 +2,26 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 
-const getHref = (p) => `/Portfolio/${p.slug}`;
+const FALLBACK_THUMB = "/assets/images/space.webp";
+const FALLBACK_SIDEBAR = "/assets/images/Russia4.webp";
+
+const getHref = (p) => {
+  if (p?.href) return p.href;
+
+  if (p?.type === "mb") {
+    return `/MidnightBureau/${p.slug}`;
+  }
+
+  return `/Portfolio/${p.slug}`;
+};
 
 const formatDate = (iso) => {
   if (!iso) return "";
+
   const d = new Date(iso);
+
   if (Number.isNaN(d.getTime())) return "";
+
   return d.toLocaleDateString(undefined, {
     year: "numeric",
     month: "short",
@@ -15,54 +29,18 @@ const formatDate = (iso) => {
   });
 };
 
-const SB_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
-const PUBLIC_BUCKET = "public-images";
-const POSTS_BUCKET = "post-images";
+const firstTruthy = (...xs) => xs.find(Boolean);
 
-const publicBucketUrl = (path) => {
-  if (!SB_URL || !path) return "";
-  return `${SB_URL}/storage/v1/object/public/${PUBLIC_BUCKET}/${String(path).replace(/^\/+/, "")}`;
-};
-
-const postsBucketUrl = (path) => {
-  if (!SB_URL || !path) return "";
-  return `${SB_URL}/storage/v1/object/public/${POSTS_BUCKET}/${String(path).replace(/^\/+/, "")}`;
-};
-
-const toResolvedImageUrl = (src) => {
-  if (!src) return "";
-
-  const value = String(src).trim();
-  if (!value) return "";
-
-  if (/^https?:\/\//i.test(value)) return value;
-
-  const assetsMatch = value.match(/^\/assets\/images\/(.+)$/i);
-  if (assetsMatch?.[1]) {
-    return publicBucketUrl(assetsMatch[1]);
-  }
-
-  if (value.startsWith("posts/")) {
-    return postsBucketUrl(value);
-  }
-
-  return publicBucketUrl(value);
-};
-
-const pickPostImage = (post) => {
-  const raw =
-    post?.image_url ||
-    post?.banner_url ||
-    post?.banner ||
-    post?.archive_image_url ||
-    post?.archiveImage ||
-    post?.archiveImageUrl ||
-    post?.imageUrl ||
-    post?.image ||
-    "";
-
-  return post?.imageUrl || toResolvedImageUrl(raw) || "";
-};
+const pickPostImage = (post) =>
+  firstTruthy(
+    post?.imageUrl,
+    post?.displayImage,
+    post?.banner_url,
+    post?.banner,
+    post?.archive_image_url,
+    post?.archiveImage,
+    FALLBACK_THUMB
+  );
 
 export default function FeaturedPapers() {
   const [posts, setPosts] = useState([]);
@@ -78,8 +56,9 @@ export default function FeaturedPapers() {
         setLoading(true);
         setFailed(false);
 
-        const res = await fetch("/api/portfolio/featured-papers?perGroup=2", {
+        const res = await fetch("/api/portfolio/featured-papers", {
           method: "GET",
+          cache: "no-store",
           headers: {
             "Content-Type": "application/json",
           },
@@ -90,19 +69,19 @@ export default function FeaturedPapers() {
         }
 
         const data = await res.json();
-        const selected = Array.isArray(data?.posts) ? data.posts : [];
 
-        if (active) {
-          setPosts(selected);
-          setSidebarImage(data?.sidebarImage || "");
-        }
+        if (!active) return;
+
+        setPosts(Array.isArray(data?.posts) ? data.posts.slice(0, 4) : []);
+        setSidebarImage(data?.sidebarImage || "");
       } catch (e) {
         console.error("FeaturedPapers fetch failed:", e);
-        if (active) {
-          setPosts([]);
-          setSidebarImage("");
-          setFailed(true);
-        }
+
+        if (!active) return;
+
+        setPosts([]);
+        setSidebarImage("");
+        setFailed(true);
       } finally {
         if (active) {
           setLoading(false);
@@ -134,6 +113,7 @@ export default function FeaturedPapers() {
           <h3 className="font-style-italic c-accent mt-15 fs-md-24 lh-lg">
             Featured Papers
           </h3>
+
           <h4
             className="fs-18 mb-15 fs-md-16"
             data-armstrong-id="module_subtitle"
@@ -149,28 +129,22 @@ export default function FeaturedPapers() {
           >
             {/* Large right image */}
             <div className="col-12 col-md-5 d-flex justify-center align-items-center home-hide-narrow">
-              {sidebarImage ? (
-                <img
-                  src={sidebarImage}
-                  alt="Featured papers artwork"
-                  loading="lazy"
-                  onLoad={() =>
-                    console.log("Sidebar image loaded:", sidebarImage)
-                  }
-                  onError={() =>
-                    console.log("Sidebar image failed:", sidebarImage)
-                  }
-                  style={{
-                    maxWidth: "100%",
-                    height: 650,
-                    borderRadius: 8,
-                    objectFit: "cover",
-                    display: "block",
-                  }}
-                />
-              ) : (
-                <div className="body-s c-text-secondary">No sidebar image</div>
-              )}
+              <img
+                src={sidebarImage || FALLBACK_SIDEBAR}
+                alt="Featured papers artwork"
+                loading="lazy"
+                onError={(e) => {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = FALLBACK_SIDEBAR;
+                }}
+                style={{
+                  maxWidth: "100%",
+                  height: 650,
+                  borderRadius: 8,
+                  objectFit: "cover",
+                  display: "block",
+                }}
+              />
             </div>
 
             {/* Cards */}
@@ -189,8 +163,7 @@ export default function FeaturedPapers() {
 
               {!loading && !failed && posts.length === 0 && (
                 <div className="col-12 body-s c-text-secondary">
-                  No featured papers yet. Once you create portfolio groups +
-                  items in Supabase, they’ll appear here automatically.
+                  No featured papers yet.
                 </div>
               )}
 
@@ -198,9 +171,9 @@ export default function FeaturedPapers() {
                 !failed &&
                 posts.map((p, i) => {
                   const href = getHref(p);
-                  const img = pickPostImage(p) || "/assets/images/space.webp";
+                  const img = pickPostImage(p);
                   const title = p.title || "Untitled";
-                  const desc = p.excerpt || "Read the full paper.";
+                  const desc = p.excerpt || p.subtitle || "Read the full paper.";
                   const author = p.author || "Tobin Albanese";
                   const dateDisplay = formatDate(p.date);
 
@@ -212,12 +185,20 @@ export default function FeaturedPapers() {
                         (i === 0 ? "border-top border-top-thin pt-20 " : "") +
                         "border-bottom border-bottom-thin c-border"
                       }
-                      style={{ alignItems: "stretch", position: "relative" }}
+                      style={{
+                        alignItems: "stretch",
+                        position: "relative",
+                      }}
                     >
                       <Link
                         href={href}
                         aria-label={title}
-                        style={{ position: "absolute", inset: 0, zIndex: 1 }}
+                        style={{
+                          position: "absolute",
+                          inset: 0,
+                          zIndex: 1,
+                          borderRadius: 6,
+                        }}
                       />
 
                       <div
@@ -226,7 +207,10 @@ export default function FeaturedPapers() {
                       >
                         <h3
                           className="body-m"
-                          style={{ marginBottom: 6, textTransform: "none" }}
+                          style={{
+                            marginBottom: 6,
+                            textTransform: "none",
+                          }}
                         >
                           <span>{title}</span>
                         </h3>
@@ -251,16 +235,24 @@ export default function FeaturedPapers() {
                           }}
                         >
                           <span>{author}</span>
-                          <span
-                            aria-hidden="true"
-                            style={{
-                              lineHeight: 1,
-                              transform: "translateY(-0.5px)",
-                            }}
-                          >
-                            ✵
-                          </span>
-                          <time dateTime={p.date || ""}>{dateDisplay}</time>
+
+                          {dateDisplay && (
+                            <>
+                              <span
+                                aria-hidden="true"
+                                style={{
+                                  lineHeight: 1,
+                                  transform: "translateY(-0.5px)",
+                                }}
+                              >
+                                ✵
+                              </span>
+
+                              <time dateTime={p.date || ""}>
+                                {dateDisplay}
+                              </time>
+                            </>
+                          )}
                         </p>
                       </div>
 
@@ -272,7 +264,7 @@ export default function FeaturedPapers() {
                             loading="lazy"
                             onError={(e) => {
                               e.currentTarget.onerror = null;
-                              e.currentTarget.src = "/assets/images/space.webp";
+                              e.currentTarget.src = FALLBACK_THUMB;
                             }}
                             style={{
                               width: "100%",

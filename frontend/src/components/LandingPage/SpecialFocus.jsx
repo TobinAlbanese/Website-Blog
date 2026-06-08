@@ -1,16 +1,33 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 
-const getHref = (item, base = "/Portfolio") => `${base}/${item.slug}`;
-
 const FALLBACK_THUMB = "/assets/images/space.webp";
-const FALLBACK_SIDEBAR = "/assets/images/stellarisWorkflow.webp";
+
+const FALLBACK_SIDEBAR =
+  "https://aekjhiphxycnybowwgud.supabase.co/storage/v1/object/public/public-images/russia9.webp";
+
 const PODCAST_FALLBACK_IMG = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/public-images/Podcast.png`;
+
+const firstTruthy = (...xs) => xs.find(Boolean);
+
+const pickProjectImg = (item) =>
+  firstTruthy(
+    item?.banner_url,
+    item?.banner,
+    item?.displayImage,
+    item?.imageUrl,
+    item?.archive_image_url,
+    item?.archiveImage,
+    FALLBACK_THUMB
+  );
 
 const formatDate = (iso) => {
   if (!iso) return "";
+
   const d = new Date(iso);
+
   if (Number.isNaN(d.getTime())) return "";
+
   return d.toLocaleDateString(undefined, {
     year: "numeric",
     month: "short",
@@ -20,7 +37,6 @@ const formatDate = (iso) => {
 
 export default function SpecialFocus() {
   const [current, setCurrent] = useState([]);
-  const [sidebarImage, setSidebarImage] = useState("");
   const [loading, setLoading] = useState(true);
   const [failed, setFailed] = useState(false);
 
@@ -34,6 +50,7 @@ export default function SpecialFocus() {
 
         const res = await fetch("/api/portfolio/special-focus?limit=4", {
           method: "GET",
+          cache: "no-store",
           headers: {
             "Content-Type": "application/json",
           },
@@ -46,14 +63,13 @@ export default function SpecialFocus() {
         const data = await res.json();
 
         if (active) {
-          setCurrent(Array.isArray(data?.items) ? data.items : []);
-          setSidebarImage(data?.sidebarImage || "");
+          setCurrent(Array.isArray(data?.items) ? data.items.slice(0, 4) : []);
         }
       } catch (e) {
         console.error("SpecialFocus fetch failed:", e);
+
         if (active) {
           setCurrent([]);
-          setSidebarImage("");
           setFailed(true);
         }
       } finally {
@@ -81,7 +97,7 @@ export default function SpecialFocus() {
     date: null,
   };
 
-  const cards = [...current, podcastCard];
+  const cards = [...current.slice(0, 4), podcastCard];
 
   const IMG_MAX_W_DESKTOP = 220;
   const ASPECT_RATIO = "16 / 10";
@@ -95,6 +111,7 @@ export default function SpecialFocus() {
         <h3 className="font-style-italic c-accent mt-15 fs-md-24 lh-lg">
           Special Focus
         </h3>
+
         <h4
           className="fs-18 mb-15 fs-md-16"
           data-armstrong-id="module_subtitle"
@@ -111,7 +128,7 @@ export default function SpecialFocus() {
           {/* Large right image */}
           <div className="col-12 col-md-5 d-flex justify-center align-items-center home-hide-narrow">
             <img
-              src={sidebarImage || FALLBACK_SIDEBAR}
+              src={FALLBACK_SIDEBAR}
               alt="Special Focus Visual"
               loading="lazy"
               onError={(e) => {
@@ -153,8 +170,11 @@ export default function SpecialFocus() {
               !failed &&
               cards.map((item, i) => {
                 const isPodcast = !!item._isPodcast;
-                const href = item._href || getHref(item);
-                const imgSrc = item.imageUrl || FALLBACK_THUMB;
+
+                const imgSrc = isPodcast
+                  ? item.imageUrl || PODCAST_FALLBACK_IMG
+                  : pickProjectImg(item);
+
                 const title = item.title || "Untitled";
                 const excerpt = item.excerpt || "Details coming soon.";
                 const dateDisplay = formatDate(item.date);
@@ -170,18 +190,21 @@ export default function SpecialFocus() {
                       alignItems: "flex-start",
                       marginBottom: 14,
                       position: "relative",
+                      cursor: isPodcast ? "pointer" : "default",
                     }}
                   >
-                    <Link
-                      href={href}
-                      aria-label={title}
-                      style={{
-                        position: "absolute",
-                        inset: 0,
-                        zIndex: 1,
-                        borderRadius: 6,
-                      }}
-                    />
+                    {isPodcast && (
+                      <Link
+                        href={item._href}
+                        aria-label={title}
+                        style={{
+                          position: "absolute",
+                          inset: 0,
+                          zIndex: 1,
+                          borderRadius: 6,
+                        }}
+                      />
+                    )}
 
                     {/* Text */}
                     <div
@@ -208,18 +231,22 @@ export default function SpecialFocus() {
                         {excerpt}
                       </p>
 
-                      <p
-                        className="body-s c-accent home-hide-meta"
-                        style={{
-                          fontSize: "0.9rem",
-                          marginTop: "auto",
-                          marginBottom: 18,
-                          display: "flex",
-                          gap: 10,
-                        }}
-                      >
-                        <time dateTime={item.date || ""}>{dateDisplay}</time>
-                      </p>
+                      {!isPodcast && dateDisplay && (
+                        <p
+                          className="body-s c-accent home-hide-meta"
+                          style={{
+                            fontSize: "0.9rem",
+                            marginTop: "auto",
+                            marginBottom: 18,
+                            display: "flex",
+                            gap: 10,
+                          }}
+                        >
+                          <time dateTime={item.date || ""}>
+                            {dateDisplay}
+                          </time>
+                        </p>
+                      )}
                     </div>
 
                     {/* Thumbnail */}
@@ -238,7 +265,11 @@ export default function SpecialFocus() {
                           style={{ marginRight: 8 }}
                         >
                           <svg
-                            style={{ width: 14, height: 14, display: "block" }}
+                            style={{
+                              width: 14,
+                              height: 14,
+                              display: "block",
+                            }}
                           >
                             <use href="#icon-podcast" />
                           </svg>
@@ -251,7 +282,9 @@ export default function SpecialFocus() {
                         loading="lazy"
                         onError={(e) => {
                           e.currentTarget.onerror = null;
-                          e.currentTarget.src = FALLBACK_THUMB;
+                          e.currentTarget.src = isPodcast
+                            ? PODCAST_FALLBACK_IMG
+                            : FALLBACK_THUMB;
                         }}
                         style={{
                           width: "100%",

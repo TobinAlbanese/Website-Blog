@@ -1,109 +1,105 @@
+// pages/api/portfolio/featured-papers.js
 import { supabaseServer } from "../../../lib/supabase/supabaseServer";
 
-const BUCKET = "public-images";
+const PUBLIC_BUCKET = "public-images";
+const POSTS_BUCKET = "post-images";
 
-function resolveImageUrl(supabase, maybePathOrUrl) {
-  if (!maybePathOrUrl) return null;
+const FALLBACK_THUMB = "/assets/images/space.webp";
 
-  const value = String(maybePathOrUrl).trim();
-  if (!value) return null;
+const FEATURED_PAPERS_ORDER = [
+  "the-al-qaeda-framework",
+  "strategic-proxies",
+  "russian-affairs-research-project",
+  "political-science-ballot-research-paper",
+];
 
-  if (/^https?:\/\//i.test(value)) return value;
+function publicBucketUrl(path) {
+  if (!path) return "";
 
-  if (value.startsWith("/")) {
-    const key = value.replace(/^\/assets\/images\//i, "");
-    const { data } = supabase.storage.from(BUCKET).getPublicUrl(key);
-    return data?.publicUrl || null;
+  const clean = String(path)
+    .replace(/^\/+/, "")
+    .replace(/^public-images\//i, "");
+
+  const { data } = supabaseServer.storage
+    .from(PUBLIC_BUCKET)
+    .getPublicUrl(clean);
+
+  return data?.publicUrl || "";
+}
+
+function postsBucketUrl(path) {
+  if (!path) return "";
+
+  const clean = String(path)
+    .replace(/^\/+/, "")
+    .replace(/^post-images\//i, "");
+
+  const { data } = supabaseServer.storage.from(POSTS_BUCKET).getPublicUrl(clean);
+
+  return data?.publicUrl || "";
+}
+
+function toResolvedImageUrl(src) {
+  if (!src) return "";
+
+  const value = String(src).trim();
+
+  if (!value) return "";
+
+  if (/^https?:\/\//i.test(value)) {
+    return value;
   }
 
-  const cleaned = value.replace(/^public-images\//i, "");
-  const { data } = supabase.storage.from(BUCKET).getPublicUrl(cleaned);
-  return data?.publicUrl || null;
+  if (value.startsWith("/assets/images/")) {
+    return value.replace(/\.(jpg|jpeg|png)$/i, ".webp");
+  }
+
+  if (value.startsWith("posts/")) {
+    return postsBucketUrl(value);
+  }
+
+  return publicBucketUrl(value);
 }
 
-async function getGroupIdByName(groupName) {
-  const { data, error } = await supabaseServer
-    .from("portfolio_groups")
-    .select("id")
-    .eq("name", groupName)
-    .single();
+function hrefForPost(post) {
+  if (post.type === "mb") {
+    return `/MidnightBureau/${post.slug}`;
+  }
 
-  if (error) return null;
-  return data?.id || null;
+  return `/Portfolio/${post.slug}`;
 }
 
-async function fetchPortfolioItemsForGroup(groupId, limit) {
-  if (!groupId) return [];
+function normalizePost(post) {
+  const bannerImage = toResolvedImageUrl(post.banner_url);
+  const archiveImage = toResolvedImageUrl(post.archive_image_url);
 
-  const { data, error } = await supabaseServer
-    .from("portfolio_items")
-    .select(
-      `
-      id,
-      title,
-      excerpt,
-      image_url,
-      external,
-      external_url,
-      clickable,
-      position,
-      created_at,
-      updated_at,
-      post_id,
-      posts:post_id (
-        id,
-        slug,
-        title,
-        excerpt,
-        author,
-        date,
-        published_at,
-        created_at,
-        banner_url,
-        archive_image_url
-      )
-    `
-    )
-    .eq("group_id", groupId)
-    .order("position", { ascending: true })
-    .limit(limit * 8);
+  const imageUrl =
+    bannerImage ||
+    archiveImage ||
+    toResolvedImageUrl("fallbacks/space.webp") ||
+    FALLBACK_THUMB;
 
-  if (error) throw error;
+  return {
+    id: post.id,
+    type: post.type,
+    slug: post.slug,
+    title: post.title || "Untitled",
+    subtitle: post.subtitle || "",
+    excerpt: post.excerpt || "",
+    author: post.author || "Tobin Albanese",
+    date: post.date || post.published_at || post.created_at || null,
 
-  const usable = (data || []).filter((row) => row?.posts?.slug);
+    href: hrefForPost(post),
 
-  return usable.slice(0, limit).map((row) => {
-    const post = row.posts;
+    banner_url: bannerImage,
+    archive_image_url: archiveImage,
+    banner: bannerImage,
+    archiveImage,
+    imageUrl,
+    displayImage: imageUrl,
 
-    const imageUrl =
-      resolveImageUrl(supabaseServer, row.image_url) ||
-      resolveImageUrl(supabaseServer, post?.archive_image_url) ||
-      resolveImageUrl(supabaseServer, post?.banner_url) ||
-      resolveImageUrl(supabaseServer, "fallbacks/space.webp") ||
-      "/assets/images/space.webp";
-
-    return {
-      id: row.id,
-      slug: post.slug,
-      title: row.title || post.title || "Untitled",
-      excerpt: row.excerpt || post.excerpt || "",
-      author: post.author || "Tobin Albanese",
-      date: post.date || post.published_at || post.created_at || row.updated_at || row.created_at,
-      imageUrl,
-      imageAlt: row.title || post.title || "Paper thumbnail",
-      group: groupId,
-    };
-  });
-}
-
-function uniqBySlug(list) {
-  const seen = new Set();
-  return (list || []).filter((p) => {
-    if (!p?.slug) return false;
-    if (seen.has(p.slug)) return false;
-    seen.add(p.slug);
-    return true;
-  });
+    imageAlt: post.title || "Paper thumbnail",
+  };
 }
 
 export default async function handler(req, res) {
@@ -113,51 +109,60 @@ export default async function handler(req, res) {
       return res.status(405).json({ error: "Method not allowed" });
     }
 
-    const perGroupRaw = parseInt(req.query.perGroup || "2", 10);
-    const perGroup = Number.isFinite(perGroupRaw)
-      ? Math.min(Math.max(perGroupRaw, 1), 6)
-      : 2;
+    const { data, error } = await supabaseServer
+      .from("posts")
+      .select(
+        `
+        id,
+        slug,
+        type,
+        title,
+        subtitle,
+        excerpt,
+        author,
+        date,
+        status,
+        is_published,
+        clickable,
+        banner_url,
+        archive_image_url,
+        created_at,
+        published_at
+      `
+      )
+      .in("type", ["portfolio", "mb"])
+      .eq("status", "published")
+      .eq("is_published", true)
+      .in("slug", FEATURED_PAPERS_ORDER);
 
-    const GROUP_A = "Analytical Writing & Publications";
-    const GROUP_B = "Research & Analysis Projects";
+    if (error) {
+      throw error;
+    }
 
-    const [groupAId, groupBId] = await Promise.all([
-      getGroupIdByName(GROUP_A),
-      getGroupIdByName(GROUP_B),
-    ]);
+    const bySlug = new Map((data || []).map((post) => [post.slug, post]));
 
-    const [aRaw, bRaw] = await Promise.all([
-      fetchPortfolioItemsForGroup(groupAId, perGroup),
-      fetchPortfolioItemsForGroup(groupBId, perGroup),
-    ]);
-
-    const used = new Set();
-    const takeUnique = (arr) => {
-      const out = [];
-      for (const p of uniqBySlug(arr)) {
-        if (out.length >= perGroup) break;
-        if (p?.slug && !used.has(p.slug)) {
-          used.add(p.slug);
-          out.push(p);
-        }
-      }
-      return out;
-    };
-
-    const a = takeUnique(aRaw);
-    const b = takeUnique(bRaw);
+    const posts = FEATURED_PAPERS_ORDER.map((slug) => bySlug.get(slug))
+      .filter(Boolean)
+      .map(normalizePost);
 
     const sidebarImage =
-      resolveImageUrl(supabaseServer, "Russia4.webp") ||
-      "/assets/images/Russia4.webp";
+      toResolvedImageUrl("Russia4.webp") || "/assets/images/Russia4.webp";
 
     return res.status(200).json({
-      groups: { a: GROUP_A, b: GROUP_B },
-      posts: [...a, ...b],
+      groups: {
+        a: "Analytical Writing & Publications",
+        b: "Research & Analysis Projects",
+      },
+      posts,
       sidebarImage,
     });
   } catch (e) {
     console.error("featured-papers API error:", e);
-    return res.status(500).json({ error: e?.message || "Unknown error" });
+
+    return res.status(500).json({
+      posts: [],
+      sidebarImage: "",
+      error: e?.message || "Unknown error",
+    });
   }
 }
