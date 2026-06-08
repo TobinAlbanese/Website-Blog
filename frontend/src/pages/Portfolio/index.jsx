@@ -22,11 +22,16 @@ const categoryToId = {
   Collaborations: "collaborations",
 };
 
+const NON_CLICKABLE_CATEGORIES = new Set([
+  "Current & In-Progress Work",
+]);
+
 const toId = (name) =>
   categoryToId[name] || name.replace(/[^\w\- ]+/g, "").replace(/\s+/g, "-");
 
 const stripHtml = (html) =>
   typeof html === "string" ? html.replace(/<[^>]*>/g, "") : "";
+
 
 // --------------------
 // Server-side helpers
@@ -456,7 +461,8 @@ export async function getServerSideProps() {
       volume,
       author,
       date,
-      category
+      category,
+      clickable
     `
     )
     .eq("type", "portfolio")
@@ -590,7 +596,7 @@ export async function getServerSideProps() {
       archiveImage: resolvedArchiveImage,
       images: [],
       slug: post.slug || "",
-      clickable: !!post.slug,
+      clickable: post.clickable !== false && !!post.slug,
       external: false,
       external_url: "",
       volume: post.volume || null,
