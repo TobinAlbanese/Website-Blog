@@ -13,6 +13,9 @@ const FEATURED_PAPERS_ORDER = [
   "political-science-ballot-research-paper",
 ];
 
+const SIDEBAR_IMAGE =
+  "https://aekjhiphxycnybowwgud.supabase.co/storage/v1/object/public/public-images/Russia4.webp";
+
 function publicBucketUrl(path) {
   if (!path) return "";
 
@@ -34,7 +37,9 @@ function postsBucketUrl(path) {
     .replace(/^\/+/, "")
     .replace(/^post-images\//i, "");
 
-  const { data } = supabaseServer.storage.from(POSTS_BUCKET).getPublicUrl(clean);
+  const { data } = supabaseServer.storage
+    .from(POSTS_BUCKET)
+    .getPublicUrl(clean);
 
   return data?.publicUrl || "";
 }
@@ -84,7 +89,6 @@ function normalizePost(post) {
     type: post.type,
     slug: post.slug,
     title: post.title || "Untitled",
-    subtitle: post.subtitle || "",
     excerpt: post.excerpt || "",
     author: post.author || "Tobin Albanese",
     date: post.date || post.published_at || post.created_at || null,
@@ -117,7 +121,6 @@ export default async function handler(req, res) {
         slug,
         type,
         title,
-        subtitle,
         excerpt,
         author,
         date,
@@ -136,6 +139,7 @@ export default async function handler(req, res) {
       .in("slug", FEATURED_PAPERS_ORDER);
 
     if (error) {
+      console.error("Supabase featured-papers query error:", error);
       throw error;
     }
 
@@ -145,23 +149,20 @@ export default async function handler(req, res) {
       .filter(Boolean)
       .map(normalizePost);
 
-    const sidebarImage =
-      toResolvedImageUrl("Russia4.webp") || "/assets/images/Russia4.webp";
-
     return res.status(200).json({
       groups: {
         a: "Analytical Writing & Publications",
         b: "Research & Analysis Projects",
       },
       posts,
-      sidebarImage,
+      sidebarImage: SIDEBAR_IMAGE,
     });
   } catch (e) {
     console.error("featured-papers API error:", e);
 
     return res.status(500).json({
       posts: [],
-      sidebarImage: "",
+      sidebarImage: SIDEBAR_IMAGE,
       error: e?.message || "Unknown error",
     });
   }

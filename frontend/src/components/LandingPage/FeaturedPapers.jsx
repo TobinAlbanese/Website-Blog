@@ -173,7 +173,7 @@ export default function FeaturedPapers() {
                   const href = getHref(p);
                   const img = pickPostImage(p);
                   const title = p.title || "Untitled";
-                  const desc = p.excerpt || p.subtitle || "Read the full paper.";
+                  const desc = p.excerpt || "Read the full paper.";
                   const author = p.author || "Tobin Albanese";
                   const dateDisplay = formatDate(p.date);
 
