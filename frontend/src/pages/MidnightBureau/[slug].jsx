@@ -243,6 +243,21 @@ export default function BlogPost({
     setExpandedCarouselIndex((prev) => (prev === idx ? null : idx));
   };
 
+  const [isPhoneTitle, setIsPhoneTitle] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const checkPhone = () => {
+      setIsPhoneTitle(window.innerWidth <= 480);
+    };
+
+    checkPhone();
+    window.addEventListener("resize", checkPhone);
+
+    return () => window.removeEventListener("resize", checkPhone);
+  }, []);
+
   return (
     <>
       <MetaHead />
@@ -317,29 +332,30 @@ export default function BlogPost({
               }}
             >
               <AutoFitText
+                key={`${article.id}-${isPhoneTitle ? "phone" : "desktop"}`}
                 as="h1"
                 text={(article.title || "").toUpperCase()}
                 className="mb-title"
-                minSize={44}
-                maxSize={150}
-                maxLines={2}
-                mobileMaxLines={6}
+                minSize={isPhoneTitle ? 28 : 44}
+                maxSize={isPhoneTitle ? 62 : 150}
+                maxLines={isPhoneTitle ? 4 : 2}
+                mobileMaxLines={isPhoneTitle ? 4 : 6}
                 style={{
                   margin: "1rem auto 0.75rem",
                   padding: 0,
-                  width: "fit-content",
+                  width: isPhoneTitle ? "100%" : "fit-content",
                   maxWidth: "100%",
-                  lineHeight: 0.9,
+                  lineHeight: isPhoneTitle ? 0.92 : 0.9,
                   fontWeight: 380,
-                  letterSpacing: "-0.04em",
+                  letterSpacing: isPhoneTitle ? "-0.035em" : "-0.04em",
                   textTransform: "uppercase",
                   textIndent: 0,
                   whiteSpace: "normal",
                   wordBreak: "normal",
-                  overflowWrap: "anywhere",
+                  overflowWrap: isPhoneTitle ? "break-word" : "anywhere",
                   hyphens: "none",
                   textWrap: "balance",
-                  textAlign: "left",
+                  textAlign: isPhoneTitle ? "center" : "left",
                 }}
               />
 
