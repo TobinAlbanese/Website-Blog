@@ -7,7 +7,7 @@ const POSTS_BUCKET = "post-images";
 const FALLBACK_THUMB = "/assets/images/space.webp";
 
 const SPECIAL_FOCUS_ORDER = [
-  "midnight-bureau-expansion",
+  "midnight-bureau-blog-expansion",
   "european-terrorist-group-intel-report",
   "russian-affairs-project",
 ];

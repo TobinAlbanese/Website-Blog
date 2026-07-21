@@ -48,10 +48,10 @@ My long-term vision includes:
 
 ---
 
-## 🕵️ Midnight Bureau  
+## 🕵️ Research Journal  
 **A living journal of signals, systems, and psychological landscapes.**  
 
-The **Midnight Bureau** is the analytical blog embedded in my personal website. It is inspired by the idea that intelligence doesn't sleep — and neither do the questions we face as AI, surveillance, conflict, and culture rapidly evolve.
+The **Research Journal** is the analytical blog embedded in my personal website. It is inspired by the idea that intelligence doesn't sleep — and neither do the questions we face as AI, surveillance, conflict, and culture rapidly evolve.
 
 It is not just a blog. It’s a **research journal**, a **tactical archive**, and a **personal observatory** where I explore:
 - Emerging technologies in artificial intelligence
@@ -182,7 +182,7 @@ Ultimately, I believe:
             [MidnightBureau@gmail.com](mailto:MidnightBureau@gmail.com)  
             [tobinmalbanese@gmail.com](mailto:tobinmalbanese@gmail.com) 
 - 🧠 GitHub: [github.com/tobinalbanese](https://github.com/tobinalbanese)  
-- 🕵️ Blog: [The Midnight Bureau](https://www.tobinalbanese.com/MidnightBureau)  
+- 🕵️ Blog: [The Research Journal](https://www.tobinalbanese.com/MidnightBureau)  
 
 ---
 

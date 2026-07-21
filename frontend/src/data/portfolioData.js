@@ -209,7 +209,7 @@ const PortfolioData = {
         ],
         "Related Work": [
           {
-            label: "Midnight Bureau (Case Notes)",
+            label: "Research Journal (Case Notes)",
             url: "/MidnightBureau",
             external: false,
           },
@@ -445,7 +445,7 @@ const PortfolioData = {
         ],
         "Reports & Case Studies": [
           {
-            label: "Midnight Bureau (Case Notes)",
+            label: "Research Journal (Case Notes)",
             url: "/MidnightBureau",
             external: false,
           },
@@ -842,7 +842,7 @@ const PortfolioData = {
         ],
         "Related Work": [
           {
-            label: "Midnight Bureau (Case Notes)",
+            label: "Research Journal (Case Notes)",
             url: "/MidnightBureau",
             external: false,
           },
@@ -1078,7 +1078,7 @@ const PortfolioData = {
         ],
         "Reports & Case Studies": [
           {
-            label: "Midnight Bureau (Case Notes)",
+            label: "Research Journal (Case Notes)",
             url: "/MidnightBureau",
             external: false,
           },
@@ -1273,13 +1273,13 @@ const PortfolioData = {
       author: "Tobin M. Albanese",
       date: "2025-01-01",
       excerpt:
-        "My personal website for exploring my portfolio, stories about me & my interests, along with the curation of my blog page; Midnight Bureau where I dive into topics I'm most interested in & real time Intelligence analysis!",
+        "My personal website for exploring my portfolio, stories about me & my interests, along with the curation of my blog page; Research Journal where I dive into topics I'm most interested in & real time Intelligence analysis!",
       archiveImage: "/assets/images/portfolioHub.webp",
       banner: "/assets/images/portfolioBanner.webp",
       content: [
         {
           text: `
-      <p><strong>Why this exists.</strong> I wanted one quiet place to gather the things I’m building and learning—projects, essays, and the Midnight Bureau archive—without chasing half-finished drafts across apps. This site is my working notebook in public. It’s tidy on the surface so it’s pleasant to read, but it doesn’t hide the in-progress parts: the small experiments, the detours, the questions I’m still figuring out. I also wanted permanence. Links should stay valid, citations should have a home, and files shouldn’t disappear because a platform changed its mind. Publishing here gives me a stable address to point to, a place I control, and a rhythm that encourages me to refine ideas out in the open instead of waiting for “perfect.”</p>
+      <p><strong>Why this exists.</strong> I wanted one quiet place to gather the things I’m building and learning—projects, essays, and the Research Journal archive—without chasing half-finished drafts across apps. This site is my working notebook in public. It’s tidy on the surface so it’s pleasant to read, but it doesn’t hide the in-progress parts: the small experiments, the detours, the questions I’m still figuring out. I also wanted permanence. Links should stay valid, citations should have a home, and files shouldn’t disappear because a platform changed its mind. Publishing here gives me a stable address to point to, a place I control, and a rhythm that encourages me to refine ideas out in the open instead of waiting for “perfect.”</p>
     `,
         },
         {
@@ -1328,7 +1328,7 @@ const PortfolioData = {
             url: "https://www.tobinalbanese.com",
             external: true,
           },
-          { label: "Midnight Bureau", url: "/MidnightBureau", external: false },
+          { label: "Research Journal", url: "/MidnightBureau", external: false },
         ],
         "About & Research": [
           { label: "About / CV", url: "/About", external: false },
@@ -2090,7 +2090,7 @@ privacy_reporting: { dp_epsilon_monthly: 2.0 }
 "Current & In-Progress Work": [
   {
     volume: "PORTFOLIO — IN PROGRESS",
-    title: "Midnight Bureau Blog Expansion",
+    title: "Research Journal Blog Expansion",
     slug: "midnight-bureau-expansion",
     author: "Tobin M. Albanese",
     date: "2025-02-01",
@@ -2136,7 +2136,7 @@ privacy_reporting: { dp_epsilon_monthly: 2.0 }
     ],
     resources: {
       LiveAndDemos: [
-        { label: "Midnight Bureau", url: "/MidnightBureau", external: false },
+        { label: "Research Journal", url: "/MidnightBureau", external: false },
         { label: "Live Site", url: "https://www.tobinalbanese.com", external: true }
       ],
       CodeAndRoadmap: [
@@ -2571,7 +2571,7 @@ export default PortfolioData;
         ],
         "Reports & Briefs": [
           {
-            label: "Midnight Bureau (Case Notes)",
+            label: "Research Journal (Case Notes)",
             url: "/MidnightBureau",
             external: false,
           },

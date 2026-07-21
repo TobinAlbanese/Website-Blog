@@ -23,7 +23,7 @@ const toDate = (p) => {
       p?.created_at ||
       p?.published_at ||
       p?.date ||
-      0
+      0,
   );
   return Number.isNaN(d.getTime()) ? new Date(0) : d;
 };
@@ -51,9 +51,7 @@ const resolveAnyImageUrl = (value) => {
 
   // try both buckets used in your project
   return (
-    tryBucketUrl("post-images", v) ||
-    tryBucketUrl("public-images", v) ||
-    null
+    tryBucketUrl("post-images", v) || tryBucketUrl("public-images", v) || null
   );
 };
 
@@ -87,7 +85,6 @@ const resolveStorageUrl = (path) => {
   const { data } = supabase.storage.from("post-images").getPublicUrl(value);
   return data?.publicUrl || null;
 };
-
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -174,7 +171,7 @@ export default function Navbar() {
     await router.push(
       `/MidnightBureau/Archive?group=${encodeURIComponent(group)}#archive-content`,
       undefined,
-      { shallow: true }
+      { shallow: true },
     );
   };
 
@@ -207,7 +204,7 @@ export default function Navbar() {
           position,
           created_at
         )
-      `
+      `,
         )
         .eq("status", "published")
         .not("slug", "is", null)
@@ -312,7 +309,7 @@ export default function Navbar() {
                   className="site-nav__link body-s-smallcaps highlight"
                   href="/MidnightBureau"
                 >
-                  Midnight Bureau
+                  Research Journal
                 </a>
               </li>
               <li className="site-nav__list-item d-flex show-mobile">
@@ -320,7 +317,7 @@ export default function Navbar() {
                   className="site-nav__link body-s-smallcaps highlight"
                   href="/MidnightBureau"
                 >
-                  Midnight Bureau
+                  Research Journal
                 </a>
               </li>
             </ul>
@@ -347,7 +344,7 @@ export default function Navbar() {
                   className="site-nav__link body-s-smallcaps highlight"
                   href="/MidnightBureau"
                 >
-                  Midnight Bureau
+                  Research Journal
                 </a>
               </li>
               <li className="site-nav__list-item">
@@ -435,7 +432,7 @@ export default function Navbar() {
                   className="site-nav__link body-s-smallcaps highlight"
                   href="/MidnightBureau"
                 >
-                  Midnight Bureau
+                  Research Journal
                 </a>
               </li>
               <li className="site-nav__list-item d-flex show-mobile">
@@ -443,7 +440,7 @@ export default function Navbar() {
                   className="site-nav__link body-s-smallcaps highlight"
                   href="/MidnightBureau"
                 >
-                  Midnight Bureau
+                  Research Journal
                 </a>
               </li>
             </ul>
@@ -470,7 +467,7 @@ export default function Navbar() {
                   className="site-nav__link body-s-smallcaps highlight"
                   href="/MidnightBureau"
                 >
-                  Midnight Bureau
+                  Research Journal
                 </a>
               </li>
               <li className="site-nav__list-item">
@@ -514,7 +511,7 @@ export default function Navbar() {
                       href="/MidnightBureau/Archive"
                       onClick={() => setMenuOpen(false)}
                     >
-                      Blog Archive
+                      Journal Archive
                     </a>
                   </li>
                   <li className="menu__topics-list-item mb-10">
@@ -659,16 +656,17 @@ export default function Navbar() {
             <div className="menu__section d-flex flex-wrap justify-between gap-y-30 -ml-10 -mr-10">
               <div className="menu__about col-12 col-sm-6 col-lg-4-base-10">
                 <p>
-                  Hi, I'm{" "}
+                  Hi, I’m{" "}
                   <strong>
-                    <em>Tobin Albanese.. </em>
-                  </strong>
-                  A Computer Science student and writer passionate about
-                  strategic intelligence, global affairs, and current events.
-                  This blog shares my thoughts, analyses, and personal insights
-                  across a wide range of topics including politics, technology,
-                  and culture.
+                    <em>Tobin Albanese.</em>
+                  </strong>{" "}
+                  I’m an International Relations and Political Science student
+                  focused on Russia, Eastern Europe, diplomacy, and global
+                  affairs. This site is where I share my research, analysis, and
+                  personal perspective on politics, intelligence, technology,
+                  and the issues shaping our world.
                 </p>
+
                 <a
                   className="mt-30 arrow-link border-bottom-thin border-bottom d-inline-block lh-22"
                   href="/Personal/About"

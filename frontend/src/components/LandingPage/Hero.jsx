@@ -1,6 +1,6 @@
 // components/LandingPage/LandingSection.jsx (or Hero.jsx)
 import React, { useEffect, useState } from "react";
-import { publicImageUrl } from "../../lib/supabase/client"; 
+import { publicImageUrl } from "../../lib/supabase/client";
 // 👆 adjust the relative path ("../../") if your folder structure is different
 
 export default function LandingSection() {
@@ -10,7 +10,7 @@ export default function LandingSection() {
     setAnimate(true);
   }, []);
 
-const heroImageSrc = publicImageUrl("Tobin-Johnny.webp");
+  const heroImageSrc = publicImageUrl("Tobin-Johnny.webp");
 
   return (
     <section className="c-bg" data-armstrong-id="wrapper">
@@ -35,24 +35,26 @@ const heroImageSrc = publicImageUrl("Tobin-Johnny.webp");
                 className="body-m c-text-secondary"
                 style={{ fontSize: 18, lineHeight: 1.6 }}
               >
-                Hi, I&apos;m Tobin Albanese — a student, writer, thinker, and
-                creator behind the blog <em>Midnight Bureau</em>.
-                <br />
-                This space is where I share my insights on politics, culture,
-                and the ideas that inspire me every day. Through thoughtful
-                analysis and personal reflections, I aim to explore the
-                complexities of the world around us and encourage meaningful
-                conversations.
+                Hi, I&apos;m Tobin Albanese — a student, researcher, writer, and
+                developer with interests in politics, international affairs,
+                national security, technology, and human behavior.
                 <br />
                 <br />
-                In addition to the blog, this site also serves as a portfolio
-                showcasing my current projects and work as I grow and learn in
-                the fields I’m passionate about. Whether you’re here to read my
-                latest thoughts or explore my portfolio, I hope you find
-                something that resonates or sparks your curiosity.
+                <em>Research Journal</em> is my independent publication and
+                personal archive for research, analysis, commentary, and ongoing
+                projects. It is where I explore complex issues, document what I
+                am learning, and share work that reflects my academic,
+                professional, and intellectual interests.
                 <br />
                 <br />
-                Thanks for visiting!
+                This website also serves as my portfolio, bringing together my
+                writing, research, technical projects, education, and
+                professional experience. Whether you are here to read my latest
+                work or learn more about what I do. 
+                <br />
+                <br />
+                I hope you find the content here informative, thought-provoking,
+                and engaging. Thank you for visiting!
               </p>
             </div>
 

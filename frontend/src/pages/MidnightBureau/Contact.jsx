@@ -7,6 +7,12 @@ import NavbarMB from "../../components/LandingPage/NavbarMB.jsx";
 
 const socialLinks = [
   {
+    name: "Reddit",
+    url: "https://www.reddit.com/user/MidnightBureau",
+    desc: "Join the Research Journal conversation on Reddit.",
+    icon: "#icon-reddit",
+  },
+  {
     name: "X",
     url: "https://x.com/TobinAlbanese",
     desc: "Follow me on X for quick thoughts.",
@@ -20,39 +26,33 @@ const socialLinks = [
   },
   {
     name: "LinkedIn",
-    url: "https://www.linkedin.com/company/tobin-albanese",
+    url: "https://www.linkedin.com/in/tobinalbanese/",
     desc: "Professional updates on LinkedIn.",
     icon: "#icon-linkedin",
   },
   {
+    name: "ResearchGate",
+    url: "https://www.researchgate.net/profile/Tobin-Albanese",
+    desc: "Read my research work on ResearchGate.",
+    icon: "#icon-researchgate",
+  },
+  {
     name: "YouTube",
-    url: "https://www.youtube.com/@Tobinalbanese",
-    desc: "Watch my videos on YouTube.",
+    url: "https://www.youtube.com/@MidnightBureau-TA",
+    desc: "Watch Research Journal videos and updates.",
     icon: "#icon-youtube",
   },
   {
-    name: "Facebook",
-    url: "https://www.facebook.com/tobin.graham.77",
-    desc: "Connect with me on Facebook for updates.",
-    icon: "#icon-facebook",
-  },
-  {
-    name: "Reddit",
-    url: "https://www.reddit.com/user/tobinalbanese",
-    desc: "Join the conversation on Reddit.",
-    icon: "#icon-reddit",
-  },
-  {
     name: "Spotify",
-    url: "https://open.spotify.com/",
-    desc: "Listen to my playlists on Spotify.",
+    url: "https://www.spotify.com/MidnightBureau",
+    desc: "Listen to the Research Journal podcast.",
     icon: "#icon-spotify",
   },
   {
-    name: "RSS",
-    url: "https://www.tobinalbanese.com/rss.xml",
-    desc: "Subscribe to my RSS feed.",
-    icon: "#icon-rss",
+    name: "GitHub",
+    url: "https://github.com/TobinAlbanese",
+    desc: "Check out my code and projects on GitHub.",
+    icon: "#icon-github",
   },
 ];
 

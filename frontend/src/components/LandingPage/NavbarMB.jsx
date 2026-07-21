@@ -44,7 +44,7 @@ export default function NavbarMB() {
         const { data: posts, error } = await supabase
           .from("posts")
           .select(
-            "id, slug, title, archive_image_url, banner_url, published_at, created_at, date, is_published, status, type"
+            "id, slug, title, archive_image_url, banner_url, published_at, created_at, date, is_published, status, type",
           )
           .eq("type", "mb")
           .eq("status", "published")
@@ -201,10 +201,10 @@ export default function NavbarMB() {
     sessionStorage.setItem("scrollTarget", "archive-content");
     await router.push(
       `/MidnightBureau/Archive?group=${encodeURIComponent(
-        group
+        group,
       )}#archive-content`,
       undefined,
-      { shallow: true }
+      { shallow: true },
     );
   };
 
@@ -283,7 +283,7 @@ export default function NavbarMB() {
                   className="site-nav__link body-s-smallcaps highlight"
                   href="/MidnightBureau"
                 >
-                  Midnight Bureau
+                  Research Journal
                 </a>
               </li>
               <li className="site-nav__list-item d-flex show-mobile">
@@ -291,7 +291,7 @@ export default function NavbarMB() {
                   className="site-nav__link body-s-smallcaps highlight"
                   href="/MidnightBureau"
                 >
-                  Midnight Bureau
+                  Research Journal
                 </a>
               </li>
             </ul>
@@ -364,7 +364,7 @@ export default function NavbarMB() {
                   className="site-nav__link body-s-smallcaps highlight"
                   href="/MidnightBureau"
                 >
-                  Midnight Bureau
+                  Research Journal
                 </a>
               </li>
 
@@ -465,7 +465,7 @@ export default function NavbarMB() {
                   className="site-nav__link body-s-smallcaps highlight"
                   href="/MidnightBureau"
                 >
-                  Midnight Bureau
+                  Research Journal
                 </a>
               </li>
               <li className="site-nav__list-item d-flex show-mobile">
@@ -473,7 +473,7 @@ export default function NavbarMB() {
                   className="site-nav__link body-s-smallcaps highlight"
                   href="/MidnightBureau"
                 >
-                  Midnight Bureau
+                  Research Journal
                 </a>
               </li>
             </ul>
@@ -546,7 +546,7 @@ export default function NavbarMB() {
                   className="site-nav__link body-s-smallcaps highlight"
                   href="/MidnightBureau"
                 >
-                  Midnight Bureau
+                  Research Journal
                 </a>
               </li>
 
@@ -591,7 +591,7 @@ export default function NavbarMB() {
                       href="/MidnightBureau/Archive"
                       onClick={() => setMenuOpen(false)}
                     >
-                      Blog Archive
+                      Journal Archive
                     </a>
                   </li>
                   <li className="menu__topics-list-item mb-10">
@@ -621,10 +621,7 @@ export default function NavbarMB() {
                         Log Out
                       </button>
                     ) : (
-                      <a
-                        href="/user/login"
-                        onClick={() => setMenuOpen(false)}
-                      >
+                      <a href="/user/login" onClick={() => setMenuOpen(false)}>
                         Login / Sign Up
                       </a>
                     )}
@@ -853,15 +850,15 @@ export default function NavbarMB() {
             <div className="menu__section d-flex flex-wrap justify-between gap-y-30 -ml-10 -mr-10">
               <div className="menu__about col-12 col-sm-6 col-lg-4-base-10">
                 <p>
-                  Hi, I'm{" "}
+                  Hi, I’m{" "}
                   <strong>
-                    <em>Tobin Albanese.. </em>
-                  </strong>
-                  A Computer Science student and writer passionate about
-                  strategic intelligence, global affairs, and current events.
-                  This blog shares my thoughts, analyses, and personal insights
-                  across a wide range of topics including politics, technology,
-                  and culture.
+                    <em>Tobin Albanese.</em>
+                  </strong>{" "}
+                  I’m an International Relations and Political Science student
+                  focused on Russia, Eastern Europe, diplomacy, and global
+                  affairs. This site is where I share my research, analysis, and
+                  personal perspective on politics, intelligence, technology,
+                  and the issues shaping our world.
                 </p>
                 <a
                   className="mt-30 arrow-link border-bottom-thin border-bottom d-inline-block lh-22"

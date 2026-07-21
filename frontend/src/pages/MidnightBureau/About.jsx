@@ -15,10 +15,10 @@ const sbPublic = (path) =>
 
 // ✅ Set these to the exact storage paths (object keys) in public-images.
 // (Case-sensitive. If your objects are inside folders, include them, e.g. "about/AboutMePhoto2.webp")
-const HERO_IMG_PATH = "Dylan-Tobin.webp";          // was /assets/images/Dylan-Tobin.jpg
-const FLOAT_RIGHT_1  = "AboutMePhoto2.webp";       // was /assets/images/AboutMePhoto2.jpg
-const FLOAT_LEFT_1   = "Cross.webp";               // was /assets/images/Cross.jpg
-const FLOAT_RIGHT_2  = "tk.webp";                  // was /assets/images/tk.jpg
+const HERO_IMG_PATH = "Dylan-Tobin.webp"; // was /assets/images/Dylan-Tobin.jpg
+const FLOAT_RIGHT_1 = "AboutMePhoto2.webp"; // was /assets/images/AboutMePhoto2.jpg
+const FLOAT_LEFT_1 = "Cross.webp"; // was /assets/images/Cross.jpg
+const FLOAT_RIGHT_2 = "tk.webp"; // was /assets/images/tk.jpg
 
 const COLOR_IMG = sbPublic(HERO_IMG_PATH);
 
@@ -44,7 +44,7 @@ export default function About() {
             io.unobserve(entry.target);
           });
         },
-        { threshold: 0.2, rootMargin: "0px 0px -10% 0px" }
+        { threshold: 0.2, rootMargin: "0px 0px -10% 0px" },
       );
       els.forEach((el) => io.observe(el));
       return () => io.disconnect();
@@ -95,247 +95,259 @@ export default function About() {
             <h2 className="about-title">About Me</h2>
 
             <article className="about-copy">
-              {/* RIGHT (uniform size) */}
+              {/* RIGHT IMAGE */}
               <img
                 src={sbPublic(FLOAT_RIGHT_1)}
-                alt="Notes and maps for research"
+                alt="Notes and maps for international affairs research"
                 loading="lazy"
                 className="float-img right"
               />
-
               <p>
-                I’m <strong>Tobin Albanese</strong>, a{" "}
-                <strong>proud American</strong> and a Computer Science major
-                with a mathematics emphasis at Sacramento State. I wake up
-                thinking about where technology, intelligence, and international
-                affairs collide, and how real decisions get made when the stakes
-                are high. I’m not here for performative takes; I care about work
-                that helps people see clearly and act smart.{" "}
-                <strong>Graduating in May of 2026</strong> and I’m aiming next
-                at a master’s in{" "}
-                <strong>strategic affairs and international politics</strong>.
-                That’s the ground I plan to work on:{" "}
+                I’m <strong>Tobin Albanese</strong>, a proud American, student,
+                researcher, and state government professional. At Sacramento
+                State University, I studied{" "}
+                <strong>International Relations and Political Science</strong>,
+                with minors in{" "}
+                <strong>behavioral analysis and war studies</strong>. My
+                academic interests center on diplomacy, international security,
+                intelligence, political behavior, and the ways states compete
+                when the rules are unclear and the consequences are real. My
+                long-term goal is to build a career in international relations
+                and eventually serve in the{" "}
+                <strong>United States Foreign Service</strong>, working overseas
+                and representing my country in environments where judgment,
+                cultural understanding, patience, and personal integrity matter.
+                I’m especially interested in{" "}
+                <strong>Russia and Eastern European affairs</strong>, including
+                Russian foreign policy, regional security, strategic culture,
+                and Russia’s political and economic influence throughout the
+                region. In my view, understanding another country does not
+                require agreeing with its government or overlooking its actions.
+                It requires taking its history, institutions, fears, ambitions,
+                and internal contradictions seriously. That kind of
+                understanding is necessary for any diplomacy that hopes to
+                produce more than temporary results.
+              </p>
+              <p>
+                I currently work within{" "}
+                <strong>California state government</strong>, which has given me
+                a practical understanding of how public institutions operate and
+                how much responsibility exists behind decisions most people
+                never see. What stands out to me is that effective government
+                depends less on appearances and more on consistency, judgment,
+                accountability, and people who are willing to do the work
+                correctly even when that work happens behind the scenes. Before
+                moving more directly into international relations, I studied{" "}
+                <strong>computer science</strong> and earned an associate degree
+                in the field. That technical background still shapes the way I
+                approach political and international problems. I tend to look
+                for systems, incentives, weak points, patterns, feedback loops,
+                and unintended consequences. Code either works or it doesn’t.
+                Government and foreign policy are obviously not that simple, but
+                the same discipline still matters. Assumptions have to be
+                tested. Sources have to be checked. A confident answer is not
+                automatically a correct one. Behavioral analysis adds another
+                side to that thinking by helping me understand decision-making,
+                perception, pressure, incentives, and uncertainty, while war
+                studies gives me a stronger foundation for studying strategy,
+                deterrence, escalation, proxy conflict, and the political
+                consequences of force. International relations is where those
+                different areas begin to connect.
+              </p>
+              <p>
+                I grew up in a <strong>small rural town in California</strong>,
+                where you learn early that not every problem comes with
+                instructions. Sometimes you have to improvise, work with what
+                you have, and figure things out yourself. My father served in
+                the United States Navy, and some of my earliest interest in the
+                world came from listening to stories about his deployments and
+                the places he visited. He spoke about traveling through ports in
+                Turkey and Italy, meeting people from completely different
+                backgrounds, and discovering that unfamiliar places could begin
+                to feel human once you stopped viewing them from a distance. I
+                lost my father when I was twelve, but one of the lessons he gave
+                me has stayed with me throughout my life:{" "}
                 <strong>
-                  sharp analysis, real technical fluency, and disciplined
-                  judgment
-                </strong>
-                . Building skills to
-                <strong> protect and strengthen this country</strong> while
-                adapting as the facts change. If you’re wondering where that
-                fire comes from, it started long before college, this drive to
-                become something of myself, something impactful for my country
-                and the world all together.
+                  “Integrity is about doing the right thing even when no one’s
+                  around to see it.”
+                </strong>{" "}
+                That sentence means more to me now than it did when I first
+                heard it. Integrity is easy to talk about when other people are
+                watching, when there is recognition involved, or when doing the
+                right thing benefits you. The harder question is what you do
+                when there is no reward, no attention, and no one nearby to hold
+                you accountable. His example continues to shape the kind of man
+                and professional I want to become.
               </p>
-
               <p>
-                I grew up in a <strong>tiny rural town in California</strong>.
-                The kind of place where you learn to improvise because there
-                isn’t always a store around the corner or someone who can fix
-                things for you. <strong>My dad served in the Navy</strong> and
-                told stories about traveling during his deployments. Travelling
-                all across the ocean and specifically enjoying our
-                <strong> Turkey</strong> and <strong>Italy </strong>
-                ports and bases. I've learned that there's this sense of
-                unfamiliarity of exploring places that suddenly felt like home
-                because you met people who weren't what you really expected.
-                Sadly enough, I{" "}
-                <strong>lost my father when I was twelve</strong>. That loss has
-                empowered me to try and fill the shoes that he once had, even
-                though I know that I can never do so. This sense of
-                <strong> responsibility</strong> has driven me to{" "}
-                <strong>work harder and be more disciplined</strong> in my life
-                so that I can make something of myself. Prove not to just myself
-                but him and everyone else around me that I can be something more
-                than just ordinary but excel in everything I do. With all that's
-                happened, I learned that God has given me this fate and it's up
-                to me to make the best out of it and shine through the dark
-                points and realize there's always something new to come
-                tomorrow. I like to say this to my friends and family, "God gave
-                us the moon not for the sake of it, but for you to realize{" "}
-                <strong>
-                  there is light no matter the darkness around you
-                </strong>
-                ." and that this place is truly infinite, and that we are
-                infinite.
+                Growing up <strong>in and out of foster care</strong> shaped me
+                in a different but equally important way. It gave me an early
+                understanding of how institutions can affect a person’s life,
+                especially when that person has very little control over the
+                decisions being made around them. It also taught me not to
+                compare suffering too easily. Someone’s worst experience is
+                still their worst experience, even when another person has lived
+                through something that may appear more severe from the outside.
+                We rarely know the full weight another person is carrying, but
+                we can still decide whether we treat them with patience,
+                dignity, and respect. Those experiences could have pushed my
+                life in several directions. Instead, they gave me a stronger
+                sense of responsibility and a desire to build something
+                meaningful from what I went through. I believe we are shaped by
+                our circumstances, but we are not completely defined by them. We
+                still have choices. That does not mean pretending hardship was
+                good or acting as if pain automatically makes someone stronger.
+                Sometimes hardship simply hurts. Strength comes from what a
+                person decides to build afterward, the people they allow to
+                support them, and their willingness to keep moving even when the
+                path ahead is not completely clear. My faith has helped me hold
+                onto that perspective. I often tell the people close to me that
+                God gave us the moon as a reminder that there can still be light
+                even when everything around us feels dark.
               </p>
-
-              <p>
-                Growing up living <strong>in and out of foster care</strong> has
-                truly shaped me into the person I am today. I understand how
-                judicial processes work, how unfortunate my life could have
-                turned out, and how so many young individuals go through
-                different hardships. Something you would never think about day
-                to day, but is a reality we all have too share. I always like to
-                think that someone's worse is truly there worse, there is no
-                comparison. It's the way we go about these circumstances that{" "}
-                <strong>make or break us</strong>, the way a person can turn a
-                horrible situation into something incredible is truly amazing. I
-                think this is where I get my{" "}
-                <strong>interest in global affairs</strong>. This sense or{" "}
-                <strong>calling to help people</strong>, and do something{" "}
-                <strong>bigger than myself</strong>, and understanding that this
-                tiny blue dot we all call home, actually holds more than what's
-                confined to the places I am constrainted too. Knowing, there's
-                always someone to help, an adventure to explore, and new things
-                to learn and see truly excites me for what's to come. Do you
-                ever feel like there's something calling you? Something inside
-                you that eats at you and keeps you up at night. For me, it's
-                this sense of <strong>curiosity for the world</strong> and the
-                untold stories to be heard is what keeps me up at night. I want
-                to be that person for someone else, to{" "}
-                <strong>be a light in their dark hours</strong>, no matter the
-                distance, no matter the background but just help the entirety of
-                our world and most importantly the{" "}
-                <strong>people residing in my great nation</strong>.
-              </p>
-
-              {/* LEFT (uniform size) */}
+              {/* LEFT IMAGE */}
               <img
                 src={sbPublic(FLOAT_LEFT_1)}
-                alt="Building software and writing clearly"
+                alt="Research, public service, and international affairs"
                 loading="lazy"
                 className="float-img left"
               />
-
               <p>
-                That pull to do something bigger than myself shows up in how I
-                work. Computer Science lets me turn conviction into tools, and
-                <strong>
-                  {" "}
-                  code doesn’t care about intentions; it runs or it doesn’t
-                </strong>
-                . The strategic side of me, headed towards{" "}
-                <strong>international politics and security</strong>, keeps me
-                honest about incentives, second-order effects, and what happens
-                after we press “deploy.” Separately, languages are for the world
-                I plan to operate in, not for coding. I’m{" "}
-                <strong>studying Russian and Arabic</strong> to deal with
-                international conflicts more intelligently and to understand
-                people on their own terms, and to sharpen my intelligence
-                gathering and conversational skills across different
-                environments and platforms. I want to{" "}
-                <strong>backpack the Middle East</strong>
-                and step into places my family never imagined I’d go, places
-                many Americans have also only ever heard about, I'd like to see.
-                Night markets at full buzz, bus stations at first light, and
-                border towns where history is something you feel under your
-                shoes and experience the sense of unfamiliarity my Father
-                experienced. I want to eat what locals eat, ride through towns
-                in tuk tuks, and speak with the many great individuals residing
-                in these places as well. Especially immersing myself completely
-                and being able to speak Russian and Arabic whenever I can even
-                though we both know I will probably butcher the languages. I
-                also would really love to visit eastern Europe and get the
-                opportunity to see Russia beyond headlines and classroom
-                summaries, from provincial cities and long rail stretches to
-                small towns where life moves at a human pace. Distancing myself
-                from the everyday societal norms and get to experience the world
-                for what it truly is. Down to earth and off grid from the usual
-                tik-toks and youtube content but truly experience what goes on
-                beyond the screens. This is about{" "}
-                <strong>
-                  pushing past comfort, facing my fears, and opening new
-                  horizons
-                </strong>{" "}
-                the way my dad did when he experienced the Navy. I want to{" "}
-                <strong>meet people who build, think, and serve</strong>, and
-                get the opportunities to learn how they solve problems in their
-                own context, and collect the kind of stories that help me bridge
-                cultures when it matters. Honestly, just to have as many stories
-                and adventures as I can to tell my family and future kids one
-                day.
+                That sense of responsibility is one of the main reasons I’m
+                drawn toward foreign affairs and a future in the Foreign
+                Service. I want to work on problems that are larger than one
+                person, but I also understand that no individual solves those
+                problems alone. Diplomacy, intelligence, and national security
+                depend on teams, institutions, regional knowledge, and people
+                who are willing to listen before they act. The United States
+                needs professionals who can defend its interests without
+                reducing every foreign society to a headline, stereotype, or
+                political talking point. I want to become one of those
+                professionals. My regional focus is Russia and Eastern Europe
+                because the region brings together many of the questions I find
+                most important. It involves security competition, national
+                identity, historical memory, and the relationship between formal
+                institutions and the power structures operating underneath them.
+                Russia is also one of the clearest examples of how modern power
+                can move through military pressure, diplomacy, energy,
+                intelligence, and information at the same time. From my
+                perspective, studying the region means looking past the
+                immediate event and asking what caused it, who benefits, what
+                weakness made it possible, and what may happen once public
+                attention moves somewhere else.
               </p>
-
               <p>
-                I gravitate to skills that reward{" "}
-                <strong>patience and accountability</strong>. In the field, it's
-                hunting, range time, and marksmanship that helps slow my
-                breathing and keeps me <strong>steady, focused</strong>, and
-                precised about fundamentals. In the gym, lifting helps me clear
-                the static and gives me a routine I can measure: add a rep, add
-                five pounds, show up tomorrow. Keep pushing forward. Around the
-                table, it's time with family and friends that keeps my head
-                straight with long dinners, fun conversations, and good jokes to
-                be said. All of that{" "}
-                <strong>discipline isn’t for its own sake</strong>; it’s how I
-                stay ready to carry out responsibilities when it counts.{" "}
-                <strong>The through line is service.</strong> I’m a proud
-                American student. So, loving this country doesn’t mean
-                pretending it’s perfect; it means{" "}
-                <strong>
-                  taking responsibility to help it live up to the ideals
-                  enshrined in our beautiful Constitution
-                </strong>
-                . Written by men who didn't just see the future of this country,
-                but the greatness within it as well. That’s the lane I chose to
-                follow: <strong>build tools that surface truth</strong>, teach
-                what I know, listen to people who’ve carried real
-                responsibility, and be useful when it actually matters most. I
-                like to show up,{" "}
-                <strong>
-                  take responsibility, finish the job, and leave things stronger
-                </strong>{" "}
-                than I found them.
+                I’m studying <strong>Russian</strong> because language is part
+                of taking a region seriously. Translation can tell you what
+                someone said, but learning the language can help you better
+                understand how an argument is framed, what references carry
+                cultural meaning, and why certain ideas connect with an
+                audience. I know learning Russian will take time and patience.
+                That is part of the reason I value it. I want to engage more
+                directly with Russian sources, communicate with people without
+                always relying on another person’s interpretation, and
+                understand the region on its own terms. I also hope to spend
+                much of my professional life overseas, experiencing Eastern
+                Europe beyond government reports, news coverage, and classroom
+                summaries. I want to travel through its cities and smaller
+                communities, speak with people from different political and
+                cultural backgrounds, and understand how international decisions
+                are experienced by the people who actually have to live with
+                them. Policy can look very clean on paper. Life rarely does.
+                Decisions made in capitals eventually reach ordinary people,
+                families, businesses, and communities in ways that are often
+                ignored during the initial debate. Being present, listening
+                carefully, and remembering that people are always more
+                complicated than their governments are necessary parts of
+                serious diplomacy.
               </p>
-
-              {/* RIGHT (uniform size) */}
+              <p>
+                Writing is one of the main ways I work through these questions.
+                Through my <strong>Research Journal</strong>, I publish research
+                and analysis on foreign affairs, political theory, technology,
+                intelligence, and the systems beneath major public events. My
+                goal is not to repeat whatever position is most popular in the
+                moment. I want to examine how power actually operates, where
+                institutions become weak, why well-intended policies fail, and
+                what the long-term consequences of political decisions may be.
+                My published and featured writing includes{" "}
+                <strong>
+                  “Markets Without Rules: Informal Networks and the Failure of
+                  IMF Reform in Russia,”
+                </strong>{" "}
+                which examines how Soviet-era informal networks adapted to
+                Russia’s post-Soviet economic transition;{" "}
+                <strong>
+                  “Strategic Proxies: Explaining Iran’s Support for Hezbollah
+                  Through Realist Theory,”
+                </strong>{" "}
+                which studies proxy warfare through survival, deterrence, and
+                regional influence; and{" "}
+                <strong>“Pipelines and Democracy,”</strong> a quantitative study
+                of Russian energy dependence and European political alignment,
+                along with my ongoing{" "}
+                <strong>Russian Affairs Research Project</strong>. International
+                affairs is rarely a choice between one perfect solution and one
+                obviously wrong answer. Most of the time, it is a matter of
+                risk, timing, trade-offs, and consequences.
+              </p>
+              {/* RIGHT IMAGE */}{" "}
               <img
                 src={sbPublic(FLOAT_RIGHT_2)}
-                alt="Curiosity for the world and its stories"
+                alt="Eastern European and Russian affairs research"
                 loading="lazy"
                 className="float-img right"
               />
-
               <p>
-                Looking ahead, I want work that{" "}
-                <strong>bridges research and operations</strong>. Give me a{" "}
-                <strong>problem that matters</strong>, incomplete information,
-                and a team that cares more about results than theatrics, and
-                I’ll gladly take the first watch. I want to help build{" "}
-                <strong>secure, reliable systems</strong> that hold up under
-                pressure; write <strong>analysis people can act on</strong> when
-                the clock is running; and design
-                <strong>
-                  {" "}
-                  automations that turn fragile, manual workflows into durable,
-                  auditable ones
-                </strong>
-                . I’ll keep traveling, learning languages, and sharpening my
-                questions, not as a checklist, but as a way to earn better
-                judgment. Listening more than I talk, using Russian and Arabic
-                in real conversations, and chasing primary sources until the
-                picture gets clearer. The goal is simple:{" "}
-                <strong>
-                  work hard, widen my field of view, and turn curiosity into
-                  disciplined outcomes
-                </strong>
-                . If there’s a path that ties together{" "}
-                <strong>responsibility, strategy, and service</strong>, that’s
-                where I’ll be. I also want a life outside of work however, I
-                love to read widely, listen to music, stay fit, and show up for
-                the people who show up for me. I’m grateful for all my mentors
-                who push me and friends who keep me going through difficult
-                times. I know where I’m from, and I know where I want to go, and{" "}
-                <strong>there's nothing I won't do to get there</strong>. My
-                passions and interests go deeper than just work and school, this
-                is something I live for.
+                Outside of school and work, I try to maintain a life that keeps
+                me grounded. I enjoy reading widely, listening to music,
+                lifting, spending time outdoors, traveling, trying unfamiliar
+                food, and being around the people who have supported me. Family
+                and close friendships matter a great deal to me. Long
+                conversations, shared meals, good jokes, and the ability to
+                laugh after a difficult week are not small things. They remind
+                me what all the work is supposed to be for. I also care deeply
+                about my country. Loving the United States does not mean
+                pretending it is perfect or ignoring the times it has failed to
+                live up to its own principles. From my perspective, patriotism
+                means accepting some responsibility for helping the country
+                become stronger, more honest, and more capable of meeting those
+                principles. It means protecting what has worked, studying
+                failures without hiding from them, and recognizing that
+                authority should always come with accountability. Looking ahead,
+                I want work that connects diplomacy, regional expertise,
+                research, behavioral understanding, and disciplined analysis. I
+                want to represent the United States professionally overseas,
+                write analysis that people can actually use, and continue
+                building the knowledge required to specialize in Russian and
+                Eastern European affairs. know where I came from, and I know
+                where I’m trying to go. The distance between those two places is
+                not something I take for granted. A lot of what has shaped me
+                came from difficult circumstances, but those experiences also
+                gave me perspective, discipline, and a reason to keep moving
+                forward. I don’t expect the path ahead to be simple. I expect it
+                to test me, force me to grow, and require more patience than I
+                probably realize right now. That being said, I’m ready for it. I
+                want to build a life centered on service, integrity, curiosity,
+                and work that matters beyond myself.
               </p>
-
               <p>
-                If you’ve read this far, thank you for taking the time out of
-                your day to step a little bit inside my version of our shared
-                reality. And, If you work on{" "}
-                <strong>hard problems where policy and technology meet</strong>{" "}
-                and need help, I am always there to listen and input. Or if you
-                have any great recommendations for books, music, or FOOD (I am a
-                sucker for new foods) please feel free to send them my way. And
-                if you ever just need someone to eat some cheese with and talk
-                and be heard, I'm your guy.{" "}
+                If you have read this far, thank you for taking the time to
+                learn a little more about me. I’m always open to a good
+                conversation, especially when it involves international affairs,
+                Russia, Eastern Europe, or the way the world is changing around
+                us. At the same time, I’m just as happy talking about books,
+                music, travel, good food, or sharing a plate of cheese while
+                trying to make sense of everything going on. At the end of the
+                day, I want to keep learning, represent my country with honor,
+                and become someone others can rely on. I want the work I do and
+                the way I carry myself to mean something.
+              </p>
+              <p>
                 <strong>
-                  Let’s build things, work hard, and be the best people we can
-                  be.
-                </strong>{" "}
-                Stay blessed. -T
+                  Stay blessed. Stay you. <br />
+                  This is infinite. We are infinite.
+                </strong>
               </p>
             </article>
           </section>

@@ -633,7 +633,7 @@ const MidnightBureauData = {
         ],
         "Context & Briefings": [
           { label: "Portfolio Hub", url: "/Portfolio", external: false },
-          { label: "Midnight Bureau", url: "/MidnightBureau", external: false },
+          { label: "Research Journal", url: "/MidnightBureau", external: false },
         ],
       },
     },

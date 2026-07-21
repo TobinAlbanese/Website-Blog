@@ -10,7 +10,7 @@ const socialLinks = [
   {
     name: "Reddit",
     url: "https://www.reddit.com/user/MidnightBureau",
-    desc: "Join the Midnight Bureau conversation on Reddit.",
+    desc: "Join the Research Journal conversation on Reddit.",
     icon: "#icon-reddit",
   },
   {
@@ -40,13 +40,13 @@ const socialLinks = [
   {
     name: "YouTube",
     url: "https://www.youtube.com/@MidnightBureau-TA",
-    desc: "Watch Midnight Bureau videos and updates.",
+    desc: "Watch Research Journal videos and updates.",
     icon: "#icon-youtube",
   },
   {
     name: "Spotify",
     url: "https://www.spotify.com/MidnightBureau",
-    desc: "Listen to the Midnight Bureau podcast.",
+    desc: "Listen to the Research Journal podcast.",
     icon: "#icon-spotify",
   },
   {

@@ -120,7 +120,7 @@ export default function BlogHighlights() {
       <div className="row base__main pb-10 pb-md-25 pb-lg-40 pt-20 pt-md-30 pt-lg-60">
         <div className="col-12 col-md-5 d-flex flex-column justify-center align-items-start">
           <h3 className="font-style-italic c-accent mt-15 fs-md-24 lh-lg">
-            Blog Highlights
+            Research Highlights
           </h3>
           <h4 className="fs-18 mb-15 fs-md-16">
             A curated look at my latest insights on politics, culture, and more.

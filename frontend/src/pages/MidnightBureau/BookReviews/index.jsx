@@ -26,7 +26,7 @@ export default function SpeakingMedia() {
           <NavbarMB />
 
           <Head>
-            <title>Speaking & Media — Midnight Bureau</title>
+            <title>Speaking & Media — Research Journal</title>
             <meta name="robots" content="noindex,follow" />
           </Head>
           <main

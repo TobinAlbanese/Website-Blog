@@ -11,7 +11,7 @@ export default function StayConnected() {
           <div className="col-12 col-md-8 position-relative z-above-base ">
             <h2 className="position-relative z-above-base mt-15 c-accent fs-18 font-style-italic mb-20" />
             <h2 className="heading-m ls-narrow f-serif ls--1 text-wrap">
-              Stay connected to <em>Midnight Bureau</em>
+              Stay connected to my <em>Research Journal</em>
             </h2>
 
             {/* use ✵ as the bullet; keep checkmarks class for your existing spacing */}
@@ -36,9 +36,8 @@ export default function StayConnected() {
                   ✵
                 </span>
                 <span>
-                  Stay informed with the latest insights &amp; analysis from{" "}
-                  <em>Midnight Bureau</em>.
-                  <br /> Sign up for our newsletter and never miss an update.
+                  Stay informed with the latest insights &amp; analysis &
+                  <br /> Sign up for my newsletter and never miss an update.
                 </span>
               </li>
 
@@ -101,8 +100,8 @@ export default function StayConnected() {
                   ✵
                 </span>
                 <span>
-                  Thanks for being here and engaging with Midnight Bureau. Your
-                  interest and feedback inspire me every day. Let’s keep the
+                  Thanks for being here and engaging with my Research. Your
+                  interest and feedback inspire me every day. So, let’s keep the
                   conversation going!
                 </span>
               </li>
@@ -128,16 +127,15 @@ export default function StayConnected() {
             <a className="current-issue__image" href="#">
               <figure>
                 <img
-                  src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/public-images/stay-connected/albanylitica.png`}
-                  alt="Midnight Bureau Blog Main Image"
+                  src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/public-images/ResearchLogo.png`}
+                  alt="Research Journal logo"
                   className="drop-shadow w-30 w-auto-md m-auto"
                   loading="lazy"
                   width={767}
                   height={1096}
-                  srcSet={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/public-images/MB.png`}
                   onError={(e) => {
-                    // fallback to local if bucket object doesn't exist yet
-                    e.currentTarget.src = "/assets/images/albanylitica.png";
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = "/assets/images/ResearchLogo.png";
                   }}
                 />
               </figure>

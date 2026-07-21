@@ -68,9 +68,9 @@ export default function Newsletter() {
                 lineHeight: 1.1,
               }}
             >
-              Subscribe to{" "}
+              Subscribe to my{" "}
               <span style={{ color: "#b02621" }}>
-                <em>Midnight Bureau</em>
+                <em>Research Journal</em>
               </span>
             </h2>
 
@@ -83,7 +83,7 @@ export default function Newsletter() {
                 fontWeight: 400,
               }}
             >
-              Get updates on new posts, essays, and book reviews at the
+              Get updates on new posts, essays, and research at the
               intersection of politics, technology, and global affairs. No spam
               — just ideas worth reading.
             </p>

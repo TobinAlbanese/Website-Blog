@@ -303,7 +303,7 @@ export default function AdminNavbar() {
             className="site-nav__link body-s-smallcaps highlight"
             href="/MidnightBureau"
           >
-            Midnight Bureau
+            Research Journal
           </a>
         </li>
         <li className="site-nav__list-item d-flex show-tablet">
@@ -311,7 +311,7 @@ export default function AdminNavbar() {
             className="site-nav__link body-s-smallcaps highlight"
             href="/MidnightBureau"
           >
-            Midnight Bureau
+            Research Journal
           </a>
         </li>
 

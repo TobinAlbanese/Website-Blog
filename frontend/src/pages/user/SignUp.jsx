@@ -81,7 +81,7 @@ export default function SignupPage() {
     setLoading(false);
 
     // If email confirmation is ON, user might not be "logged in" yet,
-    // but they are created. For now, just send them to Midnight Bureau.
+    // but they are created. For now, just send them to Research Journal.
     window.location.href = "/MidnightBureau";
   };
 
@@ -127,7 +127,7 @@ export default function SignupPage() {
           >
             <h2 style={{ fontSize: "2.5rem", marginBottom: 20 }}>
               Create your{" "}
-              <span style={{ color: "#b02621" }}>Midnight Bureau</span> account
+              <span style={{ color: "#b02621" }}>Research Journal</span> account
             </h2>
 
             <form

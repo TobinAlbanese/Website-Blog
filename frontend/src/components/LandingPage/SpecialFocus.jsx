@@ -87,7 +87,7 @@ export default function SpecialFocus() {
   }, []);
 
   const podcastCard = {
-    title: "Midnight Bureau Podcast",
+    title: "Research Journal Podcast",
     excerpt: "Conversations on strategy, tech, and influence (coming soon).",
     slug: "podcast",
     _href: "/Podcast",

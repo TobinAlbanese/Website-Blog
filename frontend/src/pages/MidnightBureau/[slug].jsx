@@ -276,7 +276,7 @@ export default function BlogPost({
           <NavbarMB toggleMenu={toggleMenu} menuOpen={menuOpen} />
 
           <Head>
-            <title>{`${article.title || "Untitled"} – Midnight Bureau`}</title>
+            <title>{`${article.title || "Untitled"} – Research Journal`}</title>
             <meta name="description" content={article.excerpt || ""} />
           </Head>
 
@@ -938,7 +938,7 @@ export async function getServerSideProps({ params }) {
     ...post,
     author: post.author || "Tobin Albanese",
     excerpt: post.excerpt || "",
-    volume: post.volume || post.category || "MIDNIGHT BUREAU",
+    volume: post.volume || post.category || "Research Journal",
     date: post.published_at || post.date || post.created_at || null,
     banner:
       bannerResolved || firstInlineResolved || archiveResolved || FALLBACK_IMG,

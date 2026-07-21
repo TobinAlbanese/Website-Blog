@@ -152,7 +152,7 @@ export default function Feedback() {
                       marginBottom: 8,
                     }}
                   >
-                    Every comment you provide helps shape the future of Albanylitica. So don’t hesitate & let me know what you think
+                    Every comment you provide helps shape the future of my research. So don’t hesitate & let me know what you think
                     & help me make this community even stronger!
                   </p>
                   <div

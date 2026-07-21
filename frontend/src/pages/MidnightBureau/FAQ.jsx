@@ -6,9 +6,9 @@ import NavbarMB from "../../components/LandingPage/NavbarMB.jsx";
 
 const faqs = [
   {
-    question: "What is Midnight Bureau?",
+    question: "What is Research Journal?",
     answer:
-      "Midnight Bureau is an independent digital journal offering in-depth analysis of global affairs, emerging technologies, and current events. It's built for the critically curious—readers who seek clarity, substance, and perspective.",
+      "Research Journal is an independent digital journal offering in-depth analysis of global affairs, emerging technologies, and current events. It's built for the critically curious—readers who seek clarity, substance, and perspective.",
   },
   {
     question: "How can I leave feedback or get in touch?",
@@ -18,12 +18,12 @@ const faqs = [
   {
     question: "Where can I find your latest posts and briefings?",
     answer:
-      "All recent posts, essays, and intelligence briefings are available under the Midnight Bureau section. You’ll find it in the main navigation, updated regularly with fresh analysis.",
+      "All recent posts, essays, and intelligence briefings are available under the Research Journal section. You’ll find it in the main navigation, updated regularly with fresh analysis.",
   },
   {
     question: "Do you accept collaborations or guest contributors?",
     answer:
-      "Yes. Midnight Bureau is open to thoughtful collaborations and original guest content that aligns with our mission. Visit the Collaborations section on the Portfolio page or reach out directly.",
+      "Yes. Research Journal is open to thoughtful collaborations and original guest content that aligns with our mission. Visit the Collaborations section on the Portfolio page or reach out directly.",
   },
   {
     question: "How often is new content published?",
@@ -38,22 +38,22 @@ const faqs = [
   {
     question: "Is there a way to subscribe for updates?",
     answer:
-      "A subscription option is coming soon. In the meantime, check back regularly or follow Midnight Bureau on social platforms to stay in the loop.",
+      "A subscription option is coming soon. In the meantime, check back regularly or follow Research Journal on social platforms to stay in the loop.",
   },
   {
     question: "What is this site built with?",
     answer:
-      "Midnight Bureau runs on modern web technology including React (Next.js), custom design components, and a performance-first mindset. The experience is designed to be clean, accessible, and responsive.",
+      "Research Journal runs on modern web technology including React (Next.js), custom design components, and a performance-first mindset. The experience is designed to be clean, accessible, and responsive.",
   },
   {
     question: "Is this site mobile-friendly?",
     answer:
-      "Yes, fully. Midnight Bureau is built with mobile-first responsiveness to ensure a smooth experience across all devices—whether you're reading on the go or at your desk.",
+      "Yes, fully. Research Journal is built with mobile-first responsiveness to ensure a smooth experience across all devices—whether you're reading on the go or at your desk.",
   },
   {
-    question: "What's the long-term goal of Midnight Bureau?",
+    question: "What's the long-term goal of Research Journal?",
     answer:
-      "The vision is to create an independent, trusted voice in digital analysis—an intersection of research, journalism, and creative insight. Midnight Bureau aims to be a go-to hub for global thinkers and lifelong learners.",
+      "The vision is to create an independent, trusted voice in digital analysis—an intersection of research, journalism, and creative insight. Research Journal aims to be a go-to hub for global thinkers and lifelong learners.",
   },
 ];
 

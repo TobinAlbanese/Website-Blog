@@ -114,7 +114,7 @@ export default function Login() {
             <h2 style={{ fontSize: "2.5rem", marginBottom: 20 }}>
               Log in to{" "}
               <span style={{ color: "#b02621" }}>
-                <em>Midnight Bureau</em>
+                <em>Research Journal</em>
               </span>
             </h2>
             <p style={{ fontSize: 18, maxWidth: 700, margin: "0 auto 30px" }}>

@@ -2473,7 +2473,7 @@ body {
   scrollbar-width: none; /* Firefox */
 }
 
-/* midnight bureau image css */
+/* Research Journal image css */
 .heat-canvas-wrapper {
   flex: 1 1 auto;
   max-width: 600px;
@@ -4654,7 +4654,7 @@ html { overflow-x: hidden; }
 
 
 /* =========================
-   MIDNIGHT BUREAU — MOBILE LAYOUT
+   Research Journal — MOBILE LAYOUT
    Keep same content hierarchy, change geometry for phone widths.
    ========================= */
 

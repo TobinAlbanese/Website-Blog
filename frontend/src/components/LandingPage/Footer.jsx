@@ -22,7 +22,7 @@ export default function Footer() {
   }, []);
 
   const sectionToPageMap = {
-    // Midnight Bureau
+    // Research Journal
     "latest-posts": "/MidnightBureau",
     "recent-posts": "/MidnightBureau",
     geopolitics: "/MidnightBureau",
@@ -160,7 +160,7 @@ export default function Footer() {
               </span>
             </a>
             <p className="c-text-secondary mt-20 mt-md-20 lh-sm">
-              Published by Tobin Albanese on MidnightBureau, Inc.
+              Published by Tobin Albanese on TobinAlbanese, Inc.
             </p>
             <p className="c-text-secondary mt-5">
               ©2025. All Rights Reserved.
@@ -175,7 +175,7 @@ export default function Footer() {
               <a
                 href="https://www.reddit.com/user/MidnightBureau"
                 className="footer__social d-inline-block"
-                aria-label="Midnight Bureau on Reddit"
+                aria-label="Research Journal on Reddit"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -239,7 +239,7 @@ export default function Footer() {
               <a
                 href="https://www.youtube.com/@MidnightBureau-TA"
                 className="footer__social d-inline-block"
-                aria-label="Midnight Bureau on YouTube"
+                aria-label="Research Journal on YouTube"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -251,7 +251,7 @@ export default function Footer() {
               <a
                 href="https://open.spotify.com/"
                 className="footer__social d-inline-block"
-                aria-label="Midnight Bureau on Spotify"
+                aria-label="Research Journal on Spotify"
                 target="_blank"
                 rel="noopener noreferrer"
               >
