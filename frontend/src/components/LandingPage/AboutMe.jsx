@@ -3,7 +3,7 @@ import { publicImageUrl } from "../../lib/supabase/client"; // adjust if needed
 
 export default function AboutMe() {
   const aboutImg =
-    publicImageUrl("My-Bday.webp") || "/assets/images/My-Bday.webp";
+    publicImageUrl("Dylan-Tobin.webp") || "/assets/images/Dylan-Tobin.webp";
 
   return (
     <section

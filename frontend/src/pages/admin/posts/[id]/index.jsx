@@ -346,7 +346,7 @@ export default function AdminPostEditor() {
         .eq("id", data.user.id)
         .maybeSingle();
 
-      if (prof?.role !== "admin") router.replace("/MidnightBureau");
+      if (prof?.role !== "admin") router.replace("/ResearchJournal");
     })();
   }, [router]);
 

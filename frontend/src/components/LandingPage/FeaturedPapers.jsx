@@ -1,12 +1,22 @@
-// components/FeaturedPapers.jsx
-import React, { useEffect, useState } from "react";
+import React, {
+  useEffect,
+  useState,
+} from "react";
+
 import Link from "next/link";
 
-const FALLBACK_THUMB = "/assets/images/space.webp";
-const FALLBACK_SIDEBAR = "/assets/images/Russia4.webp";
+const FALLBACK_THUMB =
+  "/assets/images/space.webp";
+
+const FALLBACK_SIDEBAR =
+  "https://aekjhiphxycnybowwgud.supabase.co/storage/v1/object/public/public-images/Lincoln.webp";
+
+
 
 const getHref = (p) => {
-  if (p?.href) return p.href;
+  if (p?.href) {
+    return p.href;
+  }
 
   if (p?.type === "mb") {
     return `/MidnightBureau/${p.slug}`;
@@ -20,16 +30,22 @@ const formatDate = (iso) => {
 
   const d = new Date(iso);
 
-  if (Number.isNaN(d.getTime())) return "";
+  if (Number.isNaN(d.getTime())) {
+    return "";
+  }
 
-  return d.toLocaleDateString(undefined, {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
+  return d.toLocaleDateString(
+    undefined,
+    {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    }
+  );
 };
 
-const firstTruthy = (...xs) => xs.find(Boolean);
+const firstTruthy = (...xs) =>
+  xs.find(Boolean);
 
 const pickPostImage = (post) =>
   firstTruthy(
@@ -43,51 +59,65 @@ const pickPostImage = (post) =>
   );
 
 export default function FeaturedPapers() {
-  const [posts, setPosts] = useState([]);
-  const [sidebarImage, setSidebarImage] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [failed, setFailed] = useState(false);
+  const [posts, setPosts] =
+    useState([]);
+
+  const [loading, setLoading] =
+    useState(true);
+
+  const [failed, setFailed] =
+    useState(false);
 
   useEffect(() => {
     let active = true;
 
-    async function fetchFeatured() {
-      try {
-        setLoading(true);
-        setFailed(false);
+async function fetchFeatured() {
+  try {
+    setLoading(true);
+    setFailed(false);
 
-        const res = await fetch("/api/portfolio/featured-papers", {
-          method: "GET",
-          cache: "no-store",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-
-        if (!res.ok) {
-          throw new Error(`Request failed: ${res.status}`);
-        }
-
-        const data = await res.json();
-
-        if (!active) return;
-
-        setPosts(Array.isArray(data?.posts) ? data.posts.slice(0, 4) : []);
-        setSidebarImage(data?.sidebarImage || "");
-      } catch (e) {
-        console.error("FeaturedPapers fetch failed:", e);
-
-        if (!active) return;
-
-        setPosts([]);
-        setSidebarImage("");
-        setFailed(true);
-      } finally {
-        if (active) {
-          setLoading(false);
-        }
+    const res = await fetch(
+      "/api/portfolio/featured-papers",
+      {
+        method: "GET",
+        cache: "no-store",
+        headers: {
+          "Content-Type": "application/json",
+        },
       }
+    );
+
+    if (!res.ok) {
+      throw new Error(
+        `Request failed: ${res.status}`
+      );
     }
+
+    const data = await res.json();
+
+    if (!active) return;
+
+    setPosts(
+      Array.isArray(data?.posts)
+        ? data.posts
+        : []
+    );
+  } catch (e) {
+    console.error(
+      "Additional Research fetch failed:",
+      e
+    );
+
+    if (!active) return;
+
+    setPosts([]);
+    setFailed(true);
+  } finally {
+    if (active) {
+      setLoading(false);
+    }
+  }
+}
 
     fetchFeatured();
 
@@ -111,14 +141,16 @@ export default function FeaturedPapers() {
       >
         <div className="col-12 col-md-5 d-flex flex-column justify-center align-items-start">
           <h3 className="font-style-italic c-accent mt-15 fs-md-24 lh-lg">
-            Featured Papers
+            Additional Research
           </h3>
 
           <h4
             className="fs-18 mb-15 fs-md-16"
             data-armstrong-id="module_subtitle"
           >
-            Selected writing & research.
+            Additional papers and
+            research from across my
+            academic and analytical work.
           </h4>
         </div>
 
@@ -127,74 +159,115 @@ export default function FeaturedPapers() {
             className="row justify-between flex-row-reverse d-flex"
             data-armstrong-id="row"
           >
-            {/* Large right image */}
-            <div className="col-12 col-md-5 d-flex justify-center align-items-center home-hide-narrow">
-              <img
-                src={sidebarImage || FALLBACK_SIDEBAR}
-                alt="Featured papers artwork"
-                loading="lazy"
-                onError={(e) => {
-                  e.currentTarget.onerror = null;
-                  e.currentTarget.src = FALLBACK_SIDEBAR;
-                }}
-                style={{
-                  maxWidth: "100%",
-                  height: 650,
-                  borderRadius: 8,
-                  objectFit: "cover",
-                  display: "block",
-                }}
-              />
-            </div>
+{/* Large right image */}
+<div
+  className="col-12 col-md-5 home-hide-narrow"
+  style={{
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "flex-start",
+    paddingLeft: 32,
+  }}
+>
+  <img
+    src={FALLBACK_SIDEBAR}
+    alt="Additional research artwork"
+    loading="lazy"
+    onError={(e) => {
+      e.currentTarget.onerror = null;
+      e.currentTarget.src = FALLBACK_THUMB;
+    }}
+    className="home-floating-side-image"
+    style={{
+      borderRadius: 18,
+    }}
+  />
+</div>
 
             {/* Cards */}
-            <div className="col-12 col-md-7" data-armstrong-id="grid_2">
+            <div
+              className="col-12 col-md-7"
+              data-armstrong-id="grid_2"
+            >
               {loading && (
                 <div className="col-12 body-s c-text-secondary">
-                  Loading featured papers…
+                  Loading additional
+                  research…
                 </div>
               )}
 
               {!loading && failed && (
                 <div className="col-12 body-s c-text-secondary">
-                  Couldn’t load featured papers from Supabase.
-                </div>
-              )}
-
-              {!loading && !failed && posts.length === 0 && (
-                <div className="col-12 body-s c-text-secondary">
-                  No featured papers yet.
+                  Couldn&apos;t load
+                  additional research.
                 </div>
               )}
 
               {!loading &&
                 !failed &&
+                posts.length === 0 && (
+                  <div className="col-12 body-s c-text-secondary">
+                    No additional
+                    research available.
+                  </div>
+                )}
+
+              {!loading &&
+                !failed &&
                 posts.map((p, i) => {
-                  const href = getHref(p);
-                  const img = pickPostImage(p);
-                  const title = p.title || "Untitled";
-                  const desc = p.excerpt || "Read the full paper.";
-                  const author = p.author || "Tobin Albanese";
-                  const dateDisplay = formatDate(p.date);
+                  const href =
+                    getHref(p);
+
+                  const img =
+                    pickPostImage(p);
+
+                  const title =
+                    p.title ||
+                    "Untitled";
+
+                  const desc =
+                    p.excerpt ||
+                    "Read the full paper.";
+
+                  const author =
+                    p.author ||
+                    "Tobin Albanese";
+
+                  const dateDisplay =
+                    formatDate(
+                      p.date ||
+                        p.published_at ||
+                        p.created_at
+                    );
 
                   return (
                     <div
-                      key={p.slug || `${title}-${i}`}
+                      key={
+                        p.slug ||
+                        `${title}-${i}`
+                      }
                       className={
                         "card row card--large justify-between col-12 ml-0 mr-0 mb-20 " +
-                        (i === 0 ? "border-top border-top-thin pt-20 " : "") +
+                        (i === 0
+                          ? "border-top border-top-thin pt-20 "
+                          : "") +
                         "border-bottom border-bottom-thin c-border"
                       }
                       style={{
-                        alignItems: "stretch",
-                        position: "relative",
+                        alignItems:
+                          "stretch",
+                        position:
+                          "relative",
                       }}
                     >
                       <Link
                         href={href}
-                        aria-label={title}
+                        aria-label={
+                          title
+                        }
                         style={{
-                          position: "absolute",
+                          position:
+                            "absolute",
                           inset: 0,
                           zIndex: 1,
                           borderRadius: 6,
@@ -203,38 +276,52 @@ export default function FeaturedPapers() {
 
                       <div
                         className="col-9 col-md-8 ml-0 d-flex flex-column"
-                        style={{ minHeight: 0 }}
+                        style={{
+                          minHeight: 0,
+                        }}
                       >
                         <h3
                           className="body-m"
                           style={{
                             marginBottom: 6,
-                            textTransform: "none",
+                            textTransform:
+                              "none",
                           }}
                         >
-                          <span>{title}</span>
+                          <span>
+                            {title}
+                          </span>
                         </h3>
 
                         <p
                           className="body-s c-text-secondary"
-                          style={{ marginBottom: 10 }}
+                          style={{
+                            marginBottom: 10,
+                          }}
                         >
-                          <span>{desc}</span>
+                          <span>
+                            {desc}
+                          </span>
                         </p>
 
                         <p
                           className="body-s c-accent home-hide-meta"
                           style={{
-                            fontSize: "0.9rem",
-                            marginTop: "auto",
+                            fontSize:
+                              "0.9rem",
+                            marginTop:
+                              "auto",
                             marginBottom: 0,
                             paddingTop: 8,
                             display: "flex",
-                            alignItems: "center",
+                            alignItems:
+                              "center",
                             gap: 8,
                           }}
                         >
-                          <span>{author}</span>
+                          <span>
+                            {author}
+                          </span>
 
                           {dateDisplay && (
                             <>
@@ -242,14 +329,17 @@ export default function FeaturedPapers() {
                                 aria-hidden="true"
                                 style={{
                                   lineHeight: 1,
-                                  transform: "translateY(-0.5px)",
+                                  transform:
+                                    "translateY(-0.5px)",
                                 }}
                               >
                                 ✵
                               </span>
 
-                              <time dateTime={p.date || ""}>
-                                {dateDisplay}
+                              <time>
+                                {
+                                  dateDisplay
+                                }
                               </time>
                             </>
                           )}
@@ -257,22 +347,36 @@ export default function FeaturedPapers() {
                       </div>
 
                       <div className="col-3 col-md-4 mr-0 home-card-thumb">
-                        <figure style={{ margin: 0 }}>
+                        <figure
+                          style={{
+                            margin: 0,
+                          }}
+                        >
                           <img
                             src={img}
-                            alt={p.imageAlt || title}
+                            alt={title}
                             loading="lazy"
-                            onError={(e) => {
-                              e.currentTarget.onerror = null;
-                              e.currentTarget.src = FALLBACK_THUMB;
+                            onError={(
+                              e
+                            ) => {
+                              e.currentTarget.onerror =
+                                null;
+
+                              e.currentTarget.src =
+                                FALLBACK_THUMB;
                             }}
                             style={{
-                              width: "100%",
-                              maxWidth: IMG_MAX_W_DESKTOP,
-                              aspectRatio: ASPECT_RATIO,
-                              objectFit: "cover",
+                              width:
+                                "100%",
+                              maxWidth:
+                                IMG_MAX_W_DESKTOP,
+                              aspectRatio:
+                                ASPECT_RATIO,
+                              objectFit:
+                                "cover",
                               borderRadius: 6,
-                              display: "block",
+                              display:
+                                "block",
                             }}
                           />
                         </figure>

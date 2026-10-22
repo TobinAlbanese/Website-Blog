@@ -38,7 +38,7 @@ export default function SignupPage() {
       options: {
         emailRedirectTo:
           typeof window !== "undefined"
-            ? `${window.location.origin}/MidnightBureau`
+            ? `${window.location.origin}/ResearchJournal`
             : undefined,
       },
     });
@@ -82,7 +82,7 @@ export default function SignupPage() {
 
     // If email confirmation is ON, user might not be "logged in" yet,
     // but they are created. For now, just send them to Research Journal.
-    window.location.href = "/MidnightBureau";
+    window.location.href = "/ResearchJournal";
   };
 
   const isFormValid =

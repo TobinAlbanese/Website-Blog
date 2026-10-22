@@ -527,7 +527,7 @@ export default function AdminIndex() {
         role = "admin";
 
       if (role !== "admin") {
-        if (alive) router.replace("/MidnightBureau");
+        if (alive) router.replace("/ResearchJournal");
         return;
       }
 

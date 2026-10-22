@@ -1,4 +1,5 @@
-// pages/api/portfolio/special-focus.js
+// pages/api/portfolio/research-highlights.js
+
 import { supabaseServer } from "../../../lib/supabase/supabaseServer";
 
 const PUBLIC_BUCKET = "public-images";
@@ -6,13 +7,12 @@ const POSTS_BUCKET = "post-images";
 
 const FALLBACK_THUMB = "/assets/images/space.webp";
 
-const SPECIAL_FOCUS_ORDER = [
-  "midnight-bureau-blog-expansion",
-  "european-terrorist-group-intel-report",
-  "russian-affairs-project",
+const RESEARCH_HIGHLIGHTS_ORDER = [
+  "markets-without-rules",
+  "strategic-proxies",
+  "pipelines-and-democracy",
+  "the-terrorist-without-an-organization",
 ];
-
-const RUSSIA_SIDEBAR_PUBLIC_PATH = "russia9.webp";
 
 function publicBucketUrl(path) {
   if (!path) return "";
@@ -21,7 +21,9 @@ function publicBucketUrl(path) {
     .replace(/^\/+/, "")
     .replace(/^public-images\//i, "");
 
-  const { data } = supabaseServer.storage.from(PUBLIC_BUCKET).getPublicUrl(clean);
+  const { data } = supabaseServer.storage
+    .from(PUBLIC_BUCKET)
+    .getPublicUrl(clean);
 
   return data?.publicUrl || "";
 }
@@ -33,7 +35,9 @@ function postsBucketUrl(path) {
     .replace(/^\/+/, "")
     .replace(/^post-images\//i, "");
 
-  const { data } = supabaseServer.storage.from(POSTS_BUCKET).getPublicUrl(clean);
+  const { data } = supabaseServer.storage
+    .from(POSTS_BUCKET)
+    .getPublicUrl(clean);
 
   return data?.publicUrl || "";
 }
@@ -49,10 +53,8 @@ function toResolvedImageUrl(src) {
     return value;
   }
 
-  const assetsMatch = value.match(/^\/assets\/images\/(.+)$/i);
-
-  if (assetsMatch?.[1]) {
-    return publicBucketUrl(assetsMatch[1]);
+  if (value.startsWith("/assets/images/")) {
+    return value.replace(/\.(jpg|jpeg|png)$/i, ".webp");
   }
 
   if (value.startsWith("posts/")) {
@@ -60,6 +62,14 @@ function toResolvedImageUrl(src) {
   }
 
   return publicBucketUrl(value);
+}
+
+function hrefForPost(post) {
+  if (post.type === "mb") {
+    return `/ResearchJournal/${post.slug}`;
+  }
+
+  return `/Portfolio/${post.slug}`;
 }
 
 function normalizePost(post) {
@@ -74,24 +84,23 @@ function normalizePost(post) {
 
   return {
     id: post.id,
+    type: post.type,
     slug: post.slug,
     title: post.title || "Untitled",
     excerpt: post.excerpt || "",
-    author: post.author || "Tobin M. Albanese",
+    author: post.author || "Tobin Albanese",
     date: post.date || post.published_at || post.created_at || null,
+
+    href: hrefForPost(post),
 
     banner_url: bannerImage,
     archive_image_url: archiveImage,
-
     banner: bannerImage,
     archiveImage,
     imageUrl,
     displayImage: imageUrl,
 
-    imageAlt: post.title || "Portfolio image",
-
-    // Kept for clarity. Your frontend will still decide whether it is clickable.
-    clickable: false,
+    imageAlt: post.title || "Research thumbnail",
   };
 }
 
@@ -99,7 +108,9 @@ export default async function handler(req, res) {
   try {
     if (req.method !== "GET") {
       res.setHeader("Allow", "GET");
-      return res.status(405).json({ error: "Method not allowed" });
+      return res.status(405).json({
+        error: "Method not allowed",
+      });
     }
 
     const { data, error } = await supabaseServer
@@ -122,38 +133,36 @@ export default async function handler(req, res) {
         published_at
       `
       )
-      .eq("type", "portfolio")
+      .in("type", ["portfolio", "mb"])
       .eq("status", "published")
       .eq("is_published", true)
-      .in("slug", SPECIAL_FOCUS_ORDER);
+      .in("slug", RESEARCH_HIGHLIGHTS_ORDER);
 
     if (error) {
+      console.error(
+        "Supabase research-highlights query error:",
+        error
+      );
       throw error;
     }
 
-    const bySlug = new Map((data || []).map((post) => [post.slug, post]));
+    const bySlug = new Map(
+      (data || []).map((post) => [post.slug, post])
+    );
 
-    const items = SPECIAL_FOCUS_ORDER.map((slug) => bySlug.get(slug))
+    const posts = RESEARCH_HIGHLIGHTS_ORDER
+      .map((slug) => bySlug.get(slug))
       .filter(Boolean)
       .map(normalizePost);
 
-    const sidebarImage =
-      publicBucketUrl(RUSSIA_SIDEBAR_PUBLIC_PATH) ||
-      "https://aekjhiphxycnybowwgud.supabase.co/storage/v1/object/public/public-images/russia9.webp";
-
     return res.status(200).json({
-      group: "Current & In-Progress Work",
-      items,
-      sidebarImage,
+      posts,
     });
   } catch (e) {
-    console.error("special-focus API error:", e);
+    console.error("research-highlights API error:", e);
 
     return res.status(500).json({
-      group: "Current & In-Progress Work",
-      items: [],
-      sidebarImage:
-        "https://aekjhiphxycnybowwgud.supabase.co/storage/v1/object/public/public-images/russia9.webp",
+      posts: [],
       error: e?.message || "Unknown error",
     });
   }

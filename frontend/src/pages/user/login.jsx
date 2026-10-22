@@ -66,7 +66,7 @@ export default function Login() {
       if (role === "admin") {
         window.location.assign("/admin");
       } else {
-        window.location.assign("/MidnightBureau");
+        window.location.assign("/ResearchJournal");
       }
     } catch (err) {
       setLoading(false);

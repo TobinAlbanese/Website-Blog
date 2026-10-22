@@ -1,4 +1,5 @@
 // pages/api/portfolio/featured-projects.js
+
 import { supabaseServer } from "../../../lib/supabase/supabaseServer";
 
 const PUBLIC_BUCKET = "public-images";
@@ -6,11 +7,11 @@ const POSTS_BUCKET = "post-images";
 
 const FALLBACK_THUMB = "/assets/images/space.webp";
 
-const FEATURED_ORDER = [
+const FEATURED_PROJECTS_ORDER = [
   "naomi",
   "signalis-global-intelligence-platform",
+  "collector-orchestration",
   "reentry-wage-reporting-system",
-  "the-human-source-premium",
 ];
 
 function publicBucketUrl(path) {
@@ -48,30 +49,34 @@ function toResolvedImageUrl(src) {
 
   if (!value) return "";
 
-  // Already public URL
   if (/^https?:\/\//i.test(value)) {
     return value;
   }
 
-  // Local frontend asset
   if (value.startsWith("/assets/images/")) {
     return value.replace(/\.(jpg|jpeg|png)$/i, ".webp");
   }
 
-  // Post-uploaded storage paths like posts/<post-id>/banner/image.webp
   if (value.startsWith("posts/")) {
     return postsBucketUrl(value);
   }
 
-  // Public bucket fallback paths like fallbacks/space.webp or image.webp
   return publicBucketUrl(value);
+}
+
+function hrefForPost(post) {
+  if (post.type === "mb") {
+    return `/ResearchJournal/${post.slug}`;
+  }
+
+  return `/Portfolio/${post.slug}`;
 }
 
 function normalizePost(post) {
   const bannerImage = toResolvedImageUrl(post.banner_url);
   const archiveImage = toResolvedImageUrl(post.archive_image_url);
 
-  const finalImage =
+  const imageUrl =
     bannerImage ||
     archiveImage ||
     toResolvedImageUrl("fallbacks/space.webp") ||
@@ -79,21 +84,23 @@ function normalizePost(post) {
 
   return {
     id: post.id,
+    type: post.type,
     slug: post.slug,
     title: post.title || "Untitled",
     excerpt: post.excerpt || "",
     author: post.author || "Tobin Albanese",
     date: post.date || post.published_at || post.created_at || null,
 
+    href: hrefForPost(post),
+
     banner_url: bannerImage,
     archive_image_url: archiveImage,
-
-    // These preserve your existing FeaturedProjects.jsx picker semantics
-    banner: bannerImage || finalImage,
-    image_url: finalImage,
+    banner: bannerImage,
     archiveImage,
+    imageUrl,
+    displayImage: imageUrl,
 
-    displayImage: finalImage,
+    imageAlt: post.title || "Featured project thumbnail",
   };
 }
 
@@ -101,7 +108,9 @@ export default async function handler(req, res) {
   try {
     if (req.method !== "GET") {
       res.setHeader("Allow", "GET");
-      return res.status(405).json({ error: "Method not allowed" });
+      return res.status(405).json({
+        error: "Method not allowed",
+      });
     }
 
     const { data, error } = await supabaseServer
@@ -124,36 +133,36 @@ export default async function handler(req, res) {
         published_at
       `
       )
-      .eq("type", "portfolio")
+      .in("type", ["portfolio", "mb"])
       .eq("status", "published")
       .eq("is_published", true)
-      .eq("clickable", true)
-      .in("slug", FEATURED_ORDER);
+      .in("slug", FEATURED_PROJECTS_ORDER);
 
     if (error) {
+      console.error(
+        "Supabase featured-projects query error:",
+        error
+      );
       throw error;
     }
 
-    const bySlug = new Map((data || []).map((post) => [post.slug, post]));
+    const bySlug = new Map(
+      (data || []).map((post) => [post.slug, post])
+    );
 
-    const featured = FEATURED_ORDER.map((slug) => bySlug.get(slug))
+    const posts = FEATURED_PROJECTS_ORDER
+      .map((slug) => bySlug.get(slug))
       .filter(Boolean)
       .map(normalizePost);
 
     return res.status(200).json({
-      featuredName: "Featured / Spotlight Projects",
-      csName: "Computer Science Projects",
-      featured,
-      cs: [],
+      posts,
     });
   } catch (e) {
     console.error("featured-projects API error:", e);
 
     return res.status(500).json({
-      featuredName: "Featured / Spotlight Projects",
-      csName: "Computer Science Projects",
-      featured: [],
-      cs: [],
+      posts: [],
       error: e?.message || "Unknown error",
     });
   }

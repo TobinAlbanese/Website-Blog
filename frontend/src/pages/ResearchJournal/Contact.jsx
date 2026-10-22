@@ -8,7 +8,7 @@ import NavbarMB from "../../components/LandingPage/NavbarMB.jsx";
 const socialLinks = [
   {
     name: "Reddit",
-    url: "https://www.reddit.com/user/MidnightBureau",
+    url: "https://www.reddit.com/user/ResearchJournal",
     desc: "Join the Research Journal conversation on Reddit.",
     icon: "#icon-reddit",
   },
@@ -44,7 +44,7 @@ const socialLinks = [
   },
   {
     name: "Spotify",
-    url: "https://www.spotify.com/MidnightBureau",
+    url: "https://www.spotify.com/ResearchJournal",
     desc: "Listen to the Research Journal podcast.",
     icon: "#icon-spotify",
   },

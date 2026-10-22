@@ -68,13 +68,8 @@ export default function MBHeroGallery({ images = [] }) {
         </div>
       </div>
 
-      <h2 className="archive-title">My Archive</h2>
-      <p className="archive-description">
-        Browse the archive below — a curated timeline of investigations,
-        thoughts, and dispatches. Each entry opens a deeper look. Swipe
-        horizontally to scan through volumes. <br /> Scroll vertically to continue the
-        journey.
-      </p>
+      <h2 className="archive-title"></h2>
+
     </>
   );
 }

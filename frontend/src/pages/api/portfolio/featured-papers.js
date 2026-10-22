@@ -7,9 +7,9 @@ const POSTS_BUCKET = "post-images";
 const FALLBACK_THUMB = "/assets/images/space.webp";
 
 const FEATURED_PAPERS_ORDER = [
+  "terrorist-network-families",
   "the-al-qaeda-framework",
-  "strategic-proxies",
-  "russian-affairs-research-project",
+  "eastern-europe-gray-zone-networks",
   "political-science-ballot-research-paper",
 ];
 
@@ -68,7 +68,7 @@ function toResolvedImageUrl(src) {
 
 function hrefForPost(post) {
   if (post.type === "mb") {
-    return `/MidnightBureau/${post.slug}`;
+    return `/ResearchJournal/${post.slug}`;
   }
 
   return `/Portfolio/${post.slug}`;

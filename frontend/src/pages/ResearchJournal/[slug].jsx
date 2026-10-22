@@ -1,4 +1,4 @@
-// pages/MidnightBureau/[slug].jsx
+// pages/ResearchJournal/[slug].jsx
 import React, { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
@@ -801,7 +801,7 @@ export async function getServerSideProps({ params }) {
   if (incomingSlug !== post.slug) {
     return {
       redirect: {
-        destination: `/MidnightBureau/${post.slug}`,
+        destination: `/ResearchJournal/${post.slug}`,
         permanent: false,
       },
     };

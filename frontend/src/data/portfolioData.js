@@ -210,7 +210,7 @@ const PortfolioData = {
         "Related Work": [
           {
             label: "Research Journal (Case Notes)",
-            url: "/MidnightBureau",
+            url: "/ResearchJournal",
             external: false,
           },
           { label: "Home", url: "/", external: false },
@@ -331,7 +331,7 @@ const PortfolioData = {
       resources: {
         Sightings: [
           { label: "Project Hub", url: "/Portfolio", external: false },
-          { label: "OSINT Overview", url: "/MidnightBureau", external: false },
+          { label: "OSINT Overview", url: "/ResearchJournal", external: false },
         ],
         FormalStudies: [
           {
@@ -446,7 +446,7 @@ const PortfolioData = {
         "Reports & Case Studies": [
           {
             label: "Research Journal (Case Notes)",
-            url: "/MidnightBureau",
+            url: "/ResearchJournal",
             external: false,
           },
           { label: "Home", url: "/", external: false },
@@ -843,7 +843,7 @@ const PortfolioData = {
         "Related Work": [
           {
             label: "Research Journal (Case Notes)",
-            url: "/MidnightBureau",
+            url: "/ResearchJournal",
             external: false,
           },
           { label: "Home", url: "/", external: false },
@@ -964,7 +964,7 @@ const PortfolioData = {
       resources: {
         Sightings: [
           { label: "Project Hub", url: "/Portfolio", external: false },
-          { label: "OSINT Overview", url: "/MidnightBureau", external: false },
+          { label: "OSINT Overview", url: "/ResearchJournal", external: false },
         ],
         FormalStudies: [
           {
@@ -1079,7 +1079,7 @@ const PortfolioData = {
         "Reports & Case Studies": [
           {
             label: "Research Journal (Case Notes)",
-            url: "/MidnightBureau",
+            url: "/ResearchJournal",
             external: false,
           },
           { label: "Home", url: "/", external: false },
@@ -1328,7 +1328,7 @@ const PortfolioData = {
             url: "https://www.tobinalbanese.com",
             external: true,
           },
-          { label: "Research Journal", url: "/MidnightBureau", external: false },
+          { label: "Research Journal", url: "/ResearchJournal", external: false },
         ],
         "About & Research": [
           { label: "About / CV", url: "/About", external: false },
@@ -1424,7 +1424,7 @@ const PortfolioData = {
       resources: {
         Sightings: [
           { label: "Project Hub", url: "/Portfolio", external: false },
-          { label: "Bureau Article", url: "/MidnightBureau", external: false },
+          { label: "Bureau Article", url: "/ResearchJournal", external: false },
         ],
         "Methods & Notes": [
           {
@@ -1868,7 +1868,7 @@ const PortfolioData = {
         ],
         "Project Pages": [
           { label: "Project Hub", url: "/Portfolio", external: false },
-          { label: "Bureau Article", url: "/MidnightBureau", external: false },
+          { label: "Bureau Article", url: "/ResearchJournal", external: false },
           { label: "About / CV", url: "/About", external: false },
           {
             label: "ResearchGate (profile)",
@@ -2069,7 +2069,7 @@ privacy_reporting: { dp_epsilon_monthly: 2.0 }
         ],
         "Project Pages": [
           { label: "Project Hub", url: "/Portfolio", external: false },
-          { label: "Bureau Article", url: "/MidnightBureau", external: false },
+          { label: "Bureau Article", url: "/ResearchJournal", external: false },
           { label: "About / CV", url: "/About", external: false },
           {
             label: "ResearchGate (profile)",
@@ -2136,7 +2136,7 @@ privacy_reporting: { dp_epsilon_monthly: 2.0 }
     ],
     resources: {
       LiveAndDemos: [
-        { label: "Research Journal", url: "/MidnightBureau", external: false },
+        { label: "Research Journal", url: "/ResearchJournal", external: false },
         { label: "Live Site", url: "https://www.tobinalbanese.com", external: true }
       ],
       CodeAndRoadmap: [
@@ -2572,7 +2572,7 @@ export default PortfolioData;
         "Reports & Briefs": [
           {
             label: "Research Journal (Case Notes)",
-            url: "/MidnightBureau",
+            url: "/ResearchJournal",
             external: false,
           },
           { label: "Home", url: "/", external: false },

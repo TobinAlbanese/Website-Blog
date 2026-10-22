@@ -161,40 +161,7 @@ export default function Home() {
                 <h2 className="visually-hidden">Hero</h2>
                 <Hero />
               </section>
-
-              <section
-                id="about"
-                ref={setSectionRef("about")}
-                tabIndex={0}
-                data-section-wrapper="true"
-                aria-label="About me" 
-              >
-                <h2 className="visually-hidden">About me</h2>
-                <AboutMe />
-              </section>
-
-              <section
-                id="blog-highlights"
-                ref={setSectionRef("blog-highlights")}
-                tabIndex={0}
-                data-section-wrapper="true"
-                aria-label="Blog highlights"
-              >
-                <h2 className="visually-hidden">Blog highlights</h2>
-                <BlogHighlights />
-              </section>
-
-              <section
-                id="featured-projects"
-                ref={setSectionRef("featured-projects")}
-                tabIndex={0}
-                data-section-wrapper="true"
-                aria-label="Featured projects"
-              >
-                <h2 className="visually-hidden">Featured projects</h2>
-                <FeaturedProjects />
-              </section>
-
+     
               <section
                 id="special-focus"
                 ref={setSectionRef("special-focus")}
@@ -206,15 +173,26 @@ export default function Home() {
                 <SpecialFocus />
               </section>
 
-              <section
-                id="podcast"
-                ref={setSectionRef("podcast")}
+            <section
+                id="blog-highlights"
+                ref={setSectionRef("blog-highlights")}
                 tabIndex={0}
                 data-section-wrapper="true"
-                aria-label="Podcast"
+                aria-label="Blog highlights"
               >
-                <h2 className="visually-hidden">Podcast</h2>
-                <Podcast />
+                <h2 className="visually-hidden">Blog highlights</h2>
+                <BlogHighlights />
+              </section>
+
+            <section
+                id="featured-projects"
+                ref={setSectionRef("featured-projects")}
+                tabIndex={0}
+                data-section-wrapper="true"
+                aria-label="Featured projects"
+              >
+                <h2 className="visually-hidden">Featured projects</h2>
+                <FeaturedProjects />
               </section>
 
               <section
@@ -229,15 +207,18 @@ export default function Home() {
               </section>
 
               <section
-                id="book-reviews"
-                ref={setSectionRef("book-reviews")}
+                id="about"
+                ref={setSectionRef("about")}
                 tabIndex={0}
                 data-section-wrapper="true"
-                aria-label="Book reviews"
+                aria-label="About me" 
               >
-                <h2 className="visually-hidden">Book reviews</h2>
-                <BookReviews />
+                <h2 className="visually-hidden">About me</h2>
+                <AboutMe />
               </section>
+
+
+
 
               <section
                 id="feedback"
@@ -249,13 +230,11 @@ export default function Home() {
                 <h2 className="visually-hidden">Feedback</h2>
                 <Feedback />
               </section>
-
-              <section
-                id="stay-connected"
-                ref={setSectionRef("stay-connected")}
-                tabIndex={0}
-                data-section-wrapper="true"
-                aria-label="Stay connected"
+              <section id = "stay-connected"
+              ref={setSectionRef("stay-connected")}
+              tabIndex={0}
+              data-section-wrapper="true"
+              aria-label="Stay connected"
               >
                 <h2 className="visually-hidden">Stay connected</h2>
                 <StayConnected />

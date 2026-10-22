@@ -1,9 +1,23 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, {
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+
 import Link from "next/link";
 
-const hrefFor = (p) => `/Portfolio/${p.slug}`;
+const FEATURED_PROJECT_SLUGS = [
+  "naomi",
+  "signalis-global-intelligence-platform",
+  "collector-orchestration",
+  "reentry-wage-reporting-system",
+];
 
-const firstTruthy = (...xs) => xs.find(Boolean);
+const hrefFor = (p) =>
+  `/Portfolio/${p.slug}`;
+
+const firstTruthy = (...xs) =>
+  xs.find(Boolean);
 
 const pickProjectImg = (p) =>
   firstTruthy(
@@ -20,16 +34,25 @@ const uniqBySlug = (list) => {
   const seen = new Set();
 
   return (list || []).filter((p) => {
-    if (!p?.slug || seen.has(p.slug)) return false;
+    if (!p?.slug || seen.has(p.slug)) {
+      return false;
+    }
+
     seen.add(p.slug);
+
     return true;
   });
 };
 
 export default function FeaturedProjects() {
-  const [featured, setFeatured] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [failed, setFailed] = useState(false);
+  const [featured, setFeatured] =
+    useState([]);
+
+  const [loading, setLoading] =
+    useState(true);
+
+  const [failed, setFailed] =
+    useState(false);
 
   useEffect(() => {
     let active = true;
@@ -39,34 +62,49 @@ export default function FeaturedProjects() {
         setLoading(true);
         setFailed(false);
 
-        const res = await fetch("/api/portfolio/featured-projects", {
-          method: "GET",
-          cache: "no-store",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+       const res = await fetch(
+  "/api/portfolio/featured-projects",
+  {
+    method: "GET",
+    cache: "no-store",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }
+);
 
         if (!res.ok) {
-          throw new Error(`Request failed: ${res.status}`);
+          throw new Error(
+            `Request failed: ${res.status}`
+          );
         }
 
         const data = await res.json();
 
         if (!active) return;
 
-        const incoming = Array.isArray(data?.featured) ? data.featured : [];
+        const incoming =
+  Array.isArray(data?.posts)
+    ? data.posts
+    : [];
 
-        setFeatured(uniqBySlug(incoming));
+        setFeatured(
+          uniqBySlug(incoming)
+        );
       } catch (e) {
-        console.error("FeaturedProjects fetch failed:", e);
+        console.error(
+          "FeaturedProjects fetch failed:",
+          e
+        );
 
         if (!active) return;
 
         setFeatured([]);
         setFailed(true);
       } finally {
-        if (active) setLoading(false);
+        if (active) {
+          setLoading(false);
+        }
       }
     }
 
@@ -77,16 +115,31 @@ export default function FeaturedProjects() {
     };
   }, []);
 
-  const { primary, side, primaryImg, sideImages } = useMemo(() => {
-    const primary = featured[0] || null;
-    const primaryImg = primary ? pickProjectImg(primary) : null;
+  const {
+    primary,
+    side,
+    primaryImg,
+    sideImages,
+  } = useMemo(() => {
+    const primary =
+      featured[0] || null;
 
-    const side = featured.slice(1, 4);
+    const primaryImg = primary
+      ? pickProjectImg(primary)
+      : null;
 
-    const sideImages = side.reduce((acc, project) => {
-      acc[project.slug] = pickProjectImg(project);
-      return acc;
-    }, {});
+    const side =
+      featured.slice(1, 4);
+
+    const sideImages = side.reduce(
+      (acc, project) => {
+        acc[project.slug] =
+          pickProjectImg(project);
+
+        return acc;
+      },
+      {}
+    );
 
     return {
       primary,
@@ -115,8 +168,9 @@ export default function FeaturedProjects() {
             className="fs-18 mb-15 mb-25 fs-md-16"
             data-armstrong-id="module_subtitle"
           >
-            A collection of my favorite projects, handpicked to showcase the
-            breadth and depth of my work.
+            Selected technical systems
+            and software projects from my
+            portfolio.
           </h3>
 
           {loading ? (
@@ -125,37 +179,53 @@ export default function FeaturedProjects() {
             </div>
           ) : failed ? (
             <div className="body-s c-text-secondary">
-              Couldn’t load featured projects from Supabase.
+              Couldn&apos;t load featured
+              projects.
             </div>
           ) : !primary ? (
             <div className="body-s c-text-secondary">
               No featured projects yet.
             </div>
           ) : (
-            <div className="row justify-between d-flex" data-armstrong-id="row">
-              {/* Left: large NAOMI card */}
+            <div
+              className="row justify-between d-flex"
+              data-armstrong-id="row"
+            >
+              {/* Large primary card */}
               <div
                 className="col-12 col-md-6 mb-10"
                 data-armstrong-id="grid_1"
               >
                 <div className="col-12 ml-0 mr-0">
-                  <Link href={hrefFor(primary)}>
-                    <figure style={{ margin: 0 }}>
+                  <Link
+                    href={hrefFor(primary)}
+                  >
+                    <figure
+                      style={{ margin: 0 }}
+                    >
                       <img
-                        src={primaryImg || "/assets/images/space.webp"}
+                        src={
+                          primaryImg ||
+                          "/assets/images/space.webp"
+                        }
                         alt={primary.title}
                         loading="lazy"
                         onError={(e) => {
-                          e.currentTarget.onerror = null;
-                          e.currentTarget.src = "/assets/images/space.webp";
+                          e.currentTarget.onerror =
+                            null;
+
+                          e.currentTarget.src =
+                            "/assets/images/space.webp";
                         }}
                         sizes="(max-width: 767px) 100vw, (max-width: 1400px) 50vw, 620px"
                         style={{
                           width: "100%",
                           height: 300,
                           borderRadius: 8,
-                          objectFit: "cover",
-                          objectPosition: "center",
+                          objectFit:
+                            "cover",
+                          objectPosition:
+                            "center",
                           display: "block",
                         }}
                       />
@@ -165,43 +235,62 @@ export default function FeaturedProjects() {
 
                 <div className="col-12 ml-0 mr-0">
                   <h2 className="heading-m mt-20">
-                    <Link href={hrefFor(primary)}>{primary.title}</Link>
+                    <Link
+                      href={hrefFor(
+                        primary
+                      )}
+                    >
+                      {primary.title}
+                    </Link>
                   </h2>
 
                   <h3 className="body-l c-text-secondary mt-5">
-                    <Link href={hrefFor(primary)}>{primary.excerpt}</Link>
+                    <Link
+                      href={hrefFor(
+                        primary
+                      )}
+                    >
+                      {primary.excerpt}
+                    </Link>
                   </h3>
 
                   <div className="body-s mt-10" />
                 </div>
               </div>
 
-              {/* Right: SIGNALIS, Reentry Wage, Human Source */}
+              {/* Right cards */}
               <div
                 className="col-12 col-md-5 mt-30 mt-md-0"
                 data-armstrong-id="grid_2"
               >
                 {side.map((p, i) => {
-                  const img = sideImages[p.slug] || "/assets/images/space.webp";
+                  const img =
+                    sideImages[p.slug] ||
+                    "/assets/images/space.webp";
 
                   return (
                     <div
                       key={p.slug}
                       className={
                         "card row card--large justify-between col-12 ml-0 mr-0 pb-15 border-bottom border-bottom-thin c-border " +
-                        (i === 0 ? "border-top border-top-thin pt-20" : "")
+                        (i === 0
+                          ? "border-top border-top-thin pt-20"
+                          : "")
                       }
                       style={{
-                        alignItems: "flex-start",
+                        alignItems:
+                          "flex-start",
                         marginBottom: 14,
-                        position: "relative",
+                        position:
+                          "relative",
                       }}
                     >
                       <Link
                         href={hrefFor(p)}
                         aria-label={`Open: ${p.title}`}
                         style={{
-                          position: "absolute",
+                          position:
+                            "absolute",
                           inset: 0,
                           zIndex: 1,
                           borderRadius: 6,
@@ -210,25 +299,38 @@ export default function FeaturedProjects() {
 
                       <div
                         className="col-9 col-md-8 d-flex flex-column"
-                        style={{ justifyContent: "flex-start" }}
+                        style={{
+                          justifyContent:
+                            "flex-start",
+                        }}
                       >
-                        <h3 className="body-m" style={{ marginBottom: 6 }}>
+                        <h3
+                          className="body-m"
+                          style={{
+                            marginBottom: 6,
+                          }}
+                        >
                           {p.title}
                         </h3>
 
                         <p
                           className="body-s c-text-secondary"
-                          style={{ marginBottom: 10 }}
+                          style={{
+                            marginBottom: 10,
+                          }}
                         >
-                          {p.excerpt || "Read the full project."}
+                          {p.excerpt ||
+                            "Read the full project."}
                         </p>
                       </div>
 
                       <div
                         className="col-3 col-md-4 d-flex"
                         style={{
-                          alignItems: "flex-start",
-                          justifyContent: "center",
+                          alignItems:
+                            "flex-start",
+                          justifyContent:
+                            "center",
                           paddingTop: 0,
                         }}
                       >
@@ -237,15 +339,21 @@ export default function FeaturedProjects() {
                           alt={p.title}
                           loading="lazy"
                           onError={(e) => {
-                            e.currentTarget.onerror = null;
-                            e.currentTarget.src = "/assets/images/space.webp";
+                            e.currentTarget.onerror =
+                              null;
+
+                            e.currentTarget.src =
+                              "/assets/images/space.webp";
                           }}
                           style={{
                             width: "100%",
                             maxWidth: 220,
-                            aspectRatio: "4 / 3",
-                            objectFit: "cover",
-                            objectPosition: "center",
+                            aspectRatio:
+                              "4 / 3",
+                            objectFit:
+                              "cover",
+                            objectPosition:
+                              "center",
                             borderRadius: 6,
                             display: "block",
                             margin: 0,

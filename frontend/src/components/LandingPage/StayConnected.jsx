@@ -110,7 +110,7 @@ export default function StayConnected() {
             <div className="mt-20" id="stay-connected-cta">
               <a
                 className="btn border-radius-small pt-10 pb-10 pl-20 pr-20 body-s btn-accent position-relative z-above-base d-inline-block lh-22 fs-15 text-align-center mt-20 mb-40 cursor-pointer"
-                href="/MidnightBureau/Newsletter"
+                href="/ResearchJournal/Newsletter"
                 data-dl-click-event="updates_cta_click"
                 data-dl-variable-name="dl_event_location"
                 data-dl-variable-value="sub-mod-tout"

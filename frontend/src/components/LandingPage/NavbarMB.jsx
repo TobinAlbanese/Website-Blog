@@ -118,7 +118,7 @@ export default function NavbarMB() {
       await supabase.auth.signOut();
       setMenuOpen(false);
       setIsLoggedIn(false);
-      router.push("/MidnightBureau");
+      router.push("/ResearchJournal");
     } catch (err) {
       console.error("Error logging out:", err);
     }
@@ -200,7 +200,7 @@ export default function NavbarMB() {
     setMenuOpen(false);
     sessionStorage.setItem("scrollTarget", "archive-content");
     await router.push(
-      `/MidnightBureau/Archive?group=${encodeURIComponent(
+      `/ResearchJournal/Archive?group=${encodeURIComponent(
         group,
       )}#archive-content`,
       undefined,
@@ -243,19 +243,12 @@ export default function NavbarMB() {
               <li className="site-nav__list-item d-flex show-desktop">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/MidnightBureau/Archive"
+                  href="/ResearchJournal/Archive"
                 >
                   Archive
                 </a>
               </li>
-              <li className="site-nav__list-item d-flex show-desktop">
-                <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/MidnightBureau/Contact"
-                >
-                  Contact
-                </a>
-              </li>
+
 
               {/* Explore dropdown */}
               <li className="site-nav__list-item d-flex show-desktop site-nav__dropdown">
@@ -264,16 +257,16 @@ export default function NavbarMB() {
                 </a>
                 <ul className="site-nav__dropdown-menu">
                   <li>
-                    <a href="/MidnightBureau/BookReviews">Book Reviews</a>
+                    <a href="/ResearchJournal/BookReviews">Book Reviews</a>
                   </li>
                   <li>
-                    <a href="/MidnightBureau/Music">Music Suggestions</a>
+                    <a href="/ResearchJournal/Music">Music Suggestions</a>
                   </li>
                   <li>
-                    <a href="/MidnightBureau/Podcasts">Podcasts</a>
+                    <a href="/ResearchJournal/Podcasts">Podcasts</a>
                   </li>
                   <li>
-                    <a href="/MidnightBureau/FAQ">FAQs</a>
+                    <a href="/ResearchJournal/FAQ">FAQs</a>
                   </li>
                 </ul>
               </li>
@@ -281,7 +274,7 @@ export default function NavbarMB() {
               <li className="site-nav__list-item d-flex show-tablet">
                 <a
                   className="site-nav__link body-s-smallcaps highlight"
-                  href="/MidnightBureau"
+                  href="/ResearchJournal"
                 >
                   Research Journal
                 </a>
@@ -289,7 +282,7 @@ export default function NavbarMB() {
               <li className="site-nav__list-item d-flex show-mobile">
                 <a
                   className="site-nav__link body-s-smallcaps highlight"
-                  href="/MidnightBureau"
+                  href="/ResearchJournal"
                 >
                   Research Journal
                 </a>
@@ -316,7 +309,7 @@ export default function NavbarMB() {
               <li className="site-nav__list-item d-flex show-desktop">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/MidnightBureau/Newsletter"
+                  href="/ResearchJournal/Newsletter"
                 >
                   Newsletters
                 </a>
@@ -362,7 +355,7 @@ export default function NavbarMB() {
               <li className="site-nav__list-item d-flex show-desktop">
                 <a
                   className="site-nav__link body-s-smallcaps highlight"
-                  href="/MidnightBureau"
+                  href="/ResearchJournal"
                 >
                   Research Journal
                 </a>
@@ -426,7 +419,7 @@ export default function NavbarMB() {
               <li className="site-nav__list-item d-flex show-desktop">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/MidnightBureau/Archive"
+                  href="/ResearchJournal/Archive"
                 >
                   Archive
                 </a>
@@ -434,7 +427,7 @@ export default function NavbarMB() {
               <li className="site-nav__list-item d-flex show-desktop">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/MidnightBureau/Contact"
+                  href="/ResearchJournal/Contact"
                 >
                   Contact
                 </a>
@@ -446,16 +439,16 @@ export default function NavbarMB() {
                 </a>
                 <ul className="site-nav__dropdown-menu">
                   <li>
-                    <a href="/MidnightBureau/BookReviews">Book Reviews</a>
+                    <a href="/ResearchJournal/BookReviews">Book Reviews</a>
                   </li>
                   <li>
-                    <a href="/MidnightBureau/Music">Music Suggestions</a>
+                    <a href="/ResearchJournal/Music">Music Suggestions</a>
                   </li>
                   <li>
-                    <a href="/MidnightBureau/Podcasts">Podcasts</a>
+                    <a href="/ResearchJournal/Podcasts">Podcasts</a>
                   </li>
                   <li>
-                    <a href="/MidnightBureau/FAQ">FAQs</a>
+                    <a href="/ResearchJournal/FAQ">FAQs</a>
                   </li>
                 </ul>
               </li>
@@ -463,7 +456,7 @@ export default function NavbarMB() {
               <li className="site-nav__list-item d-flex show-tablet">
                 <a
                   className="site-nav__link body-s-smallcaps highlight"
-                  href="/MidnightBureau"
+                  href="/ResearchJournal"
                 >
                   Research Journal
                 </a>
@@ -471,7 +464,7 @@ export default function NavbarMB() {
               <li className="site-nav__list-item d-flex show-mobile">
                 <a
                   className="site-nav__link body-s-smallcaps highlight"
-                  href="/MidnightBureau"
+                  href="/ResearchJournal"
                 >
                   Research Journal
                 </a>
@@ -498,7 +491,7 @@ export default function NavbarMB() {
               <li className="site-nav__list-item d-flex show-desktop">
                 <a
                   className="site-nav__link body-s-smallcaps "
-                  href="/MidnightBureau/Newsletter"
+                  href="/ResearchJournal/Newsletter"
                 >
                   Newsletters
                 </a>
@@ -544,7 +537,7 @@ export default function NavbarMB() {
               <li className="site-nav__list-item d-flex show-desktop">
                 <a
                   className="site-nav__link body-s-smallcaps highlight"
-                  href="/MidnightBureau"
+                  href="/ResearchJournal"
                 >
                   Research Journal
                 </a>
@@ -588,7 +581,7 @@ export default function NavbarMB() {
                 <ul>
                   <li className="menu__topics-list-item mb-10">
                     <a
-                      href="/MidnightBureau/Archive"
+                      href="/ResearchJournal/Archive"
                       onClick={() => setMenuOpen(false)}
                     >
                       Journal Archive
@@ -596,8 +589,8 @@ export default function NavbarMB() {
                   </li>
                   <li className="menu__topics-list-item mb-10">
                     <a
-                      href="/MidnightBureau#recent-posts"
-                      onClick={goToAnchor("/MidnightBureau", "recent-posts")}
+                      href="/ResearchJournal#recent-posts"
+                      onClick={goToAnchor("/ResearchJournal", "recent-posts")}
                     >
                       Recent Posts
                     </a>
@@ -629,15 +622,7 @@ export default function NavbarMB() {
 
                   <li className="menu__topics-list-item mb-10">
                     <a
-                      href="/MidnightBureau/Newsletter"
-                      onClick={() => setMenuOpen(false)}
-                    >
-                      Newsletter
-                    </a>
-                  </li>
-                  <li className="menu__topics-list-item mb-10">
-                    <a
-                      href="/MidnightBureau/FAQ"
+                      href="/ResearchJournal/FAQ"
                       onClick={() => setMenuOpen(false)}
                     >
                       FAQs
@@ -645,7 +630,7 @@ export default function NavbarMB() {
                   </li>
                   <li className="menu__topics-list-item mb-10">
                     <a
-                      href="/MidnightBureau/About"
+                      href="/ResearchJournal/About"
                       onClick={() => setMenuOpen(false)}
                     >
                       About Me
@@ -653,7 +638,7 @@ export default function NavbarMB() {
                   </li>
                   <li className="menu__topics-list-item mb-10">
                     <a
-                      href="/MidnightBureau/Contact"
+                      href="/ResearchJournal/Contact"
                       onClick={() => setMenuOpen(false)}
                     >
                       Contact
@@ -666,7 +651,7 @@ export default function NavbarMB() {
                   <ul className="menu__links pt-10">
                     <li className="menu__links--list-item">
                       <a
-                        href="/MidnightBureau/Archive?group=World%20%26%20Diplomacy"
+                        href="/ResearchJournal/Archive?group=World%20%26%20Diplomacy"
                         onClick={goToArchiveGroup("World & Diplomacy")}
                       >
                         World &amp; Diplomacy
@@ -674,7 +659,7 @@ export default function NavbarMB() {
                     </li>
                     <li className="menu__links--list-item">
                       <a
-                        href="/MidnightBureau/Archive?group=Security%20%26%20Military"
+                        href="/ResearchJournal/Archive?group=Security%20%26%20Military"
                         onClick={goToArchiveGroup("Security & Military")}
                       >
                         Security &amp; Military
@@ -682,7 +667,7 @@ export default function NavbarMB() {
                     </li>
                     <li className="menu__links--list-item">
                       <a
-                        href="/MidnightBureau/Archive?group=Energy%20%26%20Environment"
+                        href="/ResearchJournal/Archive?group=Energy%20%26%20Environment"
                         onClick={goToArchiveGroup("Energy & Environment")}
                       >
                         Energy &amp; Environment
@@ -690,7 +675,7 @@ export default function NavbarMB() {
                     </li>
                     <li className="menu__links--list-item">
                       <a
-                        href="/MidnightBureau/Archive?group=Economy"
+                        href="/ResearchJournal/Archive?group=Economy"
                         onClick={goToArchiveGroup("Economy")}
                       >
                         Economy
@@ -698,7 +683,7 @@ export default function NavbarMB() {
                     </li>
                     <li className="menu__links--list-item">
                       <a
-                        href="/MidnightBureau/Archive?group=Technology"
+                        href="/ResearchJournal/Archive?group=Technology"
                         onClick={goToArchiveGroup("Technology")}
                       >
                         Technology
@@ -706,7 +691,7 @@ export default function NavbarMB() {
                     </li>
                     <li className="menu__links--list-item">
                       <a
-                        href="/MidnightBureau/Archive?group=Culture"
+                        href="/ResearchJournal/Archive?group=Culture"
                         onClick={goToArchiveGroup("Culture")}
                       >
                         Culture
@@ -714,7 +699,7 @@ export default function NavbarMB() {
                     </li>
                     <li className="menu__links--list-item">
                       <a
-                        href="/MidnightBureau/Archive?group=Ideas"
+                        href="/ResearchJournal/Archive?group=Ideas"
                         onClick={goToArchiveGroup("Ideas")}
                       >
                         Ideas
@@ -733,7 +718,7 @@ export default function NavbarMB() {
                     <li key={p.slug}>
                       <a
                         className="menu__post-link"
-                        href={`/MidnightBureau/${p.slug}`}
+                        href={`/ResearchJournal/${p.slug}`}
                         onClick={() => setMenuOpen(false)}
                       >
                         <figure
@@ -785,7 +770,7 @@ export default function NavbarMB() {
                   <ul className="menu__links pt-30 pt-md-0">
                     <li className="menu__links--list-item mb-5">
                       <a
-                        href="/MidnightBureau/Archive?group=World%20%26%20Diplomacy"
+                        href="/ResearchJournal/Archive?group=World%20%26%20Diplomacy"
                         onClick={goToArchiveGroup("World & Diplomacy")}
                       >
                         World &amp; Diplomacy
@@ -793,7 +778,7 @@ export default function NavbarMB() {
                     </li>
                     <li className="menu__links--list-item mb-5">
                       <a
-                        href="/MidnightBureau/Archive?group=Security%20%26%20Military"
+                        href="/ResearchJournal/Archive?group=Security%20%26%20Military"
                         onClick={goToArchiveGroup("Security & Military")}
                       >
                         Security &amp; Military
@@ -801,7 +786,7 @@ export default function NavbarMB() {
                     </li>
                     <li className="menu__links--list-item mb-5">
                       <a
-                        href="/MidnightBureau/Archive?group=Energy%20%26%20Environment"
+                        href="/ResearchJournal/Archive?group=Energy%20%26%20Environment"
                         onClick={goToArchiveGroup("Energy & Environment")}
                       >
                         Energy &amp; Environment
@@ -809,7 +794,7 @@ export default function NavbarMB() {
                     </li>
                     <li className="menu__links--list-item mb-5">
                       <a
-                        href="/MidnightBureau/Archive?group=Economy"
+                        href="/ResearchJournal/Archive?group=Economy"
                         onClick={goToArchiveGroup("Economy")}
                       >
                         Economy
@@ -817,7 +802,7 @@ export default function NavbarMB() {
                     </li>
                     <li className="menu__links--list-item mb-5">
                       <a
-                        href="/MidnightBureau/Archive?group=Technology"
+                        href="/ResearchJournal/Archive?group=Technology"
                         onClick={goToArchiveGroup("Technology")}
                       >
                         Technology
@@ -825,7 +810,7 @@ export default function NavbarMB() {
                     </li>
                     <li className="menu__links--list-item mb-5">
                       <a
-                        href="/MidnightBureau/Archive?group=Culture"
+                        href="/ResearchJournal/Archive?group=Culture"
                         onClick={goToArchiveGroup("Culture")}
                       >
                         Culture
@@ -833,7 +818,7 @@ export default function NavbarMB() {
                     </li>
                     <li className="menu__links--list-item mb-5">
                       <a
-                        href="/MidnightBureau/Archive?group=Ideas"
+                        href="/ResearchJournal/Archive?group=Ideas"
                         onClick={goToArchiveGroup("Ideas")}
                       >
                         Ideas
@@ -862,7 +847,7 @@ export default function NavbarMB() {
                 </p>
                 <a
                   className="mt-30 arrow-link border-bottom-thin border-bottom d-inline-block lh-22"
-                  href="/MidnightBureau/About"
+                  href="/ResearchJournal/About"
                   onClick={() => setMenuOpen(false)}
                 >
                   More About Me
@@ -877,7 +862,7 @@ export default function NavbarMB() {
                 <ul className="menu__links pt-30 pt-md-0">
                   <li className="menu__links--list-item mb-5">
                     <a
-                      href="/MidnightBureau/Newsletter"
+                      href="/ResearchJournal/Newsletter"
                       onClick={() => setMenuOpen(false)}
                     >
                       Newsletter
@@ -885,7 +870,7 @@ export default function NavbarMB() {
                   </li>
                   <li className="menu__links--list-item mb-5">
                     <a
-                      href="/MidnightBureau/FAQ"
+                      href="/ResearchJournal/FAQ"
                       onClick={() => setMenuOpen(false)}
                     >
                       FAQs
@@ -893,7 +878,7 @@ export default function NavbarMB() {
                   </li>
                   <li className="menu__links--list-item mb-5">
                     <a
-                      href="/MidnightBureau/Podcasts"
+                      href="/ResearchJournal/Podcasts"
                       onClick={() => setMenuOpen(false)}
                     >
                       Podcasts
@@ -901,7 +886,7 @@ export default function NavbarMB() {
                   </li>
                   <li className="menu__links--list-item mb-5">
                     <a
-                      href="/MidnightBureau/BookReviews"
+                      href="/ResearchJournal/BookReviews"
                       onClick={() => setMenuOpen(false)}
                     >
                       Book Reviews
@@ -909,7 +894,7 @@ export default function NavbarMB() {
                   </li>
                   <li className="menu__links--list-item mb-5">
                     <a
-                      href="/MidnightBureau/Music"
+                      href="/ResearchJournal/Music"
                       onClick={() => setMenuOpen(false)}
                     >
                       Music Suggestions
