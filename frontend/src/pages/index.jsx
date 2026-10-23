@@ -11,7 +11,6 @@ import SpecialFocus from "../components/LandingPage/SpecialFocus.jsx";
 import Podcast from "../components/LandingPage/Podcast.jsx";
 import BookReviews from "../components/LandingPage/BookReviews.jsx";
 import Feedback from "../components/LandingPage/FeedBack.jsx";
-import StayConnected from "../components/LandingPage/StayConnected.jsx";
 import Footer from "../components/LandingPage/Footer.jsx";
 import Navbar from "../components/LandingPage/Navbar.jsx";
 
@@ -227,16 +226,7 @@ export default function Home() {
                 <h2 className="visually-hidden">Feedback</h2>
                 <Feedback />
               </section>
-              <section
-                id="stay-connected"
-                ref={setSectionRef("stay-connected")}
-                tabIndex={0}
-                data-section-wrapper="true"
-                aria-label="Stay connected"
-              >
-                <h2 className="visually-hidden">Stay connected</h2>
-                <StayConnected />
-              </section>
+
             </div>
           </main>
 
