@@ -27,7 +27,7 @@ function publicBucketUrl(path, bucket = PUBLIC_BUCKET) {
   if (!url || !path) return "";
   return `${url}/storage/v1/object/public/${bucket}/${String(path).replace(
     /^\/+/,
-    ""
+    "",
   )}`;
 }
 
@@ -94,7 +94,9 @@ function getPostImage(post) {
 }
 
 function isAllowedStatus(post) {
-  const status = String(post?.status || "").trim().toLowerCase();
+  const status = String(post?.status || "")
+    .trim()
+    .toLowerCase();
   return status === "draft";
 }
 
@@ -128,10 +130,10 @@ export default function AdminPostsIndex({ posts = [] }) {
         const entry = entries[0];
         if (!entry?.isIntersecting) return;
         setVisibleCount((prev) =>
-          Math.min(prev + PAGE_SIZE, sortedPosts.length)
+          Math.min(prev + PAGE_SIZE, sortedPosts.length),
         );
       },
-      { rootMargin: "280px 0px" }
+      { rootMargin: "280px 0px" },
     );
 
     observer.observe(node);
@@ -315,7 +317,7 @@ export async function getServerSideProps() {
       archive_image_url,
       author,
       date
-    `
+    `,
     )
     .eq("status", "draft")
     .order("published_at", { ascending: false, nullsFirst: false })

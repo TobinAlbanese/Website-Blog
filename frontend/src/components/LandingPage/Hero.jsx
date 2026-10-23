@@ -1,10 +1,6 @@
 // components/LandingPage/LandingSection.jsx
 
-import React, {
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import { publicImageUrl } from "../../lib/supabase/client";
 
@@ -16,7 +12,7 @@ function useWordAnimatedText(
   text,
   baseDelay = 0.08,
   charClass = "type-char-title",
-  startDelay = 0
+  startDelay = 0,
 ) {
   return useMemo(() => {
     const tokens = text.split(/(\s+)/);
@@ -24,11 +20,7 @@ function useWordAnimatedText(
 
     return tokens.map((tok, idx) => {
       if (/^\s+$/.test(tok)) {
-        return (
-          <span key={`sp-${idx}`}>
-            {tok}
-          </span>
-        );
+        return <span key={`sp-${idx}`}>{tok}</span>;
       }
 
       const chars = tok.split("").map((ch) => {
@@ -39,9 +31,7 @@ function useWordAnimatedText(
             key={key}
             className={charClass}
             style={{
-              animationDelay: `${
-                startDelay + i * baseDelay
-              }s`,
+              animationDelay: `${startDelay + i * baseDelay}s`,
             }}
           >
             {ch}
@@ -60,12 +50,7 @@ function useWordAnimatedText(
         </span>
       );
     });
-  }, [
-    text,
-    baseDelay,
-    charClass,
-    startDelay,
-  ]);
+  }, [text, baseDelay, charClass, startDelay]);
 }
 
 /* -------------------------------------------------
@@ -76,7 +61,7 @@ function useWordSpanizedText(
   text,
   baseDelay = 0.01,
   charClass = "type-char",
-  startDelay = 0
+  startDelay = 0,
 ) {
   return useMemo(() => {
     const tokens = text.split(/(\s+)/);
@@ -84,11 +69,7 @@ function useWordSpanizedText(
 
     return tokens.map((tok, idx) => {
       if (/^\s+$/.test(tok)) {
-        return (
-          <span key={`sp-${idx}`}>
-            {tok}
-          </span>
-        );
+        return <span key={`sp-${idx}`}>{tok}</span>;
       }
 
       const chars = tok.split("").map((ch, j) => {
@@ -99,9 +80,7 @@ function useWordSpanizedText(
             key={`c-${idx}-${j}`}
             className={charClass}
             style={{
-              animationDelay: `${
-                startDelay + t * baseDelay
-              }s`,
+              animationDelay: `${startDelay + t * baseDelay}s`,
             }}
           >
             {ch}
@@ -120,12 +99,7 @@ function useWordSpanizedText(
         </span>
       );
     });
-  }, [
-    text,
-    baseDelay,
-    charClass,
-    startDelay,
-  ]);
+  }, [text, baseDelay, charClass, startDelay]);
 }
 
 /* -------------------------------------------------
@@ -139,67 +113,55 @@ export default function LandingSection() {
     setAnimate(true);
   }, []);
 
-  const heroImageSrc =
-    publicImageUrl("Tobin-Johnny.webp");
+  const heroImageSrc = publicImageUrl("Tobin-Johnny.webp");
 
   /* -------------------------
      HERO TEXT
   ------------------------- */
 
-  const name =
-    useWordAnimatedText(
-      "Tobin Albanese",
-      0.08,
-      "type-char-title",
-      0
-    );
+  const name = useWordAnimatedText(
+    "Tobin Albanese",
+    0.08,
+    "type-char-title",
+    0,
+  );
 
-  const role =
-    useWordSpanizedText(
-      "Security & Intelligence Researcher",
-      0.025,
-      "type-char",
-      0.6
-    );
+  const role = useWordSpanizedText(
+    "Security & Intelligence Researcher",
+    0.025,
+    "type-char",
+    0.6,
+  );
 
-  const paragraphOne =
-    useWordSpanizedText(
-      "I am a student and researcher whose work is centered on terrorism, intelligence, and international security, with a strong interest in understanding how states, organizations, and non-state actors respond to threats, exercise power, and operate in complex security environments.",
-      0.008,
-      "type-char",
-      1.15
-    );
+  const paragraphOne = useWordSpanizedText(
+    "I am a student and researcher whose work is centered on terrorism, intelligence, and international security, with a strong interest in understanding how states, organizations, and non-state actors respond to threats, exercise power, and operate in complex security environments.",
+    0.008,
+    "type-char",
+    1.15,
+  );
 
-  const paragraphTwo =
-    useWordSpanizedText(
-      "A major focus of my research is Russia and Eastern Europe, particularly Russian state affairs, regional security, political influence, and the strategic relationships shaping competition across the region.",
-      0.008,
-      "type-char",
-      2.5
-    );
+  const paragraphTwo = useWordSpanizedText(
+    "A major focus of my research is Russia and Eastern Europe, particularly Russian state affairs, regional security, political influence, and the strategic relationships shaping competition across the region.",
+    0.008,
+    "type-char",
+    2.5,
+  );
 
-  const paragraphThree =
-    useWordSpanizedText(
-      "Across my work, I use academic research, open-source intelligence, data analysis, and technical tools to examine how actors behave, how networks are structured, and what those patterns can reveal about broader political and security developments.",
-      0.008,
-      "type-char",
-      3.6
-    );
+  const paragraphThree = useWordSpanizedText(
+    "Across my work, I use academic research, open-source intelligence, data analysis, and technical tools to examine how actors behave, how networks are structured, and what those patterns can reveal about broader political and security developments.",
+    0.008,
+    "type-char",
+    3.6,
+  );
 
   return (
-    <section
-      className="c-bg"
-      data-armstrong-id="wrapper"
-    >
+    <section className="c-bg" data-armstrong-id="wrapper">
       <div
         className="row base__main pt-20 pt-md-30 pt-lg-60 pb-10 pb-md-25 pb-lg-40"
         data-armstrong-id="primary"
       >
         <div className="col-12">
-          <div
-            className="row justify-between d-flex"
-            data-armstrong-id="row"
-          >
+          <div className="row justify-between d-flex" data-armstrong-id="row">
             {/* LEFT SIDE */}
 
             <div

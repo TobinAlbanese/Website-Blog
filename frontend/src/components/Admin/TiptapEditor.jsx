@@ -64,7 +64,7 @@ export default function TiptapEditor({
       if (onUploadImage) return await onUploadImage(file);
       return URL.createObjectURL(file);
     },
-    [onUploadImage]
+    [onUploadImage],
   );
 
   const topAction = () => ({

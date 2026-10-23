@@ -35,7 +35,7 @@ export default function Home() {
     (id) => (el) => {
       if (el) sectionRefs.current[id] = el;
     },
-    []
+    [],
   );
 
   const focusSection = useCallback((id) => {
@@ -82,7 +82,7 @@ export default function Home() {
           break;
       }
     },
-    [SECTION_IDS, focusSection]
+    [SECTION_IDS, focusSection],
   );
 
   // On hash deep-link, focus the target section wrapper (if it exists)
@@ -161,7 +161,7 @@ export default function Home() {
                 <h2 className="visually-hidden">Hero</h2>
                 <Hero />
               </section>
-     
+
               <section
                 id="special-focus"
                 ref={setSectionRef("special-focus")}
@@ -173,7 +173,7 @@ export default function Home() {
                 <SpecialFocus />
               </section>
 
-            <section
+              <section
                 id="blog-highlights"
                 ref={setSectionRef("blog-highlights")}
                 tabIndex={0}
@@ -184,7 +184,7 @@ export default function Home() {
                 <BlogHighlights />
               </section>
 
-            <section
+              <section
                 id="featured-projects"
                 ref={setSectionRef("featured-projects")}
                 tabIndex={0}
@@ -211,14 +211,11 @@ export default function Home() {
                 ref={setSectionRef("about")}
                 tabIndex={0}
                 data-section-wrapper="true"
-                aria-label="About me" 
+                aria-label="About me"
               >
                 <h2 className="visually-hidden">About me</h2>
                 <AboutMe />
               </section>
-
-
-
 
               <section
                 id="feedback"
@@ -230,11 +227,12 @@ export default function Home() {
                 <h2 className="visually-hidden">Feedback</h2>
                 <Feedback />
               </section>
-              <section id = "stay-connected"
-              ref={setSectionRef("stay-connected")}
-              tabIndex={0}
-              data-section-wrapper="true"
-              aria-label="Stay connected"
+              <section
+                id="stay-connected"
+                ref={setSectionRef("stay-connected")}
+                tabIndex={0}
+                data-section-wrapper="true"
+                aria-label="Stay connected"
               >
                 <h2 className="visually-hidden">Stay connected</h2>
                 <StayConnected />

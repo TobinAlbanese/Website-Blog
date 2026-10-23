@@ -142,7 +142,7 @@ export default function Contact() {
           to_name: fd.get("to_name") || "Tobin Albanese",
           submitted_at,
         },
-        { publicKey: PUBLIC_KEY }
+        { publicKey: PUBLIC_KEY },
       );
 
       setStatus({ type: "success", msg: "" });

@@ -126,7 +126,7 @@ const ProjectPost = ({ project, __supabaseUrl, __bucket }) => {
       if (windowCount <= 0) return null;
       return start + Math.floor((windowCount - 1) / 2);
     },
-    [gallery.length]
+    [gallery.length],
   );
 
   // ---------- Effects ----------
@@ -498,7 +498,7 @@ const ProjectPost = ({ project, __supabaseUrl, __bucket }) => {
                             ))}
                           </ul>
                         </div>
-                      )
+                      ),
                     )}
                   </div>
                 </section>
@@ -566,7 +566,7 @@ export async function getServerSideProps({ params }) {
   let { data: post, error: pErr } = await supabase
     .from("posts")
     .select(
-      "id, title, Subtitle, slug, excerpt, banner_url, archive_image_url, volume, author, date, status, type"
+      "id, title, Subtitle, slug, excerpt, banner_url, archive_image_url, volume, author, date, status, type",
     )
     .eq("type", "portfolio")
     .eq("slug", slug)
@@ -576,7 +576,7 @@ export async function getServerSideProps({ params }) {
     const fallback = await supabase
       .from("posts")
       .select(
-        "id, title, slug, excerpt, banner_url, archive_image_url, volume, author, date, status, type"
+        "id, title, slug, excerpt, banner_url, archive_image_url, volume, author, date, status, type",
       )
       .eq("type", "portfolio")
       .eq("slug", slug)

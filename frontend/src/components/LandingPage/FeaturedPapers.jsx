@@ -1,17 +1,11 @@
-import React, {
-  useEffect,
-  useState,
-} from "react";
+import React, { useEffect, useState } from "react";
 
 import Link from "next/link";
 
-const FALLBACK_THUMB =
-  "/assets/images/space.webp";
+const FALLBACK_THUMB = "/assets/images/space.webp";
 
 const FALLBACK_SIDEBAR =
   "https://aekjhiphxycnybowwgud.supabase.co/storage/v1/object/public/public-images/Lincoln.webp";
-
-
 
 const getHref = (p) => {
   if (p?.href) {
@@ -34,18 +28,14 @@ const formatDate = (iso) => {
     return "";
   }
 
-  return d.toLocaleDateString(
-    undefined,
-    {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    }
-  );
+  return d.toLocaleDateString(undefined, {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
 };
 
-const firstTruthy = (...xs) =>
-  xs.find(Boolean);
+const firstTruthy = (...xs) => xs.find(Boolean);
 
 const pickPostImage = (post) =>
   firstTruthy(
@@ -55,69 +45,54 @@ const pickPostImage = (post) =>
     post?.banner,
     post?.archive_image_url,
     post?.archiveImage,
-    FALLBACK_THUMB
+    FALLBACK_THUMB,
   );
 
 export default function FeaturedPapers() {
-  const [posts, setPosts] =
-    useState([]);
+  const [posts, setPosts] = useState([]);
 
-  const [loading, setLoading] =
-    useState(true);
+  const [loading, setLoading] = useState(true);
 
-  const [failed, setFailed] =
-    useState(false);
+  const [failed, setFailed] = useState(false);
 
   useEffect(() => {
     let active = true;
 
-async function fetchFeatured() {
-  try {
-    setLoading(true);
-    setFailed(false);
+    async function fetchFeatured() {
+      try {
+        setLoading(true);
+        setFailed(false);
 
-    const res = await fetch(
-      "/api/portfolio/featured-papers",
-      {
-        method: "GET",
-        cache: "no-store",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        const res = await fetch("/api/portfolio/featured-papers", {
+          method: "GET",
+          cache: "no-store",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (!res.ok) {
+          throw new Error(`Request failed: ${res.status}`);
+        }
+
+        const data = await res.json();
+
+        if (!active) return;
+
+        setPosts(Array.isArray(data?.posts) ? data.posts : []);
+      } catch (e) {
+        console.error("Additional Research fetch failed:", e);
+
+        if (!active) return;
+
+        setPosts([]);
+        setFailed(true);
+      } finally {
+        if (active) {
+          setLoading(false);
+        }
       }
-    );
-
-    if (!res.ok) {
-      throw new Error(
-        `Request failed: ${res.status}`
-      );
     }
-
-    const data = await res.json();
-
-    if (!active) return;
-
-    setPosts(
-      Array.isArray(data?.posts)
-        ? data.posts
-        : []
-    );
-  } catch (e) {
-    console.error(
-      "Additional Research fetch failed:",
-      e
-    );
-
-    if (!active) return;
-
-    setPosts([]);
-    setFailed(true);
-  } finally {
-    if (active) {
-      setLoading(false);
-    }
-  }
-}
 
     fetchFeatured();
 
@@ -148,9 +123,8 @@ async function fetchFeatured() {
             className="fs-18 mb-15 fs-md-16"
             data-armstrong-id="module_subtitle"
           >
-            Additional papers and
-            research from across my
-            academic and analytical work.
+            Additional papers and research from across my academic and
+            analytical work.
           </h4>
         </div>
 
@@ -159,115 +133,86 @@ async function fetchFeatured() {
             className="row justify-between flex-row-reverse d-flex"
             data-armstrong-id="row"
           >
-{/* Large right image */}
-<div
-  className="col-12 col-md-5 home-hide-narrow"
-  style={{
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "flex-start",
-    paddingLeft: 32,
-  }}
->
-  <img
-    src={FALLBACK_SIDEBAR}
-    alt="Additional research artwork"
-    loading="lazy"
-    onError={(e) => {
-      e.currentTarget.onerror = null;
-      e.currentTarget.src = FALLBACK_THUMB;
-    }}
-    className="home-floating-side-image"
-    style={{
-      borderRadius: 18,
-    }}
-  />
-</div>
+            {/* Large right image */}
+            <div
+              className="col-12 col-md-5 home-hide-narrow"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "flex-start",
+                paddingLeft: 32,
+              }}
+            >
+              <img
+                src={FALLBACK_SIDEBAR}
+                alt="Additional research artwork"
+                loading="lazy"
+                onError={(e) => {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = FALLBACK_THUMB;
+                }}
+                className="home-floating-side-image"
+                style={{
+                  borderRadius: 18,
+                }}
+              />
+            </div>
 
             {/* Cards */}
-            <div
-              className="col-12 col-md-7"
-              data-armstrong-id="grid_2"
-            >
+            <div className="col-12 col-md-7" data-armstrong-id="grid_2">
               {loading && (
                 <div className="col-12 body-s c-text-secondary">
-                  Loading additional
-                  research…
+                  Loading additional research…
                 </div>
               )}
 
               {!loading && failed && (
                 <div className="col-12 body-s c-text-secondary">
-                  Couldn&apos;t load
-                  additional research.
+                  Couldn&apos;t load additional research.
+                </div>
+              )}
+
+              {!loading && !failed && posts.length === 0 && (
+                <div className="col-12 body-s c-text-secondary">
+                  No additional research available.
                 </div>
               )}
 
               {!loading &&
                 !failed &&
-                posts.length === 0 && (
-                  <div className="col-12 body-s c-text-secondary">
-                    No additional
-                    research available.
-                  </div>
-                )}
-
-              {!loading &&
-                !failed &&
                 posts.map((p, i) => {
-                  const href =
-                    getHref(p);
+                  const href = getHref(p);
 
-                  const img =
-                    pickPostImage(p);
+                  const img = pickPostImage(p);
 
-                  const title =
-                    p.title ||
-                    "Untitled";
+                  const title = p.title || "Untitled";
 
-                  const desc =
-                    p.excerpt ||
-                    "Read the full paper.";
+                  const desc = p.excerpt || "Read the full paper.";
 
-                  const author =
-                    p.author ||
-                    "Tobin Albanese";
+                  const author = p.author || "Tobin Albanese";
 
-                  const dateDisplay =
-                    formatDate(
-                      p.date ||
-                        p.published_at ||
-                        p.created_at
-                    );
+                  const dateDisplay = formatDate(
+                    p.date || p.published_at || p.created_at,
+                  );
 
                   return (
                     <div
-                      key={
-                        p.slug ||
-                        `${title}-${i}`
-                      }
+                      key={p.slug || `${title}-${i}`}
                       className={
                         "card row card--large justify-between col-12 ml-0 mr-0 mb-20 " +
-                        (i === 0
-                          ? "border-top border-top-thin pt-20 "
-                          : "") +
+                        (i === 0 ? "border-top border-top-thin pt-20 " : "") +
                         "border-bottom border-bottom-thin c-border"
                       }
                       style={{
-                        alignItems:
-                          "stretch",
-                        position:
-                          "relative",
+                        alignItems: "stretch",
+                        position: "relative",
                       }}
                     >
                       <Link
                         href={href}
-                        aria-label={
-                          title
-                        }
+                        aria-label={title}
                         style={{
-                          position:
-                            "absolute",
+                          position: "absolute",
                           inset: 0,
                           zIndex: 1,
                           borderRadius: 6,
@@ -284,13 +229,10 @@ async function fetchFeatured() {
                           className="body-m"
                           style={{
                             marginBottom: 6,
-                            textTransform:
-                              "none",
+                            textTransform: "none",
                           }}
                         >
-                          <span>
-                            {title}
-                          </span>
+                          <span>{title}</span>
                         </h3>
 
                         <p
@@ -299,29 +241,22 @@ async function fetchFeatured() {
                             marginBottom: 10,
                           }}
                         >
-                          <span>
-                            {desc}
-                          </span>
+                          <span>{desc}</span>
                         </p>
 
                         <p
                           className="body-s c-accent home-hide-meta"
                           style={{
-                            fontSize:
-                              "0.9rem",
-                            marginTop:
-                              "auto",
+                            fontSize: "0.9rem",
+                            marginTop: "auto",
                             marginBottom: 0,
                             paddingTop: 8,
                             display: "flex",
-                            alignItems:
-                              "center",
+                            alignItems: "center",
                             gap: 8,
                           }}
                         >
-                          <span>
-                            {author}
-                          </span>
+                          <span>{author}</span>
 
                           {dateDisplay && (
                             <>
@@ -329,18 +264,13 @@ async function fetchFeatured() {
                                 aria-hidden="true"
                                 style={{
                                   lineHeight: 1,
-                                  transform:
-                                    "translateY(-0.5px)",
+                                  transform: "translateY(-0.5px)",
                                 }}
                               >
                                 ✵
                               </span>
 
-                              <time>
-                                {
-                                  dateDisplay
-                                }
-                              </time>
+                              <time>{dateDisplay}</time>
                             </>
                           )}
                         </p>
@@ -356,27 +286,18 @@ async function fetchFeatured() {
                             src={img}
                             alt={title}
                             loading="lazy"
-                            onError={(
-                              e
-                            ) => {
-                              e.currentTarget.onerror =
-                                null;
+                            onError={(e) => {
+                              e.currentTarget.onerror = null;
 
-                              e.currentTarget.src =
-                                FALLBACK_THUMB;
+                              e.currentTarget.src = FALLBACK_THUMB;
                             }}
                             style={{
-                              width:
-                                "100%",
-                              maxWidth:
-                                IMG_MAX_W_DESKTOP,
-                              aspectRatio:
-                                ASPECT_RATIO,
-                              objectFit:
-                                "cover",
+                              width: "100%",
+                              maxWidth: IMG_MAX_W_DESKTOP,
+                              aspectRatio: ASPECT_RATIO,
+                              objectFit: "cover",
                               borderRadius: 6,
-                              display:
-                                "block",
+                              display: "block",
                             }}
                           />
                         </figure>

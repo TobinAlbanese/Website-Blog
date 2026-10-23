@@ -38,7 +38,10 @@ export default function Podcast() {
         data-armstrong-id="primary"
       >
         <div className="col-12" style={{ paddingTop: 18 }}>
-          <div className="row justify-between justify-center" data-armstrong-id="row">
+          <div
+            className="row justify-between justify-center"
+            data-armstrong-id="row"
+          >
             <div className="row ml-0 mr-0" data-armstrong-id="grid_1">
               {/* LEFT: Artwork (bucket) */}
               <div className="col-lg-6 mb-20 mt-md-60 mb-md-60 home-hide-narrow">
@@ -100,11 +103,17 @@ export default function Podcast() {
                     />
                   </figure>
 
-                  <h2 className="heading-l c-text-primary" style={{ textTransform: "none" }}>
+                  <h2
+                    className="heading-l c-text-primary"
+                    style={{ textTransform: "none" }}
+                  >
                     <Link href="/Podcast">{title}</Link>
                   </h2>
 
-                  <h3 className="body-l c-text-2third mt-5" style={{ maxWidth: 680, margin: "6px auto 0" }}>
+                  <h3
+                    className="body-l c-text-2third mt-5"
+                    style={{ maxWidth: 680, margin: "6px auto 0" }}
+                  >
                     <Link href="/Podcast">{excerpt}</Link>
                   </h3>
 
@@ -116,7 +125,9 @@ export default function Podcast() {
                         className="audio-player__play-button border-radius-full d-flex"
                         aria-label="Open podcast"
                       >
-                        <span className="audio-player__play-icon-label visually-hidden">Play</span>
+                        <span className="audio-player__play-icon-label visually-hidden">
+                          Play
+                        </span>
                         <svg className="play-icon play-pause-icon">
                           <use xlinkHref="#icon-play" />
                         </svg>

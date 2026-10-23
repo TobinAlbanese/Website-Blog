@@ -1,7 +1,7 @@
 // pages/admin/notes.jsx
 import React, { useEffect, useMemo, useState } from "react";
 import NavbarMB from "../../components/Admin/AdminNavbar.jsx"; // your admin navbar
-import Footer from "../../components/LandingPage/Footer.jsx";  // optional if you want it
+import Footer from "../../components/LandingPage/Footer.jsx"; // optional if you want it
 import { supabase } from "../../lib/supabase/client";
 
 function Card({ children }) {
@@ -60,9 +60,7 @@ export default function AdminNotes() {
     if (!body) return;
 
     setSaving(true);
-    const { error } = await supabase
-      .from("admin_notes")
-      .insert([{ body }]);
+    const { error } = await supabase.from("admin_notes").insert([{ body }]);
 
     setSaving(false);
     if (!error) {
@@ -138,7 +136,13 @@ export default function AdminNotes() {
               }}
             />
 
-            <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 12 }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                marginTop: 12,
+              }}
+            >
               <button
                 type="button"
                 onClick={createNote}
@@ -223,12 +227,16 @@ export default function AdminNotes() {
                             }}
                           />
                         ) : (
-                          <div style={{ whiteSpace: "pre-wrap", lineHeight: 1.6 }}>
+                          <div
+                            style={{ whiteSpace: "pre-wrap", lineHeight: 1.6 }}
+                          >
                             {n.body}
                           </div>
                         )}
 
-                        <div style={{ marginTop: 8, fontSize: 12, opacity: 0.7 }}>
+                        <div
+                          style={{ marginTop: 8, fontSize: 12, opacity: 0.7 }}
+                        >
                           Updated:{" "}
                           {n.updated_at
                             ? new Date(n.updated_at).toDateString()
@@ -239,7 +247,13 @@ export default function AdminNotes() {
                       </div>
 
                       {/* actions */}
-                      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: 8,
+                        }}
+                      >
                         {isEditing ? (
                           <>
                             <button
@@ -253,7 +267,10 @@ export default function AdminNotes() {
                                 borderRadius: 10,
                                 fontWeight: 900,
                                 border: "none",
-                                cursor: busy || !editBody.trim() ? "not-allowed" : "pointer",
+                                cursor:
+                                  busy || !editBody.trim()
+                                    ? "not-allowed"
+                                    : "pointer",
                                 opacity: busy || !editBody.trim() ? 0.7 : 1,
                               }}
                             >

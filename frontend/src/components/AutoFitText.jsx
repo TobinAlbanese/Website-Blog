@@ -50,8 +50,7 @@ export default function AutoFitText({
         : Infinity;
 
       return (
-        el.scrollWidth <= el.clientWidth + 1 &&
-        el.scrollHeight <= maxHeight
+        el.scrollWidth <= el.clientWidth + 1 && el.scrollHeight <= maxHeight
       );
     };
 

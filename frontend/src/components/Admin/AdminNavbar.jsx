@@ -71,7 +71,7 @@ export default function AdminNavbar() {
         const { data, error } = await supabase
           .from("posts")
           .select(
-            "id, title, slug, status, updated_at, created_at, published_at, banner_url, archive_image_url, cover_url, image_url"
+            "id, title, slug, status, updated_at, created_at, published_at, banner_url, archive_image_url, cover_url, image_url",
           )
           .order("updated_at", { ascending: false })
           .limit(3);
@@ -101,7 +101,7 @@ export default function AdminNavbar() {
         if (!cancelled) setRecentPosts([]);
         console.warn(
           "AdminNavbar: could not load recent posts:",
-          e?.message || e
+          e?.message || e,
         );
       }
     };
@@ -201,7 +201,7 @@ export default function AdminNavbar() {
     await router.push(
       `/MidnightBureau/Archive?group=${encodeURIComponent(group)}#archive-content`,
       undefined,
-      { shallow: true }
+      { shallow: true },
     );
   };
 
@@ -261,7 +261,7 @@ export default function AdminNavbar() {
         </li>
       </>
     ),
-    []
+    [],
   );
 
   const AdminRight = useMemo(
@@ -337,7 +337,7 @@ export default function AdminNavbar() {
         </li>
       </>
     ),
-    [isLoggedIn, menuOpen]
+    [isLoggedIn, menuOpen],
   );
 
   return (

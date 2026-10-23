@@ -8,7 +8,7 @@ const supabase = createClient(
       persistSession: false,
       autoRefreshToken: false,
     },
-  }
+  },
 );
 
 const VALID_SECTIONS = new Set([
@@ -37,10 +37,7 @@ export default async function handler(req, res) {
 
   try {
     // First get the exact homepage ordering.
-    const {
-      data: mappings,
-      error: mappingError,
-    } = await supabase
+    const { data: mappings, error: mappingError } = await supabase
       .from("homepage_cards")
       .select("post_id, position")
       .eq("section_key", section)
@@ -59,17 +56,13 @@ export default async function handler(req, res) {
       });
     }
 
-    const postIds = mappings.map(
-      (item) => item.post_id
-    );
+    const postIds = mappings.map((item) => item.post_id);
 
     // Fetch the corresponding posts.
-    const {
-      data: posts,
-      error: postsError,
-    } = await supabase
+    const { data: posts, error: postsError } = await supabase
       .from("posts")
-      .select(`
+      .select(
+        `
         id,
         type,
         title,
@@ -83,26 +76,20 @@ export default async function handler(req, res) {
         archive_image_url,
         category,
         "Subtitle"
-      `)
+      `,
+      )
       .in("id", postIds);
 
     if (postsError) {
       throw postsError;
     }
 
-    const postMap = new Map(
-      (posts || []).map((post) => [
-        post.id,
-        post,
-      ])
-    );
+    const postMap = new Map((posts || []).map((post) => [post.id, post]));
 
     // Restore the homepage_cards position order.
     const items = mappings
       .map((mapping) => {
-        const post = postMap.get(
-          mapping.post_id
-        );
+        const post = postMap.get(mapping.post_id);
 
         if (!post) return null;
 
@@ -118,10 +105,7 @@ export default async function handler(req, res) {
       items,
     });
   } catch (error) {
-    console.error(
-      "Homepage section fetch failed:",
-      error
-    );
+    console.error("Homepage section fetch failed:", error);
 
     return res.status(500).json({
       error: "Could not load homepage section",

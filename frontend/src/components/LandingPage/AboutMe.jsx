@@ -57,15 +57,15 @@ export default function AboutMe() {
               straightforward, but through every challenge, my curiosity about
               the world remained constant. As a child, I was always reading,
               asking questions, and trying to understand why people, societies,
-              and things function the way they do. That curiosity
-              continues to guide my academic and professional interests in
-              political science, national security, counterterrorism, and human
-              behavior. Today, I am focused on examining the forces that shape
-              our world and exploring the intersections of politics, culture,
-              technology, and human decision-making. My journey is still
-              unfolding, and this website offers a closer look at the
-              experiences that shaped me, the work I am pursuing, the ideas that
-              drive me, and the goals I hope to achieve.
+              and things function the way they do. That curiosity continues to
+              guide my academic and professional interests in political science,
+              national security, counterterrorism, and human behavior. Today, I
+              am focused on examining the forces that shape our world and
+              exploring the intersections of politics, culture, technology, and
+              human decision-making. My journey is still unfolding, and this
+              website offers a closer look at the experiences that shaped me,
+              the work I am pursuing, the ideas that drive me, and the goals I
+              hope to achieve.
             </p>
 
             <a

@@ -1,11 +1,6 @@
 // pages/Photography/index.jsx
 
-import {
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import MetaHead from "../../components/LandingPage/MetaHead.jsx";
 import SvgHead from "../../components/LandingPage/svgHead.jsx";
@@ -20,8 +15,7 @@ import { supabaseServer } from "../../lib/supabase/supabaseServer.js";
 
 const MEDIA_BUCKET = "media";
 
-const PUBLIC_BUCKET =
-  "public-images";
+const PUBLIC_BUCKET = "public-images";
 
 const INITIAL_COUNT = 18;
 
@@ -31,40 +25,22 @@ const LOAD_MORE_COUNT = 12;
    STORAGE HELPERS
 ------------------------------------------------- */
 
-function isImageFile(
-  name = ""
-) {
-  return /\.(jpg|jpeg|png|webp|avif)$/i.test(
-    name
-  );
+function isImageFile(name = "") {
+  return /\.(jpg|jpeg|png|webp|avif)$/i.test(name);
 }
 
-function getMediaPublicUrl(
-  path
-) {
-  const { data } =
-    supabaseServer.storage
-      .from(MEDIA_BUCKET)
-      .getPublicUrl(path);
+function getMediaPublicUrl(path) {
+  const { data } = supabaseServer.storage.from(MEDIA_BUCKET).getPublicUrl(path);
 
-  return (
-    data?.publicUrl ||
-    ""
-  );
+  return data?.publicUrl || "";
 }
 
-function getPublicImageUrl(
-  path
-) {
-  const { data } =
-    supabaseServer.storage
-      .from(PUBLIC_BUCKET)
-      .getPublicUrl(path);
+function getPublicImageUrl(path) {
+  const { data } = supabaseServer.storage
+    .from(PUBLIC_BUCKET)
+    .getPublicUrl(path);
 
-  return (
-    data?.publicUrl ||
-    ""
-  );
+  return data?.publicUrl || "";
 }
 
 /* -------------------------------------------------
@@ -81,69 +57,42 @@ function getPublicImageUrl(
    0001
 ------------------------------------------------- */
 
-function getImageNumber(
-  name = ""
-) {
-  const clean =
-    String(name);
+function getImageNumber(name = "") {
+  const clean = String(name);
 
-  const match =
-    clean.match(
-      /(\d+)(?=\.[^.]+$)/
-    );
+  const match = clean.match(/(\d+)(?=\.[^.]+$)/);
 
-  if (
-    !match?.[1]
-  ) {
+  if (!match?.[1]) {
     return 0;
   }
 
-  const number =
-    Number(
-      match[1]
-    );
+  const number = Number(match[1]);
 
-  return Number.isFinite(
-    number
-  )
-    ? number
-    : 0;
+  return Number.isFinite(number) ? number : 0;
 }
 
 /* -------------------------------------------------
    DATE
 ------------------------------------------------- */
 
-function formatMediaDate(
-  value
-) {
+function formatMediaDate(value) {
   if (!value) {
     return "";
   }
 
-  const date =
-    new Date(
-      String(value).length === 10
-        ? `${value}T12:00:00`
-        : value
-    );
+  const date = new Date(
+    String(value).length === 10 ? `${value}T12:00:00` : value,
+  );
 
-  if (
-    Number.isNaN(
-      date.getTime()
-    )
-  ) {
+  if (Number.isNaN(date.getTime())) {
     return "";
   }
 
-  return date.toLocaleDateString(
-    undefined,
-    {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    }
-  );
+  return date.toLocaleDateString(undefined, {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 }
 
 /* -------------------------------------------------
@@ -156,12 +105,7 @@ function formatMediaDate(
 ------------------------------------------------- */
 
 function getHeroFallback() {
-  return (
-    getPublicImageUrl(
-      "Ocean.webp"
-    ) ||
-    "/assets/images/space.webp"
-  );
+  return getPublicImageUrl("Ocean.webp") || "/assets/images/space.webp";
 }
 
 /* -------------------------------------------------
@@ -172,235 +116,117 @@ function useWordAnimatedText(
   text,
   baseDelay = 0.08,
   charClass = "type-char-title",
-  startDelay = 0
+  startDelay = 0,
 ) {
   return useMemo(() => {
-    const tokens =
-      text.split(
-        /(\s+)/
-      );
+    const tokens = text.split(/(\s+)/);
 
     let index = 0;
 
-    return tokens.map(
-      (
-        token,
-        tokenIndex
-      ) => {
-        if (
-          /^\s+$/.test(
-            token
-          )
-        ) {
-          return (
-            <span
-              key={`space-${tokenIndex}`}
-            >
-              {token}
-            </span>
-          );
-        }
+    return tokens.map((token, tokenIndex) => {
+      if (/^\s+$/.test(token)) {
+        return <span key={`space-${tokenIndex}`}>{token}</span>;
+      }
 
-        const characters =
-          token
-            .split("")
-            .map(
-              (
-                character
-              ) => {
-                index += 1;
-
-                return (
-                  <span
-                    key={`character-${index}`}
-                    className={
-                      charClass
-                    }
-                    style={{
-                      animationDelay:
-                        `${
-                          startDelay +
-                          index *
-                            baseDelay
-                        }s`,
-                    }}
-                  >
-                    {
-                      character
-                    }
-                  </span>
-                );
-              }
-            );
+      const characters = token.split("").map((character) => {
+        index += 1;
 
         return (
           <span
-            key={`word-${tokenIndex}`}
+            key={`character-${index}`}
+            className={charClass}
             style={{
-              display:
-                "inline-block",
+              animationDelay: `${startDelay + index * baseDelay}s`,
             }}
           >
-            {
-              characters
-            }
+            {character}
           </span>
         );
-      }
-    );
-  }, [
-    text,
-    baseDelay,
-    charClass,
-    startDelay,
-  ]);
+      });
+
+      return (
+        <span
+          key={`word-${tokenIndex}`}
+          style={{
+            display: "inline-block",
+          }}
+        >
+          {characters}
+        </span>
+      );
+    });
+  }, [text, baseDelay, charClass, startDelay]);
 }
 
 function useWordSpanizedText(
   text,
   baseDelay = 0.01,
   charClass = "type-char",
-  startDelay = 0
+  startDelay = 0,
 ) {
   return useMemo(() => {
-    const tokens =
-      text.split(
-        /(\s+)/
-      );
+    const tokens = text.split(/(\s+)/);
 
     let count = 0;
 
-    return tokens.map(
-      (
-        token,
-        tokenIndex
-      ) => {
-        if (
-          /^\s+$/.test(
-            token
-          )
-        ) {
-          return (
-            <span
-              key={`space-${tokenIndex}`}
-            >
-              {token}
-            </span>
-          );
-        }
+    return tokens.map((token, tokenIndex) => {
+      if (/^\s+$/.test(token)) {
+        return <span key={`space-${tokenIndex}`}>{token}</span>;
+      }
 
-        const characters =
-          token
-            .split("")
-            .map(
-              (
-                character,
-                characterIndex
-              ) => {
-                count += 1;
-
-                return (
-                  <span
-                    key={`character-${tokenIndex}-${characterIndex}`}
-                    className={
-                      charClass
-                    }
-                    style={{
-                      animationDelay:
-                        `${
-                          startDelay +
-                          count *
-                            baseDelay
-                        }s`,
-                    }}
-                  >
-                    {
-                      character
-                    }
-                  </span>
-                );
-              }
-            );
+      const characters = token.split("").map((character, characterIndex) => {
+        count += 1;
 
         return (
           <span
-            key={`word-${tokenIndex}`}
+            key={`character-${tokenIndex}-${characterIndex}`}
+            className={charClass}
             style={{
-              display:
-                "inline-block",
+              animationDelay: `${startDelay + count * baseDelay}s`,
             }}
           >
-            {
-              characters
-            }
+            {character}
           </span>
         );
-      }
-    );
-  }, [
-    text,
-    baseDelay,
-    charClass,
-    startDelay,
-  ]);
+      });
+
+      return (
+        <span
+          key={`word-${tokenIndex}`}
+          style={{
+            display: "inline-block",
+          }}
+        >
+          {characters}
+        </span>
+      );
+    });
+  }, [text, baseDelay, charClass, startDelay]);
 }
 
 /* -------------------------------------------------
    PAGE
 ------------------------------------------------- */
 
-export default function PhotographyPage({
-  images = [],
-  heroFallback = "",
-}) {
-  const [
-    animate,
-    setAnimate,
-  ] = useState(
-    false
+export default function PhotographyPage({ images = [], heroFallback = "" }) {
+  const [animate, setAnimate] = useState(false);
+
+  const [visibleCount, setVisibleCount] = useState(INITIAL_COUNT);
+
+  const [selectedIndex, setSelectedIndex] = useState(null);
+
+  const loaderRef = useRef(null);
+
+  const visibleImages = useMemo(
+    () => images.slice(0, visibleCount),
+    [images, visibleCount],
   );
-
-  const [
-    visibleCount,
-    setVisibleCount,
-  ] = useState(
-    INITIAL_COUNT
-  );
-
-  const [
-    selectedIndex,
-    setSelectedIndex,
-  ] = useState(
-    null
-  );
-
-  const loaderRef =
-    useRef(null);
-
-  const visibleImages =
-    useMemo(
-      () =>
-        images.slice(
-          0,
-          visibleCount
-        ),
-      [
-        images,
-        visibleCount,
-      ]
-    );
 
   const selectedImage =
-    selectedIndex !== null
-      ? images[
-          selectedIndex
-        ] || null
-      : null;
+    selectedIndex !== null ? images[selectedIndex] || null : null;
 
   const heroImage =
-    images[0]?.url ||
-    heroFallback ||
-    "/assets/images/space.webp";
+    images[0]?.url || heroFallback || "/assets/images/space.webp";
 
   /* -------------------------------------------------
      HERO ENTRANCE
@@ -415,290 +241,164 @@ export default function PhotographyPage({
   ------------------------------------------------- */
 
   useEffect(() => {
-    setVisibleCount(
-      INITIAL_COUNT
-    );
-  }, [
-    images.length,
-  ]);
+    setVisibleCount(INITIAL_COUNT);
+  }, [images.length]);
 
   /* -------------------------------------------------
      INFINITE SCROLL
   ------------------------------------------------- */
 
   useEffect(() => {
-    const node =
-      loaderRef.current;
+    const node = loaderRef.current;
 
     if (!node) {
       return;
     }
 
-    if (
-      visibleCount >=
-      images.length
-    ) {
+    if (visibleCount >= images.length) {
       return;
     }
 
-    const observer =
-      new IntersectionObserver(
-        (
-          entries
-        ) => {
-          const entry =
-            entries[0];
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
 
-          if (
-            !entry
-              ?.isIntersecting
-          ) {
-            return;
-          }
-
-          setVisibleCount(
-            (
-              previous
-            ) =>
-              Math.min(
-                previous +
-                  LOAD_MORE_COUNT,
-                images.length
-              )
-          );
-        },
-        {
-          rootMargin:
-            "500px 0px",
-          threshold: 0,
+        if (!entry?.isIntersecting) {
+          return;
         }
-      );
 
-    observer.observe(
-      node
+        setVisibleCount((previous) =>
+          Math.min(previous + LOAD_MORE_COUNT, images.length),
+        );
+      },
+      {
+        rootMargin: "500px 0px",
+        threshold: 0,
+      },
     );
+
+    observer.observe(node);
 
     return () => {
       observer.disconnect();
     };
-  }, [
-    visibleCount,
-    images.length,
-  ]);
+  }, [visibleCount, images.length]);
 
   /* -------------------------------------------------
      MODAL BODY LOCK
   ------------------------------------------------- */
 
   useEffect(() => {
-    if (
-      selectedIndex ===
-      null
-    ) {
-      document.body.style.overflow =
-        "";
+    if (selectedIndex === null) {
+      document.body.style.overflow = "";
 
       return;
     }
 
-    document.body.style.overflow =
-      "hidden";
+    document.body.style.overflow = "hidden";
 
     return () => {
-      document.body.style.overflow =
-        "";
+      document.body.style.overflow = "";
     };
-  }, [
-    selectedIndex,
-  ]);
+  }, [selectedIndex]);
 
   /* -------------------------------------------------
      KEYBOARD CONTROLS
   ------------------------------------------------- */
 
   useEffect(() => {
-    if (
-      selectedIndex ===
-      null
-    ) {
+    if (selectedIndex === null) {
       return;
     }
 
-    const onKeyDown = (
-      event
-    ) => {
-      if (
-        event.key ===
-        "Escape"
-      ) {
-        setSelectedIndex(
-          null
-        );
+    const onKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setSelectedIndex(null);
 
         return;
       }
 
-      if (
-        event.key ===
-        "ArrowLeft"
-      ) {
-        setSelectedIndex(
-          (
-            current
-          ) => {
-            if (
-              current ===
-              null
-            ) {
-              return null;
-            }
-
-            return (
-              current ===
-              0
-                ? images.length -
-                  1
-                : current -
-                  1
-            );
+      if (event.key === "ArrowLeft") {
+        setSelectedIndex((current) => {
+          if (current === null) {
+            return null;
           }
-        );
+
+          return current === 0 ? images.length - 1 : current - 1;
+        });
       }
 
-      if (
-        event.key ===
-        "ArrowRight"
-      ) {
-        setSelectedIndex(
-          (
-            current
-          ) => {
-            if (
-              current ===
-              null
-            ) {
-              return null;
-            }
-
-            return (
-              current ===
-              images.length -
-                1
-                ? 0
-                : current +
-                  1
-            );
+      if (event.key === "ArrowRight") {
+        setSelectedIndex((current) => {
+          if (current === null) {
+            return null;
           }
-        );
+
+          return current === images.length - 1 ? 0 : current + 1;
+        });
       }
     };
 
-    window.addEventListener(
-      "keydown",
-      onKeyDown
-    );
+    window.addEventListener("keydown", onKeyDown);
 
     return () => {
-      window.removeEventListener(
-        "keydown",
-        onKeyDown
-      );
+      window.removeEventListener("keydown", onKeyDown);
     };
-  }, [
-    selectedIndex,
-    images.length,
-  ]);
+  }, [selectedIndex, images.length]);
 
   /* -------------------------------------------------
      MODAL NAVIGATION
   ------------------------------------------------- */
 
-  const showPrevious =
-    () => {
-      if (
-        !images.length
-      ) {
-        return;
+  const showPrevious = () => {
+    if (!images.length) {
+      return;
+    }
+
+    setSelectedIndex((current) => {
+      if (current === null) {
+        return null;
       }
 
-      setSelectedIndex(
-        (
-          current
-        ) => {
-          if (
-            current ===
-            null
-          ) {
-            return null;
-          }
+      return current === 0 ? images.length - 1 : current - 1;
+    });
+  };
 
-          return (
-            current ===
-            0
-              ? images.length -
-                1
-              : current -
-                1
-          );
-        }
-      );
-    };
+  const showNext = () => {
+    if (!images.length) {
+      return;
+    }
 
-  const showNext =
-    () => {
-      if (
-        !images.length
-      ) {
-        return;
+    setSelectedIndex((current) => {
+      if (current === null) {
+        return null;
       }
 
-      setSelectedIndex(
-        (
-          current
-        ) => {
-          if (
-            current ===
-            null
-          ) {
-            return null;
-          }
-
-          return (
-            current ===
-            images.length -
-              1
-              ? 0
-              : current +
-                1
-          );
-        }
-      );
-    };
+      return current === images.length - 1 ? 0 : current + 1;
+    });
+  };
 
   /* -------------------------------------------------
      HERO COPY
   ------------------------------------------------- */
 
-  const titleLine1 =
-    useWordAnimatedText(
-      "Photography &",
-      0.08,
-      "type-char-title"
-    );
+  const titleLine1 = useWordAnimatedText(
+    "Photography &",
+    0.08,
+    "type-char-title",
+  );
 
-  const titleLine2 =
-    useWordAnimatedText(
-      "Visual Archive",
-      0.08,
-      "type-char-title"
-    );
+  const titleLine2 = useWordAnimatedText(
+    "Visual Archive",
+    0.08,
+    "type-char-title",
+  );
 
-  const paragraphLines =
-    [
-      "Photography has become another way for me to document the places, environments, and moments that shape how I understand the world around me.",
-      "This visual archive brings together photographs from travel, research, and everyday life, arranged from my most recent images back through earlier experiences.",
-      "Open any photograph to view it in full and, where available, explore the location, date, and context behind the image.",
-    ];
+  const paragraphLines = [
+    "Photography has become another way for me to document the places, environments, and moments that shape how I understand the world around me.",
+    "This visual archive brings together photographs from travel, research, and everyday life, arranged from my most recent images back through earlier experiences.",
+    "Open any photograph to view it in full and, where available, explore the location, date, and context behind the image.",
+  ];
 
   return (
     <>
@@ -716,120 +416,90 @@ export default function PhotographyPage({
           <section
             className="c-bg photography-page"
             style={{
-              width:
-                "100%",
+              width: "100%",
             }}
           >
             {/* -----------------------------------------
                 HERO
             ----------------------------------------- */}
 
-            <div
-              className="row base__main pt-20 pt-md-30 pt-lg-60 pb-10 pb-md-25 pb-lg-40"
-            >
+            <div className="row base__main pt-20 pt-md-30 pt-lg-60 pb-10 pb-md-25 pb-lg-40">
               <div className="col-12">
                 <div className="row justify-between d-flex photography-hero-row">
                   {/* TEXT */}
 
                   <div
                     className={`col-12 col-lg-6 mb-20 mb-lg-0 d-flex flex-column justify-center ${
-                      animate
-                        ? "slide-in-left"
-                        : ""
+                      animate ? "slide-in-left" : ""
                     }`}
                     style={{
-                      position:
-                        "relative",
+                      position: "relative",
                       zIndex: 2,
-                      paddingRight:
-                        24,
+                      paddingRight: 24,
                       minWidth: 0,
                     }}
                   >
                     <h1
                       className="heading-l mb-15"
                       style={{
-                        fontFamily:
-                          "inherit",
-                        overflow:
-                          "visible",
-                        whiteSpace:
-                          "pre-wrap",
-                        color:
-                          "var(--c-text)",
+                        fontFamily: "inherit",
+                        overflow: "visible",
+                        whiteSpace: "pre-wrap",
+                        color: "var(--c-text)",
                       }}
                     >
-                      <div>
-                        {
-                          titleLine1
-                        }
-                      </div>
+                      <div>{titleLine1}</div>
 
-                      <div>
-                        {
-                          titleLine2
-                        }
-                      </div>
+                      <div>{titleLine2}</div>
                     </h1>
 
                     <p
                       className="body-m"
                       style={{
-                        fontSize:
-                          18,
-                        lineHeight:
-                          1.65,
-                        color:
-                          "var(--c-text-secondary)",
-                        marginBottom:
-                          "1em",
+                        fontSize: 18,
+                        lineHeight: 1.65,
+                        color: "var(--c-text-secondary)",
+                        marginBottom: "1em",
                       }}
                     >
                       {useWordSpanizedText(
                         paragraphLines[0],
                         0.01,
                         "type-char",
-                        0
+                        0,
                       )}
                     </p>
 
                     <p
                       className="body-m"
                       style={{
-                        fontSize:
-                          18,
-                        lineHeight:
-                          1.65,
-                        color:
-                          "var(--c-text-secondary)",
-                        marginBottom:
-                          "1em",
+                        fontSize: 18,
+                        lineHeight: 1.65,
+                        color: "var(--c-text-secondary)",
+                        marginBottom: "1em",
                       }}
                     >
                       {useWordSpanizedText(
                         paragraphLines[1],
                         0.01,
                         "type-char",
-                        1.7
+                        1.7,
                       )}
                     </p>
 
                     <p
                       className="body-m"
                       style={{
-                        fontSize:
-                          18,
-                        lineHeight:
-                          1.65,
-                        color:
-                          "var(--c-text-secondary)",
+                        fontSize: 18,
+                        lineHeight: 1.65,
+                        color: "var(--c-text-secondary)",
                       }}
                     >
                       {useWordSpanizedText(
                         paragraphLines[2],
                         0.01,
                         "type-char",
-                        3.5
+                        3.5,
                       )}
                     </p>
                   </div>
@@ -838,9 +508,7 @@ export default function PhotographyPage({
 
                   <div className="col-12 col-lg-6 photography-hero-media">
                     <img
-                      src={
-                        heroImage
-                      }
+                      src={heroImage}
                       alt="Photography archive"
                       loading="eager"
                     />
@@ -859,113 +527,67 @@ export default function PhotographyPage({
 
             <main className="photography-shell">
               <header className="photography-gallery-heading">
-                <h2>
-                  Visual Archive
-                </h2>
+                <h2>Visual Archive</h2>
 
-                <p>
-                  Photographs
-                  arranged from
-                  most recent to
-                  earliest.
-                </p>
+                <p>Photographs arranged from most recent to earliest.</p>
               </header>
 
-              {images.length ===
-              0 ? (
+              {images.length === 0 ? (
                 <div className="photography-empty">
-                  <h3>
-                    The archive
-                    is currently
-                    empty.
-                  </h3>
+                  <h3>The archive is currently empty.</h3>
 
                   <p>
-                    Photographs
-                    will appear
-                    here as they
-                    are added to
-                    the media
+                    Photographs will appear here as they are added to the media
                     collection.
                   </p>
                 </div>
               ) : (
                 <>
                   <div className="photography-grid">
-                    {visibleImages.map(
-                      (
-                        image
-                      ) => {
-                        const actualIndex =
-                          images.findIndex(
-                            (
-                              item
-                            ) =>
-                              item.path ===
-                              image.path
-                          );
+                    {visibleImages.map((image) => {
+                      const actualIndex = images.findIndex(
+                        (item) => item.path === image.path,
+                      );
 
-                        return (
-                          <button
-                            key={
-                              image.path
-                            }
-                            type="button"
-                            className="photography-card"
-                            onClick={() =>
-                              setSelectedIndex(
-                                actualIndex
-                              )
-                            }
-                            aria-label={`Open ${
+                      return (
+                        <button
+                          key={image.path}
+                          type="button"
+                          className="photography-card"
+                          onClick={() => setSelectedIndex(actualIndex)}
+                          aria-label={`Open ${
+                            image.title ||
+                            image.location ||
+                            `photograph ${image.number}`
+                          }`}
+                        >
+                          <img
+                            src={image.url}
+                            alt={
+                              image.alt_text ||
                               image.title ||
                               image.location ||
-                              `photograph ${image.number}`
-                            }`}
-                          >
-                            <img
-                              src={
-                                image.url
-                              }
-                              alt={
-                                image.alt_text ||
-                                image.title ||
-                                image.location ||
-                                `Photograph ${image.number}`
-                              }
-                              loading="lazy"
-                            />
+                              `Photograph ${image.number}`
+                            }
+                            loading="lazy"
+                          />
 
-                            <div className="photography-card-overlay">
-                              {image.location ? (
-                                <span>
-                                  {
-                                    image.location
-                                  }
-                                </span>
-                              ) : null}
+                          <div className="photography-card-overlay">
+                            {image.location ? (
+                              <span>{image.location}</span>
+                            ) : null}
 
-                              <span className="photography-number">
-                                #
-                                {
-                                  image.displayNumber
-                                }
-                              </span>
-                            </div>
-                          </button>
-                        );
-                      }
-                    )}
+                            <span className="photography-number">
+                              #{image.displayNumber}
+                            </span>
+                          </div>
+                        </button>
+                      );
+                    })}
                   </div>
 
-                  <div
-                    ref={
-                      loaderRef
-                    }
-                    className="photography-loader"
-                  >
-                    {visibleCount <
-                    images.length
+                  <div ref={loaderRef} className="photography-loader">
+                    {visibleCount < images.length
                       ? "Loading more photographs..."
                       : "End of visual archive."}
                   </div>
@@ -985,16 +607,9 @@ export default function PhotographyPage({
       {selectedImage && (
         <div
           className="photography-modal-overlay"
-          onMouseDown={(
-            event
-          ) => {
-            if (
-              event.target ===
-              event.currentTarget
-            ) {
-              setSelectedIndex(
-                null
-              );
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) {
+              setSelectedIndex(null);
             }
           }}
         >
@@ -1003,9 +618,7 @@ export default function PhotographyPage({
             role="dialog"
             aria-modal="true"
             aria-label={
-              selectedImage.title ||
-              selectedImage.location ||
-              "Photograph"
+              selectedImage.title || selectedImage.location || "Photograph"
             }
           >
             {/* CLOSE */}
@@ -1013,11 +626,7 @@ export default function PhotographyPage({
             <button
               type="button"
               className="photography-modal-close"
-              onClick={() =>
-                setSelectedIndex(
-                  null
-                )
-              }
+              onClick={() => setSelectedIndex(null)}
               aria-label="Close photograph"
             >
               ×
@@ -1027,9 +636,7 @@ export default function PhotographyPage({
 
             <div className="photography-modal-image-wrap">
               <img
-                src={
-                  selectedImage.url
-                }
+                src={selectedImage.url}
                 alt={
                   selectedImage.alt_text ||
                   selectedImage.title ||
@@ -1041,9 +648,7 @@ export default function PhotographyPage({
               <button
                 type="button"
                 className="photography-modal-nav photography-modal-prev"
-                onClick={
-                  showPrevious
-                }
+                onClick={showPrevious}
                 aria-label="Previous photograph"
               >
                 ‹
@@ -1052,9 +657,7 @@ export default function PhotographyPage({
               <button
                 type="button"
                 className="photography-modal-nav photography-modal-next"
-                onClick={
-                  showNext
-                }
+                onClick={showNext}
                 aria-label="Next photograph"
               >
                 ›
@@ -1067,69 +670,36 @@ export default function PhotographyPage({
               <div>
                 <div className="photography-modal-meta">
                   {selectedImage.location ? (
-                    <span>
-                      {
-                        selectedImage.location
-                      }
-                    </span>
+                    <span>{selectedImage.location}</span>
                   ) : null}
 
                   {selectedImage.taken_at ? (
-                    <span>
-                      {formatMediaDate(
-                        selectedImage.taken_at
-                      )}
-                    </span>
+                    <span>{formatMediaDate(selectedImage.taken_at)}</span>
                   ) : null}
                 </div>
 
                 {selectedImage.title ? (
-                  <h2>
-                    {
-                      selectedImage.title
-                    }
-                  </h2>
+                  <h2>{selectedImage.title}</h2>
                 ) : (
-                  <h2>
-                    Photograph{" "}
-                    {
-                      selectedImage.displayNumber
-                    }
-                  </h2>
+                  <h2>Photograph {selectedImage.displayNumber}</h2>
                 )}
 
                 {selectedImage.caption ? (
                   <p className="photography-modal-caption">
-                    {
-                      selectedImage.caption
-                    }
+                    {selectedImage.caption}
                   </p>
                 ) : (
                   <p className="photography-modal-caption photography-modal-caption-empty">
-                    Additional
-                    context for
-                    this image
-                    has not been
-                    added yet.
+                    Additional context for this image has not been added yet.
                   </p>
                 )}
               </div>
 
               <div className="photography-modal-footer">
-                <span>
-                  IMAGE{" "}
-                  {
-                    selectedImage.displayNumber
-                  }
-                </span>
+                <span>IMAGE {selectedImage.displayNumber}</span>
 
                 <span>
-                  {selectedIndex +
-                    1}{" "}
-                  /{" "}
-                  {
-                    images.length
-                  }
+                  {selectedIndex + 1} / {images.length}
                 </span>
               </div>
             </aside>
@@ -1262,8 +832,7 @@ export default function PhotographyPage({
           transition: opacity 250ms ease;
         }
 
-        .photography-card:hover
-          .photography-card-overlay {
+        .photography-card:hover .photography-card-overlay {
           opacity: 1;
         }
 
@@ -1330,9 +899,7 @@ export default function PhotographyPage({
           border: 1px solid rgba(255, 255, 255, 0.1);
           border-radius: 12px;
           background: var(--c-bg-primary);
-          box-shadow:
-            0 30px 90px
-            rgba(0, 0, 0, 0.55);
+          box-shadow: 0 30px 90px rgba(0, 0, 0, 0.55);
         }
 
         .photography-modal-image-wrap {
@@ -1377,11 +944,7 @@ export default function PhotographyPage({
         .photography-modal-info h2 {
           margin: 0 0 22px;
           color: var(--c-text-primary);
-          font-size: clamp(
-            2rem,
-            4vw,
-            3.3rem
-          );
+          font-size: clamp(2rem, 4vw, 3.3rem);
           line-height: 1.05;
           font-weight: 700;
         }
@@ -1471,41 +1034,23 @@ export default function PhotographyPage({
            TABLET
         ----------------------------------------- */
 
-        @media (
-          max-width: 1024px
-        ) {
+        @media (max-width: 1024px) {
           .photography-hero-row {
             gap: 28px;
           }
 
           .photography-grid {
-            grid-template-columns:
-              repeat(
-                2,
-                minmax(
-                  0,
-                  1fr
-                )
-              );
+            grid-template-columns: repeat(2, minmax(0, 1fr));
           }
 
           .photography-modal {
             grid-template-columns:
-              minmax(
-                280px,
-                1fr
-              )
-              minmax(
-                280px,
-                0.8fr
-              );
+              minmax(280px, 1fr)
+              minmax(280px, 0.8fr);
           }
 
           .photography-modal-info {
-            padding:
-              48px
-              32px
-              28px;
+            padding: 48px 32px 28px;
           }
         }
 
@@ -1513,9 +1058,7 @@ export default function PhotographyPage({
            MOBILE
         ----------------------------------------- */
 
-        @media (
-          max-width: 767px
-        ) {
+        @media (max-width: 767px) {
           .photography-hero-row {
             display: block;
           }
@@ -1529,60 +1072,40 @@ export default function PhotographyPage({
           }
 
           .photography-divider {
-            margin:
-              30px
-              24px
-              38px;
+            margin: 30px 24px 38px;
           }
 
           .photography-shell {
-            padding:
-              0
-              16px;
+            padding: 0 16px;
           }
 
           .photography-gallery-heading h2 {
-            font-size:
-              2rem;
+            font-size: 2rem;
           }
 
           .photography-grid {
-            grid-template-columns:
-              repeat(
-                2,
-                minmax(
-                  0,
-                  1fr
-                )
-              );
+            grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 10px;
           }
 
           .photography-card {
-            border-radius:
-              5px;
+            border-radius: 5px;
           }
 
           .photography-card-overlay {
-            padding:
-              35px
-              10px
-              10px;
-            font-size:
-              0.67rem;
+            padding: 35px 10px 10px;
+            font-size: 0.67rem;
             opacity: 1;
           }
 
           .photography-modal-overlay {
             padding: 0;
-            align-items:
-              stretch;
+            align-items: stretch;
           }
 
           .photography-modal {
             display: flex;
-            flex-direction:
-              column;
+            flex-direction: column;
             width: 100%;
             height: 100%;
             max-height: none;
@@ -1592,46 +1115,36 @@ export default function PhotographyPage({
 
           .photography-modal-image-wrap {
             flex: 1 1 auto;
-            min-height:
-              55vh;
+            min-height: 55vh;
           }
 
           .photography-modal-image-wrap img {
             width: 100%;
-            max-height:
-              68vh;
+            max-height: 68vh;
           }
 
           .photography-modal-info {
             flex: 0 0 auto;
-            max-height:
-              42vh;
-            padding:
-              26px
-              22px
-              24px;
+            max-height: 42vh;
+            padding: 26px 22px 24px;
           }
 
           .photography-modal-info h2 {
-            font-size:
-              1.8rem;
+            font-size: 1.8rem;
           }
 
           .photography-modal-caption {
-            font-size:
-              0.98rem;
+            font-size: 0.98rem;
           }
 
           .photography-modal-footer {
-            margin-top:
-              26px;
+            margin-top: 26px;
           }
 
           .photography-modal-nav {
             width: 40px;
             height: 50px;
-            font-size:
-              2.2rem;
+            font-size: 2.2rem;
           }
 
           .photography-modal-prev {
@@ -1643,9 +1156,7 @@ export default function PhotographyPage({
           }
         }
 
-        @media (
-          max-width: 420px
-        ) {
+        @media (max-width: 420px) {
           .photography-grid {
             gap: 7px;
           }
@@ -1655,10 +1166,7 @@ export default function PhotographyPage({
            REDUCED MOTION
         ----------------------------------------- */
 
-        @media (
-          prefers-reduced-motion:
-            reduce
-        ) {
+        @media (prefers-reduced-motion: reduce) {
           .photography-card img,
           .photography-card-overlay,
           .photography-modal-close,
@@ -1679,64 +1187,37 @@ export default function PhotographyPage({
 ------------------------------------------------- */
 
 async function listAllMediaFiles() {
-  const PAGE_LIMIT =
-    1000;
+  const PAGE_LIMIT = 1000;
 
-  let offset =
-    0;
+  let offset = 0;
 
-  let allItems =
-    [];
+  let allItems = [];
 
   while (true) {
-    const {
-      data,
-      error,
-    } =
-      await supabaseServer.storage
-        .from(
-          MEDIA_BUCKET
-        )
-        .list(
-          "",
-          {
-            limit:
-              PAGE_LIMIT,
-            offset,
-            sortBy: {
-              column:
-                "name",
-              order:
-                "asc",
-            },
-          }
-        );
+    const { data, error } = await supabaseServer.storage
+      .from(MEDIA_BUCKET)
+      .list("", {
+        limit: PAGE_LIMIT,
+        offset,
+        sortBy: {
+          column: "name",
+          order: "asc",
+        },
+      });
 
     if (error) {
       throw error;
     }
 
-    const page =
-      Array.isArray(
-        data
-      )
-        ? data
-        : [];
+    const page = Array.isArray(data) ? data : [];
 
-    allItems =
-      allItems.concat(
-        page
-      );
+    allItems = allItems.concat(page);
 
-    if (
-      page.length <
-      PAGE_LIMIT
-    ) {
+    if (page.length < PAGE_LIMIT) {
       break;
     }
 
-    offset +=
-      PAGE_LIMIT;
+    offset += PAGE_LIMIT;
   }
 
   return allItems;
@@ -1747,18 +1228,12 @@ async function listAllMediaFiles() {
 ------------------------------------------------- */
 
 export async function getServerSideProps() {
-  let storageItems =
-    [];
+  let storageItems = [];
 
   try {
-    storageItems =
-      await listAllMediaFiles();
+    storageItems = await listAllMediaFiles();
   } catch (error) {
-    console.error(
-      "Photography storage error:",
-      error?.message ||
-        error
-    );
+    console.error("Photography storage error:", error?.message || error);
   }
 
   /* -------------------------------------------------
@@ -1770,20 +1245,11 @@ export async function getServerSideProps() {
        media_items
   ------------------------------------------------- */
 
-  let metadataRows =
-    [];
+  let metadataRows = [];
 
   try {
-    const {
-      data,
-      error,
-    } =
-      await supabaseServer
-        .from(
-          "media_items"
-        )
-        .select(
-          `
+    const { data, error } = await supabaseServer.from("media_items").select(
+      `
             id,
             storage_path,
             sort_order,
@@ -1793,164 +1259,75 @@ export async function getServerSideProps() {
             taken_at,
             alt_text,
             is_published
-          `
-        );
+          `,
+    );
 
     if (error) {
-      console.warn(
-        "Photography metadata unavailable:",
-        error.message
-      );
+      console.warn("Photography metadata unavailable:", error.message);
     } else {
-      metadataRows =
-        data || [];
+      metadataRows = data || [];
     }
   } catch (error) {
     console.warn(
       "Photography metadata table unavailable:",
-      error?.message ||
-        error
+      error?.message || error,
     );
   }
 
-  const metadataMap =
-    new Map();
+  const metadataMap = new Map();
 
-  for (
-    const row of
-    metadataRows
-  ) {
-    if (
-      !row?.storage_path
-    ) {
+  for (const row of metadataRows) {
+    if (!row?.storage_path) {
       continue;
     }
 
-    metadataMap.set(
-      row.storage_path,
-      row
-    );
+    metadataMap.set(row.storage_path, row);
   }
 
-  const images =
-    storageItems
-      .filter(
-        (
-          item
-        ) =>
-          item?.name
-      )
-      .filter(
-        (
-          item
-        ) =>
-          !item.name.startsWith(
-            "."
-          )
-      )
-      .filter(
-        (
-          item
-        ) =>
-          isImageFile(
-            item.name
-          )
-      )
-      .map(
-        (
-          item
-        ) => {
-          const metadata =
-            metadataMap.get(
-              item.name
-            ) ||
-            {};
+  const images = storageItems
+    .filter((item) => item?.name)
+    .filter((item) => !item.name.startsWith("."))
+    .filter((item) => isImageFile(item.name))
+    .map((item) => {
+      const metadata = metadataMap.get(item.name) || {};
 
-          const filenameNumber =
-            getImageNumber(
-              item.name
-            );
+      const filenameNumber = getImageNumber(item.name);
 
-          const sortOrder =
-            Number.isFinite(
-              Number(
-                metadata.sort_order
-              )
-            )
-              ? Number(
-                  metadata.sort_order
-                )
-              : filenameNumber;
+      const sortOrder = Number.isFinite(Number(metadata.sort_order))
+        ? Number(metadata.sort_order)
+        : filenameNumber;
 
-          return {
-            name:
-              item.name,
+      return {
+        name: item.name,
 
-            path:
-              item.name,
+        path: item.name,
 
-            url:
-              getMediaPublicUrl(
-                item.name
-              ),
+        url: getMediaPublicUrl(item.name),
 
-            number:
-              sortOrder,
+        number: sortOrder,
 
-            displayNumber:
-              String(
-                filenameNumber
-              ).padStart(
-                4,
-                "0"
-              ),
+        displayNumber: String(filenameNumber).padStart(4, "0"),
 
-            title:
-              metadata.title ||
-              "",
+        title: metadata.title || "",
 
-            caption:
-              metadata.caption ||
-              "",
+        caption: metadata.caption || "",
 
-            location:
-              metadata.location ||
-              "",
+        location: metadata.location || "",
 
-            taken_at:
-              metadata.taken_at ||
-              null,
+        taken_at: metadata.taken_at || null,
 
-            alt_text:
-              metadata.alt_text ||
-              "",
+        alt_text: metadata.alt_text || "",
 
-            is_published:
-              metadata.is_published !==
-              false,
-          };
-        }
-      )
-      .filter(
-        (
-          image
-        ) =>
-          image.is_published
-      )
-      .sort(
-        (
-          a,
-          b
-        ) =>
-          b.number -
-          a.number
-      );
+        is_published: metadata.is_published !== false,
+      };
+    })
+    .filter((image) => image.is_published)
+    .sort((a, b) => b.number - a.number);
 
   return {
     props: {
       images,
-      heroFallback:
-        getHeroFallback(),
+      heroFallback: getHeroFallback(),
     },
   };
 }

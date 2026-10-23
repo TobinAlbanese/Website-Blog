@@ -29,7 +29,9 @@ export default async function handler(req, res) {
 
     const { data, error } = await supabaseServer
       .from("posts")
-      .select("id, type, title, banner_url, archive_image_url, created_at, published_at, date")
+      .select(
+        "id, type, title, banner_url, archive_image_url, created_at, published_at, date",
+      )
       .in("type", PODCAST_TYPES)
       // if you want it to show even before publishing, remove these:
       // .eq("status", "published")

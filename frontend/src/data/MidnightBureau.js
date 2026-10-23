@@ -561,10 +561,9 @@ const MidnightBureauData = {
         "https://plus.unsplash.com/premium_photo-1733983990725-efe831f53e32?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8c3BhY2UlMjBkaXN0YW5jZXxlbnwwfHwwfHx8MA%3D%3D",
         "https://plus.unsplash.com/premium_photo-1680391379670-5907f52bb0d9?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8b3V0ZXJzcGFjZSUyMGVjb25vbWljc3xlbnwwfHwwfHx8MA%3D%3D",
         "https://images.unsplash.com/photo-1454789548928-9efd52dc4031?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGRlZXAlMjBzcGFjZXxlbnwwfHwwfHx8MA%3D%3D",
-     "https://images.unsplash.com/photo-1479142506502-19b3a3b7ff33?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGxhd3xlbnwwfHwwfHx8MA%3D%3D",
-     "https://images.unsplash.com/photo-1651960693464-5367391bd79d?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjZ8fGF0b21zfGVufDB8fDB8fHww",
-     "https://plus.unsplash.com/premium_photo-1680391380231-1fbae53e5858?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8c3BhY2UlMjBzYXR0ZWxpdGV8ZW58MHx8MHx8fDA%3D",
-     
+        "https://images.unsplash.com/photo-1479142506502-19b3a3b7ff33?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGxhd3xlbnwwfHwwfHx8MA%3D%3D",
+        "https://images.unsplash.com/photo-1651960693464-5367391bd79d?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjZ8fGF0b21zfGVufDB8fDB8fHww",
+        "https://plus.unsplash.com/premium_photo-1680391380231-1fbae53e5858?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8c3BhY2UlMjBzYXR0ZWxpdGV8ZW58MHx8MHx8fDA%3D",
       ],
 
       resources: {
@@ -633,7 +632,11 @@ const MidnightBureauData = {
         ],
         "Context & Briefings": [
           { label: "Portfolio Hub", url: "/Portfolio", external: false },
-          { label: "Research Journal", url: "/ResearchJournal", external: false },
+          {
+            label: "Research Journal",
+            url: "/ResearchJournal",
+            external: false,
+          },
         ],
       },
     },

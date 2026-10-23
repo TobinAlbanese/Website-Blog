@@ -50,9 +50,8 @@
   border: 1px solid var(--admin-border);
   border-radius: 12px;
   padding: 18px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
-
 
 .admin-card-title {
   font-size: 16px;
@@ -76,14 +75,16 @@
   width: 100%;
   border-radius: 10px;
   padding: 12px;
-  border: 1px solid rgba(214,40,39,0.45);
-  background: rgba(0,0,0,0.12);
+  border: 1px solid rgba(214, 40, 39, 0.45);
+  background: rgba(0, 0, 0, 0.12);
   color: var(--c-text);
   outline: none;
   font-family: inherit;
 }
 
-.admin-textarea { resize: vertical; }
+.admin-textarea {
+  resize: vertical;
+}
 
 .admin-btn {
   background: #d62827;
@@ -99,31 +100,32 @@
 }
 
 .admin-btn-soft {
-  background: rgba(214,40,39,0.12);
+  background: rgba(214, 40, 39, 0.12);
   color: #d62827;
   padding: 10px 12px;
   border-radius: 10px;
   font-weight: 900;
-  border: 1px solid rgba(214,40,39,0.35);
+  border: 1px solid rgba(214, 40, 39, 0.35);
   cursor: pointer;
 }
 
 .admin-list-btn {
-  width: 100%; 
+  width: 100%;
   text-align: left;
   padding: 12px;
   border-radius: 10px;
-border: 1px solid var(--admin-border);  cursor: pointer;
+  border: 1px solid var(--admin-border);
+  cursor: pointer;
   display: flex;
   justify-content: space-between;
   gap: 10px;
   color: var(--c-text);
-  background: rgba(0,0,0,0.12);
+  background: rgba(0, 0, 0, 0.12);
 }
 
 .admin-list-btn.is-active {
-  border-color: rgba(214,40,39,0.75);
-  background: rgba(214,40,39,0.10);
+  border-color: rgba(214, 40, 39, 0.75);
+  background: rgba(214, 40, 39, 0.1);
 }
 
 /* images */
@@ -149,7 +151,7 @@ border: 1px solid var(--admin-border);  cursor: pointer;
   position: absolute;
   top: 10px;
   right: 10px;
-  background: rgba(214,40,39,0.92);
+  background: rgba(214, 40, 39, 0.92);
   color: white;
   border: none;
   border-radius: 999px;
@@ -215,16 +217,52 @@ img.img--float-right {
   width: clamp(150px, 26%, 260px);
   border-radius: 8px;
 }
-.admin-tiptap { min-height: 280px; color: var(--c-text); font-family: inherit; }
-.tiptap-toolbar button.is-active { font-weight: 800; }
-figure.img--center { display:block; margin:1.5rem auto; max-width:100%; }
-figure.img--center img { width:100%; height:auto; border-radius:12px; display:block; }
-figure.img--float-left { float:left; margin:0 1rem 1rem 0; width: clamp(150px, 28%, 320px); }
-figure.img--float-left img { width:100%; height:auto; border-radius:8px; display:block; }
-figure.img--float-right { float:right; margin:0 0 1rem 1rem; width: clamp(150px, 28%, 320px); }
-figure.img--float-right img { width:100%; height:auto; border-radius:8px; display:block; }
-figure figcaption { font-size: .9rem; color: var(--c-text-secondary); margin-top: .4rem; }
-
+.admin-tiptap {
+  min-height: 280px;
+  color: var(--c-text);
+  font-family: inherit;
+}
+.tiptap-toolbar button.is-active {
+  font-weight: 800;
+}
+figure.img--center {
+  display: block;
+  margin: 1.5rem auto;
+  max-width: 100%;
+}
+figure.img--center img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  display: block;
+}
+figure.img--float-left {
+  float: left;
+  margin: 0 1rem 1rem 0;
+  width: clamp(150px, 28%, 320px);
+}
+figure.img--float-left img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  display: block;
+}
+figure.img--float-right {
+  float: right;
+  margin: 0 0 1rem 1rem;
+  width: clamp(150px, 28%, 320px);
+}
+figure.img--float-right img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  display: block;
+}
+figure figcaption {
+  font-size: 0.9rem;
+  color: var(--c-text-secondary);
+  margin-top: 0.4rem;
+}
 
 .admin-tiptap {
   min-height: 280px;
@@ -234,17 +272,25 @@ figure figcaption { font-size: .9rem; color: var(--c-text-secondary); margin-top
   line-height: 1.6;
 
   /* add these */
-  border: 1px solid rgba(214,40,39,0.45);
-  background: rgba(0,0,0,0.12);
+  border: 1px solid rgba(214, 40, 39, 0.45);
+  background: rgba(0, 0, 0, 0.12);
   border-radius: 12px;
   padding: 14px;
 }
 
 /* TipTap output spacing */
-.admin-tiptap p { margin: 0 0 12px; }
-.admin-tiptap h1, .admin-tiptap h2, .admin-tiptap h3 { margin: 0 0 12px; }
-.admin-tiptap a { color: #d62827; text-decoration: underline; }
-
+.admin-tiptap p {
+  margin: 0 0 12px;
+}
+.admin-tiptap h1,
+.admin-tiptap h2,
+.admin-tiptap h3 {
+  margin: 0 0 12px;
+}
+.admin-tiptap a {
+  color: #d62827;
+  text-decoration: underline;
+}
 
 /* resources list: border hugs content */
 .admin-resource-pill {
@@ -267,7 +313,7 @@ figure figcaption { font-size: .9rem; color: var(--c-text-secondary); margin-top
 .admin-modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.35); /* darker page behind */
+  background: rgba(0, 0, 0, 0.35); /* darker page behind */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -276,18 +322,18 @@ figure figcaption { font-size: .9rem; color: var(--c-text-secondary); margin-top
 
 .admin-modal {
   width: min(560px, calc(100vw - 32px));
-  background: rgba(255,255,255,0.94); /* lighter modal itself */
+  background: rgba(255, 255, 255, 0.94); /* lighter modal itself */
   color: #111;
   border-radius: 14px;
   padding: 18px;
-  box-shadow: 0 20px 70px rgba(0,0,0,0.35);
+  box-shadow: 0 20px 70px rgba(0, 0, 0, 0.35);
 }
 
 .admin-top-action {
   background: transparent;
   border: none;
   padding: 0;
-  color: var(--c-text-primary);   /* ← dynamic */
+  color: var(--c-text-primary); /* ← dynamic */
   font-weight: 900;
   cursor: pointer;
   transition: color 0.2s ease;
@@ -298,7 +344,7 @@ figure figcaption { font-size: .9rem; color: var(--c-text-secondary); margin-top
 }
 
 .admin-top-action:hover {
-  color: #d62827;            /* hover red */
+  color: #d62827; /* hover red */
 }
 
 .tiptap-toolbar {
@@ -336,22 +382,21 @@ figure figcaption { font-size: .9rem; color: var(--c-text-secondary); margin-top
 }
 
 :root {
-  --admin-border: rgba(0,0,0,0.22); /* light mode */
+  --admin-border: rgba(0, 0, 0, 0.22); /* light mode */
 }
 
 /* If you use data-theme */
 [data-theme="dark"],
 body[data-theme="dark"] {
-  --admin-border: rgba(255,255,255,0.34); /* dark mode */
+  --admin-border: rgba(255, 255, 255, 0.34); /* dark mode */
 }
 
 /* If you rely on prefers-color-scheme */
 @media (prefers-color-scheme: dark) {
   :root {
-    --admin-border: rgba(255,255,255,0.34);
+    --admin-border: rgba(255, 255, 255, 0.34);
   }
 }
-
 
 /* ── Media Library page ─────────────────────────────────── */
 
@@ -435,25 +480,50 @@ body[data-theme="dark"] {
 }
 
 @media (max-width: 1280px) {
-  .admin-media-gallery { column-count: 4; }
+  .admin-media-gallery {
+    column-count: 4;
+  }
 }
 
 @media (max-width: 1024px) {
-  .admin-media-wrap { padding-top: 48px; padding-bottom: 72px; }
-  .admin-media-gallery { column-count: 3; column-gap: 16px; }
-  .admin-media-item { margin-bottom: 16px; }
+  .admin-media-wrap {
+    padding-top: 48px;
+    padding-bottom: 72px;
+  }
+  .admin-media-gallery {
+    column-count: 3;
+    column-gap: 16px;
+  }
+  .admin-media-item {
+    margin-bottom: 16px;
+  }
 }
 
 @media (max-width: 768px) {
-  .admin-media-topbar { flex-direction: column; align-items: flex-start; }
-  .admin-media-gallery { column-count: 2; column-gap: 14px; }
-  .admin-media-item { margin-bottom: 14px; }
+  .admin-media-topbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .admin-media-gallery {
+    column-count: 2;
+    column-gap: 14px;
+  }
+  .admin-media-item {
+    margin-bottom: 14px;
+  }
 }
 
 @media (max-width: 520px) {
-  .admin-media-wrap { padding-top: 40px; padding-bottom: 64px; }
-  .admin-media-gallery { column-count: 1; }
-  .admin-media-item { margin-bottom: 14px; }
+  .admin-media-wrap {
+    padding-top: 40px;
+    padding-bottom: 64px;
+  }
+  .admin-media-gallery {
+    column-count: 1;
+  }
+  .admin-media-item {
+    margin-bottom: 14px;
+  }
 }
 .admin-media-modal {
   position: relative;

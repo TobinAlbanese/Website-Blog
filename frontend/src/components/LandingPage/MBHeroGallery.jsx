@@ -14,7 +14,7 @@ export default function MBHeroGallery({ images = [] }) {
       "item -normal -horizontal",
       "item -big -horizontal",
     ],
-    []
+    [],
   );
 
   const items = useMemo(
@@ -23,7 +23,7 @@ export default function MBHeroGallery({ images = [] }) {
         src,
         classes: CLASS_PATTERN[i % CLASS_PATTERN.length],
       })),
-    [images, CLASS_PATTERN]
+    [images, CLASS_PATTERN],
   );
 
   useEffect(() => {
@@ -69,7 +69,6 @@ export default function MBHeroGallery({ images = [] }) {
       </div>
 
       <h2 className="archive-title"></h2>
-
     </>
   );
 }

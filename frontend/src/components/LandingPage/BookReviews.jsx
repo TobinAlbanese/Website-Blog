@@ -12,7 +12,10 @@ const getImg = (item) =>
 const clamp = (s = "", n = 200) =>
   s.length > n ? s.slice(0, n).trim() + "…" : s;
 const firstSentenceFromHTML = (html = "") => {
-  const text = html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+  const text = html
+    .replace(/<[^>]*>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
   const m = text.match(/.*?[.!?](\s|$)/);
   return (m ? m[0] : text) || "";
 };
@@ -29,12 +32,19 @@ export default function BookReviews() {
   const side = items.slice(1, 5); // up to 4
 
   return (
-    <section className="theme-accent" data-armstrong-id="wrapper" id="home-section-book-review">
+    <section
+      className="theme-accent"
+      data-armstrong-id="wrapper"
+      id="home-section-book-review"
+    >
       <div className="base__main pt-60 pb-40 row">
         <div className="col-12 m-auto">
           <h3 className="font-style-italic c-accent mb-10">Book Reviews</h3>
 
-          <h4 className="fs-18 mb-15 fs-md-16" data-armstrong-id="module_subtitle">
+          <h4
+            className="fs-18 mb-15 fs-md-16"
+            data-armstrong-id="module_subtitle"
+          >
             Thoughts on books I've read recently.
           </h4>
 
@@ -86,17 +96,29 @@ export default function BookReviews() {
                     <span>{clamp(getDescription(primary), 220)}</span>
                   </h3>
 
-                  <div style={{ display: "flex", justifyContent: "flex-start" }}>
-                    <span className="body-m" style={{ color: "var(--c-text-secondary)" }}>
+                  <div
+                    style={{ display: "flex", justifyContent: "flex-start" }}
+                  >
+                    <span
+                      className="body-m"
+                      style={{ color: "var(--c-text-secondary)" }}
+                    >
                       Written by{" "}
-                      <i style={{ color: "var(--c-accent)" }}>{primary.author}</i>
+                      <i style={{ color: "var(--c-accent)" }}>
+                        {primary.author}
+                      </i>
                     </span>
                   </div>
 
                   <div style={{ marginTop: 8 }}>
                     <span
                       className="arrow-link border-bottom-thin border-bottom lh-22 fs-18"
-                      style={{ color: "var(--c-accent)", display: "inline-flex", alignItems: "center", gap: 6 }}
+                      style={{
+                        color: "var(--c-accent)",
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: 6,
+                      }}
                     >
                       {/* CTA (optional) */}
                     </span>
@@ -145,8 +167,6 @@ export default function BookReviews() {
                         />
                       </figure>
                     </Link>
-
-              
                   </div>
                 ))}
               </div>
@@ -160,7 +180,10 @@ export default function BookReviews() {
                   0 3px 10px rgba(0, 0, 0, 0.18);
                 outline: 1px solid rgba(0, 0, 0, 0.06);
                 border-radius: 8px;
-                transition: transform 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease;
+                transition:
+                  transform 0.22s ease,
+                  box-shadow 0.22s ease,
+                  filter 0.22s ease;
                 will-change: transform;
                 backface-visibility: hidden;
               }

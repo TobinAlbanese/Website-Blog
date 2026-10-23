@@ -1,7 +1,6 @@
 // lib/adminPosts.js
 import { supabase } from "./supabase/client";
 
-
 /**
  * Convert storage paths or stored URLs into a usable public URL.
  * Adjust bucket name if you use Storage for post images.
@@ -42,13 +41,21 @@ const formatResources = (groups, links) => {
     .sort((a, b) => (a.position ?? 1) - (b.position ?? 1))
     .forEach((g) => {
       const name = g.name || "Resources";
-      resources[name] = (byGroupId.get(g.id) || []).map(({ position, ...rest }) => rest);
+      resources[name] = (byGroupId.get(g.id) || []).map(
+        ({ position, ...rest }) => rest,
+      );
     });
 
   return resources;
 };
 
-const normalizeArticle = ({ post, sections, images, resourceGroups, resourceLinks }) => {
+const normalizeArticle = ({
+  post,
+  sections,
+  images,
+  resourceGroups,
+  resourceLinks,
+}) => {
   // sections -> article.content array with { text }
   const content = (sections || [])
     .sort((a, b) => (a.position ?? 1) - (b.position ?? 1))
@@ -56,10 +63,12 @@ const normalizeArticle = ({ post, sections, images, resourceGroups, resourceLink
 
   // images -> separate by kind/position
   const sortedImages = (images || []).sort(
-    (a, b) => (a.position ?? 1) - (b.position ?? 1)
+    (a, b) => (a.position ?? 1) - (b.position ?? 1),
   );
 
-  const banner = sortedImages.find((i) => i.kind === "banner")?.storage_path || post.banner_url;
+  const banner =
+    sortedImages.find((i) => i.kind === "banner")?.storage_path ||
+    post.banner_url;
 
   // Inline/center images: your current renderer assumes:
   // - article.images[0..contentBlocks.length-1] align with blocks rendered (slice(1,-1) uses imgIndex=i)
@@ -103,7 +112,8 @@ const normalizeArticle = ({ post, sections, images, resourceGroups, resourceLink
     date: post.date || post.published_at || post.created_at,
     excerpt: post.excerpt || "",
     banner: toPublicUrl(banner) || banner || null,
-    archiveImage: toPublicUrl(post.archive_image_url) || post.archive_image_url || null,
+    archiveImage:
+      toPublicUrl(post.archive_image_url) || post.archive_image_url || null,
     images: imagesOut,
     content,
     resources,
@@ -119,7 +129,8 @@ export async function getAdminPostById(id) {
     .eq("id", id)
     .single();
 
-  if (postErr || !post) return { article: null, error: postErr || new Error("Not found") };
+  if (postErr || !post)
+    return { article: null, error: postErr || new Error("Not found") };
 
   const { data: sections, error: secErr } = await supabase
     .from("posts_sections")

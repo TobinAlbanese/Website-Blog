@@ -14,7 +14,7 @@ export default function Footer() {
           observer.disconnect();
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.2 },
     );
 
     if (sectionRef.current) observer.observe(sectionRef.current);
@@ -162,9 +162,7 @@ export default function Footer() {
             <p className="c-text-secondary mt-20 mt-md-20 lh-sm">
               Published by Tobin Albanese on TobinAlbanese, Inc.
             </p>
-            <p className="c-text-secondary mt-5">
-              ©2025. All Rights Reserved.
-            </p>
+            <p className="c-text-secondary mt-5">©2025. All Rights Reserved.</p>
             <p className="mt-15">
               <a href="/PrivacyPolicy">Privacy Policy</a>
               <span className="divider" />

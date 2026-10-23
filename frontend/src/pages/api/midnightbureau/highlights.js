@@ -70,7 +70,7 @@ export default async function handler(req, res) {
         banner_url,
         archive_image_url,
         category
-      `
+      `,
       )
       .in("type", BLOG_TYPES)
       .eq("status", "published")
@@ -85,7 +85,7 @@ export default async function handler(req, res) {
       const bannerUrl = resolveImageUrl(supabaseServer, p.banner_url);
       const archiveImageUrl = resolveImageUrl(
         supabaseServer,
-        p.archive_image_url
+        p.archive_image_url,
       );
 
       return {
@@ -107,7 +107,7 @@ export default async function handler(req, res) {
       (p) =>
         String(p.category || "")
           .trim()
-          .toLowerCase() === "highlights"
+          .toLowerCase() === "highlights",
     );
 
     const recent = allPosts;

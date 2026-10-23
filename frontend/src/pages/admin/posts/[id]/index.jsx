@@ -79,7 +79,7 @@ export default function AdminPostEditor() {
     if (!post) return [];
     const rows = post.post_images || [];
     return (rows || []).map(
-      (r) => storagePathToPublicUrl(r.storage_path) || r.storage_path
+      (r) => storagePathToPublicUrl(r.storage_path) || r.storage_path,
     );
   }, [post]);
 
@@ -136,7 +136,7 @@ export default function AdminPostEditor() {
 
   const activeSectionImageRefs = useMemo(() => {
     return [...activeSectionInlineImages, ...activeSectionCenterImages].sort(
-      (a, b) => (a.position || 0) - (b.position || 0)
+      (a, b) => (a.position || 0) - (b.position || 0),
     );
   }, [activeSectionInlineImages, activeSectionCenterImages]);
   const addSectionImage = async ({ kind, file, sectionId }) => {
@@ -152,7 +152,7 @@ export default function AdminPostEditor() {
       const storage_path = await uploadImageFile({ postId, kind, file });
 
       const sectionRows = [...inlineImages, ...centerImages].filter(
-        (img) => img.section_id === sectionId && img.kind === kind
+        (img) => img.section_id === sectionId && img.kind === kind,
       );
 
       const nextPos =
@@ -203,15 +203,15 @@ export default function AdminPostEditor() {
 
       if (kind === "inline") {
         setInlineImages((prev) =>
-          prev.map((img) => (img.id === imageId ? data : img))
+          prev.map((img) => (img.id === imageId ? data : img)),
         );
       } else if (kind === "center") {
         setCenterImages((prev) =>
-          prev.map((img) => (img.id === imageId ? data : img))
+          prev.map((img) => (img.id === imageId ? data : img)),
         );
       } else if (kind === "gallery") {
         setGalleryImages((prev) =>
-          prev.map((img) => (img.id === imageId ? data : img))
+          prev.map((img) => (img.id === imageId ? data : img)),
         );
       }
     } catch (e) {
@@ -292,7 +292,7 @@ export default function AdminPostEditor() {
     bannerLocalPreview || bannerResolvedUrl || "/assets/images/space.webp";
 
   const inlineUrls = inlineImages.map((r) =>
-    storagePathToPublicUrl(r.storage_path)
+    storagePathToPublicUrl(r.storage_path),
   );
 
   const openConfirm = ({
@@ -387,13 +387,13 @@ export default function AdminPostEditor() {
       if (gErr) return (setErr(gErr.message), setLoading(false));
 
       const inl = (imgs || []).filter(
-        (x) => x.kind === "inline" && hasStoragePath(x)
+        (x) => x.kind === "inline" && hasStoragePath(x),
       );
       const cen = (imgs || []).filter(
-        (x) => x.kind === "center" && hasStoragePath(x)
+        (x) => x.kind === "center" && hasStoragePath(x),
       );
       const gal = (imgs || []).filter(
-        (x) => x.kind === "gallery" && hasStoragePath(x)
+        (x) => x.kind === "gallery" && hasStoragePath(x),
       );
 
       setPost(p);
@@ -440,11 +440,11 @@ export default function AdminPostEditor() {
           validRows.map(async (r) => {
             const url = await getRenderableImageUrl(r.storage_path);
             return [r.id, url];
-          })
+          }),
         );
 
         return Object.fromEntries(
-          pairs.filter(([, url]) => !!String(url || "").trim())
+          pairs.filter(([, url]) => !!String(url || "").trim()),
         );
       };
 
@@ -513,17 +513,17 @@ export default function AdminPostEditor() {
     return signed || publicUrl(storage_path);
   }
   const PORTFOLIO_CATEGORIES = [
-  "Current & In-Progress Work",
-  "Research & Analysis Projects",
-  "Computer Science Projects",
-  "Intelligence & Computer Systems",
-  "Analytical Writing & Publications",
-  "Skills & Technologies",
-  "Employers & Work Experience",
-  "Education & Certifications",
-  "Featured / Spotlight Projects",
-  "Speaking & Media",
-  "Collaborations",
+    "Current & In-Progress Work",
+    "Research & Analysis Projects",
+    "Computer Science Projects",
+    "Intelligence & Computer Systems",
+    "Analytical Writing & Publications",
+    "Skills & Technologies",
+    "Employers & Work Experience",
+    "Education & Certifications",
+    "Featured / Spotlight Projects",
+    "Speaking & Media",
+    "Collaborations",
   ];
 
   const BLOG_LANDING_CATEGORIES = [
@@ -576,7 +576,7 @@ export default function AdminPostEditor() {
   };
   const saveSubtitleDebounced = useMemo(
     () => debounce(saveSubtitle, 600),
-    [postId]
+    [postId],
   );
 
   // ---------- publish / unpublish / archive ----------
@@ -662,12 +662,12 @@ export default function AdminPostEditor() {
   // ---------- section helpers ----------
   const activeSection = useMemo(
     () => sections.find((s) => s.id === activeSectionId),
-    [sections, activeSectionId]
+    [sections, activeSectionId],
   );
 
   const updateSectionLocal = (id, patch) => {
     setSections((prev) =>
-      prev.map((s) => (s.id === id ? { ...s, ...patch } : s))
+      prev.map((s) => (s.id === id ? { ...s, ...patch } : s)),
     );
   };
 
@@ -882,7 +882,7 @@ export default function AdminPostEditor() {
       }
 
       setResourceGroups((p) =>
-        (p || []).map((g) => (g.id === groupId ? { ...g, name } : g))
+        (p || []).map((g) => (g.id === groupId ? { ...g, name } : g)),
       );
     }
 
@@ -961,7 +961,7 @@ export default function AdminPostEditor() {
         if (gErr) return setErr(gErr.message);
 
         setResourceGroups((p) =>
-          (p || []).filter((x) => x.id !== activeGroupId)
+          (p || []).filter((x) => x.id !== activeGroupId),
         );
         setActiveGroupLinks([]);
         setGroupDrafts((p) => {
@@ -971,7 +971,7 @@ export default function AdminPostEditor() {
         });
 
         const remaining = (resourceGroups || []).filter(
-          (x) => x.id !== activeGroupId
+          (x) => x.id !== activeGroupId,
         );
         setActiveGroupId(remaining[0]?.id || null);
         setErr("");
@@ -1011,7 +1011,7 @@ export default function AdminPostEditor() {
       const all = [...inlineImages, ...galleryImages, ...centerImages];
       const maxPos = all.reduce(
         (m, r) => Math.max(m, Number(r?.position || 0)),
-        0
+        0,
       );
       const nextPos = maxPos + 1;
 
@@ -1038,64 +1038,64 @@ export default function AdminPostEditor() {
     }
   };
 
-const deleteImage = async ({ kind, id }) => {
-  openConfirm({
-    title: "Delete image?",
-    message: "This will permanently remove this image.",
-    dangerText: "Delete Image",
-    onConfirm: async () => {
-      closeConfirm();
+  const deleteImage = async ({ kind, id }) => {
+    openConfirm({
+      title: "Delete image?",
+      message: "This will permanently remove this image.",
+      dangerText: "Delete Image",
+      onConfirm: async () => {
+        closeConfirm();
 
-      try {
-        setErr("");
-        setSaving(true);
+        try {
+          setErr("");
+          setSaving(true);
 
-        const sourceList =
-          kind === "inline"
-            ? inlineImages
-            : kind === "center"
-              ? centerImages
-              : galleryImages;
+          const sourceList =
+            kind === "inline"
+              ? inlineImages
+              : kind === "center"
+                ? centerImages
+                : galleryImages;
 
-        const imageRow = sourceList.find((x) => x.id === id);
-        if (!imageRow) throw new Error("Image record not found.");
+          const imageRow = sourceList.find((x) => x.id === id);
+          if (!imageRow) throw new Error("Image record not found.");
 
-        const storagePath = String(imageRow.storage_path || "").trim();
+          const storagePath = String(imageRow.storage_path || "").trim();
 
-        if (storagePath) {
-          const { error: storageErr } = await supabase.storage
-            .from(BUCKET)
-            .remove([storagePath]);
+          if (storagePath) {
+            const { error: storageErr } = await supabase.storage
+              .from(BUCKET)
+              .remove([storagePath]);
 
-          if (storageErr) throw storageErr;
+            if (storageErr) throw storageErr;
+          }
+
+          const { error: dbErr } = await supabase
+            .from("post_images")
+            .delete()
+            .eq("id", id);
+
+          if (dbErr) throw dbErr;
+
+          if (kind === "inline") {
+            setInlineImages((p) => p.filter((x) => x.id !== id));
+          }
+
+          if (kind === "center") {
+            setCenterImages((p) => p.filter((x) => x.id !== id));
+          }
+
+          if (kind === "gallery") {
+            setGalleryImages((p) => p.filter((x) => x.id !== id));
+          }
+        } catch (e) {
+          setErr(e?.message || "Failed to delete image");
+        } finally {
+          setSaving(false);
         }
-
-        const { error: dbErr } = await supabase
-          .from("post_images")
-          .delete()
-          .eq("id", id);
-
-        if (dbErr) throw dbErr;
-
-        if (kind === "inline") {
-          setInlineImages((p) => p.filter((x) => x.id !== id));
-        }
-
-        if (kind === "center") {
-          setCenterImages((p) => p.filter((x) => x.id !== id));
-        }
-
-        if (kind === "gallery") {
-          setGalleryImages((p) => p.filter((x) => x.id !== id));
-        }
-      } catch (e) {
-        setErr(e?.message || "Failed to delete image");
-      } finally {
-        setSaving(false);
-      }
-    },
-  });
-};
+      },
+    });
+  };
 
   // ---------- render ----------
   if (loading) {
@@ -1244,7 +1244,7 @@ const deleteImage = async ({ kind, id }) => {
 
                     if (subtitle.length > SUBTITLE_MAX_LENGTH) {
                       setErr(
-                        `Subtitle must be ${SUBTITLE_MAX_LENGTH} characters or fewer.`
+                        `Subtitle must be ${SUBTITLE_MAX_LENGTH} characters or fewer.`,
                       );
                       return;
                     }
@@ -1532,7 +1532,7 @@ const deleteImage = async ({ kind, id }) => {
                   type="button"
                   onClick={() =>
                     addSectionAfter(
-                      activeSectionId || sections[sections.length - 1]?.id
+                      activeSectionId || sections[sections.length - 1]?.id,
                     )
                   }
                   style={btnRed()}
@@ -2395,7 +2395,7 @@ function SectionImageGrid({
 
 function ImageGrid({ rows, kind, onReplace, onDelete, resolvedMap = {} }) {
   const validRows = (rows || []).filter(
-    (r) => !!String(r?.storage_path || "").trim()
+    (r) => !!String(r?.storage_path || "").trim(),
   );
 
   if (!validRows.length) return <div style={{ opacity: 0.7 }}>No images.</div>;

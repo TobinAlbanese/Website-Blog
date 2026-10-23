@@ -2,7 +2,7 @@ console.log(
   "EMAILJS KEYS",
   !!process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
   !!process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
-  !!process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
+  !!process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY,
 );
 
 import React, { useState, useEffect, useRef } from "react";
@@ -33,7 +33,7 @@ export default function Feedback() {
           obs.unobserve(el);
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
     obs.observe(el);
     return () => obs.disconnect();
@@ -50,7 +50,9 @@ export default function Feedback() {
     setError("");
 
     if (MISSING_KEYS) {
-      setError("Email service is not configured. Set NEXT_PUBLIC_EMAILJS_* and redeploy.");
+      setError(
+        "Email service is not configured. Set NEXT_PUBLIC_EMAILJS_* and redeploy.",
+      );
       return;
     }
 
@@ -69,7 +71,9 @@ export default function Feedback() {
       setFeedback("");
     } catch (err) {
       console.error(err);
-      setError("Couldn't send feedback. Please try again, or email me at tobinalbanese1@gmail.com.");
+      setError(
+        "Couldn't send feedback. Please try again, or email me at tobinalbanese1@gmail.com.",
+      );
     } finally {
       setSending(false);
     }
@@ -99,7 +103,8 @@ export default function Feedback() {
                 className="fs-18 mb-15 mb-25 fs-md-16"
                 data-armstrong-id="module_subtitle"
               >
-                Please feel free to reach out or leave any feedback you would like to add. Much Appreciated!
+                Please feel free to reach out or leave any feedback you would
+                like to add. Much Appreciated!
               </h3>
 
               {/* Image centered above the text */}
@@ -142,8 +147,11 @@ export default function Feedback() {
                       marginBottom: 16,
                     }}
                   >
-                    Please share your thoughts, suggestions, or questions below. I truly value your input as it helps me improve the content
-                    & the way I engage with you. Your feedback is essential to creating a better experience for everyone & means a lot to me personally.
+                    Please share your thoughts, suggestions, or questions below.
+                    I truly value your input as it helps me improve the content
+                    & the way I engage with you. Your feedback is essential to
+                    creating a better experience for everyone & means a lot to
+                    me personally.
                   </p>
                   <p
                     style={{
@@ -152,8 +160,9 @@ export default function Feedback() {
                       marginBottom: 8,
                     }}
                   >
-                    Every comment you provide helps shape the future of my research. So don’t hesitate & let me know what you think
-                    & help me make this community even stronger!
+                    Every comment you provide helps shape the future of my
+                    research. So don’t hesitate & let me know what you think &
+                    help me make this community even stronger!
                   </p>
                   <div
                     style={{
@@ -226,7 +235,10 @@ export default function Feedback() {
                       className="btn border-radius-small pt-10 pb-10 pl-20 pr-20 body-s btn-accent position-relative z-above-base d-inline-block lh-22 fs-15 text-align-center mt-20 mb-40 cursor-pointer"
                     >
                       {sending ? "Sending..." : "Submit Feedback"}
-                      <svg className="arrow-link__icon" style={{ marginLeft: 8 }}>
+                      <svg
+                        className="arrow-link__icon"
+                        style={{ marginLeft: 8 }}
+                      >
                         <use href="#icon-right-arrow" />
                       </svg>
                     </button>
@@ -247,7 +259,8 @@ export default function Feedback() {
                           color: "var(--c-text-secondary)",
                         }}
                       >
-                        Set NEXT_PUBLIC_EMAILJS_* in .env.local, then restart the dev server.
+                        Set NEXT_PUBLIC_EMAILJS_* in .env.local, then restart
+                        the dev server.
                       </small>
                     )}
                   </form>

@@ -32,7 +32,7 @@ function splitHtmlIntoBlocks(html = "") {
 
   const matches =
     html.match(
-      /<p[\s\S]*?<\/p>|<blockquote[\s\S]*?<\/blockquote>|<ul[\s\S]*?<\/ul>|<ol[\s\S]*?<\/ol>|<h[1-6][\s\S]*?<\/h[1-6]>/gi
+      /<p[\s\S]*?<\/p>|<blockquote[\s\S]*?<\/blockquote>|<ul[\s\S]*?<\/ul>|<ol[\s\S]*?<\/ol>|<h[1-6][\s\S]*?<\/h[1-6]>/gi,
     ) || [];
 
   const rawBlocks = matches.length ? matches : [html];
@@ -102,7 +102,7 @@ export default function BlogPost({
     let cancelled = false;
 
     const rawGalleryImages = (galleryResolved || []).filter(
-      (src) => typeof src === "string" && src.trim().length > 0
+      (src) => typeof src === "string" && src.trim().length > 0,
     );
 
     if (!rawGalleryImages.length) {
@@ -120,8 +120,8 @@ export default function BlogPost({
               img.onload = () => resolve(src);
               img.onerror = () => resolve(null);
               img.src = src;
-            })
-        )
+            }),
+        ),
       );
 
       if (!cancelled) {
@@ -422,7 +422,7 @@ export default function BlogPost({
                   renderedBlocks.push(
                     <h3 key={`${sec.id}-heading`} style={{ marginTop: 0 }}>
                       {sec.heading}
-                    </h3>
+                    </h3>,
                   );
                 }
 
@@ -455,7 +455,7 @@ export default function BlogPost({
                             }}
                             onClick={() => setModalImage(centeredSrc)}
                           />
-                        </div>
+                        </div>,
                       );
                       centerCursor += 1;
                     }
@@ -511,7 +511,7 @@ export default function BlogPost({
                         className="text-block mb-text"
                         dangerouslySetInnerHTML={{ __html: block.html }}
                       />
-                    </div>
+                    </div>,
                   );
 
                   if (inlineSrc) inlineCursor += 1;
@@ -544,7 +544,7 @@ export default function BlogPost({
                         }}
                         onClick={() => setModalImage(centeredSrc)}
                       />
-                    </div>
+                    </div>,
                   );
 
                   centerCursor += 1;
@@ -684,7 +684,7 @@ export default function BlogPost({
                               ))}
                             </ul>
                           </div>
-                        )
+                        ),
                       )}
                     </div>
                   </section>
@@ -791,7 +791,7 @@ export async function getServerSideProps({ params }) {
       (p) =>
         String(p.slug || "")
           .trim()
-          .toLowerCase() === incomingSlug.toLowerCase()
+          .toLowerCase() === incomingSlug.toLowerCase(),
     ) || null;
 
   if (!post) {
@@ -880,7 +880,7 @@ export async function getServerSideProps({ params }) {
 
   const buildSectionMap = (rows) => {
     const sorted = [...rows].sort(
-      (a, b) => (a.position || 0) - (b.position || 0)
+      (a, b) => (a.position || 0) - (b.position || 0),
     );
 
     const map = {};

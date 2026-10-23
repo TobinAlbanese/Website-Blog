@@ -14,7 +14,8 @@ export default function HeatRevealCanvas({
 
   // ✅ optional: if you pass a storage path like "public-images/Syria2.webp"
   // this lets the component build the public URL
-  storageBucket = process.env.NEXT_PUBLIC_SUPABASE_PUBLIC_IMAGES_BUCKET || "public-images",
+  storageBucket = process.env.NEXT_PUBLIC_SUPABASE_PUBLIC_IMAGES_BUCKET ||
+    "public-images",
 }) {
   const canvasRef = useRef(null);
   const containerRef = useRef(null);
@@ -26,7 +27,12 @@ export default function HeatRevealCanvas({
     if (!s) return "/assets/images/Syria2.webp";
 
     // already usable
-    if (s.startsWith("http://") || s.startsWith("https://") || s.startsWith("/")) return s;
+    if (
+      s.startsWith("http://") ||
+      s.startsWith("https://") ||
+      s.startsWith("/")
+    )
+      return s;
 
     // treat as Supabase storage path
     const base = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -134,10 +140,18 @@ export default function HeatRevealCanvas({
     }
 
     _bindEvents() {
-      this.canvas.addEventListener("pointermove", this._onMove, { passive: true });
-      this.canvas.addEventListener("pointerdown", this._onDown, { passive: true });
-      this.canvas.addEventListener("pointerleave", this._onLeave, { passive: true });
-      this.canvas.addEventListener("pointercancel", this._onLeave, { passive: true });
+      this.canvas.addEventListener("pointermove", this._onMove, {
+        passive: true,
+      });
+      this.canvas.addEventListener("pointerdown", this._onDown, {
+        passive: true,
+      });
+      this.canvas.addEventListener("pointerleave", this._onLeave, {
+        passive: true,
+      });
+      this.canvas.addEventListener("pointercancel", this._onLeave, {
+        passive: true,
+      });
       document.addEventListener("visibilitychange", this._visibilityChange);
     }
 
@@ -199,7 +213,7 @@ export default function HeatRevealCanvas({
         console.warn(
           "HeatRevealCanvas: getImageData() blocked (tainted canvas). " +
             "Use a same-origin image (in /public) OR configure CORS for the image host.",
-          err
+          err,
         );
         return;
       }
@@ -247,11 +261,11 @@ export default function HeatRevealCanvas({
 
           gray = Math.max(
             this.P.grid.minBrightness,
-            Math.min(1, (gray - 0.5) * this.P.grid.contrast + 0.5)
+            Math.min(1, (gray - 0.5) * this.P.grid.contrast + 0.5),
           );
 
           const randomChar = this.characters.charAt(
-            Math.floor(Math.random() * this.characters.length)
+            Math.floor(Math.random() * this.characters.length),
           );
 
           this.charGrid.push({
@@ -276,7 +290,10 @@ export default function HeatRevealCanvas({
         const placementCount = Math.max(1, Math.floor(Math.random() * 2) + 1);
         for (let placement = 0; placement < placementCount; placement++) {
           const direction = Math.floor(Math.random() * 3); // 0=horizontal,1=vertical,2=diagonal
-          let startX, startY, valid, attempts = 0;
+          let startX,
+            startY,
+            valid,
+            attempts = 0;
 
           while (!valid && attempts < 20) {
             attempts++;
@@ -285,7 +302,8 @@ export default function HeatRevealCanvas({
             valid = true;
 
             if (direction === 0 && startX + word.length > cols) valid = false;
-            else if (direction === 1 && startY + word.length > rows) valid = false;
+            else if (direction === 1 && startY + word.length > rows)
+              valid = false;
             else if (
               direction === 2 &&
               (startX + word.length > cols || startY + word.length > rows)
@@ -308,7 +326,7 @@ export default function HeatRevealCanvas({
                 }
 
                 const cellIndex = this.charGrid.findIndex(
-                  (cell) => cell.x === x && cell.y === y
+                  (cell) => cell.x === x && cell.y === y,
                 );
 
                 if (cellIndex === -1 || this.charGrid[cellIndex].isWordChar) {
@@ -321,7 +339,7 @@ export default function HeatRevealCanvas({
                   this.charGrid[cellIndex].isWordChar = true;
                   this.charGrid[cellIndex].brightness = Math.max(
                     this.charGrid[cellIndex].brightness,
-                    0.85
+                    0.85,
                   );
                 }
               }
@@ -475,7 +493,10 @@ export default function HeatRevealCanvas({
             const intensity = amount * Math.pow(1 - d / rad, 1.5);
             this.heat.current[idx] += intensity;
             this.heat.current[idx] = Math.min(1, this.heat.current[idx]);
-            this.heat.maxValue = Math.max(this.heat.maxValue, this.heat.current[idx]);
+            this.heat.maxValue = Math.max(
+              this.heat.maxValue,
+              this.heat.current[idx],
+            );
           }
         }
       }
@@ -547,13 +568,15 @@ export default function HeatRevealCanvas({
       if (!this.scrambleActive) return;
       if (this.lowPerformanceMode && Math.random() > 0.5) return;
 
-      const scrambleCount = Math.floor(this.charGrid.length * this.scrambleAmount);
+      const scrambleCount = Math.floor(
+        this.charGrid.length * this.scrambleAmount,
+      );
       for (let i = 0; i < scrambleCount; i++) {
         const randIndex = Math.floor(Math.random() * this.charGrid.length);
         const cell = this.charGrid[randIndex];
         if (!cell.isWordChar) {
           cell.char = this.characters.charAt(
-            Math.floor(Math.random() * this.characters.length)
+            Math.floor(Math.random() * this.characters.length),
           );
         }
       }
@@ -594,7 +617,7 @@ export default function HeatRevealCanvas({
         const cell = this.charGrid[i];
         if (!cell.isWordChar) {
           cell.char = this.characters.charAt(
-            Math.floor(Math.random() * this.characters.length)
+            Math.floor(Math.random() * this.characters.length),
           );
         }
       }

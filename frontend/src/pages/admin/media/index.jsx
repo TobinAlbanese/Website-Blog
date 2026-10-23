@@ -61,7 +61,7 @@ export default function AdminMediaPage({ images = [] }) {
         root: null,
         rootMargin: "300px 0px",
         threshold: 0,
-      }
+      },
     );
 
     observer.observe(loaderRef.current);
@@ -142,15 +142,15 @@ export default function AdminMediaPage({ images = [] }) {
 
       setGalleryImages((prev) =>
         [...prev, ...uploadedItems].sort((a, b) =>
-          a.name.localeCompare(b.name, undefined, { sensitivity: "base" })
-        )
+          a.name.localeCompare(b.name, undefined, { sensitivity: "base" }),
+        ),
       );
 
       setVisibleCount((prev) => prev + uploadedItems.length);
       setUploadSuccess(
         uploadedItems.length === 1
           ? "Image uploaded successfully."
-          : `${uploadedItems.length} images uploaded successfully.`
+          : `${uploadedItems.length} images uploaded successfully.`,
       );
 
       if (fileInputRef.current) fileInputRef.current.value = "";
@@ -191,7 +191,7 @@ export default function AdminMediaPage({ images = [] }) {
             </button>
           </div>
 
-          {galleryImages.length === 0 ? ( 
+          {galleryImages.length === 0 ? (
             <div className="admin-media-empty">
               No images found in the public-images bucket.
             </div>
@@ -219,60 +219,60 @@ export default function AdminMediaPage({ images = [] }) {
           )}
         </section>
       </main>
-{isUploadOpen && (
-  <div className="admin-modal-overlay" onClick={closeUploadModal}>
-    <div
-      className="admin-modal admin-media-modal"
-      onClick={(e) => e.stopPropagation()}
-    >
-      <button
-        type="button"
-        className="admin-media-modal-close"
-        onClick={closeUploadModal}
-        aria-label="Close upload modal"
-      >
-        ×
-      </button>
+      {isUploadOpen && (
+        <div className="admin-modal-overlay" onClick={closeUploadModal}>
+          <div
+            className="admin-modal admin-media-modal"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              type="button"
+              className="admin-media-modal-close"
+              onClick={closeUploadModal}
+              aria-label="Close upload modal"
+            >
+              ×
+            </button>
 
-      <h2 className="admin-media-modal-title">Upload to Media Library</h2>
+            <h2 className="admin-media-modal-title">Upload to Media Library</h2>
 
-      <p className="admin-media-modal-copy">
-        Select one or more images from your device to upload directly into your
-        public-images bucket.
-      </p>
+            <p className="admin-media-modal-copy">
+              Select one or more images from your device to upload directly into
+              your public-images bucket.
+            </p>
 
-      <input
-        ref={fileInputRef}
-        type="file"
-        accept="image/*"
-        multiple
-        onChange={handleFilesSelected}
-        className="admin-media-file-input"
-      />
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              multiple
+              onChange={handleFilesSelected}
+              className="admin-media-file-input"
+            />
 
-      <button
-        type="button"
-        className="admin-btn"
-        onClick={() => fileInputRef.current?.click()}
-        disabled={uploading}
-      >
-        {uploading ? "Uploading..." : "Upload from Device"}
-      </button>
+            <button
+              type="button"
+              className="admin-btn"
+              onClick={() => fileInputRef.current?.click()}
+              disabled={uploading}
+            >
+              {uploading ? "Uploading..." : "Upload from Device"}
+            </button>
 
-      {uploadError ? (
-        <div className="admin-error admin-media-modal-message">
-          {uploadError}
+            {uploadError ? (
+              <div className="admin-error admin-media-modal-message">
+                {uploadError}
+              </div>
+            ) : null}
+
+            {uploadSuccess ? (
+              <div className="admin-media-modal-success admin-media-modal-message">
+                {uploadSuccess}
+              </div>
+            ) : null}
+          </div>
         </div>
-      ) : null}
-
-      {uploadSuccess ? (
-        <div className="admin-media-modal-success admin-media-modal-message">
-          {uploadSuccess}
-        </div>
-      ) : null}
-    </div>
-  </div>
-)}
+      )}
       <Footer />
     </>
   );

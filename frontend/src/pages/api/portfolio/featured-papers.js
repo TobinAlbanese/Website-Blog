@@ -131,7 +131,7 @@ export default async function handler(req, res) {
         archive_image_url,
         created_at,
         published_at
-      `
+      `,
       )
       .in("type", ["portfolio", "mb"])
       .eq("status", "published")

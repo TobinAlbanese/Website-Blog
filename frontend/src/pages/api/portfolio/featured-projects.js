@@ -131,7 +131,7 @@ export default async function handler(req, res) {
         archive_image_url,
         created_at,
         published_at
-      `
+      `,
       )
       .in("type", ["portfolio", "mb"])
       .eq("status", "published")
@@ -139,19 +139,13 @@ export default async function handler(req, res) {
       .in("slug", FEATURED_PROJECTS_ORDER);
 
     if (error) {
-      console.error(
-        "Supabase featured-projects query error:",
-        error
-      );
+      console.error("Supabase featured-projects query error:", error);
       throw error;
     }
 
-    const bySlug = new Map(
-      (data || []).map((post) => [post.slug, post])
-    );
+    const bySlug = new Map((data || []).map((post) => [post.slug, post]));
 
-    const posts = FEATURED_PROJECTS_ORDER
-      .map((slug) => bySlug.get(slug))
+    const posts = FEATURED_PROJECTS_ORDER.map((slug) => bySlug.get(slug))
       .filter(Boolean)
       .map(normalizePost);
 

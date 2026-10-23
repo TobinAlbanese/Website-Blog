@@ -249,7 +249,6 @@ export default function NavbarMB() {
                 </a>
               </li>
 
-
               {/* Explore dropdown */}
               <li className="site-nav__list-item d-flex show-desktop site-nav__dropdown">
                 <a className="site-nav__link body-s-smallcaps" href="#">
@@ -306,15 +305,6 @@ export default function NavbarMB() {
               className="site-nav__list d-flex right"
               style={{ justifySelf: "end" }}
             >
-              <li className="site-nav__list-item d-flex show-desktop">
-                <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/ResearchJournal/Newsletter"
-                >
-                  Newsletters
-                </a>
-              </li>
-
               {isLoggedIn ? (
                 <li className="site-nav__list-item d-flex show-desktop show-tablet">
                   <button
@@ -488,15 +478,6 @@ export default function NavbarMB() {
               className="site-nav__list d-flex right"
               style={{ justifySelf: "end" }}
             >
-              <li className="site-nav__list-item d-flex show-desktop">
-                <a
-                  className="site-nav__link body-s-smallcaps "
-                  href="/ResearchJournal/Newsletter"
-                >
-                  Newsletters
-                </a>
-              </li>
-
               {isLoggedIn ? (
                 <li className="site-nav__list-item d-flex show-desktop show-tablet">
                   <button
@@ -860,14 +841,6 @@ export default function NavbarMB() {
               <div className="col-12 col-sm-6 col-lg-4-base-10">
                 <p className="menu__overline mb-20">More Resources</p>
                 <ul className="menu__links pt-30 pt-md-0">
-                  <li className="menu__links--list-item mb-5">
-                    <a
-                      href="/ResearchJournal/Newsletter"
-                      onClick={() => setMenuOpen(false)}
-                    >
-                      Newsletter
-                    </a>
-                  </li>
                   <li className="menu__links--list-item mb-5">
                     <a
                       href="/ResearchJournal/FAQ"

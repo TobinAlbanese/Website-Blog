@@ -103,8 +103,6 @@ input {
   box-sizing: border-box;
 }
 
-
-
 body:not([class*="gin--edit-form"]) {
   font-size: 18px;
   color: var(--c-text);
@@ -3739,7 +3737,6 @@ body {
   z-index: 10000;
 }
 
-
 .project-card:focus-visible {
   outline: 3px solid var(--c-accent, #d62827);
   outline-offset: 2px;
@@ -3788,7 +3785,8 @@ body {
 /* Add any other card classes you use */
 :where(.project-card, .archive-card, .book-card):focus-visible {
   outline: none; /* we’ll use a glow instead */
-  box-shadow: 0 0 0 var(--focus-ring) color-mix(in srgb, var(--focus-color) 55%, transparent);
+  box-shadow: 0 0 0 var(--focus-ring)
+    color-mix(in srgb, var(--focus-color) 55%, transparent);
   border-radius: var(--focus-radius);
 }
 
@@ -3809,17 +3807,17 @@ body {
   }
 }
 
-
-
-
-
 /* === Mobile safety shim (desktop untouched) === */
-html { overflow-x: hidden; }
+html {
+  overflow-x: hidden;
+}
 
 /* Phone & small phablets */
 @media (max-width: 600px) {
   /* gentle side padding on content areas */
-  .base__main, .base__content, main {
+  .base__main,
+  .base__content,
+  main {
     padding-left: 16px;
     padding-right: 16px;
   }
@@ -3865,32 +3863,19 @@ html { overflow-x: hidden; }
 
 /* Very small phones */
 @media (max-width: 414px) {
-  .midnight-bureau-article .box-container { height: 240px; }
-  .midnight-bureau-article .card-image { width: 60vw; height: 88vw; }
+  .midnight-bureau-article .box-container {
+    height: 240px;
+  }
+  .midnight-bureau-article .card-image {
+    width: 60vw;
+    height: 88vw;
+  }
 }
 
 /* Hard wrap long URLs/text on small screens */
-:where(p, li, blockquote, figcaption) { overflow-wrap: anywhere; }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+:where(p, li, blockquote, figcaption) {
+  overflow-wrap: anywhere;
+}
 
 /* ==========================================
    HOME PAGE (page-home) — Responsive Locking
@@ -4046,10 +4031,11 @@ html { overflow-x: hidden; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transform: translateY(-6px); /* nudge UP to sit flush with image bottom edge */
+  transform: translateY(
+    -6px
+  ); /* nudge UP to sit flush with image bottom edge */
   pointer-events: none; /* keep full-card link working */
 }
-
 
 /* HOME — Hero image mobile sizing */
 @media (max-width: 768px) {
@@ -4059,8 +4045,8 @@ html { overflow-x: hidden; }
 
   .page-home .home-hero-img {
     width: 100% !important;
-    max-width: 520px;           /* keeps it from becoming enormous */
-    max-height: 360px;          /* adjust: 300–420 based on taste */
+    max-width: 520px; /* keeps it from becoming enormous */
+    max-height: 360px; /* adjust: 300–420 based on taste */
     object-fit: cover !important;
     border-radius: 8px;
     display: block;
@@ -4069,8 +4055,8 @@ html { overflow-x: hidden; }
 @media (max-width: 1199px) {
   .page-home .home-hero-img {
     width: 100% !important;
-    max-width: 520px;     /* optional */
-    max-height: 420px;    /* optional: tune 360–520 */
+    max-width: 520px; /* optional */
+    max-height: 420px; /* optional: tune 360–520 */
     object-fit: cover !important;
     object-position: top center !important;
     display: block;
@@ -4080,7 +4066,7 @@ html { overflow-x: hidden; }
 /* ABOUT ME — control image height on smaller screens */
 @media (max-width: 1199px) {
   .page-home .about-img {
-    height: 360px !important;           /* reduce height */
+    height: 360px !important; /* reduce height */
     object-fit: cover !important;
     object-position: top center !important; /* keep faces visible */
   }
@@ -4088,18 +4074,18 @@ html { overflow-x: hidden; }
 
 @media (max-width: 768px) {
   .page-home .about-img {
-    height: 280px !important;           /* even tighter on phones */
+    height: 280px !important; /* even tighter on phones */
   }
 }
 
 /* HOME — PODCAST: on smaller screens, stop pushing the info block right */
 @media (max-width: 1199px) {
   .page-home .home-podcast-info {
-    transform: none !important;        /* remove translateX */
-    margin-left: 0 !important;         /* flush */
+    transform: none !important; /* remove translateX */
+    margin-left: 0 !important; /* flush */
     margin-right: 0 !important;
     padding-right: 0 !important;
-    text-align: left !important;       /* flush text for phones */
+    text-align: left !important; /* flush text for phones */
     max-width: 100% !important;
   }
 }
@@ -4160,7 +4146,6 @@ html { overflow-x: hidden; }
 /* HOME — Podcast: center content on iPad / small laptop
    (big image stays hidden) */
 @media (min-width: 769px) and (max-width: 1199px) {
-
   .page-home .home-podcast-info {
     margin-left: auto !important;
     margin-right: auto !important;
@@ -4185,11 +4170,9 @@ html { overflow-x: hidden; }
   }
 }
 
-
 /* iPad / small laptop: when the big side image is hidden,
    expand the cards column to full width so it doesn't float right */
 @media (min-width: 769px) and (max-width: 1199px) {
-
   /* Featured Papers */
   .page-home #featured-papers-section [data-armstrong-id="row"] {
     justify-content: flex-start !important;
@@ -4224,8 +4207,6 @@ html { overflow-x: hidden; }
   }
 }
 
-
-
 /* =========================
    HOME — Book Reviews responsive fix
    Keep desktop layout unchanged; normalize right-side covers on smaller screens
@@ -4249,7 +4230,6 @@ html { overflow-x: hidden; }
 /* HOME — Book Reviews: tablet/small laptop refinement
    Center the large book image but keep text left-aligned */
 @media (min-width: 769px) and (max-width: 1199px) {
-
   /* Center ONLY the primary book image */
   .page-home #home-section-book-review .col-lg-8 figure {
     margin-left: auto !important;
@@ -4277,9 +4257,9 @@ html { overflow-x: hidden; }
 /* HOME — Book Reviews: reduce primary image height on phones */
 @media (max-width: 768px) {
   .page-home #home-section-book-review .col-lg-8 figure img {
-    height: 320px !important;       /* tune: 260–360 depending on taste */
+    height: 320px !important; /* tune: 260–360 depending on taste */
     width: 100% !important;
-    max-width: 420px;               /* keeps it from feeling oversized */
+    max-width: 420px; /* keeps it from feeling oversized */
     object-fit: cover !important;
     object-position: top center !important; /* keep top of cover visible */
     margin-left: auto !important;
@@ -4287,11 +4267,10 @@ html { overflow-x: hidden; }
   }
 }
 
-
 /* HOME — Feedback: reduce hero image height on phones */
 @media (max-width: 768px) {
   .page-home #feedback-section [data-armstrong-id="profile-image"] img {
-    height: 320px !important;              /* tune: 260–360 */
+    height: 320px !important; /* tune: 260–360 */
     width: 100% !important;
     max-width: 420px !important;
     object-fit: cover !important;
@@ -4301,7 +4280,7 @@ html { overflow-x: hidden; }
 /* HOME — Feedback image: show the BOTTOM of the photo on small screens */
 @media (max-width: 991px) {
   .page-home #feedback-section [data-armstrong-id="profile-image"] img {
-    height: 320px !important;                 /* tune 260–380 */
+    height: 320px !important; /* tune 260–380 */
     width: 100% !important;
     max-width: 420px !important;
     object-fit: cover !important;
@@ -4313,8 +4292,6 @@ html { overflow-x: hidden; }
   object-fit: cover !important;
   object-position: center !important; /* key change */
 }
-
-
 
 /* HOME — Stay Connected: center CTA on tablet + phone */
 @media (max-width: 1199px) {
@@ -4336,9 +4313,6 @@ html { overflow-x: hidden; }
   }
 }
 
-
-
-
 /* Footer fix */
 @media (max-width: 1199px) {
   .footer .footer__inner > .col-12.col-lg-9 {
@@ -4351,12 +4325,6 @@ html { overflow-x: hidden; }
     flex: 0 0 100% !important;
   }
 }
-
-
-
-
-
-
 
 /* =========================
    MENU OVERLAY — TRUE FULLSCREEN + OPAQUE + INTERNAL SCROLL
@@ -4402,7 +4370,7 @@ html { overflow-x: hidden; }
   -webkit-overflow-scrolling: touch;
 
   /* Keep content from sitting under your always-visible navbar */
-  padding-top: 86px;  /* adjust if your navbar height differs */
+  padding-top: 86px; /* adjust if your navbar height differs */
   padding-bottom: 80px;
 }
 /* Reduce the menu top gap on mobile only */
@@ -4411,7 +4379,6 @@ html { overflow-x: hidden; }
     padding-top: 35px; /* try 48–60px depending on your nav height */
   }
 }
-
 
 /* =========================
    MENU TOP SECTION LAYOUT CONTROL
@@ -4439,7 +4406,6 @@ html { overflow-x: hidden; }
 /* Mobile: show ONLY Recent Posts (hide Browse by Section),
    and make the cards vertical */
 @media (max-width: 767px) {
-
   .js--menu .menu__section--top .menu__issues {
     flex: 1 1 100%;
     max-width: 100%;
@@ -4549,7 +4515,7 @@ html { overflow-x: hidden; }
   /* Title under image should wrap and never force width */
   .js--menu .menu__section--top .menu__post-link span {
     display: block !important;
-    width: 120px !important;         /* match your mobile figure width */
+    width: 120px !important; /* match your mobile figure width */
     max-width: 120px !important;
     min-width: 0 !important;
 
@@ -4600,17 +4566,24 @@ html { overflow-x: hidden; }
 
 /* MOBILE ONLY: move "Browse by Topic" back under Browse by Section */
 /* Show/Hide duplicate "Browse by Topic" blocks */
-.menu__topics-mobile-only { display: none; }
-.menu__topics-desktop-only { display: block; }
+.menu__topics-mobile-only {
+  display: none;
+}
+.menu__topics-desktop-only {
+  display: block;
+}
 
 @media (max-width: 767px) {
-  .menu__topics-mobile-only { display: block; }
-  .menu__topics-desktop-only { display: none; }
+  .menu__topics-mobile-only {
+    display: block;
+  }
+  .menu__topics-desktop-only {
+    display: none;
+  }
 }
 
 /* MOBILE ONLY: Browse by Topic as a compact horizontal grid */
 @media (max-width: 767px) {
-
   /* Turn the topic list into a grid */
   .menu__topics-mobile-only .menu__links {
     display: grid !important;
@@ -4637,7 +4610,7 @@ html { overflow-x: hidden; }
 @media (max-width: 767px) {
   /* Center the whole top section */
   .js--menu .menu__section--top {
-    max-width: 750px;        /* controls how "centered" it feels */
+    max-width: 750px; /* controls how "centered" it feels */
     margin-left: auto;
     margin-right: auto;
   }
@@ -4648,10 +4621,6 @@ html { overflow-x: hidden; }
     padding-right: 0px;
   }
 }
-
-
-
-
 
 /* =========================
    Research Journal — MOBILE LAYOUT
@@ -4705,8 +4674,6 @@ html { overflow-x: hidden; }
   }
 }
 
-
-
 /* Hide horizontal scrollbar, keep scroll functional */
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
@@ -4714,8 +4681,6 @@ html { overflow-x: hidden; }
 .hide-scrollbar {
   -webkit-overflow-scrolling: touch;
 }
-
-
 
 /* =========================================================
    SLUG LAYOUT FIXES (ALL SCREENS)
@@ -4774,7 +4739,7 @@ body {
   z-index: 2;
   width: 100%;
   max-width: 100%;
-  margin: 18px 0 10px;   /* controls spacing under banner */
+  margin: 18px 0 10px; /* controls spacing under banner */
   padding: 0;
 
   /* force wrap; kill truncation/ellipsis from any legacy rule */
@@ -4816,14 +4781,13 @@ body {
 /* mobile */
 @media (max-width: 767px) {
   .midnight-bureau-article h1.mb-title {
-    margin-top: 14px;         /* bring title down slightly from banner */
-    margin-bottom: 8px;       /* reduce space below title */
+    margin-top: 14px; /* bring title down slightly from banner */
+    margin-bottom: 8px; /* reduce space below title */
     font-size: clamp(1.55rem, 7vw, 2.35rem);
     line-height: 1.12;
     letter-spacing: 0.005em;
   }
 }
-
 
 /* =========================================================
    Keep subtitle/meta contained as well
@@ -4878,8 +4842,6 @@ body {
     height: 140px !important;
     object-fit: cover;
   }
-
-
 
   .mb-subtitle {
     font-size: 1rem;
@@ -4984,14 +4946,6 @@ body {
   padding: 6px 10px;
 }
 
-
-
-
-
-
-
-
-
 /* =========================================================
    PORTFOLIO CAROUSEL — 2-UP DESKTOP/iPAD, 1-UP MOBILE
    Fixes:
@@ -5047,8 +5001,8 @@ body {
   align-items: stretch;
   gap: 24px;
 
-  width: max-content;  /* KEY: enables real overflow */
-  min-width: 100%;     /* keeps first view flush */
+  width: max-content; /* KEY: enables real overflow */
+  min-width: 100%; /* keeps first view flush */
   padding: 0;
   margin: 0;
   box-sizing: border-box;
@@ -5182,13 +5136,3 @@ body {
     flex: 0 0 96px !important;
   }
 }
-
-
-
-
-
-
-
-
-
-

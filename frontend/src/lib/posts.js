@@ -29,10 +29,10 @@ import MB_RAW from "../data/ResearchJournal";
 import PF_RAW from "../data/portfolioData";
 
 const MB = (Array.isArray(MB_RAW) ? MB_RAW : Object.values(MB_RAW).flat()).map(
-  normalize
+  normalize,
 );
 const PF = (Array.isArray(PF_RAW) ? PF_RAW : Object.values(PF_RAW).flat()).map(
-  normalize
+  normalize,
 );
 
 // Public API your pages use:

@@ -59,7 +59,7 @@ function splitHtmlIntoBlocks(html = "") {
 
   const matches =
     html.match(
-      /<p[\s\S]*?<\/p>|<blockquote[\s\S]*?<\/blockquote>|<ul[\s\S]*?<\/ul>|<ol[\s\S]*?<\/ol>|<h[1-6][\s\S]*?<\/h[1-6]>/gi
+      /<p[\s\S]*?<\/p>|<blockquote[\s\S]*?<\/blockquote>|<ul[\s\S]*?<\/ul>|<ol[\s\S]*?<\/ol>|<h[1-6][\s\S]*?<\/h[1-6]>/gi,
     ) || [];
 
   const rawBlocks = matches.length ? matches : [html];
@@ -117,8 +117,6 @@ export default function AdminPostid() {
 
   const subtitle = (article?.subtitle || article?.Subtitle || "").trim();
 
-
-  
   useEffect(() => {
     if (!id) return;
     let cancelled = false;
@@ -220,14 +218,14 @@ export default function AdminPostid() {
 
       const buildSectionMap = async (rows) => {
         const sorted = [...rows].sort(
-          (a, b) => (a.position || 0) - (b.position || 0)
+          (a, b) => (a.position || 0) - (b.position || 0),
         );
 
         const entries = await Promise.all(
           sorted.map(async (r) => {
             const url = await resolveImage(r.storage_path);
             return { section_id: r.section_id, url, row: r };
-          })
+          }),
         );
 
         const map = {};
@@ -258,7 +256,7 @@ export default function AdminPostid() {
       });
 
       const galleryUrls = await Promise.all(
-        dedupedGalleryRows.map((r) => resolveImage(r.storage_path))
+        dedupedGalleryRows.map((r) => resolveImage(r.storage_path)),
       );
 
       if (cancelled) return;
@@ -349,12 +347,14 @@ export default function AdminPostid() {
   if (loadErr) return <p style={{ padding: "2rem" }}>Error: {loadErr}</p>;
   if (!article) return <p style={{ padding: "2rem" }}>Loading post…</p>;
 
- const bannerSrc = bannerResolved || "/assets/images/space.webp";
+  const bannerSrc = bannerResolved || "/assets/images/space.webp";
 
-const safeSections = Array.isArray(sections) ? sections : [];
-const hasMultipleSections = safeSections.length > 1;
-const introSection = hasMultipleSections ? safeSections[0] : null;
-const bodySections = hasMultipleSections ? safeSections.slice(1) : safeSections;
+  const safeSections = Array.isArray(sections) ? sections : [];
+  const hasMultipleSections = safeSections.length > 1;
+  const introSection = hasMultipleSections ? safeSections[0] : null;
+  const bodySections = hasMultipleSections
+    ? safeSections.slice(1)
+    : safeSections;
 
   const galleryImages = galleryResolved;
 
@@ -538,7 +538,7 @@ const bodySections = hasMultipleSections ? safeSections.slice(1) : safeSections;
                   renderedBlocks.push(
                     <h3 key={`${sec.id}-heading`} style={{ marginTop: 0 }}>
                       {sec.heading}
-                    </h3>
+                    </h3>,
                   );
                 }
 
@@ -572,7 +572,7 @@ const bodySections = hasMultipleSections ? safeSections.slice(1) : safeSections;
                             }}
                             onClick={() => setModalImage(centeredSrc)}
                           />
-                        </div>
+                        </div>,
                       );
                       centerCursor += 1;
                     }
@@ -630,7 +630,7 @@ const bodySections = hasMultipleSections ? safeSections.slice(1) : safeSections;
                         className="text-block mb-text"
                         dangerouslySetInnerHTML={{ __html: block.html }}
                       />
-                    </div>
+                    </div>,
                   );
 
                   if (inlineSrc) inlineCursor += 1;
@@ -664,7 +664,7 @@ const bodySections = hasMultipleSections ? safeSections.slice(1) : safeSections;
                         }}
                         onClick={() => setModalImage(centeredSrc)}
                       />
-                    </div>
+                    </div>,
                   );
 
                   centerCursor += 1;
@@ -786,7 +786,7 @@ const bodySections = hasMultipleSections ? safeSections.slice(1) : safeSections;
                               ))}
                             </ul>
                           </div>
-                        )
+                        ),
                       )}
                     </div>
                   </section>

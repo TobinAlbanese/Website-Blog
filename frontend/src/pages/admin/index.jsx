@@ -6,10 +6,7 @@ import MetaHead from "../../components/LandingPage/MetaHead.jsx";
 import SvgHead from "../../components/LandingPage/svgHead.jsx";
 import Footer from "../../components/LandingPage/Footer.jsx";
 import AdminNavbar from "../../components/Admin/AdminNavbar.jsx";
-import {
-  supabase,
-  storagePathToPublicUrl,
-} from "../../lib/supabase/client";
+import { supabase, storagePathToPublicUrl } from "../../lib/supabase/client";
 
 const FALLBACK_IMG = "/assets/images/space.webp";
 
@@ -52,7 +49,7 @@ function CardImage({ post, alt, style }) {
       alt={alt}
       onError={() => {
         setImageIndex((current) =>
-          current + 1 < candidates.length ? current + 1 : current
+          current + 1 < candidates.length ? current + 1 : current,
         );
       }}
       style={style}
@@ -536,7 +533,7 @@ export default function AdminIndex() {
         supabase
           .from("posts")
           .select(
-            "id,title,slug,excerpt,status,updated_at,banner_url,archive_image_url"
+            "id,title,slug,excerpt,status,updated_at,banner_url,archive_image_url",
           )
           .eq("status", "draft")
           .order("updated_at", { ascending: false })
@@ -544,7 +541,7 @@ export default function AdminIndex() {
         supabase
           .from("posts")
           .select(
-            "id,title,slug,excerpt,status,published_at,updated_at,banner_url,archive_image_url"
+            "id,title,slug,excerpt,status,published_at,updated_at,banner_url,archive_image_url",
           )
           .eq("status", "published")
           .order("published_at", { ascending: false })

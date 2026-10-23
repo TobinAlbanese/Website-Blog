@@ -20,7 +20,7 @@ export default function NotFoundPage() {
   }, []);
 
   useEffect(() => {
-    + gsap.set(".art svg", { visibility: "visible" });
+    +gsap.set(".art svg", { visibility: "visible" });
 
     const tweens = [
       gsap.to("#headStripe", {
@@ -77,7 +77,7 @@ export default function NotFoundPage() {
           yoyo: true,
           repeat: -1,
           stagger: 0.1,
-        }
+        },
       ),
       gsap.to("#circlesSmall circle", {
         y: -4,
@@ -909,4 +909,3 @@ s33.181,12.591,38.725,16.498c2.387,1.682,3.461,4.668,2.705,7.488L380.857,346.164
     </div>
   );
 }
-
