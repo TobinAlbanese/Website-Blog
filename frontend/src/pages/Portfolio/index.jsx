@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from "react";
-
 import Link from "next/link";
 
 import MetaHead from "../../components/LandingPage/MetaHead.jsx";
@@ -10,53 +9,61 @@ import Footer from "../../components/LandingPage/Footer.jsx";
 import { createClient } from "@supabase/supabase-js";
 
 /* -------------------------------------------------
-   CATEGORIES
+   CONSTANTS / CATEGORY HELPERS
 ------------------------------------------------- */
+
+const HERO_IMAGE =
+  "https://aekjhiphxycnybowwgud.supabase.co/storage/v1/object/public/public-images/Snowboarding1.webp";
 
 const categoryToId = {
   "Current & In-Progress Work": "Current-&-In-Progress-Work",
-
   "Research & Analysis Projects": "research-&-analysis-projects",
-
   "Computer Science Projects": "computer-science-projects",
-
   "Intelligence & Computer Systems": "intelligence-computer-systems",
-
   "Analytical Writing & Publications": "analytical-writing-publications",
-
   "Skills & Technologies": "skills-technologies",
-
   "Employers & Work Experience": "employers-&-work-experience",
-
   "Education & Certifications": "education-&-certifications",
-
   "Featured / Spotlight Projects": "featured-spotlight-projects",
-
   "Speaking & Media": "speaking-&-media",
-
   Collaborations: "collaborations",
 };
-
-const toId = (name) =>
-  categoryToId[name] || name.replace(/[^\w -]+/g, "").replace(/\s+/g, "-");
-
-const stripHtml = (html) =>
-  typeof html === "string" ? html.replace(/<[^>]*>/g, "") : "";
 
 const NON_CLICKABLE_CATEGORIES = new Set([
   "Current & In-Progress Work",
   "Education & Certifications",
   "Collaborations",
 ]);
-const getCategoryDisplayName = (category) =>
-  category.replace(/\s*\(Non-clickable\)\s*$/i, "");
+
+const HIDDEN_PORTFOLIO_SLUGS = new Set([
+  "semantic-archive",
+  "daily-briefing-generator",
+  "noise-filtering-engine",
+  "ofac-sanctions-monitor",
+  "watchlist-engine",
+]);
+
+const getCategoryDisplayName = (category = "") =>
+  String(category).replace(/\s*\(Non-clickable\)\s*$/i, "").trim();
+
+const toId = (name = "") => {
+  const displayName = getCategoryDisplayName(name);
+
+  return (
+    categoryToId[displayName] ||
+    displayName.replace(/[^\w -]+/g, "").replace(/\s+/g, "-")
+  );
+};
+
+const stripHtml = (html) =>
+  typeof html === "string" ? html.replace(/<[^>]*>/g, "") : "";
+
 /* -------------------------------------------------
    SERVER-SIDE HELPERS
 ------------------------------------------------- */
 
 function getServerSupabase() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-
   const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
   return createClient(url, anon, {
@@ -83,15 +90,6 @@ function resolveImageServer(supabase, bucket, src) {
     return s;
   }
 
-  /*
-    If the DB accidentally stores:
-
-    post-images/posts/...
-
-    strip the bucket name so the URL
-    does not duplicate it.
-  */
-
   if (bucket && s.startsWith(`${bucket}/`)) {
     s = s.slice(bucket.length + 1);
   }
@@ -109,7 +107,7 @@ function resolveImageClient(src) {
   let s = (src || "").trim();
 
   if (!s) {
-    return "https://aekjhiphxycnybowwgud.supabase.co/storage/v1/object/public/public-images/Snowboarding1.webp";
+    return HERO_IMAGE;
   }
 
   if (
@@ -121,11 +119,14 @@ function resolveImageClient(src) {
   }
 
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-
   const bucket = process.env.NEXT_PUBLIC_SUPABASE_BUCKET || "post-images";
 
   if (bucket && s.startsWith(`${bucket}/`)) {
     s = s.slice(bucket.length + 1);
+  }
+
+  if (!url) {
+    return HERO_IMAGE;
   }
 
   return `${url}/storage/v1/object/public/${bucket}/${s}`;
@@ -155,7 +156,7 @@ function getProjectImage(project) {
     project?.archiveImage ||
     project?.banner ||
     (Array.isArray(project?.images) && project.images[0]) ||
-    "https://aekjhiphxycnybowwgud.supabase.co/storage/v1/object/public/public-images/Snowboarding1.webp"
+    HERO_IMAGE
   );
 }
 
@@ -171,7 +172,6 @@ function useWordAnimatedText(
 ) {
   return useMemo(() => {
     const tokens = text.split(/(\s+)/);
-
     let i = 0;
 
     return tokens.map((tok, idx) => {
@@ -196,12 +196,7 @@ function useWordAnimatedText(
       });
 
       return (
-        <span
-          key={`w-${idx}`}
-          style={{
-            display: "inline-block",
-          }}
-        >
+        <span key={`w-${idx}`} style={{ display: "inline-block" }}>
           {chars}
         </span>
       );
@@ -221,7 +216,6 @@ function useWordSpanizedText(
 ) {
   return useMemo(() => {
     const tokens = text.split(/(\s+)/);
-
     let t = 0;
 
     return tokens.map((tok, idx) => {
@@ -246,12 +240,7 @@ function useWordSpanizedText(
       });
 
       return (
-        <span
-          key={`w-${idx}`}
-          style={{
-            display: "inline-block",
-          }}
-        >
+        <span key={`w-${idx}`} style={{ display: "inline-block" }}>
           {chars}
         </span>
       );
@@ -265,7 +254,6 @@ function useWordSpanizedText(
 
 function ProjectRow({ project, index }) {
   const [visible, setVisible] = useState(false);
-
   const [hover, setHover] = useState(false);
 
   useEffect(() => {
@@ -280,13 +268,10 @@ function ProjectRow({ project, index }) {
   }, [index]);
 
   const imgSrc = resolveImageClient(getProjectImage(project));
-
   const desc = getProjectExcerpt(project);
-
   const subtitle = (project?.subtitle || "").trim();
 
   const hasExternalLink = project.external && !!project.external_url;
-
   const hasInternalPostLink = !project.external && !!project.slug;
 
   const isClickable =
@@ -304,7 +289,6 @@ function ProjectRow({ project, index }) {
             ? "translateY(-3px)"
             : "translateY(0)"
           : "translateY(12px)",
-
         opacity: visible ? 1 : 0,
       }}
     >
@@ -329,36 +313,26 @@ function ProjectRow({ project, index }) {
           loading="lazy"
           decoding="async"
           onError={(e) => {
-            e.currentTarget.src =
-              "https://aekjhiphxycnybowwgud.supabase.co/storage/v1/object/public/public-images/Snowboarding1.webp";
+            e.currentTarget.onerror = null;
+            e.currentTarget.src = HERO_IMAGE;
           }}
         />
       </div>
     </article>
   );
 
-  /*
-    Non-clickable entries
-  */
-
   if (!isClickable) {
     return body;
   }
 
-  /*
-    External project
-  */
-
   if (hasExternalLink) {
+    const isInternalExternalUrl = project.external_url.startsWith("/");
+
     return (
       <a
         href={project.external_url}
-        target={project.external_url.startsWith("/") ? "_self" : "_blank"}
-        rel={
-          project.external_url.startsWith("/")
-            ? undefined
-            : "noopener noreferrer"
-        }
+        target={isInternalExternalUrl ? "_self" : "_blank"}
+        rel={isInternalExternalUrl ? undefined : "noopener noreferrer"}
         aria-label={`Open ${project.title}`}
         className="portfolio-row-link-wrap"
       >
@@ -366,10 +340,6 @@ function ProjectRow({ project, index }) {
       </a>
     );
   }
-
-  /*
-    Internal portfolio entry
-  */
 
   return (
     <Link
@@ -387,11 +357,6 @@ function ProjectRow({ project, index }) {
 ------------------------------------------------- */
 
 export default function Portfolio({ grouped = {}, orderedCategories = [] }) {
-  /*
-    Hide category headings
-    that contain no projects.
-  */
-
   const visibleCategories = orderedCategories.filter((category) => {
     const projects = Array.isArray(grouped?.[category])
       ? grouped[category]
@@ -399,36 +364,6 @@ export default function Portfolio({ grouped = {}, orderedCategories = [] }) {
 
     return projects.length > 0;
   });
-
-  /*
-    Flatten all projects
-    so the hero always has
-    something available.
-  */
-
-  const allProjects = visibleCategories.flatMap((category) =>
-    Array.isArray(grouped?.[category]) ? grouped[category] : [],
-  );
-
-  /*
-    Prefer the first
-    Featured / Spotlight
-    project for the hero.
-  */
-
-  const featuredProjects = Array.isArray(
-    grouped?.["Featured / Spotlight Projects"],
-  )
-    ? grouped["Featured / Spotlight Projects"]
-    : [];
-
-  const heroProject = featuredProjects[0] || allProjects[0] || null;
-
-  const heroImageSrc =
-    "https://aekjhiphxycnybowwgud.supabase.co/storage/v1/object/public/public-images/Snowboarding1.webp";
-  /* -------------------------
-     HERO TEXT
-  ------------------------- */
 
   const heroTitle = useWordAnimatedText(
     "Research, Intelligence & Technical Work",
@@ -447,8 +382,10 @@ export default function Portfolio({ grouped = {}, orderedCategories = [] }) {
   return (
     <>
       <meta charSet="utf-8" />
-
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+      />
 
       <MetaHead />
       <SvgHead />
@@ -467,10 +404,6 @@ export default function Portfolio({ grouped = {}, orderedCategories = [] }) {
           <Navbar />
 
           <div className="PortfolioPage">
-            {/* =========================================
-                HERO
-            ========================================= */}
-
             <section
               className="c-bg portfolio-hero-section"
               data-armstrong-id="wrapper"
@@ -484,8 +417,6 @@ export default function Portfolio({ grouped = {}, orderedCategories = [] }) {
                     className="row justify-between d-flex portfolio-hero-row"
                     data-armstrong-id="row"
                   >
-                    {/* TEXT */}
-
                     <div
                       className="col-12 col-lg-6 mb-20 mb-lg-0 d-flex flex-column justify-center portfolio-hero-text"
                       data-armstrong-id="personal-message"
@@ -497,23 +428,17 @@ export default function Portfolio({ grouped = {}, orderedCategories = [] }) {
                       <p className="body-m portfolio-hero-copy">{heroCopy}</p>
                     </div>
 
-                    {/* IMAGE */}
-
                     <div
                       className="col-12 col-lg-6 d-flex justify-center portfolio-hero-media"
                       data-armstrong-id="profile-image"
                     >
                       <img
-                        src={heroImageSrc}
-                        alt={
-                          heroProject?.title
-                            ? `${heroProject.title} portfolio preview`
-                            : "Portfolio preview"
-                        }
+                        src={HERO_IMAGE}
+                        alt="Tobin Albanese snowboarding"
                         loading="eager"
                         onError={(e) => {
-                          e.currentTarget.src =
-                            "https://aekjhiphxycnybowwgud.supabase.co/storage/v1/object/public/public-images/Snowboarding1.webp";
+                          e.currentTarget.onerror = null;
+                          e.currentTarget.src = "/assets/images/space.webp";
                         }}
                       />
                     </div>
@@ -522,13 +447,7 @@ export default function Portfolio({ grouped = {}, orderedCategories = [] }) {
               </div>
             </section>
 
-            {/* HERO DIVIDER */}
-
             <div className="portfolio-hero-divider" />
-
-            {/* =========================================
-                CONTINUOUS CATEGORIZED PORTFOLIO
-            ========================================= */}
 
             <main className="portfolio-editorial">
               {visibleCategories.length === 0 ? (
@@ -541,36 +460,29 @@ export default function Portfolio({ grouped = {}, orderedCategories = [] }) {
                     ? grouped[category]
                     : [];
 
+                  const displayName = getCategoryDisplayName(category);
+
                   return (
                     <section
                       key={category}
                       id={toId(category)}
                       className="portfolio-category"
-                      style={{
-                        scrollMarginTop: "80px",
-                      }}
+                      style={{ scrollMarginTop: "80px" }}
                     >
-                      {/* RED SEPARATOR BETWEEN CATEGORIES */}
-
                       {categoryIndex > 0 && (
                         <div className="portfolio-category-rule" />
                       )}
 
-                      {/* CATEGORY HEADER */}
-
                       <header className="portfolio-category-header">
-                        <h2>{getCategoryDisplayName(category)}</h2>
+                        <h2>{displayName}</h2>
 
                         <p>
-                          {projects.length}{" "}
-                          {projects.length === 1 ? "project" : "projects"}
-                          {NON_CLICKABLE_CATEGORIES.has(
-                            getCategoryDisplayName(category),
-                          ) && <> · Non-clickable</>}
+                          {projects.length} {projects.length === 1 ? "project" : "projects"}
+                          {NON_CLICKABLE_CATEGORIES.has(displayName) && (
+                            <> · Non-clickable</>
+                          )}
                         </p>
                       </header>
-
-                      {/* PROJECT ROWS */}
 
                       <div className="portfolio-category-list">
                         {projects.map((project, idx) => (
@@ -619,60 +531,41 @@ export default function Portfolio({ grouped = {}, orderedCategories = [] }) {
           position: relative;
           isolation: isolate;
           z-index: 2;
-
           min-width: 0;
-
           padding-right: 16px;
         }
 
         .portfolio-hero-title {
           margin-top: 0;
-
           color: var(--c-text);
-
           font-family: inherit;
-
           overflow: visible;
         }
 
         .portfolio-hero-copy {
           max-width: 640px;
-
           margin: 0;
-
           color: var(--c-text-secondary);
-
           font-size: 18px;
-
           line-height: 1.7;
-
           word-break: normal;
-
           overflow-wrap: normal;
-
           hyphens: none;
         }
 
         .portfolio-hero-media {
           min-width: 0;
-
           align-items: center;
         }
 
         .portfolio-hero-media img {
           display: block;
-
           width: 100%;
           max-width: 600px;
-
           height: auto;
-
           aspect-ratio: 1 / 1;
-
           object-fit: cover;
-
           object-position: center;
-
           border-radius: 12px;
         }
 
@@ -682,9 +575,7 @@ export default function Portfolio({ grouped = {}, orderedCategories = [] }) {
 
         .portfolio-hero-divider {
           width: min(1000px, calc(100% - 48px));
-
           margin: 40px auto;
-
           border-top: 4px solid #d62827;
         }
 
@@ -694,9 +585,7 @@ export default function Portfolio({ grouped = {}, orderedCategories = [] }) {
 
         .portfolio-editorial {
           width: min(1080px, calc(100% - 48px));
-
           margin: 0 auto;
-
           padding: 0 0 90px;
         }
 
@@ -710,9 +599,7 @@ export default function Portfolio({ grouped = {}, orderedCategories = [] }) {
 
         .portfolio-category-rule {
           width: 100%;
-
           border-top: 2px solid #d62827;
-
           margin: 64px 0 30px;
         }
 
@@ -722,39 +609,26 @@ export default function Portfolio({ grouped = {}, orderedCategories = [] }) {
 
         .portfolio-category-header {
           display: flex;
-
           align-items: flex-end;
-
           justify-content: space-between;
-
           gap: 24px;
-
           margin-bottom: 12px;
         }
 
         .portfolio-category-header h2 {
           margin: 0;
-
           padding-left: 14px;
-
           border-left: 4px solid #d62827;
-
           color: var(--c-text-primary);
-
           font-size: clamp(1.8rem, 3vw, 2.5rem);
-
           font-weight: 700;
-
           line-height: 1.1;
         }
 
         .portfolio-category-header p {
           margin: 0 0 4px;
-
           color: var(--c-text-secondary);
-
           font-size: 14px;
-
           white-space: nowrap;
         }
 
@@ -768,9 +642,7 @@ export default function Portfolio({ grouped = {}, orderedCategories = [] }) {
 
         .portfolio-row-link-wrap {
           display: block;
-
           color: inherit;
-
           text-decoration: none;
         }
 
@@ -780,21 +652,12 @@ export default function Portfolio({ grouped = {}, orderedCategories = [] }) {
 
         .portfolio-row {
           display: grid;
-
-          grid-template-columns:
-            minmax(0, 1fr)
-            250px;
-
+          grid-template-columns: minmax(0, 1fr) 250px;
           gap: 34px;
-
           align-items: center;
-
           min-height: 190px;
-
           padding: 22px 0;
-
           border-top: 1px solid rgba(255, 255, 255, 0.09);
-
           transition:
             opacity 0.35s ease,
             transform 0.25s ease;
@@ -814,47 +677,32 @@ export default function Portfolio({ grouped = {}, orderedCategories = [] }) {
 
         .portfolio-row-title {
           margin: 0 0 7px;
-
           color: var(--c-text-primary);
-
           font-size: 1.35rem;
-
           font-weight: 600;
-
           line-height: 1.25;
         }
 
         .portfolio-row-subtitle {
           margin: 0 0 8px;
-
           color: var(--c-text-secondary);
-
           font-size: 0.95rem;
-
           line-height: 1.45;
-
           font-style: italic;
         }
 
         .portfolio-row-excerpt {
           max-width: 680px;
-
           margin: 0;
-
           color: var(--c-text-secondary);
-
           font-size: 16px;
-
           line-height: 1.65;
         }
 
         .portfolio-row-link {
           margin-top: 12px;
-
           color: #d62827;
-
           font-size: 0.9rem;
-
           font-weight: 600;
         }
 
@@ -865,24 +713,17 @@ export default function Portfolio({ grouped = {}, orderedCategories = [] }) {
         .portfolio-row-media {
           width: 250px;
           height: 150px;
-
           overflow: hidden;
-
           border-radius: 8px;
-
           background: var(--c-bg-secondary, #1f1f1f);
         }
 
         .portfolio-row-media img {
           display: block;
-
           width: 100%;
           height: 100%;
-
           object-fit: cover;
-
           object-position: center;
-
           transition: transform 0.3s ease;
         }
 
@@ -896,9 +737,7 @@ export default function Portfolio({ grouped = {}, orderedCategories = [] }) {
 
         .portfolio-empty {
           padding: 40px 0 80px;
-
           color: var(--c-text-secondary);
-
           font-size: 18px;
         }
 
@@ -912,16 +751,12 @@ export default function Portfolio({ grouped = {}, orderedCategories = [] }) {
           }
 
           .portfolio-row {
-            grid-template-columns:
-              minmax(0, 1fr)
-              210px;
-
+            grid-template-columns: minmax(0, 1fr) 210px;
             gap: 24px;
           }
 
           .portfolio-row-media {
             width: 210px;
-
             height: 140px;
           }
         }
@@ -941,21 +776,17 @@ export default function Portfolio({ grouped = {}, orderedCategories = [] }) {
 
           .portfolio-hero-media img {
             width: 100%;
-
             max-width: 600px;
-
             aspect-ratio: 4 / 5;
           }
 
           .portfolio-hero-divider {
             width: auto;
-
             margin: 30px 16px;
           }
 
           .portfolio-editorial {
             width: calc(100% - 32px);
-
             padding-bottom: 60px;
           }
 
@@ -965,9 +796,7 @@ export default function Portfolio({ grouped = {}, orderedCategories = [] }) {
 
           .portfolio-category-header {
             align-items: flex-start;
-
             flex-direction: column;
-
             gap: 8px;
           }
 
@@ -977,19 +806,14 @@ export default function Portfolio({ grouped = {}, orderedCategories = [] }) {
 
           .portfolio-row {
             grid-template-columns: 1fr;
-
             gap: 16px;
-
             padding: 22px 0 26px;
           }
 
           .portfolio-row-media {
             width: 100%;
-
             height: auto;
-
             aspect-ratio: 16 / 9;
-
             order: -1;
           }
 
@@ -1012,7 +836,6 @@ export default function Portfolio({ grouped = {}, orderedCategories = [] }) {
 
 export async function getServerSideProps() {
   const supabase = getServerSupabase();
-
   const BUCKET = process.env.NEXT_PUBLIC_SUPABASE_BUCKET || "post-images";
 
   /* -------------------------------------------------
@@ -1039,7 +862,6 @@ export async function getServerSideProps() {
   }
 
   const safeGroups = Array.isArray(groups) ? groups : [];
-
   const orderedCategories = safeGroups.map((group) => group.name);
 
   /* -------------------------------------------------
@@ -1049,19 +871,18 @@ export async function getServerSideProps() {
   const groupMeta = {};
 
   for (const group of safeGroups) {
+    const displayName = getCategoryDisplayName(group.name || "");
+
     const nonClickable =
+      NON_CLICKABLE_CATEGORIES.has(displayName) ||
       (group.slug || "").endsWith("-non-clickable") ||
       (group.name || "").toLowerCase().includes("non-clickable");
 
     groupMeta[group.name] = {
       id: group.id,
-
       name: group.name,
-
       slug: group.slug,
-
       position: group.position,
-
       nonClickable,
     };
   }
@@ -1095,7 +916,6 @@ export async function getServerSideProps() {
         position,
         post_id,
         clickable,
-
         posts:post_id (
           id,
           title,
@@ -1134,11 +954,7 @@ export async function getServerSideProps() {
      3. STANDALONE PORTFOLIO POSTS
   ------------------------------------------------- */
 
-  const {
-    data: standalonePosts,
-
-    error: pErr,
-  } = await supabase
+  const { data: standalonePosts, error: pErr } = await supabase
     .from("posts")
     .select(
       `
@@ -1171,6 +987,10 @@ export async function getServerSideProps() {
     console.log("Portfolio SSR standalone posts error:", pErr);
   }
 
+  const safeStandalonePosts = Array.isArray(standalonePosts)
+    ? standalonePosts
+    : [];
+
   /* -------------------------------------------------
      GROUP ID -> GROUP NAME
   ------------------------------------------------- */
@@ -1190,20 +1010,29 @@ export async function getServerSideProps() {
   );
 
   /* -------------------------------------------------
+     CATEGORY MATCHING
+  ------------------------------------------------- */
+
+  const resolveCategoryName = (requestedCategory) => {
+    const requestedDisplayName = getCategoryDisplayName(requestedCategory);
+
+    return (
+      orderedCategories.find(
+        (existingCategory) =>
+          getCategoryDisplayName(existingCategory) === requestedDisplayName,
+      ) || requestedCategory
+    );
+  };
+
+  /* -------------------------------------------------
      NORMALIZE CURATED PORTFOLIO ITEM
   ------------------------------------------------- */
 
   const normalizeCard = (item) => {
     const post = item.posts || null;
 
-    /* -------------------------
-         IMAGES
-      ------------------------- */
-
     const rawCardImage = (item.image_url || "").trim();
-
     const rawArchiveImage = (post?.archive_image_url || "").trim();
-
     const rawBannerImage = (post?.banner_url || "").trim();
 
     const resolvedCardImage =
@@ -1221,37 +1050,18 @@ export async function getServerSideProps() {
       rawBannerImage ||
       null;
 
-    /* -------------------------
-         EXCERPT
-      ------------------------- */
-
     const cardExcerpt =
       (item.excerpt || "").trim() || (post?.excerpt || "").trim() || "";
 
-    /* -------------------------
-         TITLE
-      ------------------------- */
-
-    const cardTitle = (item.title || "").trim() || (post?.title || "").trim();
-
-    /* -------------------------
-         SUBTITLE
-      ------------------------- */
+    const cardTitle =
+      (item.title || "").trim() || (post?.title || "").trim();
 
     const cardSubtitle =
       (item.subtitle || "").trim() ||
       (post?.subtitle || post?.Subtitle || "").trim() ||
       "";
 
-    /* -------------------------
-         SLUG
-      ------------------------- */
-
     const slug = post?.slug || "";
-
-    /* -------------------------
-         GROUP CLICKABILITY
-      ------------------------- */
 
     const groupName =
       groupIdToName[item.group_id] || orderedCategories[0] || "";
@@ -1265,37 +1075,21 @@ export async function getServerSideProps() {
 
     return {
       id: item.id,
-
       title: cardTitle || "Untitled",
-
       subtitle: cardSubtitle,
-
       excerpt: cardExcerpt,
-
       cardImage: resolvedCardImage,
-
       banner: resolvedBannerImage,
-
       archiveImage: resolvedArchiveImage,
-
       images: [],
-
       slug,
-
       clickable: isClickable,
-
       external: !!item.external,
-
       external_url: item.external_url || "",
-
       volume: post?.volume || null,
-
       author: post?.author || null,
-
       date: post?.date || null,
-
       source: "portfolio_items",
-
       postId: post?.id || null,
     };
   };
@@ -1304,9 +1098,8 @@ export async function getServerSideProps() {
      NORMALIZE STANDALONE PORTFOLIO POST
   ------------------------------------------------- */
 
-  const normalizeStandalonePost = (post) => {
+  const normalizeStandalonePost = (post, category) => {
     const rawArchiveImage = (post?.archive_image_url || "").trim();
-
     const rawBannerImage = (post?.banner_url || "").trim();
 
     const resolvedArchiveImage =
@@ -1319,39 +1112,28 @@ export async function getServerSideProps() {
       rawBannerImage ||
       null;
 
+    const categoryNonClickable =
+      !!groupMeta?.[category]?.nonClickable ||
+      NON_CLICKABLE_CATEGORIES.has(getCategoryDisplayName(category));
+
     return {
       id: post.id,
-
       title: post.title || "Untitled",
-
       subtitle: post.subtitle || post.Subtitle || "",
-
       excerpt: post.excerpt || "",
-
       cardImage: null,
-
       banner: resolvedBannerImage,
-
       archiveImage: resolvedArchiveImage,
-
       images: [],
-
       slug: post.slug || "",
-
-      clickable: post.clickable !== false && !!post.slug,
-
+      clickable:
+        post.clickable !== false && !!post.slug && !categoryNonClickable,
       external: false,
-
       external_url: "",
-
       volume: post.volume || null,
-
       author: post.author || null,
-
       date: post.date || null,
-
       source: "posts",
-
       postId: post.id,
     };
   };
@@ -1363,67 +1145,61 @@ export async function getServerSideProps() {
   for (const item of safeItems) {
     const groupName = groupIdToName[item.group_id];
 
-    if (!groupName) {
+    if (!groupName || !grouped[groupName]) {
       continue;
     }
 
-    grouped[groupName].push(normalizeCard(item));
+    const normalized = normalizeCard(item);
+
+    if (HIDDEN_PORTFOLIO_SLUGS.has(normalized.slug)) {
+      continue;
+    }
+
+    grouped[groupName].push(normalized);
   }
 
   /* -------------------------------------------------
      5. ADD STANDALONE POSTS
   ------------------------------------------------- */
 
-  if (Array.isArray(standalonePosts)) {
-    for (const post of standalonePosts) {
-      if (!post?.id) {
-        continue;
-      }
-
-      /*
-        Avoid duplicates if
-        portfolio_items already
-        links to this post.
-      */
-
-      if (representedPostIds.has(post.id)) {
-        continue;
-      }
-
-      const category =
-        post.category && typeof post.category === "string"
-          ? post.category
-          : "Featured / Spotlight Projects";
-
-      /*
-        If a standalone post has
-        a category not already in
-        portfolio_groups, create a
-        dynamic section at the bottom.
-      */
-
-      if (!grouped[category]) {
-        grouped[category] = [];
-
-        orderedCategories.push(category);
-
-        groupMeta[category] = {
-          id: null,
-
-          name: category,
-
-          slug: toId(category),
-
-          position: orderedCategories.length,
-
-          nonClickable: false,
-
-          dynamic: true,
-        };
-      }
-
-      grouped[category].push(normalizeStandalonePost(post));
+  for (const post of safeStandalonePosts) {
+    if (!post?.id) {
+      continue;
     }
+
+    if (HIDDEN_PORTFOLIO_SLUGS.has(post.slug)) {
+      continue;
+    }
+
+    if (representedPostIds.has(post.id)) {
+      continue;
+    }
+
+    const requestedCategory =
+      post.category && typeof post.category === "string"
+        ? post.category
+        : "Featured / Spotlight Projects";
+
+    const category = resolveCategoryName(requestedCategory);
+
+    if (!grouped[category]) {
+      grouped[category] = [];
+      orderedCategories.push(category);
+
+      const displayName = getCategoryDisplayName(category);
+      const nonClickable = NON_CLICKABLE_CATEGORIES.has(displayName);
+
+      groupMeta[category] = {
+        id: null,
+        name: category,
+        slug: toId(category),
+        position: orderedCategories.length,
+        nonClickable,
+        dynamic: true,
+      };
+    }
+
+    grouped[category].push(normalizeStandalonePost(post, category));
   }
 
   /* -------------------------------------------------

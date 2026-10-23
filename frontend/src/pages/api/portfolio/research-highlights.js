@@ -11,7 +11,7 @@ const RESEARCH_HIGHLIGHTS_ORDER = [
   "markets-without-rules",
   "strategic-proxies",
   "pipelines-and-democracy",
-  "the-terrorist-without-an-organization",
+  "covert-action-paper",
 ];
 
 function publicBucketUrl(path) {

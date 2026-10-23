@@ -5,7 +5,7 @@ const HIGHLIGHT_SLUGS = [
   "markets-without-rules",
   "strategic-proxies",
   "pipelines-and-democracy",
-  "the-terrorist-without-an-organization",
+  "covert-action-paper",
 ];
 
 const getHref = (post) => {
